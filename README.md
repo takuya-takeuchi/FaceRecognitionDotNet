@@ -12,9 +12,9 @@ This repository is porting https://github.com/ageitgey/face_recognition by C#.
 
 #### [face_recognition](https://github.com/ageitgey/face_recognition/)
 
-> **License:** Creative Commons Zero v1.0 Universal License
->
 > **License:** The MIT License
+>
+> **Author:** Adam Geitgey
 > 
 > **Principal Use:** The world's simplest facial recognition api for Python and the command line. Main goal of FaceRecognitionDotNet is what ports face_recognition by C#.
 
