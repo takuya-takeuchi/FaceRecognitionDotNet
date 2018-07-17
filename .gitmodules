@@ -1,0 +1,3 @@
+[submodule "DlibDotNet"]
+	path = DlibDotNet
+	url = https://github.com/takuya-takeuchi/DlibDotNet
