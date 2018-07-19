@@ -58,8 +58,11 @@ namespace FaceRecognitionDotNet.Dlib.Python
                 foreach (var chip in thisImageFaceChips)
                     faceChips.Add(chip);
             }
-
+            
             var faceDescriptors = new List<List<Matrix<double>>>();
+            for(int i = 0, count = batchImages.Count; i < count; i++)
+                faceDescriptors.Add(new List<Matrix<double>>());
+
             if (numJitters <= 1)
             {
                 // extract descriptors and convert from float vectors to double vectors
@@ -68,7 +71,6 @@ namespace FaceRecognitionDotNet.Dlib.Python
                 var list = descriptors.Select(matrix => matrix).ToArray();
                 for (var i = 0; i < batchFaces.Count(); ++i)
                 {
-                    faceDescriptors.Add(new List<Matrix<double>>());
                     for (var j = 0; j < batchFaces[i].Count(); ++j)
                         faceDescriptors[i].Add(DlibDotNet.Dlib.MatrixCast<double>(list[index++]));
                 }
