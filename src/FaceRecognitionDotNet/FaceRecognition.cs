@@ -257,7 +257,7 @@ namespace FaceRecognitionDotNet
         {
             switch (model)
             {
-                case Models.Hog:
+                case Models.Cnn:
                     return CnnFaceDetectionodelV1.Detect(this._CnnFaceDetector, faceImage.Matrix, numberOfTimesToUpsample);
                 default:
                     return this._FaceDetector.Operator(faceImage.Matrix, numberOfTimesToUpsample).Select(rectangle => new MModRect() { Rect = rectangle });
