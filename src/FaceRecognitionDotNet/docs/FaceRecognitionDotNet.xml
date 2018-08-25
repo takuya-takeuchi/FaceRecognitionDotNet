@@ -25,6 +25,56 @@
             </summary>
             <param name="disposing">Indicate value whether <see cref="M:System.IDisposable.Dispose"/> method was called.</param>
         </member>
+        <member name="T:FaceRecognitionDotNet.FacePart">
+            <summary>
+            Specifies the part of face.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.Chin">
+            <summary>
+            Specifies the chin.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.LeftEyebrow">
+            <summary>
+            Specifies the left eyebrow.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.RightEyebrow">
+            <summary>
+            Specifies the right eyebrow.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.NoseBridge">
+            <summary>
+            Specifies the nose bridge.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.NoseTip">
+            <summary>
+            Specifies the nose tip.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.LeftEye">
+            <summary>
+            Specifies the left eye.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.RightEye">
+            <summary>
+            Specifies the right eye.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.TopLip">
+            <summary>
+            Specifies the top lip.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.BottomLip">
+            <summary>
+            Specifies the bottom lip.
+            </summary>
+        </member>
         <member name="T:FaceRecognitionDotNet.FaceRecognition">
             <summary>
             Provides the method to find and recognize face methods. This class cannot be inherited.
@@ -35,6 +85,7 @@
             Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> class with the directory path that stores model files.
             </summary>
             <param name="directory">The directory path that stores model files.</param>
+            <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
             <exception cref="T:System.IO.DirectoryNotFoundException">The specified directory path is not found.</exception>
         </member>
         <member name="P:FaceRecognitionDotNet.FaceRecognition.IsDisposed">
@@ -58,6 +109,7 @@
             Create a new instance of the <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> class.
             </summary>
             <param name="directory">The directory path that stores model files.</param>
+            <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
             <exception cref="T:System.IO.DirectoryNotFoundException">The specified directory path is not found.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistance(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding)">
@@ -81,7 +133,18 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image,System.Int32,FaceRecognitionDotNet.Models)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModel)">
+            <summary>
+            Returns an enumerable collection of dictionary of face parts locations (eyes, nose, etc) for each face in the image.
+            </summary>
+            <param name="faceImage">The image contains faces. The image can contain multiple faces.</param>
+            <param name="faceLocations">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
+            <param name="model">The model of face detector.</param>
+            <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="faceImage"/> or this object is disposed.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image,System.Int32,FaceRecognitionDotNet.Model)">
             <summary>
             Returns an enumerable collection of face location correspond to all faces in specified image.
             </summary>
@@ -176,32 +239,54 @@
             Gets the y-axis value of the top of the rectangle of face.
             </summary>
         </member>
-        <member name="T:FaceRecognitionDotNet.Models">
+        <member name="T:FaceRecognitionDotNet.Model">
             <summary>
             Specifies the model of face detector.
             </summary>
         </member>
-        <member name="F:FaceRecognitionDotNet.Models.Hog">
+        <member name="F:FaceRecognitionDotNet.Model.Hog">
             <summary>
             Specifies that the model is HOG (Histograms of Oriented Gradients) based face detector.
             </summary>
         </member>
-        <member name="F:FaceRecognitionDotNet.Models.Cnn">
+        <member name="F:FaceRecognitionDotNet.Model.Cnn">
             <summary>
             Specifies that the model is CNN (Convolutional Neural Network) based face detector.
             </summary>
         </member>
-        <member name="T:FaceRecognitionDotNet.PredictorModels">
+        <member name="T:FaceRecognitionDotNet.Point">
+            <summary>
+            Represents an ordered pair of integer x- and y-coordinates that defines a point in a two-dimensional plane.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Point.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Point"/> structure with the specified coordinates.
+            </summary>
+            <param name="x">The horizontal position of the point.</param>
+            <param name="y">The vertical position of the point.</param>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Point.X">
+            <summary>
+            Gets the x-coordinate of this <see cref="T:FaceRecognitionDotNet.Point"/>.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Point.Y">
+            <summary>
+            Gets the y-coordinate of this <see cref="T:FaceRecognitionDotNet.Point"/>.
+            </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.PredictorModel">
             <summary>
             Specifies the dimension of vector which be returned from detector.
             </summary>
         </member>
-        <member name="F:FaceRecognitionDotNet.PredictorModels.Large">
+        <member name="F:FaceRecognitionDotNet.PredictorModel.Large">
             <summary>
             Specifies that the large scale detector. The detector returns 68 points for represent face. 
             </summary>
         </member>
-        <member name="F:FaceRecognitionDotNet.PredictorModels.Small">
+        <member name="F:FaceRecognitionDotNet.PredictorModel.Small">
             <summary>
             Specifies that the small scale detector. The detector returns 5 points for represent face. 
             </summary>

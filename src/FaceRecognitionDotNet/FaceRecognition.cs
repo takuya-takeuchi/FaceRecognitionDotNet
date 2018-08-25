@@ -36,6 +36,7 @@ namespace FaceRecognitionDotNet
         /// Initializes a new instance of the <see cref="FaceRecognition"/> class with the directory path that stores model files.
         /// </summary>
         /// <param name="directory">The directory path that stores model files.</param>
+        /// <exception cref="FileNotFoundException">The model file is not found.</exception>
         /// <exception cref="DirectoryNotFoundException">The specified directory path is not found.</exception>
         private FaceRecognition(string directory)
         {
@@ -133,6 +134,7 @@ namespace FaceRecognitionDotNet
         /// Create a new instance of the <see cref="FaceRecognition"/> class.
         /// </summary>
         /// <param name="directory">The directory path that stores model files.</param>
+        /// <exception cref="FileNotFoundException">The model file is not found.</exception>
         /// <exception cref="DirectoryNotFoundException">The specified directory path is not found.</exception>
         public static FaceRecognition Create(string directory)
         {
@@ -183,9 +185,74 @@ namespace FaceRecognitionDotNet
             if (this.IsDisposed)
                 throw new ObjectDisposedException(nameof(FaceEncoding));
 
-            var rawLandmarks = this.RawFaceLandmarks(image, knownFaceLocation, PredictorModels.Small);
+            var rawLandmarks = this.RawFaceLandmarks(image, knownFaceLocation, PredictorModel.Small);
             foreach (var landmark in rawLandmarks)
                 yield return new FaceEncoding(FaceRecognitionModelV1.ComputeFaceDescriptor(this._FaceEncoder, image, landmark, numJitters));
+        }
+
+        /// <summary>
+        /// Returns an enumerable collection of dictionary of face parts locations (eyes, nose, etc) for each face in the image.
+        /// </summary>
+        /// <param name="faceImage">The image contains faces. The image can contain multiple faces.</param>
+        /// <param name="faceLocations">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
+        /// <param name="model">The model of face detector.</param>
+        /// <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="faceImage"/> or this object is disposed.</exception>
+        public IEnumerable<IDictionary<FacePart, IEnumerable<Point>>> FaceLandmark(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
+        {
+            if (faceImage == null)
+                throw new ArgumentNullException(nameof(faceImage));
+            if (faceImage.IsDisposed)
+                throw new ObjectDisposedException(nameof(faceImage));
+            if (this.IsDisposed)
+                throw new ObjectDisposedException(nameof(FaceEncoding));
+
+            var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, model);
+            var landmarkTuples = landmarks.Select(landmark => Enumerable.Range(0, (int) landmark.Parts)
+                                          .Select(index => new Point(landmark.GetPart((uint) index))).ToArray());
+
+            // For a definition of each point index, see https://cdn-images-1.medium.com/max/1600/1*AbEg31EgkbXSQehuNJBlWg.png
+            switch (model)
+            {
+                case PredictorModel.Large:
+                    foreach (var landmarkTuple in landmarkTuples)
+                        yield return new Dictionary<FacePart, IEnumerable<Point>>
+                        {
+                            { FacePart.Chin,         Enumerable.Range(0,17).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.LeftEyebrow,  Enumerable.Range(17,5).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.RightEyebrow, Enumerable.Range(22,5).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.NoseBridge,   Enumerable.Range(27,5).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.NoseTip,      Enumerable.Range(31,5).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.LeftEye,      Enumerable.Range(36,6).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.RightEye,     Enumerable.Range(42,6).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.TopLip,       Enumerable.Range(48,7).Select(i => landmarkTuple[i])
+                                                                           .Concat( new [] { landmarkTuple[64] })
+                                                                           .Concat( new [] { landmarkTuple[63] })
+                                                                           .Concat( new [] { landmarkTuple[62] })
+                                                                           .Concat( new [] { landmarkTuple[61] })
+                                                                           .Concat( new [] { landmarkTuple[60] }) },
+                            { FacePart.BottomLip,    Enumerable.Range(54,6).Select(i => landmarkTuple[i])
+                                                                           .Concat( new [] { landmarkTuple[48] })
+                                                                           .Concat( new [] { landmarkTuple[60] })
+                                                                           .Concat( new [] { landmarkTuple[67] })
+                                                                           .Concat( new [] { landmarkTuple[66] })
+                                                                           .Concat( new [] { landmarkTuple[65] })
+                                                                           .Concat( new [] { landmarkTuple[64] }) }
+                        };
+                    break;
+                case PredictorModel.Small:
+                    foreach (var landmarkTuple in landmarkTuples)
+                        yield return new Dictionary<FacePart, IEnumerable<Point>>
+                        {
+                            { FacePart.NoseTip,  Enumerable.Range(4,1).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.LeftEye,  Enumerable.Range(2,2).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.RightEye, Enumerable.Range(0,2).Select(i => landmarkTuple[i]).ToArray() }
+                        };
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(model), model, null);
+            }
         }
 
         /// <summary>
@@ -197,7 +264,7 @@ namespace FaceRecognitionDotNet
         /// <returns>An enumerable collection of face location correspond to all faces in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> is null.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
-        public IEnumerable<Location> FaceLocations(Image image, int numberOfTimesToUpsample = 1, Models model = Models.Hog)
+        public IEnumerable<Location> FaceLocations(Image image, int numberOfTimesToUpsample = 1, Model model = Model.Hog)
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
@@ -208,8 +275,8 @@ namespace FaceRecognitionDotNet
 
             switch (model)
             {
-                case Models.Cnn:
-                    foreach (var face in this.RawFaceLocations(image, numberOfTimesToUpsample, Models.Cnn))
+                case Model.Cnn:
+                    foreach (var face in this.RawFaceLocations(image, numberOfTimesToUpsample, Model.Cnn))
                         yield return TrimBound(face.Rect, image.Width, image.Height);
                     break;
                 default:
@@ -236,9 +303,9 @@ namespace FaceRecognitionDotNet
 
         #region Helpers
 
-        private IEnumerable<FullObjectDetection> RawFaceLandmarks(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModels model = PredictorModels.Large)
+        private IEnumerable<FullObjectDetection> RawFaceLandmarks(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
         {
-            IEnumerable<MModRect> tmp = null;
+            IEnumerable<MModRect> tmp;
 
             if (faceLocations == null)
                 tmp = this.RawFaceLocations(faceImage);
@@ -246,18 +313,18 @@ namespace FaceRecognitionDotNet
                 tmp = faceLocations.Select(l => new MModRect { Rect = new Rectangle { Bottom = l.Bottom, Left = l.Left, Top = l.Top, Right = l.Right } });
 
             var posePredictor = this._PosePredictor68Point;
-            if (model == PredictorModels.Small)
+            if (model == PredictorModel.Small)
                 posePredictor = this._PosePredictor5Point;
 
             foreach (var rect in tmp)
                 yield return posePredictor.Detect(faceImage.Matrix, rect);
         }
 
-        private IEnumerable<MModRect> RawFaceLocations(Image faceImage, int numberOfTimesToUpsample = 1, Models model = Models.Hog)
+        private IEnumerable<MModRect> RawFaceLocations(Image faceImage, int numberOfTimesToUpsample = 1, Model model = Model.Hog)
         {
             switch (model)
             {
-                case Models.Cnn:
+                case Model.Cnn:
                     return CnnFaceDetectionodelV1.Detect(this._CnnFaceDetector, faceImage.Matrix, numberOfTimesToUpsample);
                 default:
                     return this._FaceDetector.Operator(faceImage.Matrix, numberOfTimesToUpsample).Select(rectangle => new MModRect() { Rect = rectangle });
@@ -285,6 +352,7 @@ namespace FaceRecognitionDotNet
         /// </summary>
         public void Dispose()
         {
+            // ReSharper disable once GCSuppressFinalizeForTypeWithoutDestructor
             GC.SuppressFinalize(this);
             this.Dispose(true);
         }

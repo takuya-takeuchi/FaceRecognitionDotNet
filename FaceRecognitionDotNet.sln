@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaceRecognitionDotNet", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DlibDotNet", "DlibDotNet\src\DlibDotNet\DlibDotNet.csproj", "{BC72B97F-9631-4550-8DAC-5F96FF7DE9EB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{501D0145-416F-42A7-B636-02A4F783C97C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaceRecognitionDotNet.Tests", "test\FaceRecognitionDotNet.Tests\FaceRecognitionDotNet.Tests.csproj", "{EB355E8B-8070-4221-9CB9-7BD0655DC9A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,18 @@ Global
 		{BC72B97F-9631-4550-8DAC-5F96FF7DE9EB}.ReleaseLinux|Any CPU.Build.0 = ReleaseLinux|Any CPU
 		{BC72B97F-9631-4550-8DAC-5F96FF7DE9EB}.ReleaseMac|Any CPU.ActiveCfg = ReleaseMac|Any CPU
 		{BC72B97F-9631-4550-8DAC-5F96FF7DE9EB}.ReleaseMac|Any CPU.Build.0 = ReleaseMac|Any CPU
+		{EB355E8B-8070-4221-9CB9-7BD0655DC9A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB355E8B-8070-4221-9CB9-7BD0655DC9A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB355E8B-8070-4221-9CB9-7BD0655DC9A8}.DebugLinux|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB355E8B-8070-4221-9CB9-7BD0655DC9A8}.DebugLinux|Any CPU.Build.0 = Debug|Any CPU
+		{EB355E8B-8070-4221-9CB9-7BD0655DC9A8}.DebugMac|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB355E8B-8070-4221-9CB9-7BD0655DC9A8}.DebugMac|Any CPU.Build.0 = Debug|Any CPU
+		{EB355E8B-8070-4221-9CB9-7BD0655DC9A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB355E8B-8070-4221-9CB9-7BD0655DC9A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB355E8B-8070-4221-9CB9-7BD0655DC9A8}.ReleaseLinux|Any CPU.ActiveCfg = Release|Any CPU
+		{EB355E8B-8070-4221-9CB9-7BD0655DC9A8}.ReleaseLinux|Any CPU.Build.0 = Release|Any CPU
+		{EB355E8B-8070-4221-9CB9-7BD0655DC9A8}.ReleaseMac|Any CPU.ActiveCfg = Release|Any CPU
+		{EB355E8B-8070-4221-9CB9-7BD0655DC9A8}.ReleaseMac|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +66,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{85AB4F26-48B7-4A21-A6C7-14EA6608B539} = {2F845E5F-E6B9-46D5-B5D8-52BEE4B463F0}
 		{BC72B97F-9631-4550-8DAC-5F96FF7DE9EB} = {2F845E5F-E6B9-46D5-B5D8-52BEE4B463F0}
+		{EB355E8B-8070-4221-9CB9-7BD0655DC9A8} = {501D0145-416F-42A7-B636-02A4F783C97C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D44C572-D749-4A76-A199-8C598A08AE8A}
