@@ -31,6 +31,10 @@ namespace FaceRecognitionDotNet.Tests
 
         private const string ResultDirectory = "Result";
 
+        private const string TwoPersonUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
+
+        private const string TwoPersonFile = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
+
         #endregion
 
         #region Methods
@@ -117,15 +121,29 @@ namespace FaceRecognitionDotNet.Tests
         [TestMethod]
         public void FaceLandmarkLarge()
         {
-            const string TestName = nameof(this.FaceLandmarkLarge);
-            this.FaceLandmark(TestName, PredictorModel.Large);
+            const string testName = nameof(this.FaceLandmarkLarge);
+            this.FaceLandmark(testName, PredictorModel.Large);
         }
 
         [TestMethod]
         public void FaceLandmarkSmall()
         {
-            const string TestName = nameof(this.FaceLandmarkSmall);
-            this.FaceLandmark(TestName, PredictorModel.Small);
+            const string testName = nameof(this.FaceLandmarkSmall);
+            this.FaceLandmark(testName, PredictorModel.Small);
+        }
+
+        [TestMethod]
+        public void FaceLocationCnn()
+        {
+            const string testName = nameof(this.FaceLocationCnn);
+            this.FaceLocation(testName, Model.Cnn);
+        }
+
+        [TestMethod]
+        public void FaceLocationHog()
+        {
+            const string testName = nameof(this.FaceLocationHog);
+            this.FaceLocation(testName, Model.Hog);
         }
 
         [TestInitialize]
@@ -163,11 +181,9 @@ namespace FaceRecognitionDotNet.Tests
             this._FaceRecognition = FaceRecognition.Create(ModelDirectory);
         }
 
-        #region Helpers
-
-        private void FaceLandmark(string testName, PredictorModel model)
+        [TestMethod]
+        public void LoadImage()
         {
-            const int pointSize = 2;
             const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
             const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
@@ -175,6 +191,41 @@ namespace FaceRecognitionDotNet.Tests
             if (!File.Exists(path))
             {
                 var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path, binary);
+            }
+
+            using (var image = FaceRecognition.LoadImageFile(path))
+            {
+                Assert.IsTrue(image.Width == 419, $"Width of {path} is wrong");
+                Assert.IsTrue(image.Height == 600, $"Height of {path} is wrong");
+            }
+        }
+
+        [TestMethod]
+        public void LoadImageFail()
+        {
+            try
+            {
+                FaceRecognition.LoadImageFile("test.bmp");
+                Assert.Fail("test.bmp directory is missing and LoadImageFile method should throw exception.");
+            }
+            catch (FileNotFoundException)
+            {
+            }
+        }
+
+        #region Helpers
+
+        private void FaceLandmark(string testName, PredictorModel model)
+        {
+            const int pointSize = 2;
+
+            var path = Path.Combine(ImageDirectory, TwoPersonFile);
+            if (!File.Exists(path))
+            {
+                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
 
                 Directory.CreateDirectory(ImageDirectory);
                 File.WriteAllBytes(path, binary);
@@ -217,6 +268,37 @@ namespace FaceRecognitionDotNet.Tests
                                 {
                                     g.DrawEllipse(Pens.GreenYellow, p.X - pointSize, p.Y - pointSize, pointSize * 2, pointSize * 2);
                                 }
+
+                    var directory = Path.Combine(ResultDirectory, testName);
+                    Directory.CreateDirectory(directory);
+
+                    var dst = Path.Combine(directory, "All.bmp");
+                    bitmap.Save(dst, ImageFormat.Bmp);
+                }
+            }
+        }
+
+        private void FaceLocation(string testName, Model model)
+        {
+            var path = Path.Combine(ImageDirectory, TwoPersonFile);
+            if (!File.Exists(path))
+            {
+                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path, binary);
+            }
+
+            using (var image = FaceRecognition.LoadImageFile(path))
+            {
+                var locations = this._FaceRecognition.FaceLocations(image, 1, model).ToArray();
+                Assert.IsTrue(locations.Length > 1, "");
+
+                using (var bitmap = System.Drawing.Image.FromFile(path))
+                {
+                    using (var g = Graphics.FromImage(bitmap))
+                        foreach (var l in locations)
+                            g.DrawRectangle(Pens.GreenYellow,l.Left, l.Top, l.Right - l.Left, l.Bottom - l.Top);
 
                     var directory = Path.Combine(ResultDirectory, testName);
                     Directory.CreateDirectory(directory);
