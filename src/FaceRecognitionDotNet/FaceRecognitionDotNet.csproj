@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Takuya Takeuchi</Authors>
+    <Copyright>Takuya Takeuchi</Copyright>
+    <Description>Porting face_recognition (by Adam Geitgey) by C#</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -13,12 +16,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DlibDotNet\src\DlibDotNet.Extensions\DlibDotNet.Extensions.csproj" />
-    <ProjectReference Include="..\..\..\DlibDotNet\src\DlibDotNet\DlibDotNet.csproj" />
+    <Folder Include="docs\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="docs\" />
+    <ProjectReference Include="..\..\DlibDotNet\src\DlibDotNet\DlibDotNet.csproj" />
   </ItemGroup>
 
 </Project>

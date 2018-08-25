@@ -33,7 +33,7 @@ namespace FaceRecognitionDotNet
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FaceRecognition"/> structure that has the specified the directory that stores model files.
+        /// Initializes a new instance of the <see cref="FaceRecognition"/> class with the directory path that stores model files.
         /// </summary>
         /// <param name="directory">The directory path that stores model files.</param>
         /// <exception cref="DirectoryNotFoundException">The specified directory path is not found.</exception>
@@ -143,7 +143,7 @@ namespace FaceRecognitionDotNet
         /// Compare them to a known face encoding and get a euclidean distance for comparison face.
         /// </summary>
         /// <param name="faceEncoding">The face encoding to compare.</param>
-        /// <param name="faceToCompare">The face encoding to compare  against.</param>
+        /// <param name="faceToCompare">The face encoding to compare against.</param>
         /// <returns>The euclidean distance for comparison face. If 0, faces are completely equal.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="faceEncoding"/> or <paramref name="faceToCompare"/> is null.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="faceEncoding"/> or <paramref name="faceToCompare"/> is disposed.</exception>
@@ -220,11 +220,11 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
-        /// Creates an <see cref="Image"/> from the specified file.
+        /// Creates an <see cref="Image"/> from the specified path.
         /// </summary>
-        /// <param name="file">A string that contains the name of the file from which to create the <see cref="Image"/>.</param>
+        /// <param name="file">A string that contains the path of the file from which to create the <see cref="Image"/>.</param>
         /// <returns>The <see cref="Image"/> this method creates.</returns>
-        /// <exception cref="FileNotFoundException">The specified file does not exist.</exception>
+        /// <exception cref="FileNotFoundException">The specified path does not exist.</exception>
         public static Image LoadImageFile(string file)
         {
             if (!File.Exists(file))
@@ -257,7 +257,7 @@ namespace FaceRecognitionDotNet
         {
             switch (model)
             {
-                case Models.Hog:
+                case Models.Cnn:
                     return CnnFaceDetectionodelV1.Detect(this._CnnFaceDetector, faceImage.Matrix, numberOfTimesToUpsample);
                 default:
                     return this._FaceDetector.Operator(faceImage.Matrix, numberOfTimesToUpsample).Select(rectangle => new MModRect() { Rect = rectangle });
