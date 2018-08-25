@@ -210,7 +210,7 @@ namespace FaceRecognitionDotNet
 
             var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, model);
             var landmarkTuples = landmarks.Select(landmark => Enumerable.Range(0, (int) landmark.Parts)
-                                          .Select(index => landmark.GetPart((uint) index)).ToArray());
+                                          .Select(index => new Point(landmark.GetPart((uint) index))).ToArray());
 
             // For a definition of each point index, see https://cdn-images-1.medium.com/max/1600/1*AbEg31EgkbXSQehuNJBlWg.png
             switch (model)

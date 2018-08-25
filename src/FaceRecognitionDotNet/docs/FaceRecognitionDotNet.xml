@@ -254,6 +254,28 @@
             Specifies that the model is CNN (Convolutional Neural Network) based face detector.
             </summary>
         </member>
+        <member name="T:FaceRecognitionDotNet.Point">
+            <summary>
+            Represents an ordered pair of integer x- and y-coordinates that defines a point in a two-dimensional plane.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Point.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Point"/> structure with the specified coordinates.
+            </summary>
+            <param name="x">The horizontal position of the point.</param>
+            <param name="y">The vertical position of the point.</param>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Point.X">
+            <summary>
+            Gets the x-coordinate of this <see cref="T:FaceRecognitionDotNet.Point"/>.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Point.Y">
+            <summary>
+            Gets the y-coordinate of this <see cref="T:FaceRecognitionDotNet.Point"/>.
+            </summary>
+        </member>
         <member name="T:FaceRecognitionDotNet.PredictorModel">
             <summary>
             Specifies the dimension of vector which be returned from detector.

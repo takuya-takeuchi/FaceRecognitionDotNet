@@ -254,6 +254,28 @@
             CNN (畳み込みニューラルネットワーク) に基づいた顔検出器のモデルを示します。
             </summary>
         </member>
+        <member name="T:FaceRecognitionDotNet.Point">
+            <summary>
+            2 次元平面に点を定義する、整数座標ペア (x 座標と y 座標) を表します。
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Point.#ctor(System.Int32,System.Int32)">
+            <summary>
+            座標を指定して、<see cref="T:FaceRecognitionDotNet.Point"/> 構造体の新しいインスタンスを作成します。
+            </summary>
+            <param name="x">点の水平位置。</param>
+            <param name="y">点の垂直位置。</param>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Point.X">
+            <summary>
+            この <see cref="T:FaceRecognitionDotNet.Point"/> の x 座標を取得または設定します。
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Point.Y">
+            <summary>
+            この <see cref="T:FaceRecognitionDotNet.Point"/> の y 座標を取得または設定します。
+            </summary>
+        </member>
         <member name="T:FaceRecognitionDotNet.PredictorModel">
             <summary>
             検出器から返されるベクトルの次元数を指定します。
