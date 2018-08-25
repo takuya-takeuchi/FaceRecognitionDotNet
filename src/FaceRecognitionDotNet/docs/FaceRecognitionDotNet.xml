@@ -25,6 +25,56 @@
             </summary>
             <param name="disposing">Indicate value whether <see cref="M:System.IDisposable.Dispose"/> method was called.</param>
         </member>
+        <member name="T:FaceRecognitionDotNet.FacePart">
+            <summary>
+            Specifies the part of face.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.Chin">
+            <summary>
+            Specifies the chin.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.LeftEyebrow">
+            <summary>
+            Specifies the left eyebrow.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.RightEyebrow">
+            <summary>
+            Specifies the right eyebrow.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.NoseBridge">
+            <summary>
+            Specifies the nose bridge.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.NoseTip">
+            <summary>
+            Specifies the nose tip.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.LeftEye">
+            <summary>
+            Specifies the left eye.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.RightEye">
+            <summary>
+            Specifies the right eye.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.TopLip">
+            <summary>
+            Specifies the top lip.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.BottomLip">
+            <summary>
+            Specifies the bottom lip.
+            </summary>
+        </member>
         <member name="T:FaceRecognitionDotNet.FaceRecognition">
             <summary>
             Provides the method to find and recognize face methods. This class cannot be inherited.
@@ -80,6 +130,17 @@
             <returns>An enumerable collection of face feature data corresponds to all faces in specified image.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModels)">
+            <summary>
+            Returns an enumerable collection of dictionary of face parts locations (eyes, nose, etc) for each face in the image.
+            </summary>
+            <param name="faceImage">The image contains faces. The image can contain multiple faces.</param>
+            <param name="faceLocations">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
+            <param name="model">The model of face detector.</param>
+            <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="faceImage"/> or this object is disposed.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image,System.Int32,FaceRecognitionDotNet.Models)">
             <summary>

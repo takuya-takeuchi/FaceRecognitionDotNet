@@ -25,6 +25,56 @@
             </summary>
             <param name="disposing"><see cref="M:System.IDisposable.Dispose"/> が呼び出されたかどうかを示す値。</param>
         </member>
+        <member name="T:FaceRecognitionDotNet.FacePart">
+            <summary>
+            顔の構成要素を指定します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.Chin">
+            <summary>
+            顎を示します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.LeftEyebrow">
+            <summary>
+            左眉を示します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.RightEyebrow">
+            <summary>
+            右眉を示します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.NoseBridge">
+            <summary>
+            鼻梁を示します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.NoseTip">
+            <summary>
+            鼻尖を示します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.LeftEye">
+            <summary>
+            左眼 を示します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.RightEye">
+            <summary>
+            右眼 を示します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.TopLip">
+            <summary>
+            上唇を示します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.BottomLip">
+            <summary>
+            下唇を示します。
+            </summary>
+        </member>
         <member name="T:FaceRecognitionDotNet.FaceRecognition">
             <summary>
             顔を探索、認識するメソッドを提供します。このクラスは継承できません。
@@ -80,6 +130,17 @@
             <returns>指定した画像内の全ての顔に対応する顔特徴データの列挙可能なコレクション。</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> が null です。</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> またはこのオブジェクトは破棄されています。</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModels)">
+            <summary>
+            画像内の各顔に対する、眼、鼻等の顔の構成要素の辞書の列挙可能なコレクションを返します。
+            </summary>
+            <param name="faceImage">顔を含む画像。画像には複数の顔を含めることができます。</param>
+            <param name="faceLocations">顔に対する矩形位置の列挙可能なコレクション。null を指定した場合、メソッドが顔の位置を探索します。</param>
+            <param name="model">検出器から返されるベクトルの次元数。</param>
+            <returns>眼、鼻等の顔の構成要素の辞書の列挙可能なコレクション。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="faceImage"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="faceImage"/> またはこのオブジェクトは破棄されています。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image,System.Int32,FaceRecognitionDotNet.Models)">
             <summary>
@@ -193,7 +254,7 @@
         </member>
         <member name="T:FaceRecognitionDotNet.PredictorModels">
             <summary>
-            検出器から返されるベクトルの時限数を指定します。
+            検出器から返されるベクトルの次元数を指定します。
             </summary>
         </member>
         <member name="F:FaceRecognitionDotNet.PredictorModels.Large">

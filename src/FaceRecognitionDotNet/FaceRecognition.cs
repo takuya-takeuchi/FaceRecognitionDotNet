@@ -189,6 +189,71 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
+        /// Returns an enumerable collection of dictionary of face parts locations (eyes, nose, etc) for each face in the image.
+        /// </summary>
+        /// <param name="faceImage">The image contains faces. The image can contain multiple faces.</param>
+        /// <param name="faceLocations">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
+        /// <param name="model">The model of face detector.</param>
+        /// <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="faceImage"/> or this object is disposed.</exception>
+        public IEnumerable<IDictionary<FacePart, IEnumerable<Point>>> FaceLandmark(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModels model = PredictorModels.Large)
+        {
+            if (faceImage == null)
+                throw new ArgumentNullException(nameof(faceImage));
+            if (faceImage.IsDisposed)
+                throw new ObjectDisposedException(nameof(faceImage));
+            if (this.IsDisposed)
+                throw new ObjectDisposedException(nameof(FaceEncoding));
+
+            var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, model);
+            var landmarkTuples = landmarks.Select(landmark => Enumerable.Range(0, (int) landmark.Parts)
+                                          .Select(index => landmark.GetPart((uint) index)).ToArray());
+
+            // For a definition of each point index, see https://cdn-images-1.medium.com/max/1600/1*AbEg31EgkbXSQehuNJBlWg.png
+            switch (model)
+            {
+                case PredictorModels.Large:
+                    foreach (var landmarkTuple in landmarkTuples)
+                        yield return new Dictionary<FacePart, IEnumerable<Point>>
+                        {
+                            { FacePart.Chin,         Enumerable.Range(0,17).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.LeftEyebrow,  Enumerable.Range(17,5).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.RightEyebrow, Enumerable.Range(22,5).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.NoseBridge,   Enumerable.Range(27,5).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.NoseTip,      Enumerable.Range(31,5).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.LeftEye,      Enumerable.Range(36,6).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.RightEye,     Enumerable.Range(42,6).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.TopLip,       Enumerable.Range(48,7).Select(i => landmarkTuple[i])
+                                                                           .Concat( new [] { landmarkTuple[64] })
+                                                                           .Concat( new [] { landmarkTuple[63] })
+                                                                           .Concat( new [] { landmarkTuple[62] })
+                                                                           .Concat( new [] { landmarkTuple[61] })
+                                                                           .Concat( new [] { landmarkTuple[60] }) },
+                            { FacePart.BottomLip,    Enumerable.Range(54,6).Select(i => landmarkTuple[i])
+                                                                           .Concat( new [] { landmarkTuple[48] })
+                                                                           .Concat( new [] { landmarkTuple[60] })
+                                                                           .Concat( new [] { landmarkTuple[67] })
+                                                                           .Concat( new [] { landmarkTuple[66] })
+                                                                           .Concat( new [] { landmarkTuple[65] })
+                                                                           .Concat( new [] { landmarkTuple[64] }) }
+                        };
+                    break;
+                case PredictorModels.Small:
+                    foreach (var landmarkTuple in landmarkTuples)
+                        yield return new Dictionary<FacePart, IEnumerable<Point>>
+                        {
+                            { FacePart.NoseTip,  Enumerable.Range(4,1).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.LeftEye,  Enumerable.Range(2,2).Select(i => landmarkTuple[i]).ToArray() },
+                            { FacePart.RightEye, Enumerable.Range(0,2).Select(i => landmarkTuple[i]).ToArray() }
+                        };
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(model), model, null);
+            }
+        }
+
+        /// <summary>
         /// Returns an enumerable collection of face location correspond to all faces in specified image.
         /// </summary>
         /// <param name="image">The image contains faces. The image can contain multiple faces.</param>
