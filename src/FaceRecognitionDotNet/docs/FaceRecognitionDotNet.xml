@@ -85,6 +85,7 @@
             Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> class with the directory path that stores model files.
             </summary>
             <param name="directory">The directory path that stores model files.</param>
+            <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
             <exception cref="T:System.IO.DirectoryNotFoundException">The specified directory path is not found.</exception>
         </member>
         <member name="P:FaceRecognitionDotNet.FaceRecognition.IsDisposed">
@@ -108,6 +109,7 @@
             Create a new instance of the <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> class.
             </summary>
             <param name="directory">The directory path that stores model files.</param>
+            <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
             <exception cref="T:System.IO.DirectoryNotFoundException">The specified directory path is not found.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistance(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding)">

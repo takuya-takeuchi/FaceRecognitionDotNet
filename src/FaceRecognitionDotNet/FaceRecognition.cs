@@ -36,6 +36,7 @@ namespace FaceRecognitionDotNet
         /// Initializes a new instance of the <see cref="FaceRecognition"/> class with the directory path that stores model files.
         /// </summary>
         /// <param name="directory">The directory path that stores model files.</param>
+        /// <exception cref="FileNotFoundException">The model file is not found.</exception>
         /// <exception cref="DirectoryNotFoundException">The specified directory path is not found.</exception>
         private FaceRecognition(string directory)
         {
@@ -133,6 +134,7 @@ namespace FaceRecognitionDotNet
         /// Create a new instance of the <see cref="FaceRecognition"/> class.
         /// </summary>
         /// <param name="directory">The directory path that stores model files.</param>
+        /// <exception cref="FileNotFoundException">The model file is not found.</exception>
         /// <exception cref="DirectoryNotFoundException">The specified directory path is not found.</exception>
         public static FaceRecognition Create(string directory)
         {
