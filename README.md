@@ -1,6 +1,12 @@
-# FaceRecognition.Net
+# ![Alt text](nuget/face48.png "FaceRecognition.Net") FaceRecognition.Net [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
+
 The world's simplest facial recognition api for .NET  
 This repository is porting https://github.com/ageitgey/face_recognition by C#.
+
+|Package|NuGet|
+|---|---|
+|FaceRecognition|[![NuGet version](https://badge.fury.io/nu/FaceRecognition.svg)](https://badge.fury.io/nu/FaceRecognition)|
+|FaceRecognition With CUDA|[![NuGet version](https://badge.fury.io/nu/FaceRecognition-WithCUDA.svg)](https://badge.fury.io/nu/FaceRecognition-WithCUDA)|
 
 ## Demo
 
