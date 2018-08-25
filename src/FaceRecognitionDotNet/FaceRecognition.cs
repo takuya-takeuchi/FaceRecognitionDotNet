@@ -305,7 +305,7 @@ namespace FaceRecognitionDotNet
 
         private IEnumerable<FullObjectDetection> RawFaceLandmarks(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
         {
-            IEnumerable<MModRect> tmp = null;
+            IEnumerable<MModRect> tmp;
 
             if (faceLocations == null)
                 tmp = this.RawFaceLocations(faceImage);
@@ -352,6 +352,7 @@ namespace FaceRecognitionDotNet
         /// </summary>
         public void Dispose()
         {
+            // ReSharper disable once GCSuppressFinalizeForTypeWithoutDestructor
             GC.SuppressFinalize(this);
             this.Dispose(true);
         }
