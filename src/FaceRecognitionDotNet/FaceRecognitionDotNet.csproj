@@ -16,12 +16,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DlibDotNet\src\DlibDotNet.Extensions\DlibDotNet.Extensions.csproj" />
-    <ProjectReference Include="..\..\..\DlibDotNet\src\DlibDotNet\DlibDotNet.csproj" />
+    <Folder Include="docs\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="docs\" />
+    <ProjectReference Include="..\..\DlibDotNet\src\DlibDotNet\DlibDotNet.csproj" />
   </ItemGroup>
 
 </Project>
