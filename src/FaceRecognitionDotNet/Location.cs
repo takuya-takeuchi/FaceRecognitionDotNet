@@ -12,10 +12,10 @@ namespace FaceRecognitionDotNet
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Location"/> structure that has the specified left, top, right and bottom.
+        /// Initializes a new instance of the <see cref="Location"/> structure with the specified left, top, right and bottom.
         /// </summary>
         /// <param name="left">The x-axis value of the left side of the rectangle of face.</param>
-        /// <param name="top">The y-axis position of the top of the rectangle of face.</param>
+        /// <param name="top">The y-axis value of the top of the rectangle of face.</param>
         /// <param name="right">The x-axis value of the right side of the rectangle of face.</param>
         /// <param name="bottom">The y-axis value of the bottom of the rectangle of face.</param>
         public Location(int left, int top, int right, int bottom)
@@ -60,7 +60,7 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
-        /// Gets the y-axis position of the top of the rectangle of face.
+        /// Gets the y-axis value of the top of the rectangle of face.
         /// </summary>
         public int Top
         {
