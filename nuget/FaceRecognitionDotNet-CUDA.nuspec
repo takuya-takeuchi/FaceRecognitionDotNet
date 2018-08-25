@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>FaceRecognitionDotNet-WithCUDA</id>
+    <version>1.2.3-pre</version>
+    <title>FaceRecognitionDotNet (with CUDA)</title>
+    <authors>Takuya Takeuchi</authors>
+    <owners>Takuya Takeuchi</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/takuya-takeuchi/FaceRecognitionDotNet</projectUrl>
+    <iconUrl>https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/nuget/face128.png?raw=true</iconUrl>
+    <description>The world's simplest facial recognition api for .NET
+
+This library is ported from https://github.com/ageitgey/face_recognition by C#.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>© Takuya Takeuchi 2018</copyright>
+    <tags>.net machinelearning face-recognition</tags>
+    <serviceable>true</serviceable>
+    <dependencies>
+      <group targetFramework="netstandard2.0">
+        <dependency id="DlibDotNet-WithCUDA" version="(19.15.0.20180808,)" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\src\FaceRecognitionDotNet\bin\Release\netstandard2.0\FaceRecognitionDotNet.dll" target="lib\netstandard2.0" />
+    <file src="..\src\FaceRecognitionDotNet\bin\Release\netstandard2.0\FaceRecognitionDotNet.xml" target="lib\netstandard2.0" />
+    <file src="..\src\FaceRecognitionDotNet\docs\ja\*.xml" target="lib\netstandard2.0\ja" />
+  </files>
+</package>
