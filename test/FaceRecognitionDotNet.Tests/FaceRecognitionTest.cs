@@ -59,6 +59,96 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [TestMethod]
+        public void CompareFacesFalse()
+        {
+            var bidenUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Biden_2013.jpg";
+            var bidenFile = "480px-Biden_2013.jpg";
+            var obamaUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg";
+            var obamaFile = "200px-President_Barack_Obama.jpg";
+
+            var path1 = Path.Combine(ImageDirectory, bidenFile);
+            if (!File.Exists(path1))
+            {
+                var url = $"{bidenUrl}/{bidenFile}";
+                var binary = new HttpClient().GetByteArrayAsync(url).Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path1, binary);
+            }
+
+            var path2 = Path.Combine(ImageDirectory, obamaFile);
+            if (!File.Exists(path2))
+            {
+                var url = $"{obamaUrl}/{obamaFile}";
+                var binary = new HttpClient().GetByteArrayAsync(url).Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path2, binary);
+            }
+
+            using (var image1 = FaceRecognition.LoadImageFile(path1))
+            using (var image2 = FaceRecognition.LoadImageFile(path2))
+            {
+                var endodings1 = this._FaceRecognition.FaceEncodings(image1).ToArray();
+                var endodings2 = this._FaceRecognition.FaceEncodings(image2).ToArray();
+
+                foreach (var encoding in endodings1)
+                foreach (var compareFace in FaceRecognition.CompareFaces(endodings2, encoding))
+                    Assert.IsFalse(compareFace);
+
+                foreach (var encoding in endodings1)
+                    encoding.Dispose();
+                foreach (var encoding in endodings2)
+                    encoding.Dispose();
+            }
+        }
+
+        [TestMethod]
+        public void CompareFacesTrue()
+        {
+            var obamaUrl1 = "https://upload.wikimedia.org/wikipedia/commons/3/3f";
+            var obamaFile1 = "Barack_Obama_addresses_LULAC_7-8-08.JPG";
+            var obamaUrl2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg";
+            var obamaFile2 = "200px-President_Barack_Obama.jpg";
+
+            var path1 = Path.Combine(ImageDirectory, obamaFile1);
+            if (!File.Exists(path1))
+            {
+                var url = $"{obamaUrl1}/{obamaFile1}";
+                var binary = new HttpClient().GetByteArrayAsync(url).Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path1, binary);
+            }
+
+            var path2 = Path.Combine(ImageDirectory, obamaFile2);
+            if (!File.Exists(path2))
+            {
+                var url = $"{obamaUrl2}/{obamaFile2}";
+                var binary = new HttpClient().GetByteArrayAsync(url).Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path2, binary);
+            }
+
+            using (var image1 = FaceRecognition.LoadImageFile(path1))
+            using (var image2 = FaceRecognition.LoadImageFile(path2))
+            {
+                var endodings1 = this._FaceRecognition.FaceEncodings(image1).ToArray();
+                var endodings2 = this._FaceRecognition.FaceEncodings(image2).ToArray();
+
+                foreach (var encoding in endodings1)
+                foreach (var compareFace in FaceRecognition.CompareFaces(endodings2, encoding))
+                    Assert.IsTrue(compareFace);
+
+                foreach (var encoding in endodings1)
+                    encoding.Dispose();
+                foreach (var encoding in endodings2)
+                    encoding.Dispose();
+            }
+        }
+
+        [TestMethod]
         public void CreateFail1()
         {
             Directory.CreateDirectory(ModelTempDirectory);
@@ -115,6 +205,79 @@ namespace FaceRecognitionDotNet.Tests
             finally
             {
                 faceRecognition?.Dispose();
+            }
+        }
+
+        [TestMethod]
+        public void FaceDistance()
+        {
+            var bidenUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Biden_2013.jpg";
+            var bidenFile = "480px-Biden_2013.jpg";
+            var obamaUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg";
+            var obamaFile = "200px-President_Barack_Obama.jpg";
+
+            var path1 = Path.Combine(ImageDirectory, bidenFile);
+            if (!File.Exists(path1))
+            {
+                var url = $"{bidenUrl}/{bidenFile}";
+                var binary = new HttpClient().GetByteArrayAsync(url).Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path1, binary);
+            }
+
+            var path2 = Path.Combine(ImageDirectory, obamaFile);
+            if (!File.Exists(path2))
+            {
+                var url = $"{obamaUrl}/{obamaFile}";
+                var binary = new HttpClient().GetByteArrayAsync(url).Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path2, binary);
+            }
+
+            using (var image1 = FaceRecognition.LoadImageFile(path1))
+            using (var image2 = FaceRecognition.LoadImageFile(path2))
+            {
+                var endodings1 = this._FaceRecognition.FaceEncodings(image1).ToArray();
+                var endodings2 = this._FaceRecognition.FaceEncodings(image2).ToArray();
+
+                foreach (var e1 in endodings1)
+                    foreach (var e2 in endodings2)
+                    {
+                        var distance = FaceRecognition.FaceDistance(e1, e2);
+                        Assert.IsTrue(distance < 0.6d);
+                    }
+
+                foreach (var encoding in endodings1)
+                    encoding.Dispose();
+                foreach (var encoding in endodings2)
+                    encoding.Dispose();
+            }
+        }
+
+        [TestMethod]
+        public void FaceEncodings()
+        {
+            var path = Path.Combine(ImageDirectory, TwoPersonFile);
+            if (!File.Exists(path))
+            {
+                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path, binary);
+            }
+
+            using (var image = FaceRecognition.LoadImageFile(path))
+            {
+                var encodings = this._FaceRecognition.FaceEncodings(image).ToArray();
+                Assert.IsTrue(encodings.Length > 1, "");
+
+                foreach (var encoding in encodings)
+                    encoding.Dispose();
+
+                foreach (var encoding in encodings)
+                    Assert.IsTrue(encoding.IsDisposed, $"{typeof(FaceEncoding)} should be already disposed.");
             }
         }
 
@@ -196,11 +359,12 @@ namespace FaceRecognitionDotNet.Tests
                 File.WriteAllBytes(path, binary);
             }
 
-            using (var image = FaceRecognition.LoadImageFile(path))
-            {
-                Assert.IsTrue(image.Width == 419, $"Width of {path} is wrong");
-                Assert.IsTrue(image.Height == 600, $"Height of {path} is wrong");
-            }
+            var image = FaceRecognition.LoadImageFile(path);
+            Assert.IsTrue(image.Width == 419, $"Width of {path} is wrong");
+            Assert.IsTrue(image.Height == 600, $"Height of {path} is wrong");
+
+            image.Dispose();
+            Assert.IsTrue(image.IsDisposed, $"{typeof(Image)} should be already disposed.");
         }
 
         [TestMethod]
@@ -298,7 +462,7 @@ namespace FaceRecognitionDotNet.Tests
                 {
                     using (var g = Graphics.FromImage(bitmap))
                         foreach (var l in locations)
-                            g.DrawRectangle(Pens.GreenYellow,l.Left, l.Top, l.Right - l.Left, l.Bottom - l.Top);
+                            g.DrawRectangle(Pens.GreenYellow, l.Left, l.Top, l.Right - l.Left, l.Bottom - l.Top);
 
                     var directory = Path.Combine(ResultDirectory, testName);
                     Directory.CreateDirectory(directory);
