@@ -6,265 +6,265 @@
     <members>
         <member name="T:FaceRecognitionDotNet.FaceEncoding">
             <summary>
-            ��̓����f�[�^��\�����܂��B���̃N���X�͌p���ł��܂���B
+            顔の特徴データを表現します。このクラスは継承できません。
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.FaceEncoding.IsDisposed">
             <summary>
-            ���̃I�u�W�F�N�g���j������Ă��邩�ǂ����������l���擾���܂��B
+            このオブジェクトが破棄されているかどうかを示す値を取得します。
             </summary>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceEncoding.Dispose">
             <summary>
-            <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> ���g�p���Ă���S�Ẵ��\�[�X��������܂��B
+            <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> が使用している全てのリソースを解放します。
             </summary>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceEncoding.Dispose(System.Boolean)">
             <summary>
-            <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> ���g�p���Ă���S�Ẵ��\�[�X��������܂��B
+            <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> が使用している全てのリソースを解放します。
             </summary>
-            <param name="disposing"><see cref="M:System.IDisposable.Dispose"/> ���Ăяo���ꂽ���ǂ����������l�B</param>
+            <param name="disposing"><see cref="M:System.IDisposable.Dispose"/> が呼び出されたかどうかを示す値。</param>
         </member>
         <member name="T:FaceRecognitionDotNet.FacePart">
             <summary>
-            ��̍\���v�f���w�肵�܂��B
+            顔の構成要素を指定します。
             </summary>
         </member>
         <member name="F:FaceRecognitionDotNet.FacePart.Chin">
             <summary>
-            �{�������܂��B
+            顎を示します。
             </summary>
         </member>
         <member name="F:FaceRecognitionDotNet.FacePart.LeftEyebrow">
             <summary>
-            �����������܂��B
+            左眉を示します。
             </summary>
         </member>
         <member name="F:FaceRecognitionDotNet.FacePart.RightEyebrow">
             <summary>
-            �E���������܂��B
+            右眉を示します。
             </summary>
         </member>
         <member name="F:FaceRecognitionDotNet.FacePart.NoseBridge">
             <summary>
-            �@���������܂��B
+            鼻梁を示します。
             </summary>
         </member>
         <member name="F:FaceRecognitionDotNet.FacePart.NoseTip">
             <summary>
-            �@��������܂��B
+            鼻尖を示します。
             </summary>
         </member>
         <member name="F:FaceRecognitionDotNet.FacePart.LeftEye">
             <summary>
-            ���� �������܂��B
+            左眼 を示します。
             </summary>
         </member>
         <member name="F:FaceRecognitionDotNet.FacePart.RightEye">
             <summary>
-            �E�� �������܂��B
+            右眼 を示します。
             </summary>
         </member>
         <member name="F:FaceRecognitionDotNet.FacePart.TopLip">
             <summary>
-            ��O�������܂��B
+            上唇を示します。
             </summary>
         </member>
         <member name="F:FaceRecognitionDotNet.FacePart.BottomLip">
             <summary>
-            ���O�������܂��B
+            下唇を示します。
             </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.FaceRecognition">
             <summary>
-            ���T���A�F�����郁�\�b�h��񋟂��܂��B���̃N���X�͌p���ł��܂���B
+            顔を探索、認識するメソッドを提供します。このクラスは継承できません。
             </summary>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.#ctor(System.String)">
             <summary>
-            ���f���t�@�C�����i�[���Ă���f�B���N�g�� �p�X���w�肵�āA<see cref="T:FaceRecognitionDotNet.FaceRecognition"/> �N���X�̐V�����C���X�^���X�����������܂��B
+            モデルファイルを格納しているディレクトリ パスを指定して、<see cref="T:FaceRecognitionDotNet.FaceRecognition"/> クラスの新しいインスタンスを初期化します。
             </summary>
-            <param name="directory">���f���t�@�C�����i�[���Ă���f�B���N�g�� �p�X�B</param>
-            <exception cref="T:System.IO.DirectoryNotFoundException">�w�肵���f�B���N�g�� �p�X��������܂���B</exception>
+            <param name="directory">モデルファイルを格納しているディレクトリ パス。</param>
+            <exception cref="T:System.IO.DirectoryNotFoundException">指定したディレクトリ パスが見つかりません。</exception>
         </member>
         <member name="P:FaceRecognitionDotNet.FaceRecognition.IsDisposed">
             <summary>
-            ���̃I�u�W�F�N�g���j������Ă��邩�ǂ����������l���擾���܂��B
+            このオブジェクトが破棄されているかどうかを示す値を取得します。
             </summary>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.CompareFaces(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding,System.Double)">
             <summary>
-            ��G���R�[�f�B���O�̃��X�g�����G���R�[�f�B���O�Ɣ�r���A��v���邩�ǂ������m�F���܂��B
+            顔エンコーディングのリストを候補エンコーディングと比較し、一致するかどうかを確認します。
             </summary>
-            <param name="knownFaceEncodings">���m�̊�G���R�[�f�B���O�̃��X�g�B</param>
-            <param name="faceEncodingToCheck">���X�g�Ɣ�r����P��̊�G���R�[�f�B���O�B</param>
-            <param name="tolerance">��v�����ƌ��Ȃ��瓯�m�̋����B�Ⴂ�قǂ�茵���ł��B�K��l�� 0.6 �ł��B</param>
-            <returns>���m�̊�G���R�[�f�B���O���`�F�b�N�����G���R�[�f�B���O�ƈ�v���邩�ǂ��������� true/false �l�̃��X�g�B</returns>
-            <exception cref="T:System.ArgumentNullException"><paramref name="knownFaceEncodings"/> �܂��� <paramref name="faceEncodingToCheck"/> �� null �ł��B</exception>
-            <exception cref="T:System.ObjectDisposedException"><paramref name="faceEncodingToCheck"/> �͔j������Ă��܂��B�܂��� <paramref name="knownFaceEncodings"/> �ɔj���ς݂̃I�u�W�F�N�g���܂܂�Ă��܂��B</exception>
+            <param name="knownFaceEncodings">既知の顔エンコーディングのリスト。</param>
+            <param name="faceEncodingToCheck">リストと比較する単一の顔エンコーディング。</param>
+            <param name="tolerance">一致したと見なす顔同士の距離。低いほどより厳密です。規定値は 0.6 です。</param>
+            <returns>既知の顔エンコーディングがチェックする顔エンコーディングと一致するかどうかを示す true/false 値のリスト。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="knownFaceEncodings"/> または <paramref name="faceEncodingToCheck"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="faceEncodingToCheck"/> は破棄されています。または <paramref name="knownFaceEncodings"/> に破棄済みのオブジェクトが含まれています。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.Create(System.String)">
             <summary>
-            <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> �N���X�̐V�����C���X�^���X���쐬���܂��B
+            <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> クラスの新しいインスタンスを作成します。
             </summary>
-            <param name="directory">���f���t�@�C�����i�[���Ă���f�B���N�g�� �p�X�B</param>
-            <exception cref="T:System.IO.DirectoryNotFoundException">�w�肵���f�B���N�g�� �p�X��������܂���B</exception>
+            <param name="directory">モデルファイルを格納しているディレクトリ パス。</param>
+            <exception cref="T:System.IO.DirectoryNotFoundException">指定したディレクトリ パスが見つかりません。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistance(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding)">
             <summary>
-            ���m�̊�G���R�[�f�B���O�Ɣ�r���A��r����Ƃ̊烆�[�N���b�h�������擾���܂��B
+            既知の顔エンコーディングと比較し、比較するとの顔ユークリッド距離を取得します。
             </summary>
-            <param name="faceEncoding">��r�����G���R�[�f�B���O�B</param>
-            <param name="faceToCompare">��r�����G���R�[�f�B���O�̂�����΁B</param>
-            <returns>��r�����̃��[�N���b�h�����B�炪���S�Ɉ�v����ꍇ�� 0�B</returns>
-            <exception cref="T:System.ArgumentNullException"><paramref name="faceEncoding"/> �܂��� <paramref name="faceToCompare"/> �� null �ł��B</exception>
-            <exception cref="T:System.ObjectDisposedException"><paramref name="faceEncoding"/> �܂��� <paramref name="faceToCompare"/> �͔j������Ă��܂��B</exception>
+            <param name="faceEncoding">比較する顔エンコーディング。</param>
+            <param name="faceToCompare">比較する顔エンコーディングのもう一対。</param>
+            <returns>比較する顔のユークリッド距離。顔が完全に一致する場合は 0。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="faceEncoding"/> または <paramref name="faceToCompare"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="faceEncoding"/> または <paramref name="faceToCompare"/> は破棄されています。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},System.Int32)">
             <summary>
-            �w�肵���摜���̑S�Ă̊�ɑΉ����������f�[�^�̗񋓉\�ȃR���N�V������Ԃ��܂��B
+            指定した画像内の全ての顔に対応する顔特徴データの列挙可能なコレクションを返します。
             </summary>
-            <param name="image">����܂މ摜�B�摜�ɂ͕����̊���܂߂邱�Ƃ��ł��܂��B</param>
-            <param name="knownFaceLocation">��ɑ΂����`�ʒu�̗񋓉\�ȃR���N�V�����Bnull ���w�肵���ꍇ�A���\�b�h����̈ʒu��T�����܂��B</param>
-            <param name="numJitters">�G���R�[�f�B���O���v�Z����ۂ̊�̃��T���v�����O�񐔁B</param>
-            <returns>�w�肵���摜���̑S�Ă̊�ɑΉ����������f�[�^�̗񋓉\�ȃR���N�V�����B</returns>
-            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> �� null �ł��B</exception>
-            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> �܂��͂��̃I�u�W�F�N�g�͔j������Ă��܂��B</exception>
+            <param name="image">顔を含む画像。画像には複数の顔を含めることができます。</param>
+            <param name="knownFaceLocation">顔に対する矩形位置の列挙可能なコレクション。null を指定した場合、メソッドが顔の位置を探索します。</param>
+            <param name="numJitters">エンコーディングを計算する際の顔のリサンプリング回数。</param>
+            <returns>指定した画像内の全ての顔に対応する顔特徴データの列挙可能なコレクション。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> またはこのオブジェクトは破棄されています。</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModels)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModel)">
             <summary>
-            �摜���̊e��ɑ΂���A��A�@���̊�̍\���v�f�̎����̗񋓉\�ȃR���N�V������Ԃ��܂��B
+            画像内の各顔に対する、眼、鼻等の顔の構成要素の辞書の列挙可能なコレクションを返します。
             </summary>
-            <param name="faceImage">����܂މ摜�B�摜�ɂ͕����̊���܂߂邱�Ƃ��ł��܂��B</param>
-            <param name="faceLocations">��ɑ΂����`�ʒu�̗񋓉\�ȃR���N�V�����Bnull ���w�肵���ꍇ�A���\�b�h����̈ʒu��T�����܂��B</param>
-            <param name="model">���o�킩��Ԃ����x�N�g���̎������B</param>
-            <returns>��A�@���̊�̍\���v�f�̎����̗񋓉\�ȃR���N�V�����B</returns>
-            <exception cref="T:System.ArgumentNullException"><paramref name="faceImage"/> �� null �ł��B</exception>
-            <exception cref="T:System.ObjectDisposedException"><paramref name="faceImage"/> �܂��͂��̃I�u�W�F�N�g�͔j������Ă��܂��B</exception>
+            <param name="faceImage">顔を含む画像。画像には複数の顔を含めることができます。</param>
+            <param name="faceLocations">顔に対する矩形位置の列挙可能なコレクション。null を指定した場合、メソッドが顔の位置を探索します。</param>
+            <param name="model">検出器から返されるベクトルの次元数。</param>
+            <returns>眼、鼻等の顔の構成要素の辞書の列挙可能なコレクション。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="faceImage"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="faceImage"/> またはこのオブジェクトは破棄されています。</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image,System.Int32,FaceRecognitionDotNet.Models)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image,System.Int32,FaceRecognitionDotNet.Model)">
             <summary>
-            �w�肵���摜���̑S�Ă̊�ɑΉ������̈ʒu�̗񋓉\�ȃR���N�V������Ԃ��܂��B
+            指定した画像内の全ての顔に対応する顔の位置の列挙可能なコレクションを返します。
             </summary>
-            <param name="image">����܂މ摜�B�摜�ɂ͕����̊���܂߂邱�Ƃ��ł��܂��B</param>
-            <param name="numberOfTimesToUpsample">���T������ۂ̊�̃A�b�v�T���v�����O�񐔁B</param>
-            <param name="model">�摜���Ŋ�̌��o���s���猟�o��̃��f���B</param>
-            <returns>�w�肵���摜���̑S�Ă̊�ɑΉ������̈ʒu�̗񋓉\�ȃR���N�V�����B</returns>
-            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> �� null �ł��B</exception>
-            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> �܂��͂��̃I�u�W�F�N�g�͔j������Ă��܂��B</exception>
+            <param name="image">顔を含む画像。画像には複数の顔を含めることができます。</param>
+            <param name="numberOfTimesToUpsample">顔を探索する際の顔のアップサンプリング回数。</param>
+            <param name="model">画像内で顔の検出を行う顔検出器のモデル。</param>
+            <returns>指定した画像内の全ての顔に対応する顔の位置の列挙可能なコレクション。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> またはこのオブジェクトは破棄されています。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadImageFile(System.String)">
             <summary>
-            �w�肵���p�X���� <see cref="T:FaceRecognitionDotNet.Image"/> ���쐬���܂��B
+            指定したパスから <see cref="T:FaceRecognitionDotNet.Image"/> を作成します。
             </summary>
-            <param name="file"><see cref="T:FaceRecognitionDotNet.Image"/> �𐶐�����t�@�C���̃p�X���܂ޕ�����B</param>
-            <returns>���̃��\�b�h���쐬���� <see cref="T:FaceRecognitionDotNet.Image"/>�B</returns>
-            <exception cref="T:System.IO.FileNotFoundException">�w�肵���p�X�͑��݂��܂���B</exception>
+            <param name="file"><see cref="T:FaceRecognitionDotNet.Image"/> を生成するファイルのパスを含む文字列。</param>
+            <returns>このメソッドが作成した <see cref="T:FaceRecognitionDotNet.Image"/>。</returns>
+            <exception cref="T:System.IO.FileNotFoundException">指定したパスは存在しません。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.Dispose">
             <summary>
-            <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> ���g�p���Ă���S�Ẵ��\�[�X��������܂��B
+            <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> が使用している全てのリソースを解放します。
             </summary>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.Dispose(System.Boolean)">
             <summary>
-            <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> ���g�p���Ă���S�Ẵ��\�[�X��������܂��B
+            <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> が使用している全てのリソースを解放します。
             </summary>
-            <param name="disposing"><see cref="M:System.IDisposable.Dispose"/> ���Ăяo���ꂽ���ǂ����������l�B</param>
+            <param name="disposing"><see cref="M:System.IDisposable.Dispose"/> が呼び出されたかどうかを示す値。</param>
         </member>
         <member name="T:FaceRecognitionDotNet.Image">
             <summary>
-            �摜�f�[�^��\�����܂��B���̃N���X�͌p���ł��܂���B
+            画像データを表現します。このクラスは継承できません。
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.Image.Height">
             <summary>
-            �摜�̍������擾���܂��B
+            画像の高さを取得します。
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.Image.IsDisposed">
             <summary>
-            ���̃I�u�W�F�N�g���j������Ă��邩�ǂ����������l���擾���܂��B
+            このオブジェクトが破棄されているかどうかを示す値を取得します。
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.Image.Width">
             <summary>
-            �摜�̕����擾���܂��B
+            画像の幅を取得します。
             </summary>
         </member>
         <member name="M:FaceRecognitionDotNet.Image.Dispose">
             <summary>
-            <see cref="T:FaceRecognitionDotNet.Image"/> ���g�p���Ă���S�Ẵ��\�[�X��������܂��B
+            <see cref="T:FaceRecognitionDotNet.Image"/> が使用している全てのリソースを解放します。
             </summary>
         </member>
         <member name="M:FaceRecognitionDotNet.Image.Dispose(System.Boolean)">
             <summary>
-            <see cref="T:FaceRecognitionDotNet.Image"/> ���g�p���Ă���S�Ẵ��\�[�X��������܂��B
+            <see cref="T:FaceRecognitionDotNet.Image"/> が使用している全てのリソースを解放します。
             </summary>
-            <param name="disposing"><see cref="M:System.IDisposable.Dispose"/> ���Ăяo���ꂽ���ǂ����������l�B</param>
+            <param name="disposing"><see cref="M:System.IDisposable.Dispose"/> が呼び出されたかどうかを示す値。</param>
         </member>
         <member name="T:FaceRecognitionDotNet.Location">
             <summary>
-            ��̍��[�A��[�A�E�[�A���[�ʒu��������܂��B���̃N���X�͌p���ł��܂���B
+            顔の左端、上端、右端、下端位置を説明します。このクラスは継承できません。
             </summary>
         </member>
         <member name="M:FaceRecognitionDotNet.Location.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
-            ���[�A��[�A�E�[�A���[���w�肵�āA<see cref="T:FaceRecognitionDotNet.Location"/> �\���̂̐V�����C���X�^���X�����������܂��B
+            左端、上端、右端、下端を指定して、<see cref="T:FaceRecognitionDotNet.Location"/> 構造体の新しいインスタンスを初期化します。
             </summary>
-            <param name="left">��̋�`�̍����� X ���̒l�B</param>
-            <param name="top">��̋�`�̏㑤�� Y ���̒l�B</param>
-            <param name="right">��̋�`�̉E���� X ���̒l�B</param>
-            <param name="bottom">��̋�`�̉����� Y ���̒l�B</param>
+            <param name="left">顔の矩形の左側の X 軸の値。</param>
+            <param name="top">顔の矩形の上側の Y 軸の値。</param>
+            <param name="right">顔の矩形の右側の X 軸の値。</param>
+            <param name="bottom">顔の矩形の下側の Y 軸の値。</param>
         </member>
         <member name="P:FaceRecognitionDotNet.Location.Bottom">
             <summary>
-            ��̋�`�̉����� Y ���̒l���擾���܂��B
+            顔の矩形の下側の Y 軸の値を取得します。
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.Location.Left">
             <summary>
-            ��̋�`�̍����� X ���̒l���擾���܂��B
+            顔の矩形の左側の X 軸の値を取得します。
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.Location.Right">
             <summary>
-            ��̋�`�̉E���� X ���̒l���擾���܂��B
+            顔の矩形の右側の X 軸の値を取得します。
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.Location.Top">
             <summary>
-            ��̋�`�̏㑤�� Y ���̒l���擾���܂��B
+            顔の矩形の上側の Y 軸の値を取得します。
             </summary>
         </member>
-        <member name="T:FaceRecognitionDotNet.Models">
+        <member name="T:FaceRecognitionDotNet.Model">
             <summary>
-            �猟�o��̃��f�����w�肵�܂��B
+            顔検出器のモデルを指定します。
             </summary>
         </member>
-        <member name="F:FaceRecognitionDotNet.Models.Hog">
+        <member name="F:FaceRecognitionDotNet.Model.Hog">
             <summary>
-            HOG (���������z�̃q�X�g�O����) �Ɋ�Â����猟�o��̃��f���������܂��B
+            HOG (方向つき勾配のヒストグラム) に基づいた顔検出器のモデルを示します。
             </summary>
         </member>
-        <member name="F:FaceRecognitionDotNet.Models.Cnn">
+        <member name="F:FaceRecognitionDotNet.Model.Cnn">
             <summary>
-            CNN (��ݍ��݃j���[�����l�b�g���[�N) �Ɋ�Â����猟�o��̃��f���������܂��B
+            CNN (畳み込みニューラルネットワーク) に基づいた顔検出器のモデルを示します。
             </summary>
         </member>
-        <member name="T:FaceRecognitionDotNet.PredictorModels">
+        <member name="T:FaceRecognitionDotNet.PredictorModel">
             <summary>
-            ���o�킩��Ԃ����x�N�g���̎��������w�肵�܂��B
+            検出器から返されるベクトルの次元数を指定します。
             </summary>
         </member>
-        <member name="F:FaceRecognitionDotNet.PredictorModels.Large">
+        <member name="F:FaceRecognitionDotNet.PredictorModel.Large">
             <summary>
-            ��K�͂Ȍ��o��������܂��B���o��͊�̕\���� 68 �_��Ԃ��܂��B
+            大規模な検出器を示します。検出器は顔の表現に 68 点を返します。
             </summary>
         </member>
-        <member name="F:FaceRecognitionDotNet.PredictorModels.Small">
+        <member name="F:FaceRecognitionDotNet.PredictorModel.Small">
             <summary>
-            ���K�͂Ȍ��o��������܂��B���o��͊�̕\���� 5 �_��Ԃ��܂��B
+            小規模な検出器を示します。検出器は顔の表現に 5 点を返します。
             </summary>
         </member>
     </members>

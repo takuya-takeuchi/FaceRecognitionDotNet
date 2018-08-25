@@ -131,7 +131,7 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModels)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModel)">
             <summary>
             Returns an enumerable collection of dictionary of face parts locations (eyes, nose, etc) for each face in the image.
             </summary>
@@ -142,7 +142,7 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceImage"/> or this object is disposed.</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image,System.Int32,FaceRecognitionDotNet.Models)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image,System.Int32,FaceRecognitionDotNet.Model)">
             <summary>
             Returns an enumerable collection of face location correspond to all faces in specified image.
             </summary>
@@ -237,32 +237,32 @@
             Gets the y-axis value of the top of the rectangle of face.
             </summary>
         </member>
-        <member name="T:FaceRecognitionDotNet.Models">
+        <member name="T:FaceRecognitionDotNet.Model">
             <summary>
             Specifies the model of face detector.
             </summary>
         </member>
-        <member name="F:FaceRecognitionDotNet.Models.Hog">
+        <member name="F:FaceRecognitionDotNet.Model.Hog">
             <summary>
             Specifies that the model is HOG (Histograms of Oriented Gradients) based face detector.
             </summary>
         </member>
-        <member name="F:FaceRecognitionDotNet.Models.Cnn">
+        <member name="F:FaceRecognitionDotNet.Model.Cnn">
             <summary>
             Specifies that the model is CNN (Convolutional Neural Network) based face detector.
             </summary>
         </member>
-        <member name="T:FaceRecognitionDotNet.PredictorModels">
+        <member name="T:FaceRecognitionDotNet.PredictorModel">
             <summary>
             Specifies the dimension of vector which be returned from detector.
             </summary>
         </member>
-        <member name="F:FaceRecognitionDotNet.PredictorModels.Large">
+        <member name="F:FaceRecognitionDotNet.PredictorModel.Large">
             <summary>
             Specifies that the large scale detector. The detector returns 68 points for represent face. 
             </summary>
         </member>
-        <member name="F:FaceRecognitionDotNet.PredictorModels.Small">
+        <member name="F:FaceRecognitionDotNet.PredictorModel.Small">
             <summary>
             Specifies that the small scale detector. The detector returns 5 points for represent face. 
             </summary>
