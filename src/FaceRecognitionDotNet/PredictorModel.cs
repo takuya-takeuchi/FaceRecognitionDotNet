@@ -4,7 +4,7 @@
     /// <summary>
     /// Specifies the dimension of vector which be returned from detector.
     /// </summary>
-    public enum PredictorModels
+    public enum PredictorModel
     {
 
         /// <summary>

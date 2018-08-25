@@ -4,7 +4,7 @@
     /// <summary>
     /// Specifies the model of face detector.
     /// </summary>
-    public enum Models
+    public enum Model
     {
 
         /// <summary>

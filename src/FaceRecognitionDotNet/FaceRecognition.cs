@@ -183,7 +183,7 @@ namespace FaceRecognitionDotNet
             if (this.IsDisposed)
                 throw new ObjectDisposedException(nameof(FaceEncoding));
 
-            var rawLandmarks = this.RawFaceLandmarks(image, knownFaceLocation, PredictorModels.Small);
+            var rawLandmarks = this.RawFaceLandmarks(image, knownFaceLocation, PredictorModel.Small);
             foreach (var landmark in rawLandmarks)
                 yield return new FaceEncoding(FaceRecognitionModelV1.ComputeFaceDescriptor(this._FaceEncoder, image, landmark, numJitters));
         }
@@ -197,7 +197,7 @@ namespace FaceRecognitionDotNet
         /// <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
         /// <exception cref="ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="faceImage"/> or this object is disposed.</exception>
-        public IEnumerable<IDictionary<FacePart, IEnumerable<Point>>> FaceLandmark(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModels model = PredictorModels.Large)
+        public IEnumerable<IDictionary<FacePart, IEnumerable<Point>>> FaceLandmark(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
         {
             if (faceImage == null)
                 throw new ArgumentNullException(nameof(faceImage));
@@ -213,7 +213,7 @@ namespace FaceRecognitionDotNet
             // For a definition of each point index, see https://cdn-images-1.medium.com/max/1600/1*AbEg31EgkbXSQehuNJBlWg.png
             switch (model)
             {
-                case PredictorModels.Large:
+                case PredictorModel.Large:
                     foreach (var landmarkTuple in landmarkTuples)
                         yield return new Dictionary<FacePart, IEnumerable<Point>>
                         {
@@ -239,7 +239,7 @@ namespace FaceRecognitionDotNet
                                                                            .Concat( new [] { landmarkTuple[64] }) }
                         };
                     break;
-                case PredictorModels.Small:
+                case PredictorModel.Small:
                     foreach (var landmarkTuple in landmarkTuples)
                         yield return new Dictionary<FacePart, IEnumerable<Point>>
                         {
@@ -262,7 +262,7 @@ namespace FaceRecognitionDotNet
         /// <returns>An enumerable collection of face location correspond to all faces in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> is null.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
-        public IEnumerable<Location> FaceLocations(Image image, int numberOfTimesToUpsample = 1, Models model = Models.Hog)
+        public IEnumerable<Location> FaceLocations(Image image, int numberOfTimesToUpsample = 1, Model model = Model.Hog)
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
@@ -273,8 +273,8 @@ namespace FaceRecognitionDotNet
 
             switch (model)
             {
-                case Models.Cnn:
-                    foreach (var face in this.RawFaceLocations(image, numberOfTimesToUpsample, Models.Cnn))
+                case Model.Cnn:
+                    foreach (var face in this.RawFaceLocations(image, numberOfTimesToUpsample, Model.Cnn))
                         yield return TrimBound(face.Rect, image.Width, image.Height);
                     break;
                 default:
@@ -301,7 +301,7 @@ namespace FaceRecognitionDotNet
 
         #region Helpers
 
-        private IEnumerable<FullObjectDetection> RawFaceLandmarks(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModels model = PredictorModels.Large)
+        private IEnumerable<FullObjectDetection> RawFaceLandmarks(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
         {
             IEnumerable<MModRect> tmp = null;
 
@@ -311,18 +311,18 @@ namespace FaceRecognitionDotNet
                 tmp = faceLocations.Select(l => new MModRect { Rect = new Rectangle { Bottom = l.Bottom, Left = l.Left, Top = l.Top, Right = l.Right } });
 
             var posePredictor = this._PosePredictor68Point;
-            if (model == PredictorModels.Small)
+            if (model == PredictorModel.Small)
                 posePredictor = this._PosePredictor5Point;
 
             foreach (var rect in tmp)
                 yield return posePredictor.Detect(faceImage.Matrix, rect);
         }
 
-        private IEnumerable<MModRect> RawFaceLocations(Image faceImage, int numberOfTimesToUpsample = 1, Models model = Models.Hog)
+        private IEnumerable<MModRect> RawFaceLocations(Image faceImage, int numberOfTimesToUpsample = 1, Model model = Model.Hog)
         {
             switch (model)
             {
-                case Models.Cnn:
+                case Model.Cnn:
                     return CnnFaceDetectionodelV1.Detect(this._CnnFaceDetector, faceImage.Matrix, numberOfTimesToUpsample);
                 default:
                     return this._FaceDetector.Operator(faceImage.Matrix, numberOfTimesToUpsample).Select(rectangle => new MModRect() { Rect = rectangle });
