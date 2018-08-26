@@ -5,8 +5,8 @@ This repository is porting https://github.com/ageitgey/face_recognition by C#.
 
 |Package|NuGet|
 |---|---|
-|FaceRecognitionDotNet|[![NuGet version](https://badge.fury.io/nu/FaceRecognitionDotNet.svg)](https://badge.fury.io/nu/FaceRecognitionDotNet)|
-|FaceRecognitionDotNet With CUDA|[![NuGet version](https://badge.fury.io/nu/FaceRecognitionDotNet-WithCUDA.svg)](https://badge.fury.io/nu/FaceRecognitionDotNet-WithCUDA)|
+|FaceRecognitionDotNet|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.svg)](https://img.shields.io/nuget/v/FaceRecognitionDotNet)|
+|FaceRecognitionDotNet With CUDA|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet-WithCUDA.svg)](https://img.shields.io/nuget/v/FaceRecognitionDotNet-WithCUDA)|
 
 ## Demo
 
