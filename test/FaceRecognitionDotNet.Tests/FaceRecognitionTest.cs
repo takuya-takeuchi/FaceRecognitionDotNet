@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FaceRecognitionDotNet.Tests
@@ -399,6 +400,50 @@ namespace FaceRecognitionDotNet.Tests
             }
             catch (FileNotFoundException)
             {
+            }
+        }
+
+        [TestMethod]
+        public void SerializeDeserializeBinaryFormatter()
+        {
+            const string testName = nameof(this.SerializeDeserializeBinaryFormatter);
+            var directory = Path.Combine(ResultDirectory, testName);
+            Directory.CreateDirectory(directory);
+
+            var path = Path.Combine(ImageDirectory, TwoPersonFile);
+            if (!File.Exists(path))
+            {
+                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path, binary);
+            }
+
+            using (var image = FaceRecognition.LoadImageFile(path))
+            {
+                var encodings = this._FaceRecognition.FaceEncodings(image).ToArray();
+                Assert.IsTrue(encodings.Length > 1, "");
+
+                var dest = $"{path}.dat";
+                if (File.Exists(dest))
+                    File.Delete(dest);
+
+                var bf = new BinaryFormatter();
+                using (var fs = new FileStream(dest, FileMode.OpenOrCreate))
+                    bf.Serialize(fs, encodings.First());
+
+                using (var fs = new FileStream(dest, FileMode.OpenOrCreate))
+                {
+                    var encoding = (FaceEncoding)bf.Deserialize(fs);
+                    var distance = FaceRecognition.FaceDistance(encodings.First(), encoding);
+                    Assert.IsTrue(Math.Abs(distance) < double.Epsilon);
+                }
+
+                foreach (var encoding in encodings)
+                    encoding.Dispose();
+
+                foreach (var encoding in encodings)
+                    Assert.IsTrue(encoding.IsDisposed, $"{typeof(FaceEncoding)} should be already disposed.");
             }
         }
 
