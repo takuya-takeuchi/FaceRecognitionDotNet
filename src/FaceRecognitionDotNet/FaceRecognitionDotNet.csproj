@@ -5,6 +5,7 @@
     <Authors>Takuya Takeuchi</Authors>
     <Copyright>Takuya Takeuchi</Copyright>
     <Description>Porting face_recognition (by Adam Geitgey) by C#</Description>
+    <Version>1.2.3.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

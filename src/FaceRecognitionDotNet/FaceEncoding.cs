@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using DlibDotNet;
 
 namespace FaceRecognitionDotNet
@@ -7,11 +8,13 @@ namespace FaceRecognitionDotNet
     /// <summary>
     /// Represents a feature data of face. This class cannot be inherited.
     /// </summary>
-    public sealed class FaceEncoding : IDisposable
+    [Serializable]
+    public sealed class FaceEncoding : IDisposable, ISerializable
     {
 
         #region Fields
 
+        [NonSerialized]
         private readonly Matrix<double> _Encoding;
 
         #endregion
@@ -21,6 +24,17 @@ namespace FaceRecognitionDotNet
         internal FaceEncoding(Matrix<double> encoding)
         {
             this._Encoding = encoding;
+        }
+
+        private FaceEncoding(SerializationInfo info, StreamingContext context)
+        {
+            if (info == null)
+                throw new ArgumentNullException(nameof(info));
+
+            var array = (double[])info.GetValue(nameof(this._Encoding), typeof(double[]));
+            var row = (int)info.GetValue(nameof(this._Encoding.Rows), typeof(int));
+            var column = (int)info.GetValue(nameof(this._Encoding.Columns), typeof(int));
+            this._Encoding = new Matrix<double>(array, row, column);
         }
 
         #endregion
@@ -69,6 +83,22 @@ namespace FaceRecognitionDotNet
                 this._Encoding?.Dispose();
             }
 
+        }
+
+        #endregion
+
+        #region ISerializable Members
+
+        /// <summary>
+        /// Populates a <see cref="SerializationInfo"/> with the data needed to serialize the target object.
+        /// </summary>
+        /// <param name="info">The <see cref="SerializationInfo"/> to populate with data.</param>
+        /// <param name="context">The destination (see <see cref="StreamingContext"/>) for this serialization.</param>
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue(nameof(this._Encoding), this._Encoding.ToArray());
+            info.AddValue(nameof(this._Encoding.Rows), this._Encoding.Rows);
+            info.AddValue(nameof(this._Encoding.Columns), this._Encoding.Columns);
         }
 
         #endregion
