@@ -301,6 +301,26 @@ namespace FaceRecognitionDotNet
                 return new Image(new Matrix<RgbPixel>(array));
         }
 
+        /// <summary>
+        /// Creates an <see cref="Image"/> from the array2d data.
+        /// </summary>
+        /// <param name="array">Array that contains the array2d data from which to create the <see cref="Image"/>.</param>
+        /// <returns>The <see cref="Image"/> this method creates.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="array"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="array"/> or this object is disposed.</exception>
+        /// <exception cref="ArgumentException"><paramref name="array"/> size is zero.</exception>
+        public static Image LoadImageData(Array2D<RgbPixel> array)
+        {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+            if (array.IsDisposed)
+                throw new ObjectDisposedException(nameof(array));
+            if (array.Size == 0)
+                throw new ArgumentException(nameof(array));
+
+            return new Image(new Matrix<RgbPixel>(array));
+        }
+
         #region Helpers
 
         private IEnumerable<FullObjectDetection> RawFaceLandmarks(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
