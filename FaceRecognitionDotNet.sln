@@ -15,7 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaceRecognitionDotNet.Tests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{FEEAC07F-70D7-4C12-B92C-153CEE0F2539}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaceEncodingPerformance", "examples\FaceEncodingPerformance\FaceEncodingPerformance.csproj", "{D0CB4212-16D2-4DE5-8A26-83AF5E24C7D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaceEncodingPerformance", "examples\FaceEncodingPerformance\FaceEncodingPerformance.csproj", "{D0CB4212-16D2-4DE5-8A26-83AF5E24C7D3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark", "examples\Benchmark\Benchmark.csproj", "{32599FBF-8E91-43BA-B0B6-38E3C7A02530}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaceDetection", "examples\FaceDetection\FaceDetection.csproj", "{49ED9EF1-7E3E-4959-B152-52545B973906}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +79,30 @@ Global
 		{D0CB4212-16D2-4DE5-8A26-83AF5E24C7D3}.ReleaseLinux|Any CPU.Build.0 = Release|Any CPU
 		{D0CB4212-16D2-4DE5-8A26-83AF5E24C7D3}.ReleaseMac|Any CPU.ActiveCfg = Release|Any CPU
 		{D0CB4212-16D2-4DE5-8A26-83AF5E24C7D3}.ReleaseMac|Any CPU.Build.0 = Release|Any CPU
+		{32599FBF-8E91-43BA-B0B6-38E3C7A02530}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32599FBF-8E91-43BA-B0B6-38E3C7A02530}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32599FBF-8E91-43BA-B0B6-38E3C7A02530}.DebugLinux|Any CPU.ActiveCfg = Debug|Any CPU
+		{32599FBF-8E91-43BA-B0B6-38E3C7A02530}.DebugLinux|Any CPU.Build.0 = Debug|Any CPU
+		{32599FBF-8E91-43BA-B0B6-38E3C7A02530}.DebugMac|Any CPU.ActiveCfg = Debug|Any CPU
+		{32599FBF-8E91-43BA-B0B6-38E3C7A02530}.DebugMac|Any CPU.Build.0 = Debug|Any CPU
+		{32599FBF-8E91-43BA-B0B6-38E3C7A02530}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32599FBF-8E91-43BA-B0B6-38E3C7A02530}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32599FBF-8E91-43BA-B0B6-38E3C7A02530}.ReleaseLinux|Any CPU.ActiveCfg = Release|Any CPU
+		{32599FBF-8E91-43BA-B0B6-38E3C7A02530}.ReleaseLinux|Any CPU.Build.0 = Release|Any CPU
+		{32599FBF-8E91-43BA-B0B6-38E3C7A02530}.ReleaseMac|Any CPU.ActiveCfg = Release|Any CPU
+		{32599FBF-8E91-43BA-B0B6-38E3C7A02530}.ReleaseMac|Any CPU.Build.0 = Release|Any CPU
+		{49ED9EF1-7E3E-4959-B152-52545B973906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49ED9EF1-7E3E-4959-B152-52545B973906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49ED9EF1-7E3E-4959-B152-52545B973906}.DebugLinux|Any CPU.ActiveCfg = Debug|Any CPU
+		{49ED9EF1-7E3E-4959-B152-52545B973906}.DebugLinux|Any CPU.Build.0 = Debug|Any CPU
+		{49ED9EF1-7E3E-4959-B152-52545B973906}.DebugMac|Any CPU.ActiveCfg = Debug|Any CPU
+		{49ED9EF1-7E3E-4959-B152-52545B973906}.DebugMac|Any CPU.Build.0 = Debug|Any CPU
+		{49ED9EF1-7E3E-4959-B152-52545B973906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49ED9EF1-7E3E-4959-B152-52545B973906}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49ED9EF1-7E3E-4959-B152-52545B973906}.ReleaseLinux|Any CPU.ActiveCfg = Release|Any CPU
+		{49ED9EF1-7E3E-4959-B152-52545B973906}.ReleaseLinux|Any CPU.Build.0 = Release|Any CPU
+		{49ED9EF1-7E3E-4959-B152-52545B973906}.ReleaseMac|Any CPU.ActiveCfg = Release|Any CPU
+		{49ED9EF1-7E3E-4959-B152-52545B973906}.ReleaseMac|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +112,8 @@ Global
 		{BC72B97F-9631-4550-8DAC-5F96FF7DE9EB} = {2F845E5F-E6B9-46D5-B5D8-52BEE4B463F0}
 		{EB355E8B-8070-4221-9CB9-7BD0655DC9A8} = {501D0145-416F-42A7-B636-02A4F783C97C}
 		{D0CB4212-16D2-4DE5-8A26-83AF5E24C7D3} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
+		{32599FBF-8E91-43BA-B0B6-38E3C7A02530} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
+		{49ED9EF1-7E3E-4959-B152-52545B973906} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D44C572-D749-4A76-A199-8C598A08AE8A}

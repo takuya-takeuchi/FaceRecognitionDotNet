@@ -325,15 +325,16 @@ namespace FaceRecognitionDotNet
             switch (model)
             {
                 case Model.Cnn:
-                    return CnnFaceDetectionodelV1.Detect(this._CnnFaceDetector, faceImage.Matrix, numberOfTimesToUpsample);
+                    return CnnFaceDetectionModelV1.Detect(this._CnnFaceDetector, faceImage.Matrix, numberOfTimesToUpsample);
                 default:
-                    return this._FaceDetector.Operator(faceImage.Matrix, numberOfTimesToUpsample).Select(rectangle => new MModRect() { Rect = rectangle });
+                    var locations = SimpleObjectDetector.RunDetectorWithUpscale2(this._FaceDetector, faceImage, (uint)numberOfTimesToUpsample);
+                    return locations.Select(rectangle => new MModRect { Rect = rectangle });
             }
         }
 
         //private IEnumerable<IEnumerable<MModRect>> RawFaceLocationsBatched(IEnumerable<Image> faceImages, int numberOfTimesToUpsample = 1, int batchSize = 128)
         //{
-        //    return CnnFaceDetectionodelV1.DetectMulti(this._CnnFaceDetector, faceImages, numberOfTimesToUpsample);
+        //    return CnnFaceDetectionModelV1.DetectMulti(this._CnnFaceDetector, faceImages, numberOfTimesToUpsample);
         //}
 
         private static Location TrimBound(Rectangle location, int width, int height)
