@@ -7,7 +7,7 @@ using DlibDotNet.Dnn;
 namespace FaceRecognitionDotNet.Dlib.Python
 {
 
-    internal sealed class CnnFaceDetectionodelV1
+    internal sealed class CnnFaceDetectionModelV1
     {
 
         #region Methods
