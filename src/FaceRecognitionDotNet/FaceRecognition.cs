@@ -327,7 +327,8 @@ namespace FaceRecognitionDotNet
                 case Model.Cnn:
                     return CnnFaceDetectionModelV1.Detect(this._CnnFaceDetector, faceImage.Matrix, numberOfTimesToUpsample);
                 default:
-                    return this._FaceDetector.Operator(faceImage.Matrix, numberOfTimesToUpsample).Select(rectangle => new MModRect() { Rect = rectangle });
+                    var locations = SimpleObjectDetector.RunDetectorWithUpscale2(this._FaceDetector, faceImage, (uint)numberOfTimesToUpsample);
+                    return locations.Select(rectangle => new MModRect { Rect = rectangle });
             }
         }
 
