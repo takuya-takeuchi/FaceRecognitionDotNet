@@ -255,14 +255,16 @@ namespace FaceRecognitionDotNet.Tests
             }
 
             bool atLeast1Time = false;
-
-            using (var image1 = FaceRecognition.LoadImageFile(path1))
-            using (var image2 = FaceRecognition.LoadImageFile(path2))
+            
+            foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
             {
-                var endodings1 = this._FaceRecognition.FaceEncodings(image1).ToArray();
-                var endodings2 = this._FaceRecognition.FaceEncodings(image2).ToArray();
+                using (var image1 = FaceRecognition.LoadImageFile(path1, mode))
+                using (var image2 = FaceRecognition.LoadImageFile(path2, mode))
+                {
+                    var endodings1 = this._FaceRecognition.FaceEncodings(image1).ToArray();
+                    var endodings2 = this._FaceRecognition.FaceEncodings(image2).ToArray();
 
-                foreach (var e1 in endodings1)
+                    foreach (var e1 in endodings1)
                     foreach (var e2 in endodings2)
                     {
                         atLeast1Time = true;
@@ -270,10 +272,11 @@ namespace FaceRecognitionDotNet.Tests
                         Assert.IsTrue(distance > 0.6d);
                     }
 
-                foreach (var encoding in endodings1)
-                    encoding.Dispose();
-                foreach (var encoding in endodings2)
-                    encoding.Dispose();
+                    foreach (var encoding in endodings1)
+                        encoding.Dispose();
+                    foreach (var encoding in endodings2)
+                        encoding.Dispose();
+                }
             }
 
             if (!atLeast1Time)
@@ -291,17 +294,20 @@ namespace FaceRecognitionDotNet.Tests
                 Directory.CreateDirectory(ImageDirectory);
                 File.WriteAllBytes(path, binary);
             }
-
-            using (var image = FaceRecognition.LoadImageFile(path))
+            
+            foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
             {
-                var encodings = this._FaceRecognition.FaceEncodings(image).ToArray();
-                Assert.IsTrue(encodings.Length > 1, "");
+                using (var image = FaceRecognition.LoadImageFile(path, mode))
+                {
+                    var encodings = this._FaceRecognition.FaceEncodings(image).ToArray();
+                    Assert.IsTrue(encodings.Length > 1, "");
 
-                foreach (var encoding in encodings)
-                    encoding.Dispose();
+                    foreach (var encoding in encodings)
+                        encoding.Dispose();
 
-                foreach (var encoding in encodings)
-                    Assert.IsTrue(encoding.IsDisposed, $"{typeof(FaceEncoding)} should be already disposed.");
+                    foreach (var encoding in encodings)
+                        Assert.IsTrue(encoding.IsDisposed, $"{typeof(FaceEncoding)} should be already disposed.");
+                }
             }
         }
 
@@ -880,50 +886,53 @@ namespace FaceRecognitionDotNet.Tests
                 Directory.CreateDirectory(ImageDirectory);
                 File.WriteAllBytes(path, binary);
             }
-
-            using (var image = FaceRecognition.LoadImageFile(path))
+            
+            foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
             {
-                var landmarks = this._FaceRecognition.FaceLandmark(image, null, model).ToArray();
-                Assert.IsTrue(landmarks.Length > 1, "");
+                using (var image = FaceRecognition.LoadImageFile(path, mode))
+                {
+                    var landmarks = this._FaceRecognition.FaceLandmark(image, null, model).ToArray();
+                    Assert.IsTrue(landmarks.Length > 1, $"{mode}");
 
-                foreach (var facePart in Enum.GetValues(typeof(FacePart)).Cast<FacePart>())
+                    foreach (var facePart in Enum.GetValues(typeof(FacePart)).Cast<FacePart>())
+                        using (var bitmap = System.Drawing.Image.FromFile(path))
+                        {
+                            var draw = false;
+                            using (var g = Graphics.FromImage(bitmap))
+                                foreach (var landmark in landmarks)
+                                    if (landmark.ContainsKey(facePart))
+                                    {
+                                        draw = true;
+                                        foreach (var p in landmark[facePart].ToArray())
+                                            g.DrawEllipse(Pens.GreenYellow, p.X - pointSize, p.Y - pointSize, pointSize * 2, pointSize * 2);
+                                    }
+
+                            if (draw)
+                            {
+                                var directory = Path.Combine(ResultDirectory, testName);
+                                Directory.CreateDirectory(directory);
+
+                                var dst = Path.Combine(directory, $"{facePart}-{mode}.bmp");
+                                bitmap.Save(dst, ImageFormat.Bmp);
+                            }
+                        }
+
                     using (var bitmap = System.Drawing.Image.FromFile(path))
                     {
-                        var draw = false;
                         using (var g = Graphics.FromImage(bitmap))
                             foreach (var landmark in landmarks)
-                                if (landmark.ContainsKey(facePart))
-                                {
-                                    draw = true;
-                                    foreach (var p in landmark[facePart].ToArray())
+                                foreach (var points in landmark.Values)
+                                    foreach (var p in points)
+                                    {
                                         g.DrawEllipse(Pens.GreenYellow, p.X - pointSize, p.Y - pointSize, pointSize * 2, pointSize * 2);
-                                }
+                                    }
 
-                        if (draw)
-                        {
-                            var directory = Path.Combine(ResultDirectory, testName);
-                            Directory.CreateDirectory(directory);
+                        var directory = Path.Combine(ResultDirectory, testName);
+                        Directory.CreateDirectory(directory);
 
-                            var dst = Path.Combine(directory, $"{facePart}.bmp");
-                            bitmap.Save(dst, ImageFormat.Bmp);
-                        }
+                        var dst = Path.Combine(directory, $"All-{mode}.bmp");
+                        bitmap.Save(dst, ImageFormat.Bmp);
                     }
-
-                using (var bitmap = System.Drawing.Image.FromFile(path))
-                {
-                    using (var g = Graphics.FromImage(bitmap))
-                        foreach (var landmark in landmarks)
-                            foreach (var points in landmark.Values)
-                                foreach (var p in points)
-                                {
-                                    g.DrawEllipse(Pens.GreenYellow, p.X - pointSize, p.Y - pointSize, pointSize * 2, pointSize * 2);
-                                }
-
-                    var directory = Path.Combine(ResultDirectory, testName);
-                    Directory.CreateDirectory(directory);
-
-                    var dst = Path.Combine(directory, "All.bmp");
-                    bitmap.Save(dst, ImageFormat.Bmp);
                 }
             }
         }
@@ -939,22 +948,25 @@ namespace FaceRecognitionDotNet.Tests
                 File.WriteAllBytes(path, binary);
             }
 
-            using (var image = FaceRecognition.LoadImageFile(path))
+            foreach (var mode in new [] { Mode.Rgb, Mode.Greyscale })
             {
-                var locations = this._FaceRecognition.FaceLocations(image, 1, model).ToArray();
-                Assert.IsTrue(locations.Length > 1, "");
-
-                using (var bitmap = System.Drawing.Image.FromFile(path))
+                using (var image = FaceRecognition.LoadImageFile(path, mode))
                 {
-                    using (var g = Graphics.FromImage(bitmap))
-                        foreach (var l in locations)
-                            g.DrawRectangle(Pens.GreenYellow, l.Left, l.Top, l.Right - l.Left, l.Bottom - l.Top);
+                    var locations = this._FaceRecognition.FaceLocations(image, 1, model).ToArray();
+                    Assert.IsTrue(locations.Length > 1, $"{mode}");
 
-                    var directory = Path.Combine(ResultDirectory, testName);
-                    Directory.CreateDirectory(directory);
+                    using (var bitmap = System.Drawing.Image.FromFile(path))
+                    {
+                        using (var g = Graphics.FromImage(bitmap))
+                            foreach (var l in locations)
+                                g.DrawRectangle(Pens.GreenYellow, l.Left, l.Top, l.Right - l.Left, l.Bottom - l.Top);
 
-                    var dst = Path.Combine(directory, "All.bmp");
-                    bitmap.Save(dst, ImageFormat.Bmp);
+                        var directory = Path.Combine(ResultDirectory, testName);
+                        Directory.CreateDirectory(directory);
+
+                        var dst = Path.Combine(directory, $"All-{mode}.bmp");
+                        bitmap.Save(dst, ImageFormat.Bmp);
+                    }
                 }
             }
         }
