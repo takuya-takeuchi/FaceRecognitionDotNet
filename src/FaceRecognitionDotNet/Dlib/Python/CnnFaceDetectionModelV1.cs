@@ -59,7 +59,7 @@ namespace FaceRecognitionDotNet.Dlib.Python
 
         public static IEnumerable<IEnumerable<MModRect>> DetectMulti(LossMmod net, IEnumerable<Image> images, int upsampleNumTimes, int batchSize = 128)
         {
-            var dimgs = new List<Matrix<RgbPixel>>();
+            var destImages = new List<Matrix<RgbPixel>>();
             var allRects = new List<IEnumerable<MModRect>>();
 
             using (var pyr = new PyramidDown(2))
@@ -67,48 +67,45 @@ namespace FaceRecognitionDotNet.Dlib.Python
                 // Copy the data into dlib based objects
                 foreach (var matrix in images)
                 {
-                    using (var image = new Matrix<RgbPixel>())
+                    var image = new Matrix<RgbPixel>();
+                    var type = matrix.Matrix.MatrixElementType;
+                    switch (type)
                     {
-                        var type = matrix.Matrix.MatrixElementType;
-                        switch (type)
+                        case MatrixElementTypes.UInt8:
+                        case MatrixElementTypes.RgbPixel:
+                            DlibDotNet.Dlib.AssignImage(matrix.Matrix, image);
+                            break;
+                        default:
+                            throw new NotSupportedException("Unsupported image type, must be 8bit gray or RGB image.");
+                    }
+
+                    for (var i = 0; i < upsampleNumTimes; i++)
+                        DlibDotNet.Dlib.PyramidUp(image);
+
+                    destImages.Add(image);
+
+                    for (var i = 1; i < destImages.Count; i++)
+                        if (destImages[i - 1].Columns != destImages[i].Columns || destImages[i - 1].Rows != destImages[i].Rows)
+                            throw new ArgumentException("Images in list must all have the same dimensions.");
+
+                    var dets = net.Operator(destImages, (ulong)batchSize);
+                    foreach (var det in dets)
+                    {
+                        var rects = new List<MModRect>();
+                        foreach (var d in det)
                         {
-                            case MatrixElementTypes.UInt8:
-                            case MatrixElementTypes.RgbPixel:
-                                DlibDotNet.Dlib.AssignImage(matrix.Matrix, image);
-                                break;
-                            default:
-                                throw new NotSupportedException("Unsupported image type, must be 8bit gray or RGB image.");
+                            var drect = pyr.RectDown(new DRectangle(d.Rect), (uint)upsampleNumTimes);
+                            d.Rect = new Rectangle((int)drect.Left, (int)drect.Top, (int)drect.Right, (int)drect.Bottom);
+                            rects.Add(d);
                         }
 
-                        for (var i = 0; i < upsampleNumTimes; i++)
-                        {
-                            DlibDotNet.Dlib.PyramidUp(image);
-                        }
-
-                        dimgs.Add(image);
-
-                        for (var i = 1; i < dimgs.Count; i++)
-                        {
-                            if (dimgs[i - 1].Columns != dimgs[i].Columns || dimgs[i - 1].Rows != dimgs[i].Rows)
-                                throw new ArgumentException("Images in list must all have the same dimensions.");
-                        }
-
-                        var dets = net.Operator(dimgs, (ulong)batchSize);
-                        foreach (var det in dets)
-                        {
-                            var rects = new List<MModRect>();
-                            foreach (var d in det)
-                            {
-                                var drect = pyr.RectDown(new DRectangle(d.Rect), (uint)upsampleNumTimes);
-                                d.Rect = new Rectangle((int)drect.Left, (int)drect.Top, (int)drect.Right, (int)drect.Bottom);
-                                rects.Add(d);
-                            }
-
-                            allRects.Add(rects);
-                        }
+                        allRects.Add(rects);
                     }
                 }
             }
+
+            foreach (var matrix in destImages)
+                matrix.Dispose();
 
             return allRects;
         }

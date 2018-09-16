@@ -52,6 +52,19 @@ namespace FaceRecognitionDotNet
 
         internal Matrix<double> Encoding => this._Encoding;
 
+        /// <summary>
+        /// Gets the size of feature data.
+        /// </summary>
+        public int Size
+        {
+            get
+            {
+                if(this.IsDisposed)
+                    throw new ObjectDisposedException($"{nameof(FaceEncoding)}");
+                return this._Encoding.Size;
+            }
+        }
+
         #endregion
 
         #region IDisposable Members

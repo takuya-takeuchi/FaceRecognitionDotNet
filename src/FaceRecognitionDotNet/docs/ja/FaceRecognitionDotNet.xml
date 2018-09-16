@@ -14,6 +14,11 @@
             このオブジェクトが破棄されているかどうかを示す値を取得します。
             </summary>
         </member>
+        <member name="P:FaceRecognitionDotNet.FaceEncoding.Size">
+            <summary>
+            特徴データのサイズを取得します。
+            </summary>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceEncoding.Dispose">
             <summary>
             <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> が使用している全てのリソースを解放します。
@@ -100,14 +105,35 @@
             このオブジェクトが破棄されているかどうかを示す値を取得します。
             </summary>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.CompareFaces(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding,System.Double)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Image},System.Int32,System.Int32)">
             <summary>
-            顔エンコーディングのリストを候補エンコーディングと比較し、一致するかどうかを確認します。
+            CNN (畳み込みニューラルネットワーク) 顔検出器を使用して画像内の人間の顔のバウンディング ボックスの配列の列挙可能なコレクションを返します。
             </summary>
-            <param name="knownFaceEncodings">既知の顔エンコーディングのリスト。</param>
-            <param name="faceEncodingToCheck">リストと比較する単一の顔エンコーディング。</param>
+            <param name="images">画像の列挙可能なコレクション。</param>
+            <param name="numberOfTimesToUpsample">顔を探索する画像の数。大きいほどより小さな顔を探索します。</param>
+            <param name="batchSize">各 GPU 処理バッチに含まれる画像の数。</param>
+            <returns>見つかった顔の矩形の配列の列挙可能なコレクション。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="images"/> が null です。</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.CompareFace(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding,System.Double)">
+            <summary>
+            既知の顔エンコーディングを候補エンコーディングと比較し、一致するかどうかを確認します。
+            </summary>
+            <param name="knownFaceEncoding">既知の顔エンコーディング。</param>
+            <param name="faceEncodingToCheck">既知の顔エンコーディングと比較する単一の顔エンコーディング。</param>
             <param name="tolerance">一致したと見なす顔同士の距離。低いほどより厳密です。規定値は 0.6 です。</param>
             <returns>既知の顔エンコーディングがチェックする顔エンコーディングと一致するかどうかを示す true/false 値のリスト。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="knownFaceEncoding"/> または <paramref name="faceEncodingToCheck"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="knownFaceEncoding"/> または <paramref name="faceEncodingToCheck"/> は破棄されています。</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.CompareFaces(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding,System.Double)">
+            <summary>
+            顔エンコーディングの列挙可能なコレクションを候補エンコーディングと比較し、一致するかどうかを確認します。
+            </summary>
+            <param name="knownFaceEncodings">既知の顔エンコーディングの列挙可能なコレクション。</param>
+            <param name="faceEncodingToCheck">列挙可能なコレクションと比較する単一の顔エンコーディング。</param>
+            <param name="tolerance">一致したと見なす顔同士の距離。低いほどより厳密です。規定値は 0.6 です。</param>
+            <returns>既知の顔エンコーディングがチェックする顔エンコーディングと一致するかどうかを示す true/false 値の列挙可能なコレクション。</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="knownFaceEncodings"/> または <paramref name="faceEncodingToCheck"/> が null です。</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceEncodingToCheck"/> は破棄されています。または <paramref name="knownFaceEncodings"/> に破棄済みのオブジェクトが含まれています。</exception>
         </member>
@@ -121,13 +147,23 @@
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistance(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding)">
             <summary>
-            既知の顔エンコーディングと比較し、比較するとの顔ユークリッド距離を取得します。
+            既知の顔エンコーディングと比較し、顔ユークリッド距離を取得します。
             </summary>
             <param name="faceEncoding">比較する顔エンコーディング。</param>
             <param name="faceToCompare">比較する顔エンコーディングのもう一対。</param>
             <returns>比較する顔のユークリッド距離。顔が完全に一致する場合は 0。</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="faceEncoding"/> または <paramref name="faceToCompare"/> が null です。</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceEncoding"/> または <paramref name="faceToCompare"/> は破棄されています。</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistances(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding)">
+            <summary>
+            顔エンコーディングの列挙可能なコレクションと既知の顔エンコーディングを比較し、顔ユークリッド距離の列挙可能なコレクションを取得します。
+            </summary>
+            <param name="faceEncodings">比較する顔エンコーディングの列挙可能なコレクション。</param>
+            <param name="faceToCompare">比較する顔エンコーディングのもう一対。</param>
+            <returns>比較する顔のユークリッド距離の列挙可能なコレクション。顔が完全に一致する場合は 0。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="faceEncodings"/> または <paramref name="faceToCompare"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="faceToCompare"/> は破棄されています。または <paramref name="faceEncodings"/> に破棄済みのオブジェクトが含まれています。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},System.Int32)">
             <summary>
