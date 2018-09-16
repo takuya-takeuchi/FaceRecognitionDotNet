@@ -287,6 +287,23 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
+        /// Creates an <see cref="Image"/> from the <see cref="byte"/> array.
+        /// </summary>
+        /// <param name="array">The <see cref="byte"/> array contains image data.</param>
+        /// <param name="row">The number of rows in a image data.</param>
+        /// <param name="column">The number of columns in a image data.</param>
+        /// <param name="elementSize">The image element size in bytes.</param>
+        /// <returns>The <see cref="Image"/> this method creates.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="array"/> is null.</exception>
+        public static Image LoadImage(byte[] array, int row, int column, int elementSize)
+        {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            return new Image(new Matrix<RgbPixel>(array, row, column, elementSize));
+        }
+
+        /// <summary>
         /// Creates an <see cref="Image"/> from the specified path.
         /// </summary>
         /// <param name="file">A string that contains the path of the file from which to create the <see cref="Image"/>.</param>

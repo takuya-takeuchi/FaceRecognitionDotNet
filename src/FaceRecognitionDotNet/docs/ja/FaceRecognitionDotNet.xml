@@ -25,6 +25,13 @@
             </summary>
             <param name="disposing"><see cref="M:System.IDisposable.Dispose"/> が呼び出されたかどうかを示す値。</param>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceEncoding.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            <see cref="T:System.Runtime.Serialization.SerializationInfo"/> に、対象のオブジェクトをシリアル化するために必要なデータを設定します。
+            </summary>
+            <param name="info">データの読み込み先となる <see cref="T:System.Runtime.Serialization.SerializationInfo"/>。</param>
+            <param name="context">このシリアル化のシリアル化先 (<see cref="T:System.Runtime.Serialization.StreamingContext"/> を参照)。</param>
+        </member>
         <member name="T:FaceRecognitionDotNet.FacePart">
             <summary>
             顔の構成要素を指定します。
@@ -155,6 +162,17 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> が null です。</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> またはこのオブジェクトは破棄されています。</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Byte[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            <see cref="T:System.Byte"/> 配列から <see cref="T:FaceRecognitionDotNet.Image"/> を作成します。
+            </summary>
+            <param name="array">画像データを含む <see cref="T:System.Byte"/> 配列。</param>
+            <param name="row">画像データの行数。</param>
+            <param name="column">画像データの列数。</param>
+            <param name="elementSize">画像要素のバイト単位のサイズ。</param>
+            <returns>このメソッドが作成した <see cref="T:FaceRecognitionDotNet.Image"/>。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> が null です。</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadImageFile(System.String)">
             <summary>
             指定したパスから <see cref="T:FaceRecognitionDotNet.Image"/> を作成します。
@@ -239,6 +257,42 @@
             顔の矩形の上側の Y 軸の値を取得します。
             </summary>
         </member>
+        <member name="M:FaceRecognitionDotNet.Location.Equals(FaceRecognitionDotNet.Location)">
+            <summary>
+            2 つの <see cref="T:FaceRecognitionDotNet.Location"/> クラスを比較して、等しいかどうかを確認します。
+            </summary>
+            <param name="other">このインスタンスと比較する顔の矩形。</param>
+            <returns>両方の <see cref="T:FaceRecognitionDotNet.Location"/> クラスが同じ <see cref="P:FaceRecognitionDotNet.Location.Left"/> 値、<see cref="P:FaceRecognitionDotNet.Location.Top"/> 値、<see cref="P:FaceRecognitionDotNet.Location.Right"/> 値と <see cref="P:FaceRecognitionDotNet.Location.Bottom"/> 値を含む場合は <code>true</code>。それ以外の場合は <code>false</code>。</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Location.Equals(System.Object)">
+            <summary>
+            指定した <see cref="T:System.Object"/> が <see cref="T:FaceRecognitionDotNet.Location"/> であり、この <see cref="T:FaceRecognitionDotNet.Location"/> と同じ顔の矩形を含んでいるかどうかを判断します。
+            </summary>
+            <param name="obj">比較対象の <see cref="T:System.Object"/>。</param>            
+            <returns><paramref name="obj"/> が <see cref="T:FaceRecognitionDotNet.Location"/> であり、この <see cref="T:FaceRecognitionDotNet.Location"/> と同じ <see cref="P:FaceRecognitionDotNet.Location.Left"/> 値、<see cref="P:FaceRecognitionDotNet.Location.Top"/> 値、<see cref="P:FaceRecognitionDotNet.Location.Right"/> 値と <see cref="P:FaceRecognitionDotNet.Location.Bottom"/> 値を含んでいる場合は <code>true</code>。それ以外の場合は <code>false</code>。</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Location.GetHashCode">
+            <summary>
+            この <see cref="T:FaceRecognitionDotNet.Location"/> のハッシュ コードを返します。
+            </summary>
+            <returns>この <see cref="T:FaceRecognitionDotNet.Location"/> クラスのハッシュ コード。</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Location.op_Equality(FaceRecognitionDotNet.Location,FaceRecognitionDotNet.Location)">
+            <summary>
+            2 つの <see cref="T:FaceRecognitionDotNet.Location"/> クラスを比較して、等しいかどうかを確認します。
+            </summary>
+            <param name="location1">比較する最初の <see cref="T:FaceRecognitionDotNet.Location"/> クラス。</param>
+            <param name="location2">比較する 2 番目の <see cref="T:FaceRecognitionDotNet.Location"/> クラス。</param>
+            <returns><paramref name="location1"/> および <paramref name="location2"/> の <see cref="P:FaceRecognitionDotNet.Location.Left"/> 値、<see cref="P:FaceRecognitionDotNet.Location.Top"/> 値、<see cref="P:FaceRecognitionDotNet.Location.Right"/> 値と <see cref="P:FaceRecognitionDotNet.Location.Bottom"/> 値が等しい場合は <code>true</code>。それ以外の場合は <code>false</code>。</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Location.op_Inequality(FaceRecognitionDotNet.Location,FaceRecognitionDotNet.Location)">
+            <summary>
+            2 つの <see cref="T:FaceRecognitionDotNet.Location"/> クラスを比較し、等しくないかどうかを確認します。
+            </summary>
+            <param name="location1">比較する最初の <see cref="T:FaceRecognitionDotNet.Location"/> クラス。</param>
+            <param name="location2">比較する 2 番目の <see cref="T:FaceRecognitionDotNet.Location"/> クラス。</param>
+            <returns><paramref name="location1"/> と <paramref name="location2"/> の <see cref="P:FaceRecognitionDotNet.Location.Left"/> 値、<see cref="P:FaceRecognitionDotNet.Location.Top"/> 値、<see cref="P:FaceRecognitionDotNet.Location.Right"/> 値または <see cref="P:FaceRecognitionDotNet.Location.Bottom"/> 値が異なる場合は <code>true</code>。<paramref name="location1"/> と <paramref name="location2"/> の <see cref="P:FaceRecognitionDotNet.Location.Left"/> 値、<see cref="P:FaceRecognitionDotNet.Location.Top"/> 値、<see cref="P:FaceRecognitionDotNet.Location.Right"/> 値または <see cref="P:FaceRecognitionDotNet.Location.Bottom"/> 値が同じ場合は <code>false</code>。</returns>
+        </member>
         <member name="T:FaceRecognitionDotNet.Model">
             <summary>
             顔検出器のモデルを指定します。
@@ -275,6 +329,42 @@
             <summary>
             この <see cref="T:FaceRecognitionDotNet.Point"/> の y 座標を取得または設定します。
             </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Point.Equals(FaceRecognitionDotNet.Point)">
+            <summary>
+            2 つの <see cref="T:FaceRecognitionDotNet.Point"/> 構造体を比較して、等しいかどうかを確認します。
+            </summary>
+            <param name="other">このインスタンスと比較する座標。</param>
+            <returns>両方の <see cref="T:FaceRecognitionDotNet.Point"/> 構造体が同じ <see cref="P:FaceRecognitionDotNet.Point.X"/> 値と <see cref="P:FaceRecognitionDotNet.Point.Y"/> 値を含む場合は <code>true</code>。それ以外の場合は <code>false</code>。</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Point.Equals(System.Object)">
+            <summary>
+            指定した <see cref="T:System.Object"/> が <see cref="T:FaceRecognitionDotNet.Point"/> であり、この <see cref="T:FaceRecognitionDotNet.Point"/> と同じ座標を含んでいるかどうかを判断します。
+            </summary>
+            <param name="obj">比較対象の <see cref="T:System.Object"/>。</param>
+            <returns><paramref name="obj"/> が <see cref="T:FaceRecognitionDotNet.Point"/> であり、この <see cref="T:FaceRecognitionDotNet.Point"/> と同じ <see cref="P:FaceRecognitionDotNet.Point.X"/> 値と <see cref="P:FaceRecognitionDotNet.Point.Y"/> 値を含んでいる場合は <code>true</code>。それ以外の場合は <code>false</code>。</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Point.GetHashCode">
+            <summary>
+            この <see cref="T:FaceRecognitionDotNet.Point"/> のハッシュ コードを返します。
+            </summary>
+            <returns>この <see cref="T:FaceRecognitionDotNet.Point"/> 構造体のハッシュ コード。</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Point.op_Equality(FaceRecognitionDotNet.Point,FaceRecognitionDotNet.Point)">
+            <summary>
+            2 つの <see cref="T:FaceRecognitionDotNet.Point"/> 構造体を比較して、等しいかどうかを確認します。
+            </summary>
+            <param name="point1">比較する最初の <see cref="T:FaceRecognitionDotNet.Point"/> 構造体。</param>
+            <param name="point2">比較する 2 番目の <see cref="T:FaceRecognitionDotNet.Point"/> 構造体。</param>
+            <returns><paramref name="point1"/> および <paramref name="point2"/> の <see cref="P:FaceRecognitionDotNet.Point.X"/> 座標と <see cref="P:FaceRecognitionDotNet.Point.Y"/> 座標が等しい場合は <code>true</code>。それ以外の場合は <code>false</code>。</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Point.op_Inequality(FaceRecognitionDotNet.Point,FaceRecognitionDotNet.Point)">
+            <summary>
+            2 つの <see cref="T:FaceRecognitionDotNet.Point"/> 構造体を比較し、等しくないかどうかを確認します。
+            </summary>
+            <param name="point1">比較する最初の <see cref="T:FaceRecognitionDotNet.Point"/> 構造体。</param>
+            <param name="point2">比較する 2 番目の <see cref="T:FaceRecognitionDotNet.Point"/> 構造体。</param>
+            <returns><paramref name="location1"/> と <paramref name="point2"/> の <see cref="P:FaceRecognitionDotNet.Point.X"/> 座標または <see cref="P:FaceRecognitionDotNet.Point.Y"/> 座標が異なる場合は <code>true</code>。<paramref name="point1"/> と <paramref name="point2"/> の <see cref="P:FaceRecognitionDotNet.Point.X"/> 座標、<see cref="P:FaceRecognitionDotNet.Point.Y"/> 座標が同じ場合は <code>false</code>。</returns>
         </member>
         <member name="T:FaceRecognitionDotNet.PredictorModel">
             <summary>
