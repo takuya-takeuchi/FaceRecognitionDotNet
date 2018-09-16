@@ -208,12 +208,14 @@
             <param name="elementSize">The image element size in bytes.</param>
             <returns>The <see cref="T:FaceRecognitionDotNet.Image"/> this method creates.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="array"/> is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="elementSize"/> must be 3 or 1.</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadImageFile(System.String)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadImageFile(System.String,FaceRecognitionDotNet.Mode)">
             <summary>
             Creates an <see cref="T:FaceRecognitionDotNet.Image"/> from the specified path.
             </summary>
             <param name="file">A string that contains the path of the file from which to create the <see cref="T:FaceRecognitionDotNet.Image"/>.</param>
+            <param name="mode">A image color mode.</param>
             <returns>The <see cref="T:FaceRecognitionDotNet.Image"/> this method creates.</returns>
             <exception cref="T:System.IO.FileNotFoundException">The specified path does not exist.</exception>
         </member>
@@ -328,6 +330,21 @@
             <param name="location1">The first <see cref="T:FaceRecognitionDotNet.Location"/> class to compare.</param>
             <param name="location2">The second <see cref="T:FaceRecognitionDotNet.Location"/> class to compare.</param>
             <returns><code>true</code> if <paramref name="location1"/> and <paramref name="location2"/> have different <see cref="P:FaceRecognitionDotNet.Location.Left"/>, <see cref="P:FaceRecognitionDotNet.Location.Top"/>, <see cref="P:FaceRecognitionDotNet.Location.Right"/> or <see cref="P:FaceRecognitionDotNet.Location.Bottom"/> coordinates; <code>false</code> if <paramref name="location1"/> and <paramref name="location2"/> have the same <see cref="P:FaceRecognitionDotNet.Location.Left"/>, <see cref="P:FaceRecognitionDotNet.Location.Top"/>, <see cref="P:FaceRecognitionDotNet.Location.Right"/> and <see cref="P:FaceRecognitionDotNet.Location.Bottom"/> face location.</returns>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Mode">
+            <summary>
+            Specifies the image mode.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.Mode.Rgb">
+            <summary>
+            Specifies that the rgb (8-bit Red, Green and Blue, 3 channels) image mode.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.Mode.Greyscale">
+            <summary>
+            Specifies that the greyscale image mode.
+            </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.Model">
             <summary>
