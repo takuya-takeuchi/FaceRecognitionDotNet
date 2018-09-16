@@ -25,6 +25,13 @@
             </summary>
             <param name="disposing">Indicate value whether <see cref="M:System.IDisposable.Dispose"/> method was called.</param>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceEncoding.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.
+            </summary>
+            <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data.</param>
+            <param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization.</param>
+        </member>
         <member name="T:FaceRecognitionDotNet.FacePart">
             <summary>
             Specifies the part of face.
@@ -155,6 +162,17 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Byte[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates an <see cref="T:FaceRecognitionDotNet.Image"/> from the <see cref="T:System.Byte"/> array.
+            </summary>
+            <param name="array">The <see cref="T:System.Byte"/> array contains image data.</param>
+            <param name="row">The number of rows in a image data.</param>
+            <param name="column">The number of columns in a image data.</param>
+            <param name="elementSize">The image element size in bytes.</param>
+            <returns>The <see cref="T:FaceRecognitionDotNet.Image"/> this method creates.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> is null.</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadImageFile(System.String)">
             <summary>
             Creates an <see cref="T:FaceRecognitionDotNet.Image"/> from the specified path.
@@ -239,6 +257,42 @@
             Gets the y-axis value of the top of the rectangle of face.
             </summary>
         </member>
+        <member name="M:FaceRecognitionDotNet.Location.Equals(FaceRecognitionDotNet.Location)">
+            <summary>
+            Compares two <see cref="T:FaceRecognitionDotNet.Location"/> class for equality.
+            </summary>
+            <param name="other">The face location to compare to this instance.</param>
+            <returns><code>true</code> if both <see cref="T:FaceRecognitionDotNet.Location"/> class contain the same <see cref="P:FaceRecognitionDotNet.Location.Left"/>, <see cref="P:FaceRecognitionDotNet.Location.Top"/>, <see cref="P:FaceRecognitionDotNet.Location.Right"/> and <see cref="P:FaceRecognitionDotNet.Location.Bottom"/> values; otherwise, <code>false</code>.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Location.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is a <see cref="T:FaceRecognitionDotNet.Location"/> and whether it contains the same face location as this <see cref="T:FaceRecognitionDotNet.Location"/>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare.</param>
+            <returns><code>true</code> if <paramref name="obj"/> is a <see cref="T:FaceRecognitionDotNet.Location"/> and contains the same <see cref="P:FaceRecognitionDotNet.Location.Left"/>, <see cref="P:FaceRecognitionDotNet.Location.Top"/>, <see cref="P:FaceRecognitionDotNet.Location.Right"/> and <see cref="P:FaceRecognitionDotNet.Location.Bottom"/> values as this <see cref="T:FaceRecognitionDotNet.Location"/>; otherwise, <code>false</code>.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Location.GetHashCode">
+            <summary>
+            Returns the hash code for this <see cref="T:FaceRecognitionDotNet.Location"/>.
+            </summary>
+            <returns>The hash code for this <see cref="T:FaceRecognitionDotNet.Location"/> class.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Location.op_Equality(FaceRecognitionDotNet.Location,FaceRecognitionDotNet.Location)">
+            <summary>
+            Compares two <see cref="T:FaceRecognitionDotNet.Location"/> class for equality.
+            </summary>
+            <param name="location1">The first <see cref="T:FaceRecognitionDotNet.Location"/> class to compare.</param>
+            <param name="location2">The second <see cref="T:FaceRecognitionDotNet.Location"/> class to compare.</param>
+            <returns><code>true</code> if both the <see cref="P:FaceRecognitionDotNet.Location.Left"/>, <see cref="P:FaceRecognitionDotNet.Location.Top"/>, <see cref="P:FaceRecognitionDotNet.Location.Right"/> and <see cref="P:FaceRecognitionDotNet.Location.Bottom"/> face location of <paramref name="location1"/> and <paramref name="location2"/> are equal; otherwise, <code>false</code>.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Location.op_Inequality(FaceRecognitionDotNet.Location,FaceRecognitionDotNet.Location)">
+            <summary>
+            Compares two <see cref="T:FaceRecognitionDotNet.Location"/> class for inequality.
+            </summary>
+            <param name="location1">The first <see cref="T:FaceRecognitionDotNet.Location"/> class to compare.</param>
+            <param name="location2">The second <see cref="T:FaceRecognitionDotNet.Location"/> class to compare.</param>
+            <returns><code>true</code> if <paramref name="location1"/> and <paramref name="location2"/> have different <see cref="P:FaceRecognitionDotNet.Location.Left"/>, <see cref="P:FaceRecognitionDotNet.Location.Top"/>, <see cref="P:FaceRecognitionDotNet.Location.Right"/> or <see cref="P:FaceRecognitionDotNet.Location.Bottom"/> coordinates; <code>false</code> if <paramref name="location1"/> and <paramref name="location2"/> have the same <see cref="P:FaceRecognitionDotNet.Location.Left"/>, <see cref="P:FaceRecognitionDotNet.Location.Top"/>, <see cref="P:FaceRecognitionDotNet.Location.Right"/> and <see cref="P:FaceRecognitionDotNet.Location.Bottom"/> face location.</returns>
+        </member>
         <member name="T:FaceRecognitionDotNet.Model">
             <summary>
             Specifies the model of face detector.
@@ -275,6 +329,42 @@
             <summary>
             Gets the y-coordinate of this <see cref="T:FaceRecognitionDotNet.Point"/>.
             </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Point.Equals(FaceRecognitionDotNet.Point)">
+            <summary>
+            Compares two <see cref="T:FaceRecognitionDotNet.Point"/> structures for equality.
+            </summary>
+            <param name="other">The point to compare to this instance.</param>
+            <returns><code>true</code> if both <see cref="T:FaceRecognitionDotNet.Point"/> structures contain the same <see cref="P:FaceRecognitionDotNet.Point.X"/> and <see cref="P:FaceRecognitionDotNet.Point.Y"/> values; otherwise, <code>false</code>.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Point.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is a <see cref="T:FaceRecognitionDotNet.Point"/> and whether it contains the same coordinates as this <see cref="T:FaceRecognitionDotNet.Point"/>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare.</param>
+            <returns><code>true</code> if <paramref name="obj"/> is a <see cref="T:FaceRecognitionDotNet.Point"/> and contains the same <see cref="P:FaceRecognitionDotNet.Point.X"/> and <see cref="P:FaceRecognitionDotNet.Point.Y"/> values as this <see cref="T:FaceRecognitionDotNet.Point"/>; otherwise, <code>false</code>.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Point.GetHashCode">
+            <summary>
+            Returns the hash code for this <see cref="T:FaceRecognitionDotNet.Point"/>.
+            </summary>
+            <returns>The hash code for this <see cref="T:FaceRecognitionDotNet.Point"/> structure.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Point.op_Equality(FaceRecognitionDotNet.Point,FaceRecognitionDotNet.Point)">
+            <summary>
+            Compares two <see cref="T:FaceRecognitionDotNet.Point"/> structures for equality.
+            </summary>
+            <param name="point1">The first <see cref="T:FaceRecognitionDotNet.Point"/> structure to compare.</param>
+            <param name="point2">The second <see cref="T:FaceRecognitionDotNet.Point"/> structure to compare.</param>
+            <returns><code>true</code> if both the <see cref="P:FaceRecognitionDotNet.Point.X"/> and <see cref="P:FaceRecognitionDotNet.Point.Y"/> coordinates of <paramref name="point1"/> and <paramref name="point2"/> are equal; otherwise, <code>false</code>.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Point.op_Inequality(FaceRecognitionDotNet.Point,FaceRecognitionDotNet.Point)">
+            <summary>
+            Compares two <see cref="T:FaceRecognitionDotNet.Point"/> structures for inequality.
+            </summary>
+            <param name="point1">The first <see cref="T:FaceRecognitionDotNet.Point"/> structure to compare.</param>
+            <param name="point2">The second <see cref="T:FaceRecognitionDotNet.Point"/> structure to compare.</param>
+            <returns><code>true</code> if <paramref name="point1"/> and <paramref name="point2"/> have different <see cref="P:FaceRecognitionDotNet.Point.X"/> or <see cref="P:FaceRecognitionDotNet.Point.Y"/> coordinates; <code>false</code> if <paramref name="point1"/> and <paramref name="point2"/> have the same <see cref="P:FaceRecognitionDotNet.Point.X"/> and <see cref="P:FaceRecognitionDotNet.Point.Y"/> coordinates.</returns>
         </member>
         <member name="T:FaceRecognitionDotNet.PredictorModel">
             <summary>

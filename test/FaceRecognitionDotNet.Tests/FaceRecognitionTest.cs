@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
+using DlibDotNet;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FaceRecognitionDotNet.Tests
@@ -369,6 +370,70 @@ namespace FaceRecognitionDotNet.Tests
 
         [TestMethod]
         public void LoadImage()
+        {
+            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
+            const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
+
+            var path = Path.Combine(ImageDirectory, file);
+            if (!File.Exists(path))
+            {
+                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path, binary);
+            }
+
+            var array2D = DlibDotNet.Dlib.LoadImage<RgbPixel>(path);
+            var bytes = array2D.ToBytes();
+
+            var image = FaceRecognition.LoadImage(bytes, array2D.Rows, array2D.Columns, 3);
+            Assert.IsTrue(image.Width == 419, $"Width of {path} is wrong");
+            Assert.IsTrue(image.Height == 600, $"Height of {path} is wrong");
+
+            image.Dispose();
+            Assert.IsTrue(image.IsDisposed, $"{typeof(Image)} should be already disposed.");
+        }
+
+        [TestMethod]
+        public void LoadImageCheckIdentity()
+        {
+            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
+            const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
+
+            var path = Path.Combine(ImageDirectory, file);
+            if (!File.Exists(path))
+            {
+                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path, binary);
+            }
+
+            var image1 = FaceRecognition.LoadImageFile(path);
+
+            var array2D = DlibDotNet.Dlib.LoadImage<RgbPixel>(path);
+            var bytes = array2D.ToBytes();
+            var image2 = FaceRecognition.LoadImage(bytes, array2D.Rows, array2D.Columns, 3);
+
+            var location1 = this._FaceRecognition.FaceLocations(image1).ToArray();
+            var location2 = this._FaceRecognition.FaceLocations(image2).ToArray();
+
+            Assert.IsTrue(location1.Length == location2.Length, $"FaceRecognition.FaceLocations returns different results for {nameof(location1)} and {nameof(location2)}.");
+
+            for (var index = 0; index < location1.Length; index++)
+            {
+                Assert.IsTrue(location1[index] == location2[index], 
+                    $"{nameof(location1)}[{nameof(index)}] does not equal to {nameof(location2)}[{nameof(index)}].");
+            }
+
+            image2.Dispose();
+            image1.Dispose();
+            Assert.IsTrue(image2.IsDisposed, $"{nameof(image2)} should be already disposed.");
+            Assert.IsTrue(image1.IsDisposed, $"{nameof(image1)} should be already disposed.");
+        }
+
+        [TestMethod]
+        public void LoadImageFile()
         {
             const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
             const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
