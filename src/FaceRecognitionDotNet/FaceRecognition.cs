@@ -18,15 +18,15 @@ namespace FaceRecognitionDotNet
 
         #region Fields
 
-        private ShapePredictor _PosePredictor68Point;
+        private readonly ShapePredictor _PosePredictor68Point;
 
-        private ShapePredictor _PosePredictor5Point;
+        private readonly ShapePredictor _PosePredictor5Point;
 
-        private LossMmod _CnnFaceDetector;
+        private readonly LossMmod _CnnFaceDetector;
 
-        private LossMetric _FaceEncoder;
+        private readonly LossMetric _FaceEncoder;
 
-        private FrontalFaceDetector _FaceDetector;
+        private readonly FrontalFaceDetector _FaceDetector;
 
         #endregion
 
