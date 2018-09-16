@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>FaceRecognitionDotNet</id>
-    <version>1.2.3.3</version>
+    <version>1.2.3.4</version>
     <title>FaceRecognitionDotNet</title>
     <authors>Takuya Takeuchi</authors>
     <owners>Takuya Takeuchi</owners>
@@ -19,7 +19,7 @@ This library is ported from https://github.com/ageitgey/face_recognition by C#.<
     <serviceable>true</serviceable>
     <dependencies>
       <group targetFramework="netstandard2.0">
-        <dependency id="DlibDotNet" version="[19.15.0.20180915,)" />
+        <dependency id="DlibDotNet" version="[19.15.0.20180916,)" />
       </group>
     </dependencies>
   </metadata>
