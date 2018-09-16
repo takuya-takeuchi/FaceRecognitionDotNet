@@ -92,18 +92,29 @@ namespace FaceRecognitionDotNet
 
         #region Methods
 
-        //public IEnumerable<Location[]> BatchFaceLocations(IEnumerable<Image> faceImages, int numberOfTimesToUpsample = 1, int batchSize = 128)
-        //{
-        //    var faceImagesArray = faceImages.ToArray();
-        //    var rawDetectionsBatched = this.RawFaceLocationsBatched(faceImagesArray, numberOfTimesToUpsample, batchSize).ToArray();
+        /// <summary>
+        /// Returns an enumerable collection of array of bounding boxes of human faces in a image using the cnn face detector.
+        /// </summary>
+        /// <param name="images">A list of images.</param>
+        /// <param name="numberOfTimesToUpsample">The number of image looking for faces. Higher numbers find smaller faces.</param>
+        /// <param name="batchSize">The number of images to include in each GPU processing batch.</param>
+        /// <returns>An enumerable collection of array of found face locations.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="images"/> is null.</exception>
+        public IEnumerable<Location[]> BatchFaceLocations(IEnumerable<Image> images, int numberOfTimesToUpsample = 1, int batchSize = 128)
+        {
+            var imagesArray = images.ToArray();
+            if (!imagesArray.Any())
+                yield break;
 
-        //    for (var index = 0; index < rawDetectionsBatched.Length; index++)
-        //    {
-        //        var faces = rawDetectionsBatched[index];
-        //        var image = faceImagesArray[index];
-        //        yield return faces.Select(rect => TrimBound(rect.Rect, image.Width, image.Height)).ToArray();
-        //    }
-        //}
+            var rawDetectionsBatched = this.RawFaceLocationsBatched(imagesArray, numberOfTimesToUpsample, batchSize).ToArray();
+
+            var image = imagesArray[0];
+            for (var index = 0; index < rawDetectionsBatched.Length; index++)
+            {
+                var faces = rawDetectionsBatched[index];
+                yield return faces.Select(rect => TrimBound(rect.Rect, image.Width, image.Height)).ToArray();
+            }
+        }
 
         /// <summary>
         /// Compare a list of face encodings against a candidate encoding to see if they match.
@@ -209,8 +220,8 @@ namespace FaceRecognitionDotNet
                 throw new ObjectDisposedException(nameof(FaceEncoding));
 
             var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, model);
-            var landmarkTuples = landmarks.Select(landmark => Enumerable.Range(0, (int) landmark.Parts)
-                                          .Select(index => new Point(landmark.GetPart((uint) index))).ToArray());
+            var landmarkTuples = landmarks.Select(landmark => Enumerable.Range(0, (int)landmark.Parts)
+                                          .Select(index => new Point(landmark.GetPart((uint)index))).ToArray());
 
             // For a definition of each point index, see https://cdn-images-1.medium.com/max/1600/1*AbEg31EgkbXSQehuNJBlWg.png
             switch (model)
@@ -349,10 +360,10 @@ namespace FaceRecognitionDotNet
             }
         }
 
-        //private IEnumerable<IEnumerable<MModRect>> RawFaceLocationsBatched(IEnumerable<Image> faceImages, int numberOfTimesToUpsample = 1, int batchSize = 128)
-        //{
-        //    return CnnFaceDetectionModelV1.DetectMulti(this._CnnFaceDetector, faceImages, numberOfTimesToUpsample);
-        //}
+        private IEnumerable<IEnumerable<MModRect>> RawFaceLocationsBatched(IEnumerable<Image> faceImages, int numberOfTimesToUpsample = 1, int batchSize = 128)
+        {
+            return CnnFaceDetectionModelV1.DetectMulti(this._CnnFaceDetector, faceImages, numberOfTimesToUpsample, batchSize);
+        }
 
         private static Location TrimBound(Rectangle location, int width, int height)
         {

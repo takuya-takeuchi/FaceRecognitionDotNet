@@ -105,6 +105,16 @@
             このオブジェクトが破棄されているかどうかを示す値を取得します。
             </summary>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Image},System.Int32,System.Int32)">
+            <summary>
+            CNN (畳み込みニューラルネットワーク) 顔検出器を使用して画像内の人間の顔のバウンディング ボックスの配列の列挙可能なコレクションを返します。
+            </summary>
+            <param name="images">画像のリスト。</param>
+            <param name="numberOfTimesToUpsample">顔を探索する画像の数。大きいほどより小さな顔を探索します。</param>
+            <param name="batchSize">各 GPU 処理バッチに含まれる画像の数。</param>
+            <returns>見つかった顔の矩形の配列の列挙可能なコレクション。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="images"/> が null です。</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.CompareFaces(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding,System.Double)">
             <summary>
             顔エンコーディングのリストを候補エンコーディングと比較し、一致するかどうかを確認します。

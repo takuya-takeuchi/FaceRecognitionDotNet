@@ -105,6 +105,16 @@
             Gets a value indicating whether this object has been disposed of.
             </summary>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Image},System.Int32,System.Int32)">
+            <summary>
+            Returns an enumerable collection of array of bounding boxes of human faces in a image using the cnn face detector.
+            </summary>
+            <param name="images">A list of images.</param>
+            <param name="numberOfTimesToUpsample">The number of image looking for faces. Higher numbers find smaller faces.</param>
+            <param name="batchSize">The number of images to include in each GPU processing batch.</param>
+            <returns>An enumerable collection of array of found face locations.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="images"/> is null.</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.CompareFaces(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding,System.Double)">
             <summary>
             Compare a list of face encodings against a candidate encoding to see if they match.
