@@ -153,7 +153,7 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
-        /// Compare them to a known face encoding and get a euclidean distance for comparison face.
+        /// Compare a face encoding to a known face encoding and get a euclidean distance for comparison face.
         /// </summary>
         /// <param name="faceEncoding">The face encoding to compare.</param>
         /// <param name="faceToCompare">The face encoding to compare against.</param>
@@ -179,11 +179,11 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
-        /// Compare them to a known face encoding and get a euclidean distance for comparison face.
+        /// Compare an enumerable collection of face encoding to a known face encoding and get an enumerable collection of euclidean distance for comparison face.
         /// </summary>
         /// <param name="faceEncodings">The enumerable collection of face encoding to compare.</param>
         /// <param name="faceToCompare">The face encoding to compare against.</param>
-        /// <returns>The euclidean distance for comparison face. If 0, faces are completely equal.</returns>
+        /// <returns>The enumerable collection of euclidean distance for comparison face. If 0, faces are completely equal.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="faceEncodings"/> or <paramref name="faceToCompare"/> is null.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="faceToCompare"/> is disposed. Or <paramref name="faceEncodings"/> contains disposed object.</exception>
         public static IEnumerable<double> FaceDistance(IEnumerable<FaceEncoding> faceEncodings, FaceEncoding faceToCompare)
