@@ -144,6 +144,16 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="faceEncoding"/> または <paramref name="faceToCompare"/> が null です。</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceEncoding"/> または <paramref name="faceToCompare"/> は破棄されています。</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistance(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding)">
+            <summary>
+            既知の顔エンコーディングと比較し、比較するとの顔ユークリッド距離を取得します。
+            </summary>
+            <param name="faceEncodings">比較する顔エンコーディングの列挙可能なコレクション。</param>
+            <param name="faceToCompare">比較する顔エンコーディングのもう一対。</param>
+            <returns>比較する顔のユークリッド距離。顔が完全に一致する場合は 0。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="faceEncodings"/> または <paramref name="faceToCompare"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="faceToCompare"/> は破棄されています。または <paramref name="faceEncodings"/> に破棄済みのオブジェクトが含まれています。</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},System.Int32)">
             <summary>
             指定した画像内の全ての顔に対応する顔特徴データの列挙可能なコレクションを返します。

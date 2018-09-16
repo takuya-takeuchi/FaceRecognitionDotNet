@@ -179,6 +179,35 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
+        /// Compare them to a known face encoding and get a euclidean distance for comparison face.
+        /// </summary>
+        /// <param name="faceEncodings">The enumerable collection of face encoding to compare.</param>
+        /// <param name="faceToCompare">The face encoding to compare against.</param>
+        /// <returns>The euclidean distance for comparison face. If 0, faces are completely equal.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="faceEncodings"/> or <paramref name="faceToCompare"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="faceToCompare"/> is disposed. Or <paramref name="faceEncodings"/> contains disposed object.</exception>
+        public static IEnumerable<double> FaceDistance(IEnumerable<FaceEncoding> faceEncodings, FaceEncoding faceToCompare)
+        {
+            if (faceEncodings == null)
+                throw new ArgumentNullException(nameof(faceEncodings));
+            if (faceToCompare == null)
+                throw new ArgumentNullException(nameof(faceToCompare));
+            if (faceToCompare.IsDisposed)
+                throw new ObjectDisposedException(nameof(faceToCompare));
+
+            var array = faceEncodings.ToArray();
+            if (array.Any(encoding => encoding.IsDisposed))
+                throw new ObjectDisposedException($"{nameof(faceEncodings)} contains disposed object.");
+
+            if (array.Length == 0)
+                yield break;
+
+            foreach (var faceEncoding in array)
+                using (var diff = faceEncoding.Encoding - faceToCompare.Encoding)
+                yield return DlibDotNet.Dlib.Length(diff);
+        }
+
+        /// <summary>
         /// Returns an enumerable collection of face feature data corresponds to all faces in specified image.
         /// </summary>
         /// <param name="image">The image contains faces. The image can contain multiple faces.</param>
