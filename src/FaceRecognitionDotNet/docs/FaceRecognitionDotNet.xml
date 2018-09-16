@@ -14,6 +14,11 @@
             Gets a value indicating whether this object has been disposed of.
             </summary>
         </member>
+        <member name="P:FaceRecognitionDotNet.FaceEncoding.Size">
+            <summary>
+            Gets the size of feature data.
+            </summary>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceEncoding.Dispose">
             <summary>
             Releases all resources used by this <see cref="T:FaceRecognitionDotNet.FaceEncoding"/>.

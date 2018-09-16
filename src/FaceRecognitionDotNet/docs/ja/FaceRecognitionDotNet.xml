@@ -14,6 +14,11 @@
             このオブジェクトが破棄されているかどうかを示す値を取得します。
             </summary>
         </member>
+        <member name="P:FaceRecognitionDotNet.FaceEncoding.Size">
+            <summary>
+            特徴データのサイズを取得します。
+            </summary>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceEncoding.Dispose">
             <summary>
             <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> が使用している全てのリソースを解放します。
