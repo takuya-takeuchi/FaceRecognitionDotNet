@@ -362,27 +362,46 @@ namespace FaceRecognitionDotNet
         /// <param name="elementSize">The image element size in bytes.</param>
         /// <returns>The <see cref="Image"/> this method creates.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="array"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="elementSize"/> must be 3 or 1.</exception>
         public static Image LoadImage(byte[] array, int row, int column, int elementSize)
         {
             if (array == null)
                 throw new ArgumentNullException(nameof(array));
+            
+            switch (elementSize)
+            {
+                case 3:
+                    return new Image(new Matrix<RgbPixel>(array, row, column, elementSize), Mode.Rgb);
+                case 1:
+                    return new Image(new Matrix<byte>(array, row, column, elementSize), Mode.Greyscale);
+            }
 
-            return new Image(new Matrix<RgbPixel>(array, row, column, elementSize));
+            throw new ArgumentOutOfRangeException($"{nameof(elementSize)} must be 3 or 1.");
         }
 
         /// <summary>
         /// Creates an <see cref="Image"/> from the specified path.
         /// </summary>
         /// <param name="file">A string that contains the path of the file from which to create the <see cref="Image"/>.</param>
+        /// <param name="mode">A image color mode.</param>
         /// <returns>The <see cref="Image"/> this method creates.</returns>
         /// <exception cref="FileNotFoundException">The specified path does not exist.</exception>
-        public static Image LoadImageFile(string file)
+        public static Image LoadImageFile(string file, Mode mode = Mode.Rgb)
         {
             if (!File.Exists(file))
                 throw new FileNotFoundException(file);
 
-            using (var array = DlibDotNet.Dlib.LoadImage<RgbPixel>(file))
-                return new Image(new Matrix<RgbPixel>(array));
+            switch (mode)
+            {
+                case Mode.Rgb:
+                    using (var array = DlibDotNet.Dlib.LoadImage<RgbPixel>(file))
+                        return new Image(new Matrix<RgbPixel>(array), mode);
+                case Mode.Greyscale:
+                    using (var array = DlibDotNet.Dlib.LoadImage<byte>(file))
+                        return new Image(new Matrix<byte>(array), mode);
+            }
+
+            return null;
         }
 
         #region Helpers
@@ -409,7 +428,7 @@ namespace FaceRecognitionDotNet
             switch (model)
             {
                 case Model.Cnn:
-                    return CnnFaceDetectionModelV1.Detect(this._CnnFaceDetector, faceImage.Matrix, numberOfTimesToUpsample);
+                    return CnnFaceDetectionModelV1.Detect(this._CnnFaceDetector, faceImage, numberOfTimesToUpsample);
                 default:
                     var locations = SimpleObjectDetector.RunDetectorWithUpscale2(this._FaceDetector, faceImage, (uint)numberOfTimesToUpsample);
                     return locations.Select(rectangle => new MModRect { Rect = rectangle });
