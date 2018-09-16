@@ -95,7 +95,7 @@ namespace FaceRecognitionDotNet
         /// <summary>
         /// Returns an enumerable collection of array of bounding boxes of human faces in a image using the cnn face detector.
         /// </summary>
-        /// <param name="images">A list of images.</param>
+        /// <param name="images">An enumerable collection of images.</param>
         /// <param name="numberOfTimesToUpsample">The number of image looking for faces. Higher numbers find smaller faces.</param>
         /// <param name="batchSize">The number of images to include in each GPU processing batch.</param>
         /// <returns>An enumerable collection of array of found face locations.</returns>
@@ -140,12 +140,12 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
-        /// Compare a list of face encodings against a candidate encoding to see if they match.
+        /// Compare an enumerable collection of face encodings against a candidate encoding to see if they match.
         /// </summary>
-        /// <param name="knownFaceEncodings">A list of known face encodings.</param>
-        /// <param name="faceEncodingToCheck">A single face encoding to compare against the list.</param>
+        /// <param name="knownFaceEncodings">An enumerable collection of known face encodings.</param>
+        /// <param name="faceEncodingToCheck">A single face encoding to compare against the enumerable collection.</param>
         /// <param name="tolerance">The distance between faces to consider it a match. Lower is more strict. The default value is 0.6.</param>
-        /// <returns>A list of True/False values indicating which known face encodings match the face encoding to check.</returns>
+        /// <returns>An enumerable collection of True/False values indicating which known face encodings match the face encoding to check.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="knownFaceEncodings"/> or <paramref name="faceEncodingToCheck"/> is null.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="faceEncodingToCheck"/> is disposed. Or <paramref name="knownFaceEncodings"/> contains disposed object.</exception>
         public static IEnumerable<bool> CompareFaces(IEnumerable<FaceEncoding> knownFaceEncodings, FaceEncoding faceEncodingToCheck, double tolerance = 0.6d)
