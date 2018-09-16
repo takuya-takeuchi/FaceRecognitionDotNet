@@ -117,6 +117,29 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
+        /// Compare a known face encoding against a candidate encoding to see if they match.
+        /// </summary>
+        /// <param name="knownFaceEncoding">A known face encodings.</param>
+        /// <param name="faceEncodingToCheck">A single face encoding to compare against a known face encoding.</param>
+        /// <param name="tolerance">The distance between faces to consider it a match. Lower is more strict. The default value is 0.6.</param>
+        /// <returns>A True/False value indicating which known a face encoding matches the face encoding to check.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="knownFaceEncoding"/> or <paramref name="faceEncodingToCheck"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="knownFaceEncoding"/> or <paramref name="faceEncodingToCheck"/>.</exception>
+        public static bool CompareFace(FaceEncoding knownFaceEncoding, FaceEncoding faceEncodingToCheck, double tolerance = 0.6d)
+        {
+            if (knownFaceEncoding == null)
+                throw new ArgumentNullException(nameof(knownFaceEncoding));
+            if (faceEncodingToCheck == null)
+                throw new ArgumentNullException(nameof(faceEncodingToCheck));
+            if (knownFaceEncoding.IsDisposed)
+                throw new ObjectDisposedException(nameof(knownFaceEncoding));
+            if (faceEncodingToCheck.IsDisposed)
+                throw new ObjectDisposedException(nameof(faceEncodingToCheck));
+
+            return FaceDistance(knownFaceEncoding, faceEncodingToCheck) <= tolerance;
+        }
+
+        /// <summary>
         /// Compare a list of face encodings against a candidate encoding to see if they match.
         /// </summary>
         /// <param name="knownFaceEncodings">A list of known face encodings.</param>
@@ -138,7 +161,11 @@ namespace FaceRecognitionDotNet
             if (array.Any(encoding => encoding.IsDisposed))
                 throw new ObjectDisposedException($"{nameof(knownFaceEncodings)} contains disposed object.");
 
-            return array.Select(matrix => FaceDistance(matrix, faceEncodingToCheck) <= tolerance);
+            if (array.Length == 0)
+                yield break;
+
+            foreach (var faceEncoding in array)
+                yield return FaceDistance(faceEncoding, faceEncodingToCheck) <= tolerance;
         }
 
         /// <summary>

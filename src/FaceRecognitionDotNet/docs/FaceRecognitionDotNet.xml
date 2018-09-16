@@ -115,6 +115,17 @@
             <returns>An enumerable collection of array of found face locations.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="images"/> is null.</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.CompareFace(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding,System.Double)">
+            <summary>
+            Compare a known face encoding against a candidate encoding to see if they match.
+            </summary>
+            <param name="knownFaceEncoding">A known face encodings.</param>
+            <param name="faceEncodingToCheck">A single face encoding to compare against a known face encoding.</param>
+            <param name="tolerance">The distance between faces to consider it a match. Lower is more strict. The default value is 0.6.</param>
+            <returns>A True/False value indicating which known a face encoding matches the face encoding to check.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="knownFaceEncoding"/> or <paramref name="faceEncodingToCheck"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="knownFaceEncoding"/> or <paramref name="faceEncodingToCheck"/>.</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.CompareFaces(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding,System.Double)">
             <summary>
             Compare a list of face encodings against a candidate encoding to see if they match.
