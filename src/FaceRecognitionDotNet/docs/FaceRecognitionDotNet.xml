@@ -144,7 +144,7 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="faceEncoding"/> or <paramref name="faceToCompare"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceEncoding"/> or <paramref name="faceToCompare"/> is disposed.</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistance(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistances(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding)">
             <summary>
             Compare an enumerable collection of face encoding to a known face encoding and get an enumerable collection of euclidean distance for comparison face.
             </summary>

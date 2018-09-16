@@ -144,7 +144,7 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="faceEncoding"/> または <paramref name="faceToCompare"/> が null です。</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceEncoding"/> または <paramref name="faceToCompare"/> は破棄されています。</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistance(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistances(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding)">
             <summary>
             顔エンコーディングの列挙可能なコレクションと既知の顔エンコーディングを比較し、顔ユークリッド距離の列挙可能なコレクションを取得します。
             </summary>

@@ -186,7 +186,7 @@ namespace FaceRecognitionDotNet
         /// <returns>The enumerable collection of euclidean distance for comparison face. If 0, faces are completely equal.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="faceEncodings"/> or <paramref name="faceToCompare"/> is null.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="faceToCompare"/> is disposed. Or <paramref name="faceEncodings"/> contains disposed object.</exception>
-        public static IEnumerable<double> FaceDistance(IEnumerable<FaceEncoding> faceEncodings, FaceEncoding faceToCompare)
+        public static IEnumerable<double> FaceDistances(IEnumerable<FaceEncoding> faceEncodings, FaceEncoding faceToCompare)
         {
             if (faceEncodings == null)
                 throw new ArgumentNullException(nameof(faceEncodings));
