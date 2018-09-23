@@ -284,6 +284,78 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [TestMethod]
+        public void FaceDistanceDeserialized()
+        {
+            var bidenUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Biden_2013.jpg";
+            var bidenFile = "480px-Biden_2013.jpg";
+            var obamaUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg";
+            var obamaFile = "480px-President_Barack_Obama.jpg";
+
+            var path1 = Path.Combine(ImageDirectory, bidenFile);
+            if (!File.Exists(path1))
+            {
+                var url = $"{bidenUrl}/{bidenFile}";
+                var binary = new HttpClient().GetByteArrayAsync(url).Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path1, binary);
+            }
+
+            var path2 = Path.Combine(ImageDirectory, obamaFile);
+            if (!File.Exists(path2))
+            {
+                var url = $"{obamaUrl}/{obamaFile}";
+                var binary = new HttpClient().GetByteArrayAsync(url).Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path2, binary);
+            }
+
+            bool atLeast1Time = false;
+
+            foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
+            {
+                using (var image1 = FaceRecognition.LoadImageFile(path1, mode))
+                using (var image2 = FaceRecognition.LoadImageFile(path2, mode))
+                {
+                    var endodings1 = this._FaceRecognition.FaceEncodings(image1).ToArray();
+                    var endodings2 = this._FaceRecognition.FaceEncodings(image2).ToArray();
+
+                    foreach (var e1 in endodings1)
+                        foreach (var e2 in endodings2)
+                        {
+                            atLeast1Time = true;
+                            var distance = FaceRecognition.FaceDistance(e1, e2);
+                            Assert.IsTrue(distance > 0.6d);
+
+                            var bf = new BinaryFormatter();
+                            using (var ms1 = new MemoryStream())
+                            {
+                                bf.Serialize(ms1, e1);
+                                ms1.Flush();
+
+                                var array = ms1.ToArray();
+                                using (var ms2 = new MemoryStream(array))
+                                {
+                                    var de1 = bf.Deserialize(ms2) as FaceEncoding;
+                                    var distance2 = FaceRecognition.FaceDistance(de1, e2);
+                                    Assert.IsTrue(Math.Abs(distance - distance2) < double.Epsilon);
+                                }
+                            }
+                        }
+
+                    foreach (var encoding in endodings1)
+                        encoding.Dispose();
+                    foreach (var encoding in endodings2)
+                        encoding.Dispose();
+                }
+            }
+
+            if (!atLeast1Time)
+                Assert.Fail("Assert check did not execute");
+        }
+
+        [TestMethod]
         public void FaceEncodings()
         {
             var path = Path.Combine(ImageDirectory, TwoPersonFile);
