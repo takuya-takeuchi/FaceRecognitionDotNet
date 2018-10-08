@@ -12,15 +12,18 @@ namespace FaceRecognitionDotNet
 
         #region Fields
 
-        private readonly Matrix<RgbPixel> _RgbMatrix;
+        private readonly MatrixBase _Matrix;
+
+        private readonly Mode _Mode;
 
         #endregion
 
         #region Constructors
 
-        internal Image(Matrix<RgbPixel> matrix)
+        internal Image(MatrixBase matrix, Mode mode)
         {
-            this._RgbMatrix = matrix;
+            this._Matrix = matrix;
+            this._Mode = mode;
         }
 
         #endregion
@@ -30,7 +33,15 @@ namespace FaceRecognitionDotNet
         /// <summary>
         /// Gets the height of the image.
         /// </summary>
-        public int Height => this._RgbMatrix.Rows;
+        public int Height
+        {
+            get
+            {
+                if (this.IsDisposed)
+                    throw new ObjectDisposedException($"{nameof(Image)}");
+                return this._Matrix.Rows;
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether this object has been disposed of.
@@ -41,12 +52,22 @@ namespace FaceRecognitionDotNet
             private set;
         }
 
-        internal Matrix<RgbPixel> Matrix => this._RgbMatrix;
+        internal MatrixBase Matrix => this._Matrix;
+
+        internal Mode Mode => this._Mode;
 
         /// <summary>
         /// Gets the width of the image.
         /// </summary>
-        public int Width => this._RgbMatrix.Columns;
+        public int Width
+        {
+            get
+            {
+                if (this.IsDisposed)
+                    throw new ObjectDisposedException($"{nameof(Image)}");
+                return this._Matrix.Columns;
+            }
+        }
 
         #endregion
 
@@ -76,7 +97,7 @@ namespace FaceRecognitionDotNet
 
             if (disposing)
             {
-                this._RgbMatrix?.Dispose();
+                this._Matrix?.Dispose();
             }
 
         }

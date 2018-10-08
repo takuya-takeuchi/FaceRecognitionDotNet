@@ -14,6 +14,11 @@
             Gets a value indicating whether this object has been disposed of.
             </summary>
         </member>
+        <member name="P:FaceRecognitionDotNet.FaceEncoding.Size">
+            <summary>
+            Gets the size of feature data.
+            </summary>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceEncoding.Dispose">
             <summary>
             Releases all resources used by this <see cref="T:FaceRecognitionDotNet.FaceEncoding"/>.
@@ -100,14 +105,35 @@
             Gets a value indicating whether this object has been disposed of.
             </summary>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Image},System.Int32,System.Int32)">
+            <summary>
+            Returns an enumerable collection of array of bounding boxes of human faces in a image using the cnn face detector.
+            </summary>
+            <param name="images">An enumerable collection of images.</param>
+            <param name="numberOfTimesToUpsample">The number of image looking for faces. Higher numbers find smaller faces.</param>
+            <param name="batchSize">The number of images to include in each GPU processing batch.</param>
+            <returns>An enumerable collection of array of found face locations.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="images"/> is null.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.CompareFace(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding,System.Double)">
+            <summary>
+            Compare a known face encoding against a candidate encoding to see if they match.
+            </summary>
+            <param name="knownFaceEncoding">A known face encodings.</param>
+            <param name="faceEncodingToCheck">A single face encoding to compare against a known face encoding.</param>
+            <param name="tolerance">The distance between faces to consider it a match. Lower is more strict. The default value is 0.6.</param>
+            <returns>A True/False value indicating which known a face encoding matches the face encoding to check.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="knownFaceEncoding"/> or <paramref name="faceEncodingToCheck"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="knownFaceEncoding"/> or <paramref name="faceEncodingToCheck"/>.</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.CompareFaces(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding,System.Double)">
             <summary>
-            Compare a list of face encodings against a candidate encoding to see if they match.
+            Compare an enumerable collection of face encodings against a candidate encoding to see if they match.
             </summary>
-            <param name="knownFaceEncodings">A list of known face encodings.</param>
-            <param name="faceEncodingToCheck">A single face encoding to compare against the list.</param>
+            <param name="knownFaceEncodings">An enumerable collection of known face encodings.</param>
+            <param name="faceEncodingToCheck">A single face encoding to compare against the enumerable collection.</param>
             <param name="tolerance">The distance between faces to consider it a match. Lower is more strict. The default value is 0.6.</param>
-            <returns>A list of True/False values indicating which known face encodings match the face encoding to check.</returns>
+            <returns>An enumerable collection of True/False values indicating which known face encodings match the face encoding to check.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="knownFaceEncodings"/> or <paramref name="faceEncodingToCheck"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceEncodingToCheck"/> is disposed. Or <paramref name="knownFaceEncodings"/> contains disposed object.</exception>
         </member>
@@ -121,13 +147,23 @@
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistance(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding)">
             <summary>
-            Compare them to a known face encoding and get a euclidean distance for comparison face.
+            Compare a face encoding to a known face encoding and get a euclidean distance for comparison face.
             </summary>
             <param name="faceEncoding">The face encoding to compare.</param>
             <param name="faceToCompare">The face encoding to compare against.</param>
             <returns>The euclidean distance for comparison face. If 0, faces are completely equal.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="faceEncoding"/> or <paramref name="faceToCompare"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceEncoding"/> or <paramref name="faceToCompare"/> is disposed.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistances(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding)">
+            <summary>
+            Compare an enumerable collection of face encoding to a known face encoding and get an enumerable collection of euclidean distance for comparison face.
+            </summary>
+            <param name="faceEncodings">The enumerable collection of face encoding to compare.</param>
+            <param name="faceToCompare">The face encoding to compare against.</param>
+            <returns>The enumerable collection of euclidean distance for comparison face. If 0, faces are completely equal.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="faceEncodings"/> or <paramref name="faceToCompare"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="faceToCompare"/> is disposed. Or <paramref name="faceEncodings"/> contains disposed object.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},System.Int32)">
             <summary>
@@ -172,12 +208,14 @@
             <param name="elementSize">The image element size in bytes.</param>
             <returns>The <see cref="T:FaceRecognitionDotNet.Image"/> this method creates.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="array"/> is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="elementSize"/> must be 3 or 1.</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadImageFile(System.String)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadImageFile(System.String,FaceRecognitionDotNet.Mode)">
             <summary>
             Creates an <see cref="T:FaceRecognitionDotNet.Image"/> from the specified path.
             </summary>
             <param name="file">A string that contains the path of the file from which to create the <see cref="T:FaceRecognitionDotNet.Image"/>.</param>
+            <param name="mode">A image color mode.</param>
             <returns>The <see cref="T:FaceRecognitionDotNet.Image"/> this method creates.</returns>
             <exception cref="T:System.IO.FileNotFoundException">The specified path does not exist.</exception>
         </member>
@@ -292,6 +330,21 @@
             <param name="location1">The first <see cref="T:FaceRecognitionDotNet.Location"/> class to compare.</param>
             <param name="location2">The second <see cref="T:FaceRecognitionDotNet.Location"/> class to compare.</param>
             <returns><code>true</code> if <paramref name="location1"/> and <paramref name="location2"/> have different <see cref="P:FaceRecognitionDotNet.Location.Left"/>, <see cref="P:FaceRecognitionDotNet.Location.Top"/>, <see cref="P:FaceRecognitionDotNet.Location.Right"/> or <see cref="P:FaceRecognitionDotNet.Location.Bottom"/> coordinates; <code>false</code> if <paramref name="location1"/> and <paramref name="location2"/> have the same <see cref="P:FaceRecognitionDotNet.Location.Left"/>, <see cref="P:FaceRecognitionDotNet.Location.Top"/>, <see cref="P:FaceRecognitionDotNet.Location.Right"/> and <see cref="P:FaceRecognitionDotNet.Location.Bottom"/> face location.</returns>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Mode">
+            <summary>
+            Specifies the image mode.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.Mode.Rgb">
+            <summary>
+            Specifies that the rgb (8-bit Red, Green and Blue, 3 channels) image mode.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.Mode.Greyscale">
+            <summary>
+            Specifies that the greyscale image mode.
+            </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.Model">
             <summary>

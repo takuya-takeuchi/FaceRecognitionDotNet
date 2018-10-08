@@ -12,21 +12,21 @@ namespace FaceRecognitionDotNet.Dlib.Python
 
         #region Methods
 
-        public static IEnumerable<MModRect> Detect(LossMmod net, MatrixBase matrix, int upsampleNumTimes)
+        public static IEnumerable<MModRect> Detect(LossMmod net, Image image, int upsampleNumTimes)
         {
             using (var pyr = new PyramidDown(2))
             {
                 var rects = new List<MModRect>();
 
                 // Copy the data into dlib based objects
-                using (var image = new Matrix<RgbPixel>())
+                using (var matrix = new Matrix<RgbPixel>())
                 {
-                    var type = matrix.MatrixElementType;
+                    var type = image.Mode;
                     switch (type)
                     {
-                        case MatrixElementTypes.UInt8:
-                        case MatrixElementTypes.RgbPixel:
-                            DlibDotNet.Dlib.AssignImage(matrix, image);
+                        case Mode.Greyscale:
+                        case Mode.Rgb:
+                            DlibDotNet.Dlib.AssignImage(image.Matrix, matrix);
                             break;
                         default:
                             throw new NotSupportedException("Unsupported image type, must be 8bit gray or RGB image.");
@@ -38,10 +38,10 @@ namespace FaceRecognitionDotNet.Dlib.Python
                     while (levels > 0)
                     {
                         levels--;
-                        DlibDotNet.Dlib.PyramidUp<PyramidDown>(image, 2);
+                        DlibDotNet.Dlib.PyramidUp<PyramidDown>(matrix, 2);
                     }
 
-                    var dets = net.Operator(image);
+                    var dets = net.Operator(matrix);
 
                     // Scale the detection locations back to the original image size
                     // if the image was upscaled.
@@ -59,56 +59,53 @@ namespace FaceRecognitionDotNet.Dlib.Python
 
         public static IEnumerable<IEnumerable<MModRect>> DetectMulti(LossMmod net, IEnumerable<Image> images, int upsampleNumTimes, int batchSize = 128)
         {
-            var dimgs = new List<Matrix<RgbPixel>>();
+            var destImages = new List<Matrix<RgbPixel>>();
             var allRects = new List<IEnumerable<MModRect>>();
 
             using (var pyr = new PyramidDown(2))
             {
                 // Copy the data into dlib based objects
-                foreach (var matrix in images)
+                foreach (var image in images)
                 {
-                    using (var image = new Matrix<RgbPixel>())
+                    var matrix = new Matrix<RgbPixel>();
+                    var type = image.Mode;
+                    switch (type)
                     {
-                        var type = matrix.Matrix.MatrixElementType;
-                        switch (type)
+                        case Mode.Greyscale:
+                        case Mode.Rgb:
+                            DlibDotNet.Dlib.AssignImage(image.Matrix, matrix);
+                            break;
+                        default:
+                            throw new NotSupportedException("Unsupported image type, must be 8bit gray or RGB image.");
+                    }
+
+                    for (var i = 0; i < upsampleNumTimes; i++)
+                        DlibDotNet.Dlib.PyramidUp(matrix);
+
+                    destImages.Add(matrix);
+
+                    for (var i = 1; i < destImages.Count; i++)
+                        if (destImages[i - 1].Columns != destImages[i].Columns || destImages[i - 1].Rows != destImages[i].Rows)
+                            throw new ArgumentException("Images in list must all have the same dimensions.");
+
+                    var dets = net.Operator(destImages, (ulong)batchSize);
+                    foreach (var det in dets)
+                    {
+                        var rects = new List<MModRect>();
+                        foreach (var d in det)
                         {
-                            case MatrixElementTypes.UInt8:
-                            case MatrixElementTypes.RgbPixel:
-                                DlibDotNet.Dlib.AssignImage(matrix.Matrix, image);
-                                break;
-                            default:
-                                throw new NotSupportedException("Unsupported image type, must be 8bit gray or RGB image.");
+                            var drect = pyr.RectDown(new DRectangle(d.Rect), (uint)upsampleNumTimes);
+                            d.Rect = new Rectangle((int)drect.Left, (int)drect.Top, (int)drect.Right, (int)drect.Bottom);
+                            rects.Add(d);
                         }
 
-                        for (var i = 0; i < upsampleNumTimes; i++)
-                        {
-                            DlibDotNet.Dlib.PyramidUp(image);
-                        }
-
-                        dimgs.Add(image);
-
-                        for (var i = 1; i < dimgs.Count; i++)
-                        {
-                            if (dimgs[i - 1].Columns != dimgs[i].Columns || dimgs[i - 1].Rows != dimgs[i].Rows)
-                                throw new ArgumentException("Images in list must all have the same dimensions.");
-                        }
-
-                        var dets = net.Operator(dimgs, (ulong)batchSize);
-                        foreach (var det in dets)
-                        {
-                            var rects = new List<MModRect>();
-                            foreach (var d in det)
-                            {
-                                var drect = pyr.RectDown(new DRectangle(d.Rect), (uint)upsampleNumTimes);
-                                d.Rect = new Rectangle((int)drect.Left, (int)drect.Top, (int)drect.Right, (int)drect.Bottom);
-                                rects.Add(d);
-                            }
-
-                            allRects.Add(rects);
-                        }
+                        allRects.Add(rects);
                     }
                 }
             }
+
+            foreach (var matrix in destImages)
+                matrix.Dispose();
 
             return allRects;
         }

@@ -20,16 +20,62 @@ namespace FaceRecognitionDotNet.Dlib.Python
         {
             var rectangles = new List<Rectangle>();
 
-            // ToDo: support 8bit grayscale
-            if (false)
+            if (img.Mode == Mode.Greyscale)
             {
+                var greyscaleMatrix = img.Matrix as Matrix<byte>;
+                if (upsamplingAmount == 0)
+                {
+                    detector.Operator(greyscaleMatrix, out var rectDetections, adjustThreshold);
 
+                    var dets = rectDetections.ToArray();
+                    SplitRectDetections(dets, rectangles, detectionConfidences, weightIndices);
+
+                    foreach (var rectDetection in dets)
+                        rectDetection.Dispose();
+                }
+                else
+                {
+                    using (var pyr = new PyramidDown(2))
+                    {
+                        Matrix<byte> temp = null;
+
+                        try
+                        {
+                            DlibDotNet.Dlib.PyramidUp(greyscaleMatrix, pyr, out temp);
+
+                            var levels = upsamplingAmount - 1;
+                            while (levels > 0)
+                            {
+                                levels--;
+                                DlibDotNet.Dlib.PyramidUp(temp);
+                            }
+
+                            detector.Operator(temp, out var rectDetections, adjustThreshold);
+
+                            var dets = rectDetections.ToArray();
+                            foreach (var t in dets)
+                                t.Rect = pyr.RectDown(t.Rect, upsamplingAmount);
+
+                            SplitRectDetections(dets, rectangles, detectionConfidences, weightIndices);
+
+                            foreach (var rectDetection in dets)
+                                rectDetection.Dispose();
+                        }
+                        finally
+                        {
+                            temp?.Dispose();
+                        }
+                    }
+                }
+
+                return rectangles;
             }
             else
             {
+                var rgbMatrix = img.Matrix as Matrix<RgbPixel>;
                 if (upsamplingAmount == 0)
                 {
-                    detector.Operator(img.Matrix, out var rectDetections, adjustThreshold);
+                    detector.Operator(rgbMatrix, out var rectDetections, adjustThreshold);
 
                     var dets = rectDetections.ToArray();
                     SplitRectDetections(dets, rectangles, detectionConfidences, weightIndices);
@@ -45,7 +91,7 @@ namespace FaceRecognitionDotNet.Dlib.Python
 
                         try
                         {
-                            DlibDotNet.Dlib.PyramidUp(img.Matrix, pyr, out temp);
+                            DlibDotNet.Dlib.PyramidUp(rgbMatrix, pyr, out temp);
 
                             var levels = upsamplingAmount - 1;
                             while (levels > 0)
