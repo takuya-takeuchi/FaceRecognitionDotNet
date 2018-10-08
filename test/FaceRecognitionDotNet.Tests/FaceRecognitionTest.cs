@@ -17,7 +17,7 @@ namespace FaceRecognitionDotNet.Tests
     public class FaceRecognitionTest
     {
 
-        #region Fields
+        #region Fields 
 
         private FaceRecognition _FaceRecognition;
 
@@ -39,14 +39,14 @@ namespace FaceRecognitionDotNet.Tests
 
         #endregion
 
-        #region Methods
+        #region Methods 
 
         [TestCleanup]
         public void Cleanup()
         {
             var array = this.ModelFiles.ToArray();
 
-            // Remove all files
+            // Remove all files 
             foreach (var file in array)
             {
                 var path = Path.Combine(ModelTempDirectory, file);
@@ -174,7 +174,7 @@ namespace FaceRecognitionDotNet.Tests
             var array = this.ModelFiles.ToArray();
             for (var j = 0; j < array.Length; j++)
             {
-                // Remove all files
+                // Remove all files 
                 foreach (var file in array)
                 {
                     var path = Path.Combine(ModelTempDirectory, file);
@@ -255,7 +255,7 @@ namespace FaceRecognitionDotNet.Tests
             }
 
             bool atLeast1Time = false;
-            
+
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
             {
                 using (var image1 = FaceRecognition.LoadImageFile(path1, mode))
@@ -265,12 +265,12 @@ namespace FaceRecognitionDotNet.Tests
                     var endodings2 = this._FaceRecognition.FaceEncodings(image2).ToArray();
 
                     foreach (var e1 in endodings1)
-                    foreach (var e2 in endodings2)
-                    {
-                        atLeast1Time = true;
-                        var distance = FaceRecognition.FaceDistance(e1, e2);
-                        Assert.IsTrue(distance > 0.6d);
-                    }
+                        foreach (var e2 in endodings2)
+                        {
+                            atLeast1Time = true;
+                            var distance = FaceRecognition.FaceDistance(e1, e2);
+                            Assert.IsTrue(distance > 0.6d);
+                        }
 
                     foreach (var encoding in endodings1)
                         encoding.Dispose();
@@ -326,7 +326,7 @@ namespace FaceRecognitionDotNet.Tests
                         {
                             atLeast1Time = true;
                             var distance = FaceRecognition.FaceDistance(e1, e2);
-                            Assert.IsTrue(distance > 0.6d);
+                            Assert.IsTrue(distance > 0.6d, $"distance should be greater than 0.6 but {distance}.");
 
                             var bf = new BinaryFormatter();
                             using (var ms1 = new MemoryStream())
@@ -366,7 +366,7 @@ namespace FaceRecognitionDotNet.Tests
                 Directory.CreateDirectory(ImageDirectory);
                 File.WriteAllBytes(path, binary);
             }
-            
+
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
             {
                 using (var image = FaceRecognition.LoadImageFile(path, mode))
@@ -664,9 +664,9 @@ namespace FaceRecognitionDotNet.Tests
                         faceEncodingA3,
                         faceEncodingB1
                     };
-                    
+
                     var matchResults = facesToCompare.Select(faceToCompare => FaceRecognition.CompareFace(faceToCompare, faceEncodingA1)).ToList();
-                    
+
                     Assert.IsTrue(matchResults[0]);
                     Assert.IsTrue(matchResults[1]);
                     Assert.IsFalse(matchResults[2]);
@@ -681,7 +681,7 @@ namespace FaceRecognitionDotNet.Tests
             {
                 var encoding = this._FaceRecognition.FaceEncodings(img).ToArray()[0];
 
-                // empty list
+                // empty list 
                 var facesToCompare = new FaceEncoding[0];
 
                 var matchResult = FaceRecognition.CompareFaces(facesToCompare, encoding).ToArray();
@@ -725,7 +725,7 @@ namespace FaceRecognitionDotNet.Tests
             {
                 var encoding = this._FaceRecognition.FaceEncodings(img).ToArray()[0];
 
-                // empty list
+                // empty list 
                 var facesToCompare = new FaceEncoding[0];
 
                 var distanceResult = FaceRecognition.FaceDistances(facesToCompare, encoding).ToArray();
@@ -939,7 +939,7 @@ namespace FaceRecognitionDotNet.Tests
             }
         }
 
-        #region Helpers
+        #region Helpers 
 
         private static bool AssertAlmostEqual(int actual, int expected, int delta)
         {
@@ -958,7 +958,7 @@ namespace FaceRecognitionDotNet.Tests
                 Directory.CreateDirectory(ImageDirectory);
                 File.WriteAllBytes(path, binary);
             }
-            
+
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
             {
                 using (var image = FaceRecognition.LoadImageFile(path, mode))
@@ -1020,7 +1020,7 @@ namespace FaceRecognitionDotNet.Tests
                 File.WriteAllBytes(path, binary);
             }
 
-            foreach (var mode in new [] { Mode.Rgb, Mode.Greyscale })
+            foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
             {
                 using (var image = FaceRecognition.LoadImageFile(path, mode))
                 {
