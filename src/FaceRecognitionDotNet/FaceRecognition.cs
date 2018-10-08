@@ -231,7 +231,7 @@ namespace FaceRecognitionDotNet
 
             foreach (var faceEncoding in array)
                 using (var diff = faceEncoding.Encoding - faceToCompare.Encoding)
-                yield return DlibDotNet.Dlib.Length(diff);
+                    yield return DlibDotNet.Dlib.Length(diff);
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace FaceRecognitionDotNet
         {
             if (array == null)
                 throw new ArgumentNullException(nameof(array));
-            
+
             switch (elementSize)
             {
                 case 3:
@@ -394,11 +394,9 @@ namespace FaceRecognitionDotNet
             switch (mode)
             {
                 case Mode.Rgb:
-                    using (var array = DlibDotNet.Dlib.LoadImage<RgbPixel>(file))
-                        return new Image(new Matrix<RgbPixel>(array), mode);
+                    return new Image(DlibDotNet.Dlib.LoadImageAsMatrix<RgbPixel>(file), mode);
                 case Mode.Greyscale:
-                    using (var array = DlibDotNet.Dlib.LoadImage<byte>(file))
-                        return new Image(new Matrix<byte>(array), mode);
+                    return new Image(DlibDotNet.Dlib.LoadImageAsMatrix<byte>(file), mode);
             }
 
             return null;
