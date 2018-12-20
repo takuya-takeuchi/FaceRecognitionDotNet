@@ -254,7 +254,11 @@ namespace FaceRecognitionDotNet
 
             var rawLandmarks = this.RawFaceLandmarks(image, knownFaceLocation, PredictorModel.Small);
             foreach (var landmark in rawLandmarks)
-                yield return new FaceEncoding(FaceRecognitionModelV1.ComputeFaceDescriptor(this._FaceEncoder, image, landmark, numJitters));
+            {
+                var ret = new FaceEncoding(FaceRecognitionModelV1.ComputeFaceDescriptor(this._FaceEncoder, image, landmark, numJitters));
+                landmark.Dispose();
+                yield return ret;
+            }
         }
 
         /// <summary>
@@ -275,16 +279,20 @@ namespace FaceRecognitionDotNet
             if (this.IsDisposed)
                 throw new ObjectDisposedException(nameof(FaceEncoding));
 
-            var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, model);
+            var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, model).ToArray();
             var landmarkTuples = landmarks.Select(landmark => Enumerable.Range(0, (int)landmark.Parts)
                                           .Select(index => new Point(landmark.GetPart((uint)index))).ToArray());
 
-            // For a definition of each point index, see https://cdn-images-1.medium.com/max/1600/1*AbEg31EgkbXSQehuNJBlWg.png
-            switch (model)
+            var results = new List<Dictionary<FacePart, IEnumerable<Point>>>();
+
+            try
             {
-                case PredictorModel.Large:
-                    foreach (var landmarkTuple in landmarkTuples)
-                        yield return new Dictionary<FacePart, IEnumerable<Point>>
+
+                // For a definition of each point index, see https://cdn-images-1.medium.com/max/1600/1*AbEg31EgkbXSQehuNJBlWg.png
+                switch (model)
+                {
+                    case PredictorModel.Large:
+                        results.AddRange(landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<Point>>
                         {
                             { FacePart.Chin,         Enumerable.Range(0,17).Select(i => landmarkTuple[i]).ToArray() },
                             { FacePart.LeftEyebrow,  Enumerable.Range(17,5).Select(i => landmarkTuple[i]).ToArray() },
@@ -306,20 +314,27 @@ namespace FaceRecognitionDotNet
                                                                            .Concat( new [] { landmarkTuple[66] })
                                                                            .Concat( new [] { landmarkTuple[65] })
                                                                            .Concat( new [] { landmarkTuple[64] }) }
-                        };
-                    break;
-                case PredictorModel.Small:
-                    foreach (var landmarkTuple in landmarkTuples)
-                        yield return new Dictionary<FacePart, IEnumerable<Point>>
+                        }));
+                        break;
+                    case PredictorModel.Small:
+                        results.AddRange(landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<Point>>
                         {
                             { FacePart.NoseTip,  Enumerable.Range(4,1).Select(i => landmarkTuple[i]).ToArray() },
                             { FacePart.LeftEye,  Enumerable.Range(2,2).Select(i => landmarkTuple[i]).ToArray() },
                             { FacePart.RightEye, Enumerable.Range(0,2).Select(i => landmarkTuple[i]).ToArray() }
-                        };
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(model), model, null);
+                        }));
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(model), model, null);
+                }
             }
+            finally
+            {
+                foreach (var landmark in landmarks)
+                    landmark.Dispose();
+            }
+
+            return results.ToArray();
         }
 
         /// <summary>
@@ -344,11 +359,19 @@ namespace FaceRecognitionDotNet
             {
                 case Model.Cnn:
                     foreach (var face in this.RawFaceLocations(image, numberOfTimesToUpsample, Model.Cnn))
-                        yield return TrimBound(face.Rect, image.Width, image.Height);
+                    {
+                        var ret = TrimBound(face.Rect, image.Width, image.Height);
+                        face.Dispose();
+                        yield return ret;
+                    }
                     break;
                 default:
                     foreach (var face in this.RawFaceLocations(image, numberOfTimesToUpsample, model))
-                        yield return TrimBound(face.Rect, image.Width, image.Height);
+                    {
+                        var ret = TrimBound(face.Rect, image.Width, image.Height);
+                        face.Dispose();
+                        yield return ret;
+                    }
                     break;
             }
         }
@@ -418,7 +441,11 @@ namespace FaceRecognitionDotNet
                 posePredictor = this._PosePredictor5Point;
 
             foreach (var rect in tmp)
-                yield return posePredictor.Detect(faceImage.Matrix, rect);
+            {
+                var ret = posePredictor.Detect(faceImage.Matrix, rect);
+                rect.Dispose();
+                yield return ret;
+            }
         }
 
         private IEnumerable<MModRect> RawFaceLocations(Image faceImage, int numberOfTimesToUpsample = 1, Model model = Model.Hog)
