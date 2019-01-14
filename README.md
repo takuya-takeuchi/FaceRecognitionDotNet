@@ -3,13 +3,12 @@
 The world's simplest facial recognition api for .NET  
 This repository is porting https://github.com/ageitgey/face_recognition by C#.
 
-FaceRecognitionDotNet supports only Windows for now.  
-But it will support MacOS and Linux after DlibDotNet supports them!!
+This package supports cross platform, Windows, Linux and MacOSX!!
 
-|Package|NuGet|
-|---|---|
-|FaceRecognitionDotNet|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet)|
-|FaceRecognitionDotNet With CUDA|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet-WithCUDA.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet-WithCUDA)|
+|Package|Windows|Linux|MacOSX|
+|---|---|---|---|
+|FaceRecognitionDotNet|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet)|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet)|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet)|
+|FaceRecognitionDotNet With CUDA|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet-WithCUDA.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet-WithCUDA)|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet-WithCUDA.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet-WithCUDA)|N/A|
 
 ## Demo
 

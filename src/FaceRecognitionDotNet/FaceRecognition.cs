@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using DlibDotNet;
 using DlibDotNet.Dnn;
 using FaceRecognitionDotNet.Dlib.Python;
@@ -78,6 +79,15 @@ namespace FaceRecognitionDotNet
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the character encoding to convert System.String to byte[] for internal library.
+        /// </summary>
+        public static Encoding InternalEncoding
+        {
+            get => DlibDotNet.Dlib.Encoding;
+            set => DlibDotNet.Dlib.Encoding = value ?? Encoding.UTF8;
+        }
 
         /// <summary>
         /// Gets a value indicating whether this object has been disposed of.
