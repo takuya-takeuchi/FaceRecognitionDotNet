@@ -4,14 +4,46 @@
         <name>FaceRecognitionDotNet</name>
     </assembly>
     <members>
+        <member name="T:FaceRecognitionDotNet.DisposableObject">
+            <summary>
+            マネージまたはアンマネージ リソースを持つクラスを表します。
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.DisposableObject.IsDisposed">
+            <summary>
+            インスタンスが破棄されているかどうかを示す値を取得します。
+            </summary>
+            <returns>インスタンスが破棄されている場合は true。それ以外の場合は false。</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.DisposableObject.ThrowIfDisposed">
+            <summary>
+            オブジェクトが破棄されている場合、<see cref="T:System.ObjectDisposedException"/> がスローされます。
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.DisposableObject.DisposeManaged">
+            <summary>
+            マネージ リソースを解放します。
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.DisposableObject.DisposeUnmanaged">
+            <summary>
+            アンマネージ リソースを解放します。
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.DisposableObject.Dispose">
+            <summary>
+            この <see cref="T:FaceRecognitionDotNet.DisposableObject"/> によって使用されている全てのリソースを解放します。
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.DisposableObject.Dispose(System.Boolean)">
+            <summary>
+            この <see cref="T:FaceRecognitionDotNet.DisposableObject"/> によって使用されている全てのリソースを解放します。
+            </summary>
+            <param name="disposing"><see cref="M:System.IDisposable.Dispose"/> メソッドが呼ばれたかどうかを示す値。</param>
+        </member>
         <member name="T:FaceRecognitionDotNet.FaceEncoding">
             <summary>
             顔の特徴データを表現します。このクラスは継承できません。
-            </summary>
-        </member>
-        <member name="P:FaceRecognitionDotNet.FaceEncoding.IsDisposed">
-            <summary>
-            このオブジェクトが破棄されているかどうかを示す値を取得します。
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.FaceEncoding.Size">
@@ -19,16 +51,10 @@
             特徴データのサイズを取得します。
             </summary>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceEncoding.Dispose">
+        <member name="M:FaceRecognitionDotNet.FaceEncoding.DisposeUnmanaged">
             <summary>
-            <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> が使用している全てのリソースを解放します。
+            アンマネージ リソースを解放します。
             </summary>
-        </member>
-        <member name="M:FaceRecognitionDotNet.FaceEncoding.Dispose(System.Boolean)">
-            <summary>
-            <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> が使用している全てのリソースを解放します。
-            </summary>
-            <param name="disposing"><see cref="M:System.IDisposable.Dispose"/> が呼び出されたかどうかを示す値。</param>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceEncoding.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
@@ -219,16 +245,10 @@
             <returns>このメソッドが作成した <see cref="T:FaceRecognitionDotNet.Image"/>。</returns>
             <exception cref="T:System.IO.FileNotFoundException">指定したパスは存在しません。</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.Dispose">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged">
             <summary>
-            <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> が使用している全てのリソースを解放します。
+            アンマネージ リソースを解放します。
             </summary>
-        </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.Dispose(System.Boolean)">
-            <summary>
-            <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> が使用している全てのリソースを解放します。
-            </summary>
-            <param name="disposing"><see cref="M:System.IDisposable.Dispose"/> が呼び出されたかどうかを示す値。</param>
         </member>
         <member name="T:FaceRecognitionDotNet.Image">
             <summary>
@@ -240,26 +260,15 @@
             画像の高さを取得します。
             </summary>
         </member>
-        <member name="P:FaceRecognitionDotNet.Image.IsDisposed">
-            <summary>
-            このオブジェクトが破棄されているかどうかを示す値を取得します。
-            </summary>
-        </member>
         <member name="P:FaceRecognitionDotNet.Image.Width">
             <summary>
             画像の幅を取得します。
             </summary>
         </member>
-        <member name="M:FaceRecognitionDotNet.Image.Dispose">
+        <member name="M:FaceRecognitionDotNet.Image.DisposeUnmanaged">
             <summary>
-            <see cref="T:FaceRecognitionDotNet.Image"/> が使用している全てのリソースを解放します。
+            アンマネージ リソースを解放します。
             </summary>
-        </member>
-        <member name="M:FaceRecognitionDotNet.Image.Dispose(System.Boolean)">
-            <summary>
-            <see cref="T:FaceRecognitionDotNet.Image"/> が使用している全てのリソースを解放します。
-            </summary>
-            <param name="disposing"><see cref="M:System.IDisposable.Dispose"/> が呼び出されたかどうかを示す値。</param>
         </member>
         <member name="T:FaceRecognitionDotNet.Location">
             <summary>

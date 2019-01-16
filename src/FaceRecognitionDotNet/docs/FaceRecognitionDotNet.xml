@@ -4,14 +4,46 @@
         <name>FaceRecognitionDotNet</name>
     </assembly>
     <members>
+        <member name="T:FaceRecognitionDotNet.DisposableObject">
+            <summary>
+            Represents a class which has managed or unmanaged resources.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.DisposableObject.IsDisposed">
+            <summary>
+            Gets a value indicating whether this instance has been disposed.
+            </summary>
+            <returns>true if this instance has been disposed; otherwise, false.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.DisposableObject.ThrowIfDisposed">
+            <summary>
+            If this object is disposed, then <see cref="T:System.ObjectDisposedException"/> is thrown.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.DisposableObject.DisposeManaged">
+            <summary>
+            Releases all managed resources.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.DisposableObject.DisposeUnmanaged">
+            <summary>
+            Releases all unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.DisposableObject.Dispose">
+            <summary>
+            Releases all resources used by this <see cref="T:FaceRecognitionDotNet.DisposableObject"/>.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.DisposableObject.Dispose(System.Boolean)">
+            <summary>
+            Releases all resources used by this <see cref="T:FaceRecognitionDotNet.DisposableObject"/>.
+            </summary>
+            <param name="disposing">Indicate value whether <see cref="M:System.IDisposable.Dispose"/> method was called.</param>
+        </member>
         <member name="T:FaceRecognitionDotNet.FaceEncoding">
             <summary>
             Represents a feature data of face. This class cannot be inherited.
-            </summary>
-        </member>
-        <member name="P:FaceRecognitionDotNet.FaceEncoding.IsDisposed">
-            <summary>
-            Gets a value indicating whether this object has been disposed of.
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.FaceEncoding.Size">
@@ -19,16 +51,10 @@
             Gets the size of feature data.
             </summary>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceEncoding.Dispose">
+        <member name="M:FaceRecognitionDotNet.FaceEncoding.DisposeUnmanaged">
             <summary>
-            Releases all resources used by this <see cref="T:FaceRecognitionDotNet.FaceEncoding"/>.
+            Releases all unmanaged resources.
             </summary>
-        </member>
-        <member name="M:FaceRecognitionDotNet.FaceEncoding.Dispose(System.Boolean)">
-            <summary>
-            Releases all resources used by this <see cref="T:FaceRecognitionDotNet.FaceEncoding"/>.
-            </summary>
-            <param name="disposing">Indicate value whether <see cref="M:System.IDisposable.Dispose"/> method was called.</param>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceEncoding.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
@@ -100,9 +126,9 @@
             <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
             <exception cref="T:System.IO.DirectoryNotFoundException">The specified directory path is not found.</exception>
         </member>
-        <member name="P:FaceRecognitionDotNet.FaceRecognition.IsDisposed">
+        <member name="P:FaceRecognitionDotNet.FaceRecognition.InternalEncoding">
             <summary>
-            Gets a value indicating whether this object has been disposed of.
+            Gets or sets the character encoding to convert System.String to byte[] for internal library.
             </summary>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Image},System.Int32,System.Int32)">
@@ -219,16 +245,10 @@
             <returns>The <see cref="T:FaceRecognitionDotNet.Image"/> this method creates.</returns>
             <exception cref="T:System.IO.FileNotFoundException">The specified path does not exist.</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.Dispose">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged">
             <summary>
-            Releases all resources used by this <see cref="T:FaceRecognitionDotNet.FaceRecognition"/>.
+            Releases all unmanaged resources.
             </summary>
-        </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.Dispose(System.Boolean)">
-            <summary>
-            Releases all resources used by this <see cref="T:FaceRecognitionDotNet.FaceRecognition"/>.
-            </summary>
-            <param name="disposing">Indicate value whether <see cref="M:System.IDisposable.Dispose"/> method was called.</param>
         </member>
         <member name="T:FaceRecognitionDotNet.Image">
             <summary>
@@ -240,26 +260,15 @@
             Gets the height of the image.
             </summary>
         </member>
-        <member name="P:FaceRecognitionDotNet.Image.IsDisposed">
-            <summary>
-            Gets a value indicating whether this object has been disposed of.
-            </summary>
-        </member>
         <member name="P:FaceRecognitionDotNet.Image.Width">
             <summary>
             Gets the width of the image.
             </summary>
         </member>
-        <member name="M:FaceRecognitionDotNet.Image.Dispose">
+        <member name="M:FaceRecognitionDotNet.Image.DisposeUnmanaged">
             <summary>
-            Releases all resources used by this <see cref="T:FaceRecognitionDotNet.Image"/>.
+            Releases all unmanaged resources.
             </summary>
-        </member>
-        <member name="M:FaceRecognitionDotNet.Image.Dispose(System.Boolean)">
-            <summary>
-            Releases all resources used by this <see cref="T:FaceRecognitionDotNet.Image"/>.
-            </summary>
-            <param name="disposing">Indicate value whether <see cref="M:System.IDisposable.Dispose"/> method was called.</param>
         </member>
         <member name="T:FaceRecognitionDotNet.Location">
             <summary>
