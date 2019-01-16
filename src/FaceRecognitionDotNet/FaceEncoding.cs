@@ -9,7 +9,7 @@ namespace FaceRecognitionDotNet
     /// Represents a feature data of face. This class cannot be inherited.
     /// </summary>
     [Serializable]
-    public sealed class FaceEncoding : IDisposable, ISerializable
+    public sealed class FaceEncoding : DisposableObject, ISerializable
     {
 
         #region Fields
@@ -41,15 +41,6 @@ namespace FaceRecognitionDotNet
 
         #region Properties
 
-        /// <summary>
-        /// Gets a value indicating whether this object has been disposed of.
-        /// </summary>
-        public bool IsDisposed
-        {
-            get;
-            private set;
-        }
-
         internal Matrix<double> Encoding => this._Encoding;
 
         /// <summary>
@@ -59,44 +50,27 @@ namespace FaceRecognitionDotNet
         {
             get
             {
-                if(this.IsDisposed)
-                    throw new ObjectDisposedException($"{nameof(FaceEncoding)}");
+                this.ThrowIfDisposed();
                 return this._Encoding.Size;
             }
         }
 
         #endregion
 
-        #region IDisposable Members
+        #region Methods
+
+        #region Overrides 
 
         /// <summary>
-        /// Releases all resources used by this <see cref="FaceEncoding"/>.
+        /// Releases all unmanaged resources.
         /// </summary>
-        public void Dispose()
+        protected override void DisposeUnmanaged()
         {
-            GC.SuppressFinalize(this);
-            this.Dispose(true);
+            base.DisposeUnmanaged();
+            this._Encoding?.Dispose();
         }
 
-        /// <summary>
-        /// Releases all resources used by this <see cref="FaceEncoding"/>.
-        /// </summary>
-        /// <param name="disposing">Indicate value whether <see cref="IDisposable.Dispose"/> method was called.</param>
-        private void Dispose(bool disposing)
-        {
-            if (this.IsDisposed)
-            {
-                return;
-            }
-
-            this.IsDisposed = true;
-
-            if (disposing)
-            {
-                this._Encoding?.Dispose();
-            }
-
-        }
+        #endregion
 
         #endregion
 

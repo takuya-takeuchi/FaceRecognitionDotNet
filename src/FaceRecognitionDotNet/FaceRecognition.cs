@@ -14,7 +14,7 @@ namespace FaceRecognitionDotNet
     /// <summary>
     /// Provides the method to find and recognize face methods. This class cannot be inherited.
     /// </summary>
-    public sealed class FaceRecognition : IDisposable
+    public sealed class FaceRecognition : DisposableObject
     {
 
         #region Fields
@@ -89,15 +89,6 @@ namespace FaceRecognitionDotNet
             set => DlibDotNet.Dlib.Encoding = value ?? Encoding.UTF8;
         }
 
-        /// <summary>
-        /// Gets a value indicating whether this object has been disposed of.
-        /// </summary>
-        public bool IsDisposed
-        {
-            get;
-            private set;
-        }
-
         #endregion
 
         #region Methods
@@ -141,10 +132,9 @@ namespace FaceRecognitionDotNet
                 throw new ArgumentNullException(nameof(knownFaceEncoding));
             if (faceEncodingToCheck == null)
                 throw new ArgumentNullException(nameof(faceEncodingToCheck));
-            if (knownFaceEncoding.IsDisposed)
-                throw new ObjectDisposedException(nameof(knownFaceEncoding));
-            if (faceEncodingToCheck.IsDisposed)
-                throw new ObjectDisposedException(nameof(faceEncodingToCheck));
+
+            knownFaceEncoding.ThrowIfDisposed();
+            faceEncodingToCheck.ThrowIfDisposed();
 
             return FaceDistance(knownFaceEncoding, faceEncodingToCheck) <= tolerance;
         }
@@ -164,8 +154,8 @@ namespace FaceRecognitionDotNet
                 throw new ArgumentNullException(nameof(knownFaceEncodings));
             if (faceEncodingToCheck == null)
                 throw new ArgumentNullException(nameof(faceEncodingToCheck));
-            if (faceEncodingToCheck.IsDisposed)
-                throw new ObjectDisposedException(nameof(faceEncodingToCheck));
+
+            faceEncodingToCheck.ThrowIfDisposed();
 
             var array = knownFaceEncodings.ToArray();
             if (array.Any(encoding => encoding.IsDisposed))
@@ -203,10 +193,9 @@ namespace FaceRecognitionDotNet
                 throw new ArgumentNullException(nameof(faceEncoding));
             if (faceToCompare == null)
                 throw new ArgumentNullException(nameof(faceToCompare));
-            if (faceEncoding.IsDisposed)
-                throw new ObjectDisposedException(nameof(faceEncoding));
-            if (faceToCompare.IsDisposed)
-                throw new ObjectDisposedException(nameof(faceToCompare));
+
+            faceEncoding.ThrowIfDisposed();
+            faceToCompare.ThrowIfDisposed();
 
             if (faceEncoding.Encoding.Size == 0)
                 return 0;
@@ -229,8 +218,8 @@ namespace FaceRecognitionDotNet
                 throw new ArgumentNullException(nameof(faceEncodings));
             if (faceToCompare == null)
                 throw new ArgumentNullException(nameof(faceToCompare));
-            if (faceToCompare.IsDisposed)
-                throw new ObjectDisposedException(nameof(faceToCompare));
+
+            faceToCompare.ThrowIfDisposed();
 
             var array = faceEncodings.ToArray();
             if (array.Any(encoding => encoding.IsDisposed))
@@ -257,10 +246,9 @@ namespace FaceRecognitionDotNet
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
-            if (image.IsDisposed)
-                throw new ObjectDisposedException(nameof(image));
-            if (this.IsDisposed)
-                throw new ObjectDisposedException(nameof(FaceEncoding));
+
+            image.ThrowIfDisposed();
+            this.ThrowIfDisposed();
 
             var rawLandmarks = this.RawFaceLandmarks(image, knownFaceLocation, PredictorModel.Small);
             foreach (var landmark in rawLandmarks)
@@ -284,10 +272,9 @@ namespace FaceRecognitionDotNet
         {
             if (faceImage == null)
                 throw new ArgumentNullException(nameof(faceImage));
-            if (faceImage.IsDisposed)
-                throw new ObjectDisposedException(nameof(faceImage));
-            if (this.IsDisposed)
-                throw new ObjectDisposedException(nameof(FaceEncoding));
+
+            faceImage.ThrowIfDisposed();
+            this.ThrowIfDisposed();
 
             var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, model).ToArray();
             var landmarkTuples = landmarks.Select(landmark => Enumerable.Range(0, (int)landmark.Parts)
@@ -360,10 +347,9 @@ namespace FaceRecognitionDotNet
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
-            if (image.IsDisposed)
-                throw new ObjectDisposedException(nameof(image));
-            if (this.IsDisposed)
-                throw new ObjectDisposedException(nameof(FaceEncoding));
+
+            image.ThrowIfDisposed();
+            this.ThrowIfDisposed();
 
             switch (model)
             {
@@ -483,41 +469,26 @@ namespace FaceRecognitionDotNet
         #endregion
 
         #endregion
+        
+        #region Methods
 
-        #region IDisposable Members
-
-        /// <summary>
-        /// Releases all resources used by this <see cref="FaceRecognition"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            // ReSharper disable once GCSuppressFinalizeForTypeWithoutDestructor
-            GC.SuppressFinalize(this);
-            this.Dispose(true);
-        }
+        #region Overrides 
 
         /// <summary>
-        /// Releases all resources used by this <see cref="FaceRecognition"/>.
+        /// Releases all unmanaged resources.
         /// </summary>
-        /// <param name="disposing">Indicate value whether <see cref="IDisposable.Dispose"/> method was called.</param>
-        private void Dispose(bool disposing)
+        protected override void DisposeUnmanaged()
         {
-            if (this.IsDisposed)
-            {
-                return;
-            }
+            base.DisposeUnmanaged();
 
-            this.IsDisposed = true;
-
-            if (disposing)
-            {
-                this._PosePredictor68Point?.Dispose();
-                this._PosePredictor5Point?.Dispose();
-                this._CnnFaceDetector?.Dispose();
-                this._FaceEncoder?.Dispose();
-                this._FaceDetector?.Dispose();
-            }
+            this._PosePredictor68Point?.Dispose();
+            this._PosePredictor5Point?.Dispose();
+            this._CnnFaceDetector?.Dispose();
+            this._FaceEncoder?.Dispose();
+            this._FaceDetector?.Dispose();
         }
+
+        #endregion
 
         #endregion
 
