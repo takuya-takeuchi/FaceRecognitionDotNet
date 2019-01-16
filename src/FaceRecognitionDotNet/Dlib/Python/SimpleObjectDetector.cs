@@ -130,8 +130,9 @@ namespace FaceRecognitionDotNet.Dlib.Python
                 throw new ArgumentNullException(nameof(detector));
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
-            if (image.IsDisposed)
-                throw new ObjectDisposedException(nameof(image));
+
+            detector.ThrowIfDisposed();
+            image.ThrowIfDisposed();
 
             var detectionConfidences = new List<double>();
             var weightIndices = new List<ulong>();
