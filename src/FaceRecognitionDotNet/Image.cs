@@ -7,7 +7,7 @@ namespace FaceRecognitionDotNet
     /// <summary>
     /// Represents a image data. This class cannot be inherited.
     /// </summary>
-    public sealed class Image : IDisposable
+    public sealed class Image : DisposableObject
     {
 
         #region Fields
@@ -37,19 +37,9 @@ namespace FaceRecognitionDotNet
         {
             get
             {
-                if (this.IsDisposed)
-                    throw new ObjectDisposedException($"{nameof(Image)}");
+                this.ThrowIfDisposed();
                 return this._Matrix.Rows;
             }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether this object has been disposed of.
-        /// </summary>
-        public bool IsDisposed
-        {
-            get;
-            private set;
         }
 
         internal MatrixBase Matrix => this._Matrix;
@@ -63,44 +53,27 @@ namespace FaceRecognitionDotNet
         {
             get
             {
-                if (this.IsDisposed)
-                    throw new ObjectDisposedException($"{nameof(Image)}");
+                this.ThrowIfDisposed();
                 return this._Matrix.Columns;
             }
         }
 
         #endregion
 
-        #region IDisposable Members
+        #region Methods
+
+        #region Overrides 
 
         /// <summary>
-        /// Releases all resources used by this <see cref="Image"/>.
+        /// Releases all unmanaged resources.
         /// </summary>
-        public void Dispose()
+        protected override void DisposeUnmanaged()
         {
-            GC.SuppressFinalize(this);
-            this.Dispose(true);
+            base.DisposeUnmanaged();
+            this._Matrix?.Dispose();
         }
 
-        /// <summary>
-        /// Releases all resources used by this <see cref="Image"/>.
-        /// </summary>
-        /// <param name="disposing">Indicate value whether <see cref="IDisposable.Dispose"/> method was called.</param>
-        private void Dispose(bool disposing)
-        {
-            if (this.IsDisposed)
-            {
-                return;
-            }
-
-            this.IsDisposed = true;
-
-            if (disposing)
-            {
-                this._Matrix?.Dispose();
-            }
-
-        }
+        #endregion
 
         #endregion
 
