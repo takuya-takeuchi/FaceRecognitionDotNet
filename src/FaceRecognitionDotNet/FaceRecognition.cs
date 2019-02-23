@@ -373,6 +373,26 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
+        /// Creates an <see cref="FaceEncoding"/> from the <see cref="double"/> array.
+        /// </summary>
+        /// <param name="encoding">The <see cref="double"/> array contains face encoding data.</param>
+        /// <returns>The <see cref="FaceEncoding"/> this method creates.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="encoding"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="encoding"/> must be 128.</exception>
+        public static FaceEncoding LoadFaceEncoding(double[] encoding)
+        {
+            if (encoding == null)
+                throw new ArgumentNullException(nameof(encoding));
+            if (encoding.Length != 128)
+                throw new ArgumentOutOfRangeException($"{nameof(encoding)}.{nameof(encoding.Length)} must be 128.");
+            
+            var matrix = Matrix<double>.CreateTemplateParameterizeMatrix(0, 1);
+            matrix.SetSize(128);
+            matrix.Assign(encoding);
+            return new FaceEncoding(matrix);
+        }
+
+        /// <summary>
         /// Creates an <see cref="Image"/> from the <see cref="byte"/> array.
         /// </summary>
         /// <param name="array">The <see cref="byte"/> array contains image data.</param>

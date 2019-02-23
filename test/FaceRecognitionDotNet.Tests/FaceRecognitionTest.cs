@@ -447,6 +447,96 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [TestMethod]
+        public void LoadFaceEncoding()
+        {
+            var bidenUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Biden_2013.jpg";
+            var bidenFile = "480px-Biden_2013.jpg";
+
+            var path1 = Path.Combine(ImageDirectory, bidenFile);
+            if (!File.Exists(path1))
+            {
+                var url = $"{bidenUrl}/{bidenFile}";
+                var binary = new HttpClient().GetByteArrayAsync(url).Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path1, binary);
+            }
+
+            bool atLeast1Time = false;
+
+            var getMatrix = typeof(FaceEncoding).GetField("_Encoding", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
+            {
+                using (var image1 = FaceRecognition.LoadImageFile(path1, mode))
+                {
+                    var encodings = this._FaceRecognition.FaceEncodings(image1).ToArray();
+                    foreach (var e1 in encodings)
+                    {
+                        atLeast1Time = true;
+
+                        var matrix = getMatrix.GetValue(e1) as Matrix<double>;
+                        Assert.IsNotNull(matrix);
+
+                        var fe = matrix.ToArray();
+
+                        using (var e2 = FaceRecognition.LoadFaceEncoding(fe))
+                        {
+                            var distance = FaceRecognition.FaceDistance(e1, e2);
+                            Console.WriteLine($"Original: {distance}");
+                            Assert.IsTrue(Math.Abs(distance) < double.Epsilon);
+                        }
+
+                        fe[0] = 1;
+                        using (var e2 = FaceRecognition.LoadFaceEncoding(fe))
+                        {
+                            var distance = FaceRecognition.FaceDistance(e1, e2);
+                            Console.WriteLine($"Modified: {distance}");
+                            Assert.IsTrue(Math.Abs(distance) > double.Epsilon);
+                        }
+                    }
+
+                    foreach (var encoding in encodings)
+                        encoding.Dispose();
+                }
+            }
+
+            if (!atLeast1Time)
+                Assert.Fail("Assert check did not execute");
+        }
+
+        [TestMethod]
+        public void LoadFaceEncodingFail()
+        {
+            try
+            {
+                FaceRecognition.LoadFaceEncoding(null);
+                Assert.Fail($"{nameof(this.FaceEncodings)}.{nameof(FaceRecognition.LoadFaceEncoding)} should throw {nameof(ArgumentNullException)}");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                FaceRecognition.LoadFaceEncoding(new double[129]);
+                Assert.Fail($"{nameof(this.FaceEncodings)}.{nameof(FaceRecognition.LoadFaceEncoding)} should throw {nameof(ArgumentOutOfRangeException)}");
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+            }
+
+            try
+            {
+                FaceRecognition.LoadFaceEncoding(new double[127]);
+                Assert.Fail($"{nameof(this.FaceEncodings)}.{nameof(FaceRecognition.LoadFaceEncoding)} should throw {nameof(ArgumentOutOfRangeException)}");
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+            }
+        }
+
+        [TestMethod]
         public void LoadImage()
         {
             const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
