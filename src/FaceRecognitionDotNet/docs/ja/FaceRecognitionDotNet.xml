@@ -224,6 +224,15 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> が null です。</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> またはこのオブジェクトは破棄されています。</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadFaceEncoding(System.Double[])">
+            <summary>
+            <see cref="T:System.Double"/> 配列から <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> を作成します。
+            </summary>
+            <param name="encoding">顔エンコーディング データを含む <see cref="T:System.Double"/> 配列。</param>
+            <returns>このメソッドが作成した <see cref="T:FaceRecognitionDotNet.FaceEncoding"/>。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="encoding"/> が null です。</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="encoding"/> は 128 です。</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Byte[],System.Int32,System.Int32,System.Int32)">
             <summary>
             <see cref="T:System.Byte"/> 配列から <see cref="T:FaceRecognitionDotNet.Image"/> を作成します。

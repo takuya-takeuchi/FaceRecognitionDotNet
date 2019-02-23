@@ -224,6 +224,15 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadFaceEncoding(System.Double[])">
+            <summary>
+            Creates an <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> from the <see cref="T:System.Double"/> array.
+            </summary>
+            <param name="encoding">The <see cref="T:System.Double"/> array contains face encoding data.</param>
+            <returns>The <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> this method creates.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="encoding"/> is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="encoding"/> must be 128.</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Byte[],System.Int32,System.Int32,System.Int32)">
             <summary>
             Creates an <see cref="T:FaceRecognitionDotNet.Image"/> from the <see cref="T:System.Byte"/> array.
