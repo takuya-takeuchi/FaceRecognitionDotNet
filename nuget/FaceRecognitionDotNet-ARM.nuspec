@@ -1,0 +1,34 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>FaceRecognitionDotNet-ARM</id>
+    <version>1.2.3.11-alpha</version>
+    <title>FaceRecognitionDotNet (for ARM)</title>
+    <authors>Takuya Takeuchi</authors>
+    <owners>Takuya Takeuchi</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="file">LICENSE.txt</license>
+    <projectUrl>https://github.com/takuya-takeuchi/FaceRecognitionDotNet</projectUrl>
+    <iconUrl>https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/nuget/face128.png?raw=true</iconUrl>
+    <description>The world's simplest facial recognition api for .NET
+
+This library is ported from https://github.com/ageitgey/face_recognition by C#.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>© Takuya Takeuchi 2018-2019</copyright>
+    <tags>.net machinelearning face-recognition</tags>
+    <serviceable>true</serviceable>
+    <dependencies>
+      <group targetFramework="netstandard2.0">
+        <dependency id="DlibDotNet-ARM" version="[19.16.0.20190313-alpha,)" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\src\FaceRecognitionDotNet\bin\Release\netstandard2.0\FaceRecognitionDotNet.dll" target="lib\netstandard2.0" />
+    <file src="..\src\FaceRecognitionDotNet\bin\Release\netstandard2.0\FaceRecognitionDotNet.xml" target="lib\netstandard2.0" />
+    <file src="..\src\FaceRecognitionDotNet\docs\ja\*.xml" target="lib\netstandard2.0\ja" />
+    
+    <!-- license -->
+    <file src="..\LICENSE.txt" target="" /> 
+  </files>
+</package>
