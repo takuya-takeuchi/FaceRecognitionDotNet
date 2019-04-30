@@ -398,6 +398,13 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [TestMethod]
+        public void FaceLandmarkHelen()
+        {
+            const string testName = nameof(this.FaceLandmarkHelen);
+            this.FaceLandmark(testName, PredictorModel.Helen);
+        }
+
+        [TestMethod]
         public void FaceLocationCnn()
         {
             const string testName = nameof(this.FaceLocationCnn);

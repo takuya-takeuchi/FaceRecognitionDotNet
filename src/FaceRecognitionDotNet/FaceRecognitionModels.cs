@@ -24,6 +24,11 @@
             return "mmod_human_face_detector.dat";
         }
 
+        public static string GetPosePredictor194PointModelLocation()
+        {
+            return "helen-dataset.dat";
+        }
+
     }
 
 }
