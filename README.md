@@ -52,3 +52,12 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 > **Author:** Takuya Takeuchi
 > 
 > **Principal Use:** Use dlib interface via .NET. This library is developed by this owner.
+
+#### [OpenCVSharp](https://github.com/shimat/opencvsharp/)
+
+> **License:** The BSD 3-Clause License
+>
+> **Author:** shimat
+> 
+> **Principal Use:** Loading image data by opencv wrapper for example
+
