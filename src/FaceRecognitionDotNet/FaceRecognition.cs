@@ -277,6 +277,7 @@ namespace FaceRecognitionDotNet
         /// <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
         /// <exception cref="ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="faceImage"/> or this object is disposed.</exception>
+        /// <exception cref="NotSupportedException">helen-dataset.dat does not exist.</exception>
         public IEnumerable<IDictionary<FacePart, IEnumerable<Point>>> FaceLandmark(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
         {
             if (faceImage == null)
@@ -284,6 +285,10 @@ namespace FaceRecognitionDotNet
 
             faceImage.ThrowIfDisposed();
             this.ThrowIfDisposed();
+
+            // RawFaceLandmarks uses _PosePredictor194Point so check here!!
+            if (model == PredictorModel.Helen && this._PosePredictor194Point == null)
+                throw new NotSupportedException($"'{FaceRecognitionModels.GetPosePredictor194PointModelLocation()}' does not exist.");
 
             var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, model).ToArray();
             var landmarkTuples = landmarks.Select(landmark => Enumerable.Range(0, (int)landmark.Parts)
@@ -447,7 +452,7 @@ namespace FaceRecognitionDotNet
                 throw new ArgumentNullException(nameof(encoding));
             if (encoding.Length != 128)
                 throw new ArgumentOutOfRangeException($"{nameof(encoding)}.{nameof(encoding.Length)} must be 128.");
-            
+
             var matrix = Matrix<double>.CreateTemplateParameterizeMatrix(0, 1);
             matrix.SetSize(128);
             matrix.Assign(encoding);
@@ -558,7 +563,7 @@ namespace FaceRecognitionDotNet
         #endregion
 
         #endregion
-        
+
         #region Methods
 
         #region Overrides 
