@@ -263,6 +263,8 @@ namespace FaceRecognitionDotNet.Tests
                 {
                     var endodings1 = this._FaceRecognition.FaceEncodings(image1).ToArray();
                     var endodings2 = this._FaceRecognition.FaceEncodings(image2).ToArray();
+                    Assert.IsTrue(endodings1.Length >= 1, $"{nameof(endodings1)} has {endodings1.Length} faces");
+                    Assert.IsTrue(endodings2.Length >= 1, $"{nameof(endodings2)} has {endodings2.Length} faces");
 
                     foreach (var e1 in endodings1)
                         foreach (var e2 in endodings2)
@@ -320,6 +322,8 @@ namespace FaceRecognitionDotNet.Tests
                 {
                     var endodings1 = this._FaceRecognition.FaceEncodings(image1).ToArray();
                     var endodings2 = this._FaceRecognition.FaceEncodings(image2).ToArray();
+                    Assert.IsTrue(endodings1.Length >= 1, $"{nameof(endodings1)} has {endodings1.Length} faces");
+                    Assert.IsTrue(endodings2.Length >= 1, $"{nameof(endodings2)} has {endodings2.Length} faces");
 
                     foreach (var e1 in endodings1)
                         foreach (var e2 in endodings2)
@@ -431,6 +435,10 @@ namespace FaceRecognitionDotNet.Tests
             var models = new List<string>();
             foreach (var method in methods)
             {
+                // Skip helen
+                if (method.Name == "GetPosePredictor194PointModelLocation")
+                    continue;
+
                 var result = method.Invoke(null, BindingFlags.Public | BindingFlags.Static, null, null, null) as string;
                 if (string.IsNullOrWhiteSpace(result))
                     Assert.Fail($"{method.Name} does not return {typeof(string).FullName} value or return null or whitespace value.");
