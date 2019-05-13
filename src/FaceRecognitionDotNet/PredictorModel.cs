@@ -15,7 +15,12 @@
         /// <summary>
         /// Specifies that the small scale detector. The detector returns 5 points for represent face. 
         /// </summary>
-        Small
+        Small,
+        
+        /// <summary>
+        /// Specifies that the detector of helen dataset. The detector returns 194 points for represent face. 
+        /// </summary>
+        Helen
 
     }
 

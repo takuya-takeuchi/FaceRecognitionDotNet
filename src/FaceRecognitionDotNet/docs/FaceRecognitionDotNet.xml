@@ -113,6 +113,11 @@
             Specifies the bottom lip.
             </summary>
         </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.Nose">
+            <summary>
+            Specifies the nose.
+            </summary>
+        </member>
         <member name="T:FaceRecognitionDotNet.FaceRecognition">
             <summary>
             Provides the method to find and recognize face methods. This class cannot be inherited.
@@ -212,6 +217,7 @@
             <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceImage"/> or this object is disposed.</exception>
+            <exception cref="T:System.NotSupportedException">helen-dataset.dat does not exist.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image,System.Int32,FaceRecognitionDotNet.Model)">
             <summary>
@@ -450,6 +456,11 @@
         <member name="F:FaceRecognitionDotNet.PredictorModel.Small">
             <summary>
             Specifies that the small scale detector. The detector returns 5 points for represent face. 
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.PredictorModel.Helen">
+            <summary>
+            Specifies that the detector of helen dataset. The detector returns 194 points for represent face. 
             </summary>
         </member>
     </members>

@@ -19,6 +19,8 @@ namespace FaceRecognitionDotNet
 
         #region Fields
 
+        private readonly ShapePredictor _PosePredictor194Point;
+
         private readonly ShapePredictor _PosePredictor68Point;
 
         private readonly ShapePredictor _PosePredictor5Point;
@@ -74,6 +76,13 @@ namespace FaceRecognitionDotNet
 
             this._FaceEncoder?.Dispose();
             this._FaceEncoder = LossMetric.Deserialize(faceRecognitionModel);
+
+            var predictor194PointModel = Path.Combine(directory, FaceRecognitionModels.GetPosePredictor194PointModelLocation());
+            if (File.Exists(predictor194PointModel))
+            {
+                this._PosePredictor194Point?.Dispose();
+                this._PosePredictor194Point = ShapePredictor.Deserialize(predictor194PointModel);
+            }
         }
 
         #endregion
@@ -268,6 +277,7 @@ namespace FaceRecognitionDotNet
         /// <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
         /// <exception cref="ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="faceImage"/> or this object is disposed.</exception>
+        /// <exception cref="NotSupportedException">helen-dataset.dat does not exist.</exception>
         public IEnumerable<IDictionary<FacePart, IEnumerable<Point>>> FaceLandmark(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
         {
             if (faceImage == null)
@@ -275,6 +285,10 @@ namespace FaceRecognitionDotNet
 
             faceImage.ThrowIfDisposed();
             this.ThrowIfDisposed();
+
+            // RawFaceLandmarks uses _PosePredictor194Point so check here!!
+            if (model == PredictorModel.Helen && this._PosePredictor194Point == null)
+                throw new NotSupportedException($"'{FaceRecognitionModels.GetPosePredictor194PointModelLocation()}' does not exist.");
 
             var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, model).ToArray();
             var landmarkTuples = landmarks.Select(landmark => Enumerable.Range(0, (int)landmark.Parts)
@@ -319,6 +333,59 @@ namespace FaceRecognitionDotNet
                             { FacePart.NoseTip,  Enumerable.Range(4,1).Select(i => landmarkTuple[i]).ToArray() },
                             { FacePart.LeftEye,  Enumerable.Range(2,2).Select(i => landmarkTuple[i]).ToArray() },
                             { FacePart.RightEye, Enumerable.Range(0,2).Select(i => landmarkTuple[i]).ToArray() }
+                        }));
+                        break;
+                    case PredictorModel.Helen:
+                        results.AddRange(landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<Point>>
+                        {
+                            { FacePart.Chin,         Enumerable.Range(107,10).Select(i => landmarkTuple[i])
+                                                                             .Concat( Enumerable.Range(118,10).Select(i => landmarkTuple[i]))
+                                                                             .Concat( Enumerable.Range(129, 1).Select(i => landmarkTuple[i]))
+                                                                             .Concat( new [] { landmarkTuple[  0] })
+                                                                             .Concat( new [] { landmarkTuple[  1] })
+                                                                             .Concat( new [] { landmarkTuple[  2] })
+                                                                             .Concat( new [] { landmarkTuple[ 13] })
+                                                                             .Concat( new [] { landmarkTuple[ 24] })
+                                                                             .Concat( new [] { landmarkTuple[ 35] })
+                                                                             .Concat( new [] { landmarkTuple[ 46] })
+                                                                             .Concat( new [] { landmarkTuple[ 57] })
+                                                                             .Concat( new [] { landmarkTuple[ 68] })
+                                                                             .Concat( new [] { landmarkTuple[ 79] })
+                                                                             .Concat( new [] { landmarkTuple[ 90] })
+                                                                             .Concat( new [] { landmarkTuple[101] })
+                                                                             .Concat( new [] { landmarkTuple[106] })
+                                                                             .Concat( new [] { landmarkTuple[117] })
+                                                                             .Concat( new [] { landmarkTuple[128] })
+                                                                             .Concat( new [] { landmarkTuple[139] })
+                                                                             .Concat( new [] { landmarkTuple[150] })
+                                                                             .Concat( new [] { landmarkTuple[161] })
+                                                                             .Concat( new [] { landmarkTuple[172] })
+                                                                             .Concat( new [] { landmarkTuple[183] })  },
+                            { FacePart.LeftEyebrow,  Enumerable.Range( 84, 6).Select(i => landmarkTuple[i])
+                                                                             .Concat( Enumerable.Range( 91,10).Select(i => landmarkTuple[i]))
+                                                                             .Concat( Enumerable.Range(102, 4).Select(i => landmarkTuple[i])) },
+                            { FacePart.RightEyebrow, Enumerable.Range( 62, 6).Select(i => landmarkTuple[i])
+                                                                             .Concat( Enumerable.Range( 69,10).Select(i => landmarkTuple[i]))
+                                                                             .Concat( Enumerable.Range( 80, 4).Select(i => landmarkTuple[i])) },
+                            { FacePart.Nose,         Enumerable.Range(130, 9).Select(i => landmarkTuple[i])
+                                                                             .Concat( Enumerable.Range(140, 8).Select(i => landmarkTuple[i])) },
+                            { FacePart.LeftEye,      Enumerable.Range( 40, 6).Select(i => landmarkTuple[i])
+                                                                             .Concat( Enumerable.Range( 47,10).Select(i => landmarkTuple[i]))
+                                                                             .Concat( Enumerable.Range( 61, 1).Select(i => landmarkTuple[i])) },
+                            { FacePart.RightEye,     Enumerable.Range( 18, 6).Select(i => landmarkTuple[i])
+                                                                             .Concat( Enumerable.Range( 25,10).Select(i => landmarkTuple[i]))
+                                                                             .Concat( Enumerable.Range( 39, 1).Select(i => landmarkTuple[i])) },
+                            { FacePart.TopLip,       Enumerable.Range(148, 2).Select(i => landmarkTuple[i])
+                                                                             .Concat( Enumerable.Range(151,10).Select(i => landmarkTuple[i]))
+                                                                             .Concat( Enumerable.Range(162, 2).Select(i => landmarkTuple[i]))
+                                                                             .Concat( Enumerable.Range(179, 4).Select(i => landmarkTuple[i]))
+                                                                             .Concat( Enumerable.Range(184,10).Select(i => landmarkTuple[i]))
+                                                                             .Concat( Enumerable.Range(  3, 1).Select(i => landmarkTuple[i])) },
+                            { FacePart.BottomLip,    Enumerable.Range(163, 9).Select(i => landmarkTuple[i])
+                                                                             .Concat( Enumerable.Range(173, 7).Select(i => landmarkTuple[i]))
+                                                                             .Concat( Enumerable.Range(  3,10).Select(i => landmarkTuple[i]))
+                                                                             .Concat( Enumerable.Range( 14, 4).Select(i => landmarkTuple[i]))
+                                                                             .Concat( Enumerable.Range(148, 1).Select(i => landmarkTuple[i])) }
                         }));
                         break;
                     default:
@@ -385,7 +452,7 @@ namespace FaceRecognitionDotNet
                 throw new ArgumentNullException(nameof(encoding));
             if (encoding.Length != 128)
                 throw new ArgumentOutOfRangeException($"{nameof(encoding)}.{nameof(encoding.Length)} must be 128.");
-            
+
             var matrix = Matrix<double>.CreateTemplateParameterizeMatrix(0, 1);
             matrix.SetSize(128);
             matrix.Assign(encoding);
@@ -453,8 +520,15 @@ namespace FaceRecognitionDotNet
                 tmp = faceLocations.Select(l => new MModRect { Rect = new Rectangle { Bottom = l.Bottom, Left = l.Left, Top = l.Top, Right = l.Right } });
 
             var posePredictor = this._PosePredictor68Point;
-            if (model == PredictorModel.Small)
-                posePredictor = this._PosePredictor5Point;
+            switch (model)
+            {
+                case PredictorModel.Small:
+                    posePredictor = this._PosePredictor5Point;
+                    break;
+                case PredictorModel.Helen:
+                    posePredictor = this._PosePredictor194Point;
+                    break;
+            }
 
             foreach (var rect in tmp)
             {
@@ -489,7 +563,7 @@ namespace FaceRecognitionDotNet
         #endregion
 
         #endregion
-        
+
         #region Methods
 
         #region Overrides 

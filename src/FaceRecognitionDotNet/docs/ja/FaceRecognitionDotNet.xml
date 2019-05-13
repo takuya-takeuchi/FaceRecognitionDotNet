@@ -113,6 +113,11 @@
             下唇を示します。
             </summary>
         </member>
+        <member name="F:FaceRecognitionDotNet.FacePart.Nose">
+            <summary>
+            鼻を示します。
+            </summary>
+        </member>
         <member name="T:FaceRecognitionDotNet.FaceRecognition">
             <summary>
             顔を探索、認識するメソッドを提供します。このクラスは継承できません。
@@ -212,6 +217,7 @@
             <returns>眼、鼻等の顔の構成要素の辞書の列挙可能なコレクション。</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="faceImage"/> が null です。</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceImage"/> またはこのオブジェクトは破棄されています。</exception>
+            <exception cref="T:System.NotSupportedException">helen-dataset.dat が存在しません。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image,System.Int32,FaceRecognitionDotNet.Model)">
             <summary>
@@ -450,6 +456,11 @@
         <member name="F:FaceRecognitionDotNet.PredictorModel.Small">
             <summary>
             小規模な検出器を示します。検出器は顔の表現に 5 点を返します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.PredictorModel.Helen">
+            <summary>
+            Helen データセットによる検出器を示します。検出器は顔の表現に 194 点を返します。
             </summary>
         </member>
     </members>

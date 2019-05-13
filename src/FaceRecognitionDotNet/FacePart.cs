@@ -50,7 +50,12 @@
         /// <summary>
         /// Specifies the bottom lip.
         /// </summary>
-        BottomLip
+        BottomLip,
+
+        /// <summary>
+        /// Specifies the nose.
+        /// </summary>
+        Nose,
 
     }
 
