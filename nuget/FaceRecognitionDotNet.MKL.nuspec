@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <package >
   <metadata>
-    <id>FaceRecognitionDotNet</id>
+    <id>FaceRecognitionDotNet.MKL</id>
     <version>1.2.3.13</version>
     <title>FaceRecognitionDotNet for MKL</title>
     <authors>Takuya Takeuchi</authors>
