@@ -34,6 +34,14 @@ for package in "${packages[@]}" ; do
     
     dotnet test -c Release -r ${TESTDIR} --logger trx
 
+    if [ $? -eq 0 ]; then
+       echo "Test Successful"
+    else
+       echo "Test Fail for $package"
+       cd $CURDIR
+       exit -1
+    fi
+
     # move to current
     cd $CURDIR
 
