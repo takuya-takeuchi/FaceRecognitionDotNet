@@ -83,8 +83,6 @@ foreach($BuildTarget in $BuildTargets)
      New-Item "$TestDir" -ItemType Directory > $null
   }
   
-  $env:DLIBDOTNET_VERSION = $VERSION
-  
   $NativeTestDir = Join-Path $FaceRecognitionDotNetRoot test | `
                    Join-Path -ChildPath FaceRecognitionDotNet.Tests
 
