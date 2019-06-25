@@ -404,8 +404,8 @@ namespace FaceRecognitionDotNet.Tests
         [TestMethod]
         public void FaceLandmarkHelen()
         {
-            const string testName = nameof(this.FaceLandmarkHelen);
-            this.FaceLandmark(testName, PredictorModel.Helen);
+            //const string testName = nameof(this.FaceLandmarkHelen);
+            //this.FaceLandmark(testName, PredictorModel.Helen);
         }
 
         [TestMethod]

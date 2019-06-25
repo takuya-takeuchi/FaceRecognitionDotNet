@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0"?>
 <package >
   <metadata>
-    <id>FaceRecognitionDotNet.CUDA92</id>
-    <version>1.2.3.12</version>
-    <title>FaceRecognitionDotNet for CUDA 9.2</title>
+    <id>FaceRecognitionDotNet.CUDA100</id>
+    <version>1.2.3.13</version>
+    <title>FaceRecognitionDotNet for CUDA 10.0</title>
     <authors>Takuya Takeuchi</authors>
     <owners>Takuya Takeuchi</owners>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
@@ -19,7 +19,7 @@ This library is ported from https://github.com/ageitgey/face_recognition by C#.<
     <serviceable>true</serviceable>
     <dependencies>
       <group targetFramework="netstandard2.0">
-        <dependency id="DlibDotNet.CUDA92" version="19.17.0.20190513" />
+        <dependency id="DlibDotNet.CUDA100" version="19.17.0.20190623" />
       </group>
     </dependencies>
   </metadata>
