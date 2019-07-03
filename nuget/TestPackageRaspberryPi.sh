@@ -5,7 +5,7 @@ OS='raspbian'
 
 CURDIR=${pwd}
 FRDNROOT=`dirname $(pwd)`
-WORK=${FRDNROOT}/work/test
+WORK=${FRDNROOT}/work
 
 packages=(
     "FaceRecognitionDotNet.ARM"
@@ -22,7 +22,7 @@ for package in "${packages[@]}" ; do
     cd ${WORK}/FaceRecognitionDotNet.Tests
   
     # delete local project reference
-    dotnet remove reference ../../src/DlibDotNet/src/DlibDotNet\DlibDotNet.csproj > /dev/null 2>&1
+    dotnet remove reference ../../src/DlibDotNet/src/DlibDotNet/DlibDotNet.csproj > /dev/null 2>&1
     dotnet remove reference ../../src/FaceRecognitionDotNet/FaceRecognitionDotNet.csproj > /dev/null 2>&1
     
     # restore package from local nuget pacakge

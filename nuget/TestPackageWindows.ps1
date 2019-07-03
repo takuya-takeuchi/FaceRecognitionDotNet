@@ -68,8 +68,7 @@ foreach($BuildTarget in $BuildTargets)
 
 
   # Test
-  $WorkDir = Join-Path $FaceRecognitionDotNetRoot work | `
-             Join-Path -ChildPath test
+  $WorkDir = Join-Path $FaceRecognitionDotNetRoot work
   $NugetDir = Join-Path $FaceRecognitionDotNetRoot nuget
   $TestDir = Join-Path $NugetDir artifacts | `
              Join-Path -ChildPath test | `
