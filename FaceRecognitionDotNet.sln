@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2F845E5F-E6B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaceRecognitionDotNet", "src\FaceRecognitionDotNet\FaceRecognitionDotNet.csproj", "{85AB4F26-48B7-4A21-A6C7-14EA6608B539}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DlibDotNet", "DlibDotNet\src\DlibDotNet\DlibDotNet.csproj", "{BC72B97F-9631-4550-8DAC-5F96FF7DE9EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DlibDotNet", "src\DlibDotNet\src\DlibDotNet\DlibDotNet.csproj", "{BC72B97F-9631-4550-8DAC-5F96FF7DE9EB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{501D0145-416F-42A7-B636-02A4F783C97C}"
 EndProject

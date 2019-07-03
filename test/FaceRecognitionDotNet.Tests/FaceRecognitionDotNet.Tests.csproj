@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DlibDotNet\src\DlibDotNet\DlibDotNet.csproj" />
+    <ProjectReference Include="..\..\src\DlibDotNet\src\DlibDotNet\DlibDotNet.csproj" />
     <ProjectReference Include="..\..\src\FaceRecognitionDotNet\FaceRecognitionDotNet.csproj" />
   </ItemGroup>
 

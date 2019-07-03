@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DlibDotNet\src\DlibDotNet\DlibDotNet.csproj" />
+    <ProjectReference Include="..\DlibDotNet\src\DlibDotNet\DlibDotNet.csproj" />
   </ItemGroup>
 
 </Project>
