@@ -96,7 +96,7 @@ foreach($BuildTarget in $BuildTargets)
   Set-Location -Path "$TargetDir"
   
   # delete local project reference
-  dotnet remove reference ..\..\DlibDotNet\src\DlibDotNet\DlibDotNet.csproj > $null
+  dotnet remove reference ..\..\src\DlibDotNet\src\DlibDotNet\DlibDotNet.csproj > $null
   dotnet remove reference ..\..\src\FaceRecognitionDotNet\FaceRecognitionDotNet.csproj > $null
   
   # restore package from local nuget pacakge

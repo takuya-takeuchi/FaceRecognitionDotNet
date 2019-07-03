@@ -1,17 +1,14 @@
 #!/bin/bash
 
 VERSION=$1
-OS='osx'
-OSVERSION=$4
+OS='raspbian'
 
 CURDIR=${pwd}
 FRDNROOT=`dirname $(pwd)`
 WORK=${FRDNROOT}/work
 
 packages=(
-    "FaceRecognitionDotNet"
-    "FaceRecognitionDotNet.MKL"
-    #"cuda"
+    "FaceRecognitionDotNet.ARM"
 )
 
 for package in "${packages[@]}" ; do
