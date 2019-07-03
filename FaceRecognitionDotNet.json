@@ -1,0 +1,11 @@
+{
+   "packaging" : {
+      "node": "windows-cuda"
+   },
+   "test" : {
+      "linux-arm-node": "linux-arm-raspberrypi",
+      "linux-node": "windows-cuda",
+      "osx-node":  "mac",
+      "windows-node": "windows-cuda"
+   }
+}
