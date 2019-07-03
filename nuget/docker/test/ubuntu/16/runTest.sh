@@ -6,7 +6,7 @@ OS=$3
 OSVERSION=$4
 
 FRDNROOT=/opt/data/FaceRecognitionDotNet
-WORK=/opt/data/work
+WORK=/opt/data/work/test
 TESTDIR=${FRDNROOT}/nuget/artifacts/test/${PACKAGE}.${VERSION}/${OS}/${OSVERSION}
 
 

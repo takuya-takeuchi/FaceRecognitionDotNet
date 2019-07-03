@@ -6,7 +6,7 @@ OSVERSION=$4
 
 CURDIR=${pwd}
 FRDNROOT=`dirname $(pwd)`
-WORK=${FRDNROOT}/work
+WORK=${FRDNROOT}/work/test
 
 packages=(
     "FaceRecognitionDotNet"
