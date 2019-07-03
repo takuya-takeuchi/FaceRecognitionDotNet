@@ -17,9 +17,7 @@ $DistributionVersion="16"
 $Current = Get-Location
 $FaceRecognitionDotNetRoot = (Split-Path (Get-Location) -Parent)
 $FaceRecognitionDotNetSourceRoot = Join-Path $FaceRecognitionDotNetRoot src
-$DockerDir = Join-Path $FaceRecognitionDotNetRoot  | `
-             Join-Path -ChildPath src  | `
-             Join-Path -ChildPath DlibDotNet  | `
+$DockerDir = Join-Path $FaceRecognitionDotNetRoot nuget | `
              Join-Path -ChildPath docker
 
 Set-Location -Path $DockerDir
@@ -59,9 +57,9 @@ foreach($BuildTarget in $BuildTargets)
   Write-Host "Start docker build -q -t $dockername $DockerFileDir --build-arg IMAGE_NAME=""$imagename""" -ForegroundColor Green
   docker build -q -t $dockername $DockerFileDir --build-arg IMAGE_NAME="$imagename"
 
-  Write-Host "Start docker run --rm -v ""$($FaceRecognitionDotNetRoot):/opt/data/DlibDotNet"" -t ""$dockername"" $Version $package $Distribution $DistributionVersion" -ForegroundColor Green
+  Write-Host "Start docker run --rm -v ""$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet"" -t ""$dockername"" $Version $package $Distribution $DistributionVersion" -ForegroundColor Green
   docker run --rm `
-             -v "$($FaceRecognitionDotNetRoot):/opt/data/DlibDotNet" `
+             -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
              -t "$dockername" $Version $package $Distribution $DistributionVersion
 }
 
