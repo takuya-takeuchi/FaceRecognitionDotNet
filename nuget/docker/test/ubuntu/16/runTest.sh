@@ -26,11 +26,7 @@ dotnet add package $PACKAGE -v $VERSION --source ${FRDNROOT}/nuget/ > /dev/null 
 
 dotnet test -c Release -r ${TESTDIR} --logger trx
 
-if [ $? -eq 0 ]; then
-   echo "Test Successful"
-else
-   echo "Test Fail for $package"
-   cd $CURDIR
+if [ $? -ne 0 ]; then
    exit -1
 fi
 

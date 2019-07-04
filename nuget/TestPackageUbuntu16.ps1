@@ -31,9 +31,9 @@ $ArchitectureHash = @{32 = "x86"; 64 = "x64"}
 $BuildTargets = @()
 $BuildTargets += New-Object PSObject -Property @{Target = "cpu";  Architecture = 64; CUDA = 0;   Package = "FaceRecognitionDotNet"         }
 $BuildTargets += New-Object PSObject -Property @{Target = "mkl";  Architecture = 64; CUDA = 0;   Package = "FaceRecognitionDotNet.MKL"     }
-$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 92;  Package = "FaceRecognitionDotNet.CUDA92"  }
-$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 100; Package = "FaceRecognitionDotNet.CUDA100" }
-$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 101; Package = "FaceRecognitionDotNet.CUDA101" }
+#$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 92;  Package = "FaceRecognitionDotNet.CUDA92"  }
+#$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 100; Package = "FaceRecognitionDotNet.CUDA100" }
+#$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 101; Package = "FaceRecognitionDotNet.CUDA101" }
 
 foreach($BuildTarget in $BuildTargets)
 {
@@ -61,6 +61,14 @@ foreach($BuildTarget in $BuildTargets)
   docker run --rm `
              -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
              -t "$dockername" $Version $package $Distribution $DistributionVersion
+
+  if ($lastexitcode -eq 0) {
+     Write-Host "Test Successful" -ForegroundColor Green
+  } else {
+     Write-Host "Test Fail for $package" -ForegroundColor Red
+     Set-Location -Path $Current
+     exit -1
+  }
 }
 
 # Move to Root directory 
