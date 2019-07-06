@@ -3,7 +3,11 @@ FROM ${IMAGE_NAME}:latest
 LABEL maintainer "Takuya Takeuchi <takuya.takeuchi.dev@gmail.com>"
 
 # install package to run
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb \
+ && dpkg -i packages-microsoft-prod.deb \
+ && rm packages-microsoft-prod.deb
+RUN apt-get update && apt-get install -y \
+    powershell \
     libgdiplus \
     libc6-dev \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
