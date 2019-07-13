@@ -4,7 +4,7 @@
    },
    "test" : {
       "linux-arm-node": "linux-arm-raspberrypi",
-      "linux-node": "windows-cuda",
+      "linux-node": "linux-cuda",
       "osx-node":  "mac",
       "windows-node": "windows-cuda"
    }
