@@ -229,7 +229,7 @@ node('master')
         
         stage("Build Container")
         {
-            def nodeName = props['build']['linux-node']
+            def nodeName = props['build-container']['linux-node']
             node(nodeName)
             {
                 buildContainer()

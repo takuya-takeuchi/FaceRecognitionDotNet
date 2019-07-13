@@ -1,4 +1,7 @@
 {
+   "build-container" : {
+      "linux-node": "linux-cuda"
+   },
    "packaging" : {
       "node": "windows-cuda"
    },
