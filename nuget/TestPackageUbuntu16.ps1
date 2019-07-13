@@ -45,8 +45,8 @@ foreach($BuildTarget in $BuildTargets)
    }
    else
    {
-      $dockername = "facerecognition/test/$OperatingSystem/$OperatingSystemVersion/$Target/$cudaVersion"
       $cudaVersion = ($cudaVersion / 10).ToString("0.0")
+      $dockername = "facerecognition/test/$OperatingSystem/$OperatingSystemVersion/$Target/$cudaVersion"
       $imagename = "dlibdotnet/runtime/$OperatingSystem/$OperatingSystemVersion/$Target/$cudaVersion"
    }
 
