@@ -75,8 +75,10 @@ function RunTest($BuildTargets, $DependencyHash)
       # Copy Dependencies
       $OutDir = Join-Path $TargetDir bin | `
                   Join-Path -ChildPath Release | `
-                  Join-Path -ChildPath netcoreapp2.0
-      New-Item "$OutDir" -ItemType Directory > $null
+                  Join-Path -ChildPath netcoreapp2.0      
+      if (!(Test-Path "$OutDir")) {
+         New-Item "$OutDir" -ItemType Directory > $null
+      }
 
       if ($IsWindows)
       {

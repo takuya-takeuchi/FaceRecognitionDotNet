@@ -51,7 +51,7 @@ foreach($BuildTarget in $BuildTargets)
    }
 
    Write-Host "Start docker build -t $dockername $DockerFileDir --build-arg IMAGE_NAME=""$imagename""" -ForegroundColor Green
-   docker build -t $dockername $DockerFileDir --build-arg IMAGE_NAME="$imagename"
+   docker build --force-rm=true -t $dockername $DockerFileDir --build-arg IMAGE_NAME="$imagename"
 
    if ($lastexitcode -ne 0)
    {
@@ -62,16 +62,20 @@ foreach($BuildTarget in $BuildTargets)
 
    if ($BuildTarget.CUDA -ne 0)
    {   
-      Write-Host "Start docker run --runtime=nvidia --rm -v ""$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet"" -t ""$dockername"" $Version $package $OperatingSystem $OperatingSystemVersion" -ForegroundColor Green
+      Write-Host "Start docker run --runtime=nvidia --rm -v ""$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet"" -e LOCAL_UID=$(id -u $env:USER) -e LOCAL_GID=$(id -g $env:USER) -t ""$dockername"" $Version $package $OperatingSystem $OperatingSystemVersion" -ForegroundColor Green
       docker run --runtime=nvidia --rm `
                   -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
+                  -e "LOCAL_UID=$(id -u $env:USER)" `
+                  -e "LOCAL_GID=$(id -g $env:USER)" `
                   -t "$dockername" $Version $package $OperatingSystem $OperatingSystemVersion
    }
    else
    {   
-      Write-Host "Start docker run --rm -v ""$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet"" -t ""$dockername"" $Version $package $OperatingSystem $OperatingSystemVersion" -ForegroundColor Green
+      Write-Host "Start docker run --rm -v ""$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet"" -e LOCAL_UID=$(id -u $env:USER) -e LOCAL_GID=$(id -g $env:USER) -t ""$dockername"" $Version $package $OperatingSystem $OperatingSystemVersion" -ForegroundColor Green
       docker run --rm `
                   -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
+                  -e "LOCAL_UID=$(id -u $env:USER)" `
+                  -e "LOCAL_GID=$(id -g $env:USER)" `
                   -t "$dockername" $Version $package $OperatingSystem $OperatingSystemVersion
    }
 

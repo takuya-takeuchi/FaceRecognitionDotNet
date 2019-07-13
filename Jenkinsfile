@@ -2,12 +2,22 @@
 
 def errorMessage
 
+def getGitUrl()
+{
+    return "https://github.com/takuya-takeuchi/FaceRecognitionDotNet"
+}
+
+def getGitBranch()
+{
+    return "develop"
+}
+
 def getSource()
 {
-    def git_url = "https://github.com/takuya-takeuchi/FaceRecognitionDotNet"
-    def git_branch = "develop"
     def work
     def faceRecognitionDotNet
+    def gitUrl = getGitUrl()
+    def gitBranch = getGitBranch()
 
     if(isUnix())
     {
@@ -26,7 +36,7 @@ def getSource()
         {
             dir(work)
             {
-                sh 'git clone -b ' + git_branch + ' ' + git_url
+                sh "git clone -b ${git_branch} ${git_url}"
             }
         }
     }
@@ -47,7 +57,7 @@ def getSource()
         {
             dir(work)
             {
-                bat 'git clone -b ' + git_branch + ' ' + git_url
+                bat "git clone -b ${git_branch} ${git_url}"
             }
         }
     }
@@ -57,20 +67,24 @@ def getSource()
 
 def initialize(root)
 {
+    def gitBranch = getGitBranch()
+
     dir(root)
     {
         if(isUnix())
         {
             sh 'git clean -fxd nuget'
             sh 'git checkout .'
-            sh 'git pull origin develop'
+            sh "git checkout ${gitBranch}"
+            sh "git pull origin ${git_branch}"
             sh './Initialize.sh'
         }
         else
         {
             bat 'git clean -fxd nuget'
             bat 'git checkout .'
-            bat 'git pull origin develop'
+            bat "git checkout ${gitBranch}"
+            bat "git pull origin ${git_branch}"
             bat 'Initialize.bat'
         }
     }
@@ -136,13 +150,13 @@ def buildContainer()
         {
             if(isUnix())
             {     
-                sh 'powershell ./build_devel.ps1'  
-                sh 'powershell ./build_runtime.ps1'    
+                sh 'pwsh build_devel.ps1'  
+                sh 'pwsh build_runtime.ps1'    
             }
             else
             {
-                bat 'powershell .\\build_devel.ps1'  
-                bat 'powershell .\\build_runtime.ps1'    
+                bat 'pwsh build_devel.ps1'  
+                bat 'pwsh build_runtime.ps1'    
             }
         }   
     }
@@ -283,7 +297,7 @@ node('master')
                 node(nodeName)
                 {
                     echo 'Test on Windows'
-                    test('powershell .\\TestPackageWindows.ps1 ' + params.Version, 'test-windows')
+                    test('pwsh TestPackageWindows.ps1 ' + params.Version, 'test-windows')
                 }
             }
             builders['linux'] =
@@ -292,21 +306,21 @@ node('master')
                 node(nodeName)
                 {
                     echo 'Test on Linux'
-                    test('powershell .\\TestPackageUbuntu16.ps1 ' + params.Version, 'test-linux')
+                    test('pwsh TestPackageUbuntu16.ps1 ' + params.Version, 'test-linux')
                 }
             }
-            builders['linux-arm'] =
-            {
-                def nodeName = props['test']['linux-arm-node']
-                node(nodeName)
-                {
-                    echo 'Test on Linux-ARM'
-                    withEnv(["PATH+LOCAL=/usr/local/share/dotnet"])
-                    {
-                        test('./TestPackageRaspberryPi.sh ' + params.Version, 'test-linux-arm')
-                    }
-                }
-            }
+            // builders['linux-arm'] =
+            // {
+            //     def nodeName = props['test']['linux-arm-node']
+            //     node(nodeName)
+            //     {
+            //         echo 'Test on Linux-ARM'
+            //         withEnv(["PATH+LOCAL=/usr/local/share/dotnet"])
+            //         {
+            //             test('./TestPackageRaspberryPi.sh ' + params.Version, 'test-linux-arm')
+            //         }
+            //     }
+            // }
             builders['osx'] =
             {
                 def nodeName = props['test']['osx-node']
@@ -315,7 +329,7 @@ node('master')
                     echo 'Test on OSX'
                     withEnv(["PATH+LOCAL=/usr/local/share/dotnet"])
                     {
-                        test('./TestPackageOSX.sh ' + params.Version, 'test-osx')
+                        test('pwsh TestPackageOSX.ps1 ' + params.Version, 'test-osx')
                     }
                 }
             }
@@ -325,14 +339,14 @@ node('master')
 
         stage("result")
         {
-            def nodeName = props['packaging-node']
+            def nodeName = props['packaging']['node']
             node(nodeName)
             {
                 dir(buildWorkSpace)
                 {
                     unstash 'nupkg'
                     unstash 'test-windows'
-                    // unstash 'test-linux'
+                    unstash 'test-linux'
                     // unstash 'test-linux-arm'
                     unstash 'test-osx'
 
