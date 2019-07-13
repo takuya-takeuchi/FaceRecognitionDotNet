@@ -36,7 +36,7 @@ def getSource()
         {
             dir(work)
             {
-                sh "git clone -b ${git_branch} ${git_url}"
+                sh "git clone -b ${gitBranch} ${gitUrl}"
             }
         }
     }
@@ -57,7 +57,7 @@ def getSource()
         {
             dir(work)
             {
-                bat "git clone -b ${git_branch} ${git_url}"
+                bat "git clone -b ${gitBranch} ${gitUrl}"
             }
         }
     }
@@ -76,7 +76,7 @@ def initialize(root)
             sh 'git clean -fxd nuget'
             sh 'git checkout .'
             sh "git checkout ${gitBranch}"
-            sh "git pull origin ${git_branch}"
+            sh "git pull origin ${gitBranch}"
             sh './Initialize.sh'
         }
         else
@@ -84,7 +84,7 @@ def initialize(root)
             bat 'git clean -fxd nuget'
             bat 'git checkout .'
             bat "git checkout ${gitBranch}"
-            bat "git pull origin ${git_branch}"
+            bat "git pull origin ${gitBranch}"
             bat 'Initialize.bat'
         }
     }
