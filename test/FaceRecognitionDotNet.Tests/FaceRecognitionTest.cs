@@ -702,6 +702,7 @@ namespace FaceRecognitionDotNet.Tests
             {
                 var images = new[] { img, img, img };
                 var batchedDetectedFaces = this._FaceRecognition.BatchFaceLocations(images, 0).ToArray();
+                Assert.AreEqual(3, batchedDetectedFaces.Length);
 
                 foreach (var detectedFaces in batchedDetectedFaces)
                 {
