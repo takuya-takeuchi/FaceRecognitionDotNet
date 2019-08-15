@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCVSharpSample", "exampl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelenTraining", "examples\HelenTraining\HelenTraining.csproj", "{FCCD585F-1D3E-4AFB-9644-DAEC7B8CA6C4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindFacesInBatches", "examples\FindFacesInBatches\FindFacesInBatches.csproj", "{5F7CB2DF-54E3-461F-9FA9-F8B4BAFC54AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{FCCD585F-1D3E-4AFB-9644-DAEC7B8CA6C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCCD585F-1D3E-4AFB-9644-DAEC7B8CA6C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCCD585F-1D3E-4AFB-9644-DAEC7B8CA6C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F7CB2DF-54E3-461F-9FA9-F8B4BAFC54AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F7CB2DF-54E3-461F-9FA9-F8B4BAFC54AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F7CB2DF-54E3-461F-9FA9-F8B4BAFC54AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F7CB2DF-54E3-461F-9FA9-F8B4BAFC54AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{49ED9EF1-7E3E-4959-B152-52545B973906} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 		{3F6F21E5-DEF8-4F1A-BE8F-741A35B528D1} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 		{FCCD585F-1D3E-4AFB-9644-DAEC7B8CA6C4} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
+		{5F7CB2DF-54E3-461F-9FA9-F8B4BAFC54AC} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D44C572-D749-4A76-A199-8C598A08AE8A}
