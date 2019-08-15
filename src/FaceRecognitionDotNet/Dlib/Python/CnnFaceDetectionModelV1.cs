@@ -62,27 +62,30 @@ namespace FaceRecognitionDotNet.Dlib.Python
             var destImages = new List<Matrix<RgbPixel>>();
             var allRects = new List<IEnumerable<MModRect>>();
 
-            using (var pyr = new PyramidDown(2))
+            try
             {
-                // Copy the data into dlib based objects
-                foreach (var image in images)
+                using (var pyr = new PyramidDown(2))
                 {
-                    var matrix = new Matrix<RgbPixel>();
-                    var type = image.Mode;
-                    switch (type)
+                    // Copy the data into dlib based objects
+                    foreach (var image in images)
                     {
-                        case Mode.Greyscale:
-                        case Mode.Rgb:
-                            DlibDotNet.Dlib.AssignImage(image.Matrix, matrix);
-                            break;
-                        default:
-                            throw new NotSupportedException("Unsupported image type, must be 8bit gray or RGB image.");
+                        var matrix = new Matrix<RgbPixel>();
+                        var type = image.Mode;
+                        switch (type)
+                        {
+                            case Mode.Greyscale:
+                            case Mode.Rgb:
+                                DlibDotNet.Dlib.AssignImage(image.Matrix, matrix);
+                                break;
+                            default:
+                                throw new NotSupportedException("Unsupported image type, must be 8bit gray or RGB image.");
+                        }
+
+                        for (var i = 0; i < upsampleNumTimes; i++)
+                            DlibDotNet.Dlib.PyramidUp(matrix);
+
+                        destImages.Add(matrix);
                     }
-
-                    for (var i = 0; i < upsampleNumTimes; i++)
-                        DlibDotNet.Dlib.PyramidUp(matrix);
-
-                    destImages.Add(matrix);
 
                     for (var i = 1; i < destImages.Count; i++)
                         if (destImages[i - 1].Columns != destImages[i].Columns || destImages[i - 1].Rows != destImages[i].Rows)
@@ -103,9 +106,11 @@ namespace FaceRecognitionDotNet.Dlib.Python
                     }
                 }
             }
-
-            foreach (var matrix in destImages)
-                matrix.Dispose();
+            finally
+            {
+                foreach (var matrix in destImages)
+                    matrix.Dispose();
+            }
 
             return allRects;
         }
