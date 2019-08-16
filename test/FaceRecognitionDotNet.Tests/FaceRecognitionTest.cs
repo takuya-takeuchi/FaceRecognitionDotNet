@@ -95,7 +95,7 @@ namespace FaceRecognitionDotNet.Tests
             using (var image1 = FaceRecognition.LoadImageFile(path1))
             using (var image2 = FaceRecognition.LoadImageFile(path2))
             {
-                foreach (var numJitters in new[] { 1 })
+                foreach (var numJitters in new[] { 1, 2 })
                 {
                     var endodings1 = this._FaceRecognition.FaceEncodings(image1, null, numJitters).ToArray();
                     var endodings2 = this._FaceRecognition.FaceEncodings(image2, null, numJitters).ToArray();
@@ -151,7 +151,7 @@ namespace FaceRecognitionDotNet.Tests
             using (var image1 = FaceRecognition.LoadImageFile(path1))
             using (var image2 = FaceRecognition.LoadImageFile(path2))
             {
-                foreach (var numJitters in new[] { 1 })
+                foreach (var numJitters in new[] { 1, 2 })
                 {
                     var endodings1 = this._FaceRecognition.FaceEncodings(image1, null, numJitters).ToArray();
                     var endodings2 = this._FaceRecognition.FaceEncodings(image2, null, numJitters).ToArray();

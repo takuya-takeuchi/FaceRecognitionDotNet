@@ -86,11 +86,16 @@ namespace FaceRecognitionDotNet.Dlib.Python
                 {
                     for (var j = 0; j < batchFaces[i].Count(); ++j)
                     {
-                        var tmp = JitterImage(faceChips[index++], numJitters);
-                        var tmp2 = net.Operator(tmp, 16);
-                        var mat = DlibDotNet.Dlib.Mat(tmp2);
-                        var r = DlibDotNet.Dlib.Mean<double>(mat);
-                        faceDescriptors[i].Add(r);
+                        var tmp = JitterImage(faceChips[index++], numJitters).ToArray();
+                        using (var tmp2 = net.Operator(tmp, 16))
+                        using (var mat = DlibDotNet.Dlib.Mat(tmp2))
+                        {
+                            var r = DlibDotNet.Dlib.Mean<double>(mat);
+                            faceDescriptors[i].Add(r);
+                        }
+
+                        foreach (var matrix in tmp)
+                            matrix.Dispose();
                     }
                 }
 
