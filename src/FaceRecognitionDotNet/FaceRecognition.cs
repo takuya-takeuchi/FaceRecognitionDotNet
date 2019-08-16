@@ -112,6 +112,9 @@ namespace FaceRecognitionDotNet
         /// <exception cref="ArgumentNullException"><paramref name="images"/> is null.</exception>
         public IEnumerable<Location[]> BatchFaceLocations(IEnumerable<Image> images, int numberOfTimesToUpsample = 1, int batchSize = 128)
         {
+            if (images == null)
+                throw new ArgumentNullException(nameof(images));
+
             var imagesArray = images.ToArray();
             if (!imagesArray.Any())
                 yield break;

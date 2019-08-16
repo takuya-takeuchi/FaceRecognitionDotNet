@@ -27,7 +27,7 @@ namespace FaceRecognitionDotNet.Tests
 
         private const string ModelTempDirectory = "TempModels";
 
-        private IList<string> ModelFiles = new List<string>();
+        private readonly IList<string> ModelFiles = new List<string>();
 
         private const string ModelBaseUrl = "https://github.com/ageitgey/face_recognition_models/raw/master/face_recognition_models/models";
 
@@ -393,7 +393,7 @@ namespace FaceRecognitionDotNet.Tests
 
                         try
                         {
-                            var value = encoding.Size;
+                            var _ = encoding.Size;
                             Assert.Fail($"{nameof(FaceEncoding.Size)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
                         }
                         catch
@@ -408,17 +408,45 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [TestMethod]
+        public void FaceEncodingsException()
+        {
+            try
+            {
+                var _ = this._FaceRecognition.FaceEncodings(null).ToArray();
+                Assert.Fail($"{nameof(FaceRecognition.FaceEncodings)} must throw {typeof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+        }
+
+        [TestMethod]
         public void FaceLandmarkLarge()
         {
             const string testName = nameof(this.FaceLandmarkLarge);
-            this.FaceLandmark(testName, PredictorModel.Large);
+            this.FaceLandmark(testName, PredictorModel.Large, true);
+            this.FaceLandmark(testName, PredictorModel.Large, false);
         }
 
         [TestMethod]
         public void FaceLandmarkSmall()
         {
             const string testName = nameof(this.FaceLandmarkSmall);
-            this.FaceLandmark(testName, PredictorModel.Small);
+            this.FaceLandmark(testName, PredictorModel.Small, true);
+            this.FaceLandmark(testName, PredictorModel.Small, false);
+        }
+
+        [TestMethod]
+        public void FaceLandmarkException()
+        {
+            try
+            {
+                var _ = this._FaceRecognition.FaceLandmark(null).ToArray();
+                Assert.Fail($"{nameof(FaceRecognition.FaceLandmark)} must throw {typeof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
         }
 
         [TestMethod]
@@ -440,6 +468,19 @@ namespace FaceRecognitionDotNet.Tests
         {
             const string testName = nameof(this.FaceLocationHog);
             this.FaceLocation(testName, Model.Hog);
+        }
+
+        [TestMethod]
+        public void FaceLocationsException()
+        {
+            try
+            {
+                var _ = this._FaceRecognition.FaceLocations(null).ToArray();
+                Assert.Fail($"{nameof(FaceRecognition.FaceLocations)} must throw {typeof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
         }
 
         [TestInitialize]
@@ -586,40 +627,121 @@ namespace FaceRecognitionDotNet.Tests
                 File.WriteAllBytes(path, binary);
             }
 
-            var array2D = DlibDotNet.Dlib.LoadImage<RgbPixel>(path);
-            var bytes = array2D.ToBytes();
-
-            var image = FaceRecognition.LoadImage(bytes, array2D.Rows, array2D.Columns, 3);
-            Assert.IsTrue(image.Width == 419, $"Width of {path} is wrong");
-            Assert.IsTrue(image.Height == 600, $"Height of {path} is wrong");
-
-            image.Dispose();
-            Assert.IsTrue(image.IsDisposed, $"{typeof(Image)} should be already disposed.");
-
-            try
+            using (var array2D = DlibDotNet.Dlib.LoadImage<RgbPixel>(path))
             {
+                var bytes = array2D.ToBytes();
+
+                var image = FaceRecognition.LoadImage(bytes, array2D.Rows, array2D.Columns, 3);
+                Assert.IsTrue(image.Width == 419, $"Width of {path} is wrong");
+                Assert.IsTrue(image.Height == 600, $"Height of {path} is wrong");
+
                 image.Dispose();
+                Assert.IsTrue(image.IsDisposed, $"{typeof(Image)} should be already disposed.");
+
+                try
+                {
+                    image.Dispose();
+                }
+                catch
+                {
+                    Assert.Fail($"{typeof(Image)} must not throw exception even though {nameof(Image.Dispose)} method is called again.");
+                }
+
+                try
+                {
+                    var _ = image.Width;
+                    Assert.Fail($"{nameof(Image.Width)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
+                }
+                catch
+                {
+                }
+
+                try
+                {
+                    var _ = image.Height;
+                    Assert.Fail($"{nameof(Image.Height)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
+                }
+                catch
+                {
+                }
             }
-            catch
+        }
+
+        [TestMethod]
+        public void LoadImageGrayscale()
+        {
+            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
+            const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
+
+            var path = Path.Combine(ImageDirectory, file);
+            if (!File.Exists(path))
             {
-                Assert.Fail($"{typeof(Image)} must not throw exception even though {nameof(Image.Dispose)} method is called again.");
+                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path, binary);
+            }
+
+            using (var array2D = DlibDotNet.Dlib.LoadImage<RgbPixel>(path))
+            using (var array2DGray = new Array2D<byte>(array2D.Rows, array2D.Columns))
+            {
+                DlibDotNet.Dlib.AssignImage(array2DGray, array2D);
+                var bytes = array2DGray.ToBytes();
+
+                var image = FaceRecognition.LoadImage(bytes, array2DGray.Rows, array2DGray.Columns, 1);
+                Assert.IsTrue(image.Width == 419, $"Width of {path} is wrong");
+                Assert.IsTrue(image.Height == 600, $"Height of {path} is wrong");
+
+                image.Dispose();
+                Assert.IsTrue(image.IsDisposed, $"{typeof(Image)} should be already disposed.");
+
+                try
+                {
+                    image.Dispose();
+                }
+                catch
+                {
+                    Assert.Fail($"{typeof(Image)} must not throw exception even though {nameof(Image.Dispose)} method is called again.");
+                }
+
+                try
+                {
+                    var _ = image.Width;
+                    Assert.Fail($"{nameof(Image.Width)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
+                }
+                catch
+                {
+                }
+
+                try
+                {
+                    var _ = image.Height;
+                    Assert.Fail($"{nameof(Image.Height)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
+                }
+                catch
+                {
+                }
+            }
+        }
+
+        [TestMethod]
+        public void LoadImageException()
+        {
+            try
+            {
+                var _ = FaceRecognition.LoadImage(null, 100, 100, 3);
+                Assert.Fail($"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
             }
 
             try
             {
-                var value = image.Width;
-                Assert.Fail($"{nameof(Image.Width)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
+                var _ = FaceRecognition.LoadImage(new byte[100 * 100 * 2], 100, 100, 2);
+                Assert.Fail($"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentOutOfRangeException)}.");
             }
-            catch
-            {
-            }
-
-            try
-            {
-                var value = image.Height;
-                Assert.Fail($"{nameof(Image.Height)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
-            }
-            catch
+            catch (ArgumentOutOfRangeException)
             {
             }
         }
@@ -761,6 +883,33 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [TestMethod]
+        public void TestBatchedFaceLocationsException()
+        {
+            using (var _ = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            {
+                var images = new Image[] { };
+
+                try
+                {
+                    var __ = this._FaceRecognition.BatchFaceLocations(images, 0).ToArray();
+                }
+                catch (Exception)
+                {
+                    Assert.Fail($"{nameof(FaceRecognition.BatchFaceLocations)} must not throw exception even though {nameof(images)} is empty elements.");
+                }
+
+                try
+                {
+                    var __ = this._FaceRecognition.BatchFaceLocations(null, 0).ToArray();
+                    Assert.Fail($"{nameof(FaceRecognition.BatchFaceLocations)} must throw {typeof(ArgumentNullException)}.");
+                }
+                catch (ArgumentNullException)
+                {
+                }
+            }
+        }
+
+        [TestMethod]
         public void TestCnnFaceLocations()
         {
             using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
@@ -828,6 +977,88 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [TestMethod]
+        public void TestCompareFaceException()
+        {
+            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama2.jpg")))
+            {
+                using (var faceEncodingA1 = this._FaceRecognition.FaceEncodings(imgA1).ToArray()[0])
+                using (var faceEncodingA2 = this._FaceRecognition.FaceEncodings(imgA2).ToArray()[0])
+                {
+                    try
+                    {
+                        FaceRecognition.CompareFace(faceEncodingA1, null);
+                        Assert.Fail($"{nameof(FaceRecognition.CompareFace)} must throw {typeof(ArgumentNullException)}.");
+                    }
+                    catch (ArgumentNullException)
+                    {
+                    }
+
+                    try
+                    {
+                        FaceRecognition.CompareFace(null, faceEncodingA2);
+                        Assert.Fail($"{nameof(FaceRecognition.CompareFace)} must throw {typeof(ArgumentNullException)}.");
+                    }
+                    catch (ArgumentNullException)
+                    {
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
+        public void TestCompareFacesException()
+        {
+            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama2.jpg")))
+            using (var imgA3 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama3.jpg")))
+            using (var imgB1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "biden.jpg")))
+            {
+                using (var faceEncodingA1 = this._FaceRecognition.FaceEncodings(imgA1).ToArray()[0])
+                using (var faceEncodingA2 = this._FaceRecognition.FaceEncodings(imgA2).ToArray()[0])
+                using (var faceEncodingA3 = this._FaceRecognition.FaceEncodings(imgA3).ToArray()[0])
+                using (var faceEncodingB1 = this._FaceRecognition.FaceEncodings(imgB1).ToArray()[0])
+                {
+                    var facesToCompare = new[]
+                    {
+                        faceEncodingA2,
+                        faceEncodingA3,
+                        faceEncodingB1
+                    };
+
+                    try
+                    {
+                        var _ = FaceRecognition.CompareFaces(facesToCompare, null).ToArray();
+                        Assert.Fail($"{nameof(FaceRecognition.CompareFaces)} must throw {typeof(ArgumentNullException)}.");
+                    }
+                    catch (ArgumentNullException)
+                    {
+                    }
+
+                    try
+                    {
+                        var _ = FaceRecognition.CompareFaces(null, faceEncodingA1).ToArray();
+                        Assert.Fail($"{nameof(FaceRecognition.CompareFaces)} must throw {typeof(ArgumentNullException)}.");
+                    }
+                    catch (ArgumentNullException)
+                    {
+                    }
+
+                    try
+                    {
+                        foreach (var encoding in facesToCompare)
+                            encoding.Dispose();
+                        var _ = FaceRecognition.CompareFaces(facesToCompare, faceEncodingA1).ToArray();
+                        Assert.Fail($"{nameof(FaceRecognition.CompareFaces)} must throw {typeof(ObjectDisposedException)} if knownFaceEncodings contains disposed object.");
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
         public void TestCompareFacesEmptyLists()
         {
             using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "biden.jpg")))
@@ -867,6 +1098,123 @@ namespace FaceRecognitionDotNet.Tests
                     Assert.IsTrue(distanceResults[0] <= 0.6);
                     Assert.IsTrue(distanceResults[1] <= 0.6);
                     Assert.IsTrue(distanceResults[2] > 0.6);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void TestFaceDistances()
+        {
+            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama2.jpg")))
+            using (var imgA3 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama3.jpg")))
+            using (var imgB1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "biden.jpg")))
+            {
+                using (var faceEncodingA1 = this._FaceRecognition.FaceEncodings(imgA1).ToArray()[0])
+                using (var faceEncodingA2 = this._FaceRecognition.FaceEncodings(imgA2).ToArray()[0])
+                using (var faceEncodingA3 = this._FaceRecognition.FaceEncodings(imgA3).ToArray()[0])
+                using (var faceEncodingB1 = this._FaceRecognition.FaceEncodings(imgB1).ToArray()[0])
+                {
+                    var facesToCompare = new[]
+                    {
+                        faceEncodingA2,
+                        faceEncodingA3,
+                        faceEncodingA1
+                    };
+
+                    var results = FaceRecognition.FaceDistances(facesToCompare, faceEncodingB1).ToArray();
+                    Assert.IsTrue(!results.Any(d => d < 0.8));
+
+                    facesToCompare = new[]
+                    {
+                        faceEncodingA2,
+                        faceEncodingA3
+                    };
+
+                    var results2 = FaceRecognition.FaceDistances(facesToCompare, faceEncodingA1).ToArray();
+                    Assert.IsTrue(!results2.Any(d => d > 0.4));
+                }
+            }
+        }
+
+        [TestMethod]
+        public void FaceDistanceException()
+        {
+            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama2.jpg")))
+            {
+                using (var faceEncodingA1 = this._FaceRecognition.FaceEncodings(imgA1).ToArray()[0])
+                using (var faceEncodingA2 = this._FaceRecognition.FaceEncodings(imgA2).ToArray()[0])
+                {
+                    try
+                    {
+                        var _ = FaceRecognition.FaceDistance(faceEncodingA1, null);
+                        Assert.Fail($"{nameof(FaceRecognition.FaceDistance)} must throw {typeof(ArgumentNullException)}.");
+                    }
+                    catch (ArgumentNullException)
+                    {
+                    }
+
+                    try
+                    {
+                        var _ = FaceRecognition.FaceDistance(null, faceEncodingA2);
+                        Assert.Fail($"{nameof(FaceRecognition.FaceDistance)} must throw {typeof(ArgumentNullException)}.");
+                    }
+                    catch (ArgumentNullException)
+                    {
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
+        public void FaceDistancesException()
+        {
+            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama2.jpg")))
+            using (var imgA3 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama3.jpg")))
+            using (var imgB1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "biden.jpg")))
+            {
+                using (var faceEncodingA1 = this._FaceRecognition.FaceEncodings(imgA1).ToArray()[0])
+                using (var faceEncodingA2 = this._FaceRecognition.FaceEncodings(imgA2).ToArray()[0])
+                using (var faceEncodingA3 = this._FaceRecognition.FaceEncodings(imgA3).ToArray()[0])
+                using (var faceEncodingB1 = this._FaceRecognition.FaceEncodings(imgB1).ToArray()[0])
+                {
+                    var facesToCompare = new[]
+                    {
+                        faceEncodingA2,
+                        faceEncodingA3,
+                        faceEncodingB1
+                    };
+
+                    try
+                    {
+                        var _ = FaceRecognition.FaceDistances(facesToCompare, null).ToArray();
+                        Assert.Fail($"{nameof(FaceRecognition.FaceDistances)} must throw {typeof(ArgumentNullException)}.");
+                    }
+                    catch (ArgumentNullException)
+                    {
+                    }
+
+                    try
+                    {
+                        var _ = FaceRecognition.FaceDistances(null, faceEncodingA1).ToArray();
+                        Assert.Fail($"{nameof(FaceRecognition.FaceDistances)} must throw {typeof(ArgumentNullException)}.");
+                    }
+                    catch (ArgumentNullException)
+                    {
+                    }
+
+                    try
+                    {
+                        foreach (var encoding in facesToCompare)
+                            encoding.Dispose();
+                        var _ = FaceRecognition.FaceDistances(facesToCompare, faceEncodingA1).ToArray();
+                        Assert.Fail($"{nameof(FaceRecognition.FaceDistances)} must throw {typeof(ObjectDisposedException)} if faceEncodings contains disposed object.");
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                    }
                 }
             }
         }
@@ -1099,7 +1447,7 @@ namespace FaceRecognitionDotNet.Tests
             return expected - delta <= actual && actual <= expected + delta;
         }
 
-        private void FaceLandmark(string testName, PredictorModel model)
+        private void FaceLandmark(string testName, PredictorModel model, bool useKnownLocation)
         {
             const int pointSize = 2;
 
@@ -1116,7 +1464,11 @@ namespace FaceRecognitionDotNet.Tests
             {
                 using (var image = FaceRecognition.LoadImageFile(path, mode))
                 {
-                    var landmarks = this._FaceRecognition.FaceLandmark(image, null, model).ToArray();
+                    IEnumerable<Location> knownLocations = null;
+                    if (useKnownLocation)
+                        knownLocations = this._FaceRecognition.FaceLocations(image).ToArray();
+
+                    var landmarks = this._FaceRecognition.FaceLandmark(image, knownLocations, model).ToArray();
                     Assert.IsTrue(landmarks.Length > 1, $"{mode}");
 
                     foreach (var facePart in Enum.GetValues(typeof(FacePart)).Cast<FacePart>())
@@ -1137,7 +1489,7 @@ namespace FaceRecognitionDotNet.Tests
                                 var directory = Path.Combine(ResultDirectory, testName);
                                 Directory.CreateDirectory(directory);
 
-                                var dst = Path.Combine(directory, $"{facePart}-{mode}.bmp");
+                                var dst = Path.Combine(directory, $"{facePart}-{mode}-known_{useKnownLocation}.bmp");
                                 bitmap.Save(dst, ImageFormat.Bmp);
                             }
                         }
@@ -1155,7 +1507,7 @@ namespace FaceRecognitionDotNet.Tests
                         var directory = Path.Combine(ResultDirectory, testName);
                         Directory.CreateDirectory(directory);
 
-                        var dst = Path.Combine(directory, $"All-{mode}.bmp");
+                        var dst = Path.Combine(directory, $"All-{mode}-known_{useKnownLocation}.bmp");
                         bitmap.Save(dst, ImageFormat.Bmp);
                     }
                 }

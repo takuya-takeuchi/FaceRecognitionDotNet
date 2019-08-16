@@ -11,15 +11,9 @@ if ([string]::IsNullOrEmpty($token))
 
 Write-Host "Environmental Value 'CODECOV_TOKEN' is ${token}." -ForegroundColor Green
 
-$Current = Get-Location
-$CoverageDir = Join-Path $Current CoverageResults
-if (!(Test-Path "$CoverageDir"))
-{
-    New-Item "$CoverageDir" -ItemType Directory > $null
-}
-
 # install coverlet
 dotnet tool install --global coverlet.console --version $CoverletVersion > $null
+dotnet add test\FaceRecognitionDotNet.Tests\FaceRecognitionDotNet.Tests.csproj package coverlet.msbuild > $null
 # install codecov but it is not used from test project
 dotnet add test\FaceRecognitionDotNet.Tests\FaceRecognitionDotNet.Tests.csproj package Codecov --version $CodecovVersion > $null
 
