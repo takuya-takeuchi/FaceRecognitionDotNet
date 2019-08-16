@@ -1,18 +1,30 @@
-# ![Alt text](nuget/face48.png "FaceRecognition.Net") FaceRecognition.Net [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
+# ![Alt text](nuget/face48.png "FaceRecognition.Net") FaceRecognition.Net [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)]() [![codecov](https://codecov.io/gh/takuya-takeuchi/FaceRecognitionDotNet/branch/master/graph/badge.svg)](https://codecov.io/gh/takuya-takeuchi/FaceRecognitionDotNet)
 
 The world's simplest facial recognition api for .NET  
 This repository is porting https://github.com/ageitgey/face_recognition by C#.
 
 This package supports cross platform, Windows, Linux and MacOSX!!
 
-|Package|Windows|Linux|MacOSX|
-|---|---|---|---|
-|FaceRecognitionDotNet|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet)|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet)|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet)|
-|FaceRecognitionDotNet for CUDA 9.2|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA92.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA92)|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA92.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA92)|N/A|
-|FaceRecognitionDotNet for CUDA 10.0|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA100.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA100)|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA100.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA100)|N/A|
-|FaceRecognitionDotNet for CUDA 10.1|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA101.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA101)|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA101.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA101)|N/A|
-|FaceRecognitionDotNet for Intel MKL|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
-|FaceRecognitionDotNet for ARM|N/A|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet-ARM.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet-ARM)|N/A|
+|Package|OS|x86|x64|ARM|ARM64|Nuget|
+|---|---|---|---|---|---|---|
+|FaceRecognitionDotNet (CPU)|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet)|
+||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet)|
+||OSX|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet)|
+|FaceRecognitionDotNet for CUDA 9.2|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA92.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA92)|
+||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA92.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA92)|
+||OSX|-|-|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA92.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA92)|
+|FaceRecognitionDotNet for CUDA 10.0|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA100.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA100)|
+||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA100.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA100)|
+||OSX|-|-|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA100.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA100)|
+|FaceRecognitionDotNet for CUDA 10.1|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA101.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA101)|
+||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA101.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA101)|
+||OSX|-|-|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA101.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA101)|
+|FaceRecognitionDotNet for Intel MKL|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
+||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
+||OSX|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
+|FaceRecognitionDotNet for ARM|Windows|-|-|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet-ARM.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet-ARM)|
+||Linux|-|-|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet-ARM.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet-ARM)|
+||OSX|-|-|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet-ARM.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet-ARM)|
 
 ##### :warning: FaceRecognitionDotNet for ARM is not tested yet
 

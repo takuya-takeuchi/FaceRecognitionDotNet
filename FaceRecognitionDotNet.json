@@ -1,0 +1,14 @@
+{
+   "build-container" : {
+      "linux-node": "linux-cuda"
+   },
+   "packaging" : {
+      "node": "windows-cuda"
+   },
+   "test" : {
+      "linux-arm-node": "linux-arm-raspberrypi",
+      "linux-node": "linux-cuda",
+      "osx-node":  "mac",
+      "windows-node": "windows-cuda"
+   }
+}
