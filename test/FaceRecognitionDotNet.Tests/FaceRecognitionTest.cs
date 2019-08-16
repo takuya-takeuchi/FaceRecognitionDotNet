@@ -379,7 +379,27 @@ namespace FaceRecognitionDotNet.Tests
                     Assert.IsTrue(encodings.Length > 1, "");
 
                     foreach (var encoding in encodings)
+                    {
                         encoding.Dispose();
+
+                        try
+                        {
+                            encoding.Dispose();
+                        }
+                        catch
+                        {
+                            Assert.Fail($"{typeof(FaceEncoding)} must not throw exception even though {nameof(FaceEncoding.Dispose)} method is called again.");
+                        }
+
+                        try
+                        {
+                            var value = encoding.Size;
+                            Assert.Fail($"{nameof(FaceEncoding.Size)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
+                        }
+                        catch
+                        {
+                        }
+                    }
 
                     foreach (var encoding in encodings)
                         Assert.IsTrue(encoding.IsDisposed, $"{typeof(FaceEncoding)} should be already disposed.");
@@ -575,6 +595,33 @@ namespace FaceRecognitionDotNet.Tests
 
             image.Dispose();
             Assert.IsTrue(image.IsDisposed, $"{typeof(Image)} should be already disposed.");
+
+            try
+            {
+                image.Dispose();
+            }
+            catch
+            {
+                Assert.Fail($"{typeof(Image)} must not throw exception even though {nameof(Image.Dispose)} method is called again.");
+            }
+
+            try
+            {
+                var value = image.Width;
+                Assert.Fail($"{nameof(Image.Width)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                var value = image.Height;
+                Assert.Fail($"{nameof(Image.Height)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
+            }
+            catch
+            {
+            }
         }
 
         [TestMethod]
