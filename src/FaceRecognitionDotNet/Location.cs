@@ -28,11 +28,6 @@ namespace FaceRecognitionDotNet
             this.Bottom = bottom;
         }
 
-        internal Location(Rectangle rect) :
-            this(rect.Left, rect.Top, rect.Right, rect.Bottom)
-        {
-        }
-
         #endregion
 
         #region Properties
