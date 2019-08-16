@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0"?>
 <package >
   <metadata>
-    <id>FaceRecognitionDotNet.ARM</id>
+    <id>FaceRecognitionDotNet.CUDA92</id>
     <version>1.2.3.13</version>
-    <title>FaceRecognitionDotNet (for ARM)</title>
+    <title>FaceRecognitionDotNet for CUDA 9.2</title>
     <authors>Takuya Takeuchi</authors>
     <owners>Takuya Takeuchi</owners>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
@@ -19,16 +19,16 @@ This library is ported from https://github.com/ageitgey/face_recognition by C#.<
     <serviceable>true</serviceable>
     <dependencies>
       <group targetFramework="netstandard2.0">
-        <dependency id="DlibDotNet.ARM" version="19.17.0.20190623" />
+        <dependency id="DlibDotNet.CUDA92" version="19.17.0.20190623" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="..\src\FaceRecognitionDotNet\bin\Release\netstandard2.0\FaceRecognitionDotNet.dll" target="lib\netstandard2.0" />
-    <file src="..\src\FaceRecognitionDotNet\bin\Release\netstandard2.0\FaceRecognitionDotNet.xml" target="lib\netstandard2.0" />
-    <file src="..\src\FaceRecognitionDotNet\docs\ja\*.xml" target="lib\netstandard2.0\ja" />
+    <file src="..\..\src\FaceRecognitionDotNet\bin\Release\netstandard2.0\FaceRecognitionDotNet.dll" target="lib\netstandard2.0" />
+    <file src="..\..\src\FaceRecognitionDotNet\bin\Release\netstandard2.0\FaceRecognitionDotNet.xml" target="lib\netstandard2.0" />
+    <file src="..\..\src\FaceRecognitionDotNet\docs\ja\*.xml" target="lib\netstandard2.0\ja" />
     
     <!-- license -->
-    <file src="..\LICENSE.txt" target="" /> 
+    <file src="..\..\LICENSE.txt" target="" /> 
   </files>
 </package>
