@@ -28,6 +28,29 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 
 ##### :warning: FaceRecognitionDotNet for ARM is not tested yet
 
+## Support API
+
+|face_recognition API|Corresponding API|Note|
+|----|----|:----|
+|batch_face_locations|BatchFaceLocations||
+|compare_faces|CompareFaces||
+|face_distance|FaceDistance||
+|face_encodings|FaceEncodings||
+|face_landmarks|FaceLandmarks|And support Helen dataset :warning:|
+|face_locations|FaceLocations||
+|load_image_file|LoadImageFile||
+|-|LoadImage|From memory data|
+|-|ClassifyGender|Use UTKFace dataset :warning:|
+
+##### :warning: Warning
+
+You must train dataset by yourself.
+I will **NOT** provide pretrained model file due to avoiding license issue.
+You can check the following examples to train dataset.
+
+* examples/GenderTraining
+* examples/HelenTraining
+
 ## Demo
 
 #### Face Recognition
