@@ -2,8 +2,8 @@ Param()
 
 # import class and function
 $ScriptPath = $PSScriptRoot
-$DlibDotNetRoot = Split-Path $ScriptPath -Parent
-$NugetPath = Join-Path $DlibDotNetRoot "nuget" | `
+$FaceRecognitionDotNetRoot = Split-Path $ScriptPath -Parent
+$NugetPath = Join-Path $FaceRecognitionDotNetRoot "nuget" | `
              Join-Path -ChildPath "BuildUtils.ps1"
 import-module $NugetPath -function *
 
@@ -13,13 +13,16 @@ $DistributionVersion="16"
 
 # Store current directory
 $Current = Get-Location
-$DlibDotNetRoot = (Split-Path (Get-Location) -Parent)
-$DlibDotNetSourceRoot = Join-Path $DlibDotNetRoot src
-$DockerDir = Join-Path $Current docker
+$FaceRecognitionDotNetRoot = (Split-Path (Get-Location) -Parent)
+$DlibDotNetRoot = Join-Path $FaceRecognitionDotNetRoot src | `
+                  Join-Path -ChildPath DlibDotNet
+$FaceRecognitionDotNetSourceRoot = Join-Path $FaceRecognitionDotNetRoot src
+$DockerDir = Join-Path $FaceRecognitionDotNetRoot nuget | `
+             Join-Path -ChildPath docker
 
 Set-Location -Path $DockerDir
 
-$DockerFileDir = Join-Path $DockerDir build  | `
+$DockerFileDir = Join-Path $DockerDir build | `
                  Join-Path -ChildPath $Distribution | `
                  Join-Path -ChildPath $DistributionVersion
 
@@ -79,9 +82,9 @@ foreach($BuildTarget in $BuildTargets)
    # Build binary
    foreach ($key in $BuildSourceHash.keys)
    {
-      Write-Host "Start 'docker run --rm -v ""$($DlibDotNetRoot):/opt/data/DlibDotNet"" -e LOCAL_UID=$(id -u $env:USER) -e LOCAL_GID=$(id -g $env:USER) -t $dockername'" -ForegroundColor Green
+      Write-Host "Start 'docker run --rm -v ""$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet"" -e LOCAL_UID=$(id -u $env:USER) -e LOCAL_GID=$(id -g $env:USER) -t $dockername'" -ForegroundColor Green
       docker run --rm `
-                  -v "$($DlibDotNetRoot):/opt/data/DlibDotNet" `
+                  -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
                   -e "LOCAL_UID=$(id -u $env:USER)" `
                   -e "LOCAL_GID=$(id -g $env:USER)" `
                   -t "$dockername" $key $target $architecture $platform $option
@@ -96,7 +99,7 @@ foreach($BuildTarget in $BuildTargets)
    # Copy output binary
    foreach ($key in $BuildSourceHash.keys)
    {
-      $srcDir = Join-Path $DlibDotNetSourceRoot $key
+      $srcDir = Join-Path $FaceRecognitionDotNetSourceRoot $key
       $dll = $BuildSourceHash[$key]
       $dstDir = Join-Path $Current $libraryDir
 
