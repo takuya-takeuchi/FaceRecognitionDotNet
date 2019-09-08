@@ -19,6 +19,9 @@ namespace DlibDotNet
         [DllImport(NativeLibrary, CallingConvention = CallingConvention)]
         public static extern IntPtr LossMulticlassLog_gender_train_type_create();
 
+        [DllImport(NativeLibrary, CallingConvention = CallingConvention)]
+        public static extern void LossMulticlassLog_gender_train_type_delete(IntPtr @base);
+
     }
 
 }

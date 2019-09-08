@@ -90,10 +90,14 @@ namespace FaceRecognitionDotNet
             if (File.Exists(predictorGenderModel))
             {
                 var ret = NativeMethods.LossMulticlassLog_gender_train_type_create();
-                LossMulticlassLogRegistry.Add(ret);
+                var networkId = LossMulticlassLogRegistry.GetId(ret);
+                if (LossMulticlassLogRegistry.Contains(networkId))
+                    NativeMethods.LossMulticlassLog_gender_train_type_delete(ret);
+                else
+                    LossMulticlassLogRegistry.Add(ret);
 
                 this._GenderPredictorGender?.Dispose();
-                this._GenderPredictorGender = LossMulticlassLog.Deserialize(predictorGenderModel, 100);
+                this._GenderPredictorGender = LossMulticlassLog.Deserialize(predictorGenderModel, networkId);
             }
         }
 
