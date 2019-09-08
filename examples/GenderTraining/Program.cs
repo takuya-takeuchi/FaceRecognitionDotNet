@@ -126,7 +126,7 @@ namespace GenderTraining
             labels = labelList;
         }
 
-        private static void Train(string baseName, string dataset, uint epoch, double learningRate, double minLerningRate, uint miniBatchSize, uint validation)
+        private static void Train(string baseName, string dataset, uint epoch, double learningRate, double minLearningRate, uint miniBatchSize, uint validation)
         {
             try
             {
@@ -152,7 +152,7 @@ namespace GenderTraining
                 using (var trainer = new DnnTrainer<LossMulticlassLog>(net))
                 {
                     trainer.SetLearningRate(learningRate);
-                    trainer.SetMinLearningRate(minLerningRate);
+                    trainer.SetMinLearningRate(minLearningRate);
                     trainer.SetMiniBatchSize(miniBatchSize);
                     trainer.BeVerbose();
                     trainer.SetSynchronizationFile(baseName, 180);
@@ -216,7 +216,7 @@ namespace GenderTraining
                                 sw.WriteLine(validationLog);
                             }
 
-                            if (lr < minLerningRate)
+                            if (lr < minLearningRate)
                                 break;
                         }
 
