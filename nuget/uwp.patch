@@ -1,0 +1,705 @@
+diff --git a/dlib/dir_nav.h b/dlib/dir_nav.h
+index c5956615..a050524c 100644
+--- a/dlib/dir_nav.h
++++ b/dlib/dir_nav.h
+@@ -7,11 +7,11 @@
+ #include "platform.h"
+ 
+ 
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
+ #include "dir_nav/windows.h"
+ #endif
+ 
+-#ifndef WIN32
++#ifndef WIN32_UNIVERSAL_APP
+ #include "dir_nav/posix.h"
+ #endif
+ 
+diff --git a/dlib/dir_nav/dir_nav_kernel_1.cpp b/dlib/dir_nav/dir_nav_kernel_1.cpp
+index 9891d5df..53397cd3 100644
+--- a/dlib/dir_nav/dir_nav_kernel_1.cpp
++++ b/dlib/dir_nav/dir_nav_kernel_1.cpp
+@@ -4,7 +4,7 @@
+ #define DLIB_DIR_NAV_KERNEL_1_CPp_
+ #include "../platform.h"
+ 
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
+ 
+ #include "dir_nav_kernel_1.h"
+ #include "../string.h"
+@@ -252,7 +252,7 @@ namespace dlib
+ 
+ }
+ 
+-#endif // WIN32
++#endif // WIN32_UNIVERSAL_APP
+ 
+ #endif // DLIB_DIR_NAV_KERNEL_1_CPp_
+ 
+diff --git a/dlib/external/libpng/pngconf.h b/dlib/external/libpng/pngconf.h
+index 8c534722..95cbad35 100644
+--- a/dlib/external/libpng/pngconf.h
++++ b/dlib/external/libpng/pngconf.h
+@@ -211,8 +211,8 @@
+  * compiler-specific macros to the values required to change the calling
+  * conventions of the various functions.
+  */
+-#if defined(_Windows) || defined(_WINDOWS) || defined(WIN32) ||\
+-    defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++#if defined(_Windows) || defined(_WINDOWS) || defined(WIN32_UNIVERSAL_APP) ||\
++    defined(_WIN32_UNIVERSAL_APP) || defined(__WIN32_UNIVERSAL_APP__) || defined(__CYGWIN__)
+   /* Windows system (DOS doesn't support DLLs).  Includes builds under Cygwin or
+    * MinGW on any architecture currently supported by Windows.  Also includes
+    * Watcom builds but these need special treatment because they are not
+diff --git a/dlib/external/libpng/pngpriv.h b/dlib/external/libpng/pngpriv.h
+index 43b2ef4c..bc876d1f 100644
+--- a/dlib/external/libpng/pngpriv.h
++++ b/dlib/external/libpng/pngpriv.h
+@@ -451,8 +451,8 @@
+ #  include <alloc.h>
+ #endif
+ 
+-#if defined(WIN32) || defined(_Windows) || defined(_WINDOWS) || \
+-    defined(_WIN32) || defined(__WIN32__)
++#if defined(WIN32_UNIVERSAL_APP) || defined(_Windows) || defined(_WINDOWS) || \
++    defined(_WIN32_UNIVERSAL_APP) || defined(__WIN32_UNIVERSAL_APP__)
+ #  include <windows.h>  /* defines _WINDOWS_ macro */
+ #endif
+ #endif /* PNG_VERSION_INFO_ONLY */
+diff --git a/dlib/external/pybind11/include/pybind11/detail/common.h b/dlib/external/pybind11/include/pybind11/detail/common.h
+index 7d41cd63..02cdc862 100644
+--- a/dlib/external/pybind11/include/pybind11/detail/common.h
++++ b/dlib/external/pybind11/include/pybind11/detail/common.h
+@@ -72,7 +72,7 @@
+ #endif
+ 
+ #if !defined(PYBIND11_EXPORT)
+-#  if defined(WIN32) || defined(_WIN32)
++#  if defined(WIN32_UNIVERSAL_APP) || defined(_WIN32_UNIVERSAL_APP)
+ #    define PYBIND11_EXPORT __declspec(dllexport)
+ #  else
+ #    define PYBIND11_EXPORT __attribute__ ((visibility("default")))
+@@ -112,7 +112,7 @@
+ #include <frameobject.h>
+ #include <pythread.h>
+ 
+-#if defined(_WIN32) && (defined(min) || defined(max))
++#if defined(_WIN32_UNIVERSAL_APP) && (defined(min) || defined(max))
+ #  error Macro clash with min and max -- define NOMINMAX when compiling your program on Windows
+ #endif
+ 
+diff --git a/dlib/external/zlib/gzguts.h b/dlib/external/zlib/gzguts.h
+index 2bb0b049..94f528ba 100644
+--- a/dlib/external/zlib/gzguts.h
++++ b/dlib/external/zlib/gzguts.h
+@@ -35,11 +35,11 @@
+ #endif
+ #include <fcntl.h>
+ 
+-#ifdef _WIN32
++#ifdef _WIN32_UNIVERSAL_APP
+ #  include <stddef.h>
+ #endif
+ 
+-#if defined(__TURBOC__) || defined(_MSC_VER) || defined(_WIN32)
++#if defined(__TURBOC__) || defined(_MSC_VER) || defined(_WIN32_UNIVERSAL_APP)
+ #  include <io.h>
+ #else
+ #  include <unistd.h>
+@@ -83,7 +83,7 @@
+ #  ifdef __TURBOC__
+ #    define NO_vsnprintf
+ #  endif
+-#  ifdef WIN32
++#  ifdef WIN32_UNIVERSAL_APP
+ /* In Win32, vsnprintf is available as the "non-ANSI" _vsnprintf. */
+ #    if !defined(vsnprintf) && !defined(NO_vsnprintf)
+ #      if !defined(_MSC_VER) || ( defined(_MSC_VER) && _MSC_VER < 1500 )
+diff --git a/dlib/external/zlib/gzlib.c b/dlib/external/zlib/gzlib.c
+index fae202ef..220d1e90 100644
+--- a/dlib/external/zlib/gzlib.c
++++ b/dlib/external/zlib/gzlib.c
+@@ -5,7 +5,7 @@
+ 
+ #include "gzguts.h"
+ 
+-#if defined(_WIN32) && !defined(__BORLANDC__)
++#if defined(_WIN32_UNIVERSAL_APP) && !defined(__BORLANDC__)
+ #  define LSEEK _lseeki64
+ #else
+ #if defined(_LARGEFILE64_SOURCE) && _LFS64_LARGEFILE-0
+@@ -188,7 +188,7 @@ local gzFile gz_open(path, fd, mode)
+     }
+ 
+     /* save the path name for error messages */
+-#ifdef _WIN32
++#ifdef _WIN32_UNIVERSAL_APP
+     if (fd == -2) {
+         len = wcstombs(NULL, path, 0);
+         if (len == (size_t)-1)
+@@ -202,7 +202,7 @@ local gzFile gz_open(path, fd, mode)
+         free(state);
+         return NULL;
+     }
+-#ifdef _WIN32
++#ifdef _WIN32_UNIVERSAL_APP
+     if (fd == -2)
+         if (len)
+             wcstombs(state->path, path, len + 1);
+@@ -239,7 +239,7 @@ local gzFile gz_open(path, fd, mode)
+ 
+     /* open the file with the appropriate flags (or just use fd) */
+     state->fd = fd > -1 ? fd : (
+-#ifdef _WIN32
++#ifdef _WIN32_UNIVERSAL_APP
+         fd == -2 ? _wopen(path, oflag, 0666) :
+ #endif
+         open((const char *)path, oflag, 0666));
+@@ -301,7 +301,7 @@ gzFile ZEXPORT gzdopen(fd, mode)
+ }
+ 
+ /* -- see zlib.h -- */
+-#ifdef _WIN32
++#ifdef _WIN32_UNIVERSAL_APP
+ gzFile ZEXPORT gzopen_w(path, mode)
+     const wchar_t *path;
+     const char *mode;
+diff --git a/dlib/external/zlib/zconf.h b/dlib/external/zlib/zconf.h
+index 9987a775..fbd9c0d0 100644
+--- a/dlib/external/zlib/zconf.h
++++ b/dlib/external/zlib/zconf.h
+@@ -74,7 +74,7 @@
+ #    define gzoffset64            z_gzoffset64
+ #    define gzopen                z_gzopen
+ #    define gzopen64              z_gzopen64
+-#    ifdef _WIN32
++#    ifdef _WIN32_UNIVERSAL_APP
+ #      define gzopen_w              z_gzopen_w
+ #    endif
+ #    define gzprintf              z_gzprintf
+@@ -161,12 +161,12 @@
+ #if defined(_WINDOWS) && !defined(WINDOWS)
+ #  define WINDOWS
+ #endif
+-#if defined(_WIN32) || defined(_WIN32_WCE) || defined(__WIN32__)
+-#  ifndef WIN32
+-#    define WIN32
++#if defined(_WIN32_UNIVERSAL_APP) || defined(_WIN32_UNIVERSAL_APP_WCE) || defined(__WIN32_UNIVERSAL_APP__)
++#  ifndef WIN32_UNIVERSAL_APP
++#    define WIN32_UNIVERSAL_APP
+ #  endif
+ #endif
+-#if (defined(MSDOS) || defined(OS2) || defined(WINDOWS)) && !defined(WIN32)
++#if (defined(MSDOS) || defined(OS2) || defined(WINDOWS)) && !defined(WIN32_UNIVERSAL_APP)
+ #  if !defined(__GNUC__) && !defined(__FLAT__) && !defined(__386__)
+ #    ifndef SYS16BIT
+ #      define SYS16BIT
+@@ -201,7 +201,7 @@
+ #if !defined(STDC) && (defined(__GNUC__) || defined(__BORLANDC__))
+ #  define STDC
+ #endif
+-#if !defined(STDC) && (defined(MSDOS) || defined(WINDOWS) || defined(WIN32))
++#if !defined(STDC) && (defined(MSDOS) || defined(WINDOWS) || defined(WIN32_UNIVERSAL_APP))
+ #  define STDC
+ #endif
+ #if !defined(STDC) && (defined(OS2) || defined(__HOS_AIX__))
+@@ -305,12 +305,12 @@
+ #  endif
+ #endif
+ 
+-#if defined(WINDOWS) || defined(WIN32)
++#if defined(WINDOWS) || defined(WIN32_UNIVERSAL_APP)
+    /* If building or using zlib as a DLL, define ZLIB_DLL.
+     * This is not mandatory, but it offers a little performance increase.
+     */
+ #  ifdef ZLIB_DLL
+-#    if defined(WIN32) && (!defined(__BORLANDC__) || (__BORLANDC__ >= 0x500))
++#    if defined(WIN32_UNIVERSAL_APP) && (!defined(__BORLANDC__) || (__BORLANDC__ >= 0x500))
+ #      ifdef ZLIB_INTERNAL
+ #        define ZEXTERN extern __declspec(dllexport)
+ #      else
+@@ -330,7 +330,7 @@
+      /* No need for _export, use ZLIB.DEF instead. */
+      /* For complete Windows compatibility, use WINAPI, not __stdcall. */
+ #    define ZEXPORT WINAPI
+-#    ifdef WIN32
++#    ifdef WIN32_UNIVERSAL_APP
+ #      define ZEXPORTVA WINAPIV
+ #    else
+ #      define ZEXPORTVA FAR CDECL
+@@ -428,7 +428,7 @@ typedef uLong FAR uLongf;
+ #  endif
+ #endif
+ 
+-#ifdef _WIN32
++#ifdef _WIN32_UNIVERSAL_APP
+ #  ifndef Z_SOLO
+ #    include <stddef.h>         /* for wchar_t */
+ #  endif
+@@ -481,10 +481,10 @@ typedef uLong FAR uLongf;
+ #  define z_off_t long
+ #endif
+ 
+-#if !defined(_WIN32) && defined(Z_LARGE64)
++#if !defined(_WIN32_UNIVERSAL_APP) && defined(Z_LARGE64)
+ #  define z_off64_t off64_t
+ #else
+-#  if defined(_WIN32) && !defined(__GNUC__) && !defined(Z_SOLO)
++#  if defined(_WIN32_UNIVERSAL_APP) && !defined(__GNUC__) && !defined(Z_SOLO)
+ #    define z_off64_t __int64
+ #  else
+ #    define z_off64_t z_off_t
+diff --git a/dlib/external/zlib/zlib.h b/dlib/external/zlib/zlib.h
+index 3e0c7672..dec55784 100644
+--- a/dlib/external/zlib/zlib.h
++++ b/dlib/external/zlib/zlib.h
+@@ -1749,7 +1749,7 @@ ZEXTERN const z_crc_t FAR * ZEXPORT get_crc_table    OF((void));
+ ZEXTERN int            ZEXPORT inflateUndermine OF((z_streamp, int));
+ ZEXTERN int            ZEXPORT inflateResetKeep OF((z_streamp));
+ ZEXTERN int            ZEXPORT deflateResetKeep OF((z_streamp));
+-#if defined(_WIN32) && !defined(Z_SOLO)
++#if defined(_WIN32_UNIVERSAL_APP) && !defined(Z_SOLO)
+ ZEXTERN gzFile         ZEXPORT gzopen_w OF((const wchar_t *path,
+                                             const char *mode));
+ #endif
+diff --git a/dlib/external/zlib/zutil.c b/dlib/external/zlib/zutil.c
+index 23d2ebef..192b3c5d 100644
+--- a/dlib/external/zlib/zutil.c
++++ b/dlib/external/zlib/zutil.c
+@@ -139,7 +139,7 @@ const char * ZEXPORT zError(err)
+     return ERR_MSG(err);
+ }
+ 
+-#if defined(_WIN32_WCE)
++#if defined(_WIN32_UNIVERSAL_APP_WCE)
+     /* The Microsoft C Run-Time Library for Windows CE doesn't have
+      * errno.  We define it as a global variable to simplify porting.
+      * Its value is always 0 and should not be used.
+diff --git a/dlib/external/zlib/zutil.h b/dlib/external/zlib/zutil.h
+index 24ab06b1..5cf3f285 100644
+--- a/dlib/external/zlib/zutil.h
++++ b/dlib/external/zlib/zutil.h
+@@ -22,7 +22,7 @@
+ #include "zlib.h"
+ 
+ #if defined(STDC) && !defined(Z_SOLO)
+-#  if !(defined(_WIN32_WCE) && defined(_MSC_VER))
++#  if !(defined(_WIN32_UNIVERSAL_APP_WCE) && defined(_MSC_VER))
+ #    include <stddef.h>
+ #  endif
+ #  include <string.h>
+@@ -80,7 +80,7 @@ extern z_const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
+ 
+         /* target dependencies */
+ 
+-#if defined(MSDOS) || (defined(WINDOWS) && !defined(WIN32))
++#if defined(MSDOS) || (defined(WINDOWS) && !defined(WIN32_UNIVERSAL_APP))
+ #  define OS_CODE  0x00
+ #  ifndef Z_SOLO
+ #    if defined(__TURBOC__) || defined(__BORLANDC__)
+@@ -135,7 +135,7 @@ extern z_const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
+ #  define OS_CODE  0x0a
+ #endif
+ 
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
+ #  ifndef __CYGWIN__  /* Cygwin is Unix, not Win32 */
+ #    define OS_CODE  0x0b
+ #  endif
+@@ -150,7 +150,7 @@ extern z_const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
+ #endif
+ 
+ #if (defined(_MSC_VER) && (_MSC_VER > 600)) && !defined __INTERIX
+-#  if defined(_WIN32_WCE)
++#  if defined(_WIN32_UNIVERSAL_APP_WCE)
+ #    define fdopen(fd,mode) NULL /* No fdopen() */
+ #    ifndef _PTRDIFF_T_DEFINED
+        typedef int ptrdiff_t;
+@@ -168,7 +168,7 @@ extern z_const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
+ #endif
+ 
+ /* provide prototypes for these when building zlib without LFS */
+-#if !defined(_WIN32) && \
++#if !defined(_WIN32_UNIVERSAL_APP) && \
+     (!defined(_LARGEFILE64_SOURCE) || _LFS64_LARGEFILE-0 == 0)
+     ZEXTERN uLong ZEXPORT adler32_combine64 OF((uLong, uLong, z_off_t));
+     ZEXTERN uLong ZEXPORT crc32_combine64 OF((uLong, uLong, z_off_t));
+diff --git a/dlib/gui_core.h b/dlib/gui_core.h
+index 6ba54b11..111a5786 100644
+--- a/dlib/gui_core.h
++++ b/dlib/gui_core.h
+@@ -8,7 +8,7 @@
+ 
+ 
+ 
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
+ #include "gui_core/windows.h"
+ #else
+ #include "gui_core/xlib.h"
+diff --git a/dlib/gui_core/gui_core_kernel_1.cpp b/dlib/gui_core/gui_core_kernel_1.cpp
+index 2a6efa4c..d25f6997 100644
+--- a/dlib/gui_core/gui_core_kernel_1.cpp
++++ b/dlib/gui_core/gui_core_kernel_1.cpp
+@@ -4,7 +4,7 @@
+ #define DLIB_GUI_CORE_KERNEL_1_CPp_
+ #include "../platform.h"
+ 
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
+ 
+ #include "gui_core_kernel_1.h"
+ 
+@@ -2198,7 +2198,7 @@ namespace dlib
+ }
+ 
+ 
+-#endif // WIN32
++#endif // WIN32_UNIVERSAL_APP
+ 
+ #endif // DLIB_GUI_CORE_KERNEL_1_CPp_
+ 
+diff --git a/dlib/gui_widgets/nativefont.h b/dlib/gui_widgets/nativefont.h
+index 2de0edfa..4e659ce8 100644
+--- a/dlib/gui_widgets/nativefont.h
++++ b/dlib/gui_widgets/nativefont.h
+@@ -17,7 +17,7 @@
+ #include <stdlib.h>
+ #include <locale.h>
+ 
+-#if defined(WIN32)
++#if defined(WIN32_UNIVERSAL_APP)
+ #include <windows.h>
+ #include <mbstring.h>
+ #elif defined(POSIX)
+@@ -38,7 +38,7 @@ namespace nativefont
+         typedef dlib::uint8 byte;
+ 
+ 
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
+         template <typename T> struct input2native_trait{
+         };
+         template <> struct input2native_trait<char>{
+@@ -153,7 +153,7 @@ namespace nativefont
+             }
+             struct vals_internal{
+                 int width, height;
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
+                 COLORREF rgb2RGB(rgb_type &rgb){
+                     return RGB(rgb.r, rgb.g, rgb.b);
+                 }
+diff --git a/dlib/misc_api.h b/dlib/misc_api.h
+index acf87be7..8233c052 100644
+--- a/dlib/misc_api.h
++++ b/dlib/misc_api.h
+@@ -6,11 +6,11 @@
+ 
+ #include "platform.h"
+ 
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
+ #include "misc_api/windows.h"
+ #endif
+ 
+-#ifndef WIN32
++#ifndef WIN32_UNIVERSAL_APP
+ #include "misc_api/posix.h"
+ #endif
+ 
+diff --git a/dlib/misc_api/misc_api_kernel_1.cpp b/dlib/misc_api/misc_api_kernel_1.cpp
+index f17d850e..e5568f01 100644
+--- a/dlib/misc_api/misc_api_kernel_1.cpp
++++ b/dlib/misc_api/misc_api_kernel_1.cpp
+@@ -6,7 +6,12 @@
+ #include "../platform.h"
+ #include "../threads.h"
+ 
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
++
++#include <iostream>
++#include <locale> 
++#include <codecvt> 
++#include <cstdio>
+ 
+ #include "misc_api_kernel_1.h"
+ 
+@@ -57,6 +62,7 @@ namespace dlib
+         } oaimvweoinvwe;
+     }
+ 
++    /*
+     std::string get_current_dir (
+     )
+     {
+@@ -73,9 +79,29 @@ namespace dlib
+             return std::string(buf);
+         }
+     }
++    */
+ 
+-// ----------------------------------------------------------------------------------------
++    std::string get_current_dir (
++    )
++    {
++        // need to lock a mutex here because getting and setting the
++        // current working directory is not thread safe on windows.
++        auto_mutex lock(cwd_mutex());        
++        wchar_t buf[1024];
++        if (GetCurrentDirectoryW(sizeof(buf),buf) == 0)
++        {
++            return std::string();
++        }
++        else
++        {
++            std::wstring_convert<std::codecvt_utf8<wchar_t>,wchar_t> cv;
++            std::string buf_w = cv.to_bytes(buf);
++            return buf_w;
++        }
++    }
+ 
++// ----------------------------------------------------------------------------------------
++    /*
+     void set_current_dir (
+         const std::string& new_dir
+     )
+@@ -88,6 +114,22 @@ namespace dlib
+             throw set_current_dir_error("Error changing current dir to '" + new_dir + "'");
+         }
+     }
++    */
++    
++    void set_current_dir (
++        const std::string& new_dir
++    )
++    {
++        // need to lock a mutex here because getting and setting the
++        // current working directory is not thread safe on windows.
++        auto_mutex lock(cwd_mutex());
++        std::wstring_convert<std::codecvt_utf8<wchar_t>,wchar_t> cv;
++        std::wstring new_dir_w = cv.from_bytes(new_dir);
++        if (SetCurrentDirectoryW(new_dir_w.c_str()) == 0)
++        {
++            throw set_current_dir_error("Error changing current dir to '" + new_dir + "'");
++        }
++    }
+ 
+ // ----------------------------------------------------------------------------------------
+ 
+@@ -95,7 +137,8 @@ namespace dlib
+     get_timestamp (
+     ) const
+     {
+-        unsigned long temp = timeGetTime();
++        //unsigned long temp = timeGetTime();
++        unsigned long temp = 0;
+         if (temp >= last_time)
+         {            
+             last_time = temp;
+@@ -143,7 +186,7 @@ namespace dlib
+     
+ }
+ 
+-#endif // WIN32
++#endif // WIN32_UNIVERSAL_APP
+ 
+ #endif // DLIB_MISC_API_KERNEL_1_CPp_
+ 
+diff --git a/dlib/platform.h b/dlib/platform.h
+index f3000a6c..4b50518c 100644
+--- a/dlib/platform.h
++++ b/dlib/platform.h
+@@ -18,7 +18,7 @@
+             - if (this is also HP-UX) then
+                 - HPUX will be defined
+         - if (we are compiling under an MS Windows platform) then
+-            - WIN32 will be defined
++            - WIN32_UNIVERSAL_APP will be defined
+ !*/
+ 
+ 
+@@ -27,16 +27,16 @@
+     http://predef.sourceforge.net/
+ */
+ 
+-// Define WIN32 if this is MS Windows
+-#ifndef WIN32
+-    #if defined( _MSC_VER) || defined(__BORLANDC__) || defined(_WIN32) || defined(__WIN32__) || defined(__TOS_WIN__)
+-    #define WIN32 
++// Define WIN32_UNIVERSAL_APP if this is MS Windows
++#ifndef WIN32_UNIVERSAL_APP
++    #if defined( _MSC_VER) || defined(__BORLANDC__) || defined(_WIN32_UNIVERSAL_APP) || defined(__WIN32_UNIVERSAL_APP__) || defined(__TOS_WIN__)
++    #define WIN32_UNIVERSAL_APP 
+     #endif 
+ #endif
+ 
+-#ifndef WIN32
++#ifndef WIN32_UNIVERSAL_APP
+     // since this is the only other platform the library currently supports
+-    // just assume it is POSIX if it isn't WIN32
++    // just assume it is POSIX if it isn't WIN32_UNIVERSAL_APP
+     #ifndef POSIX
+         #define POSIX
+     #endif
+diff --git a/dlib/sockets.h b/dlib/sockets.h
+index e253587e..547811f6 100644
+--- a/dlib/sockets.h
++++ b/dlib/sockets.h
+@@ -6,11 +6,11 @@
+ #include "platform.h"
+ 
+ 
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
+ #include "sockets/windows.h"
+ #endif
+ 
+-#ifndef WIN32
++#ifndef WIN32_UNIVERSAL_APP
+ #include "sockets/posix.h"
+ #endif
+ 
+diff --git a/dlib/sockets/sockets_kernel_1.cpp b/dlib/sockets/sockets_kernel_1.cpp
+index 55e39569..d12e6cfc 100644
+--- a/dlib/sockets/sockets_kernel_1.cpp
++++ b/dlib/sockets/sockets_kernel_1.cpp
+@@ -4,7 +4,7 @@
+ #define DLIB_SOCKETS_KERNEL_1_CPp_
+ #include "../platform.h"
+ 
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
+ 
+ #include <winsock2.h>
+ 
+@@ -973,7 +973,7 @@ namespace dlib
+ 
+ }
+ 
+-#endif // WIN32
++#endif // WIN32_UNIVERSAL_APP
+ 
+ #endif // DLIB_SOCKETS_KERNEL_1_CPp_
+ 
+diff --git a/dlib/threads/threads_kernel.h b/dlib/threads/threads_kernel.h
+index 77cb16d9..597e36c4 100644
+--- a/dlib/threads/threads_kernel.h
++++ b/dlib/threads/threads_kernel.h
+@@ -5,11 +5,11 @@
+ 
+ #include "../platform.h"
+ 
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
+ #include "windows.h"
+ #endif
+ 
+-#ifndef WIN32
++#ifndef WIN32_UNIVERSAL_APP
+ #include "posix.h"
+ #endif
+ 
+diff --git a/dlib/threads/threads_kernel_1.cpp b/dlib/threads/threads_kernel_1.cpp
+index cb36b8d3..89c7305c 100644
+--- a/dlib/threads/threads_kernel_1.cpp
++++ b/dlib/threads/threads_kernel_1.cpp
+@@ -5,7 +5,7 @@
+ 
+ #include "../platform.h"
+ 
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
+ 
+ #include "threads_kernel_1.h"
+ 
+@@ -77,7 +77,7 @@ namespace dlib
+ 
+ }
+ 
+-#endif // WIN32
++#endif // WIN32_UNIVERSAL_APP
+ 
+ #endif // DLIB_THREADS_KERNEL_1_CPp_
+ 
+diff --git a/dlib/threads/threads_kernel_shared.cpp b/dlib/threads/threads_kernel_shared.cpp
+index 8e81193e..97d7bd0a 100644
+--- a/dlib/threads/threads_kernel_shared.cpp
++++ b/dlib/threads/threads_kernel_shared.cpp
+@@ -75,7 +75,7 @@ namespace dlib
+             destructed(data_mutex),
+             do_not_ever_destruct(false)
+         {
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
+             // Trying to destroy the global thread pool when we are part of a DLL and the
+             // DLL is being unloaded can sometimes lead to weird behavior.  For example, in
+             // the python interpreter you will get the interpreter to hang.  Or if we are
+@@ -91,7 +91,7 @@ namespace dlib
+             // trying to do this on windows is a lost cause so we give up in this case and
+             // follow the Microsoft recommendation.
+             do_not_ever_destruct = true;
+-#endif // WIN32
++#endif // WIN32_UNIVERSAL_APP
+         }
+ 
+ // ----------------------------------------------------------------------------------------
+diff --git a/dlib/timer/timer.cpp b/dlib/timer/timer.cpp
+index d12aa6f2..1091b6f8 100644
+--- a/dlib/timer/timer.cpp
++++ b/dlib/timer/timer.cpp
+@@ -49,7 +49,7 @@ namespace dlib
+         // linux: the destructor for linux will do it's usual job regardless.
+         //
+ 
+-        #ifndef _WIN32
++        #ifndef _WIN32_UNIVERSAL_APP
+         m.lock();
+         shutdown = true;
+         s.signal();
+diff --git a/dlib/windows_magic.h b/dlib/windows_magic.h
+index cfb7f22e..e51beac5 100644
+--- a/dlib/windows_magic.h
++++ b/dlib/windows_magic.h
+@@ -5,7 +5,7 @@
+ 
+ #include "platform.h"
+ 
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
+ 
+ // This file contains all the magical #defines you have to setup  before you
+ // include the windows header files.  
+@@ -39,12 +39,12 @@
+ 
+ // This is something stupid you have to do to make visual studio include the right
+ // stuff.  I don't really know what the deal is with this.
+-#if _WIN32_WINNT < 0x0500
+-#undef _WIN32_WINNT
+-#define _WIN32_WINNT 0x0500
++#if _WIN32_UNIVERSAL_APP_WINNT < 0x0500
++#undef _WIN32_UNIVERSAL_APP_WINNT
++#define _WIN32_UNIVERSAL_APP_WINNT 0x0500
+ #endif
+ 
+-#endif // WIN32
++#endif // WIN32_UNIVERSAL_APP
+ 
+ #endif // DLIB_WINDOWS_MAGIc_
+ 
+diff --git a/examples/bayes_net_gui_ex.cpp b/examples/bayes_net_gui_ex.cpp
+index 81101912..b9f64f37 100644
+--- a/examples/bayes_net_gui_ex.cpp
++++ b/examples/bayes_net_gui_ex.cpp
+@@ -149,7 +149,7 @@ int main()
+ 
+ // ----------------------------------------------------------------------------------------
+ 
+-#ifdef WIN32
++#ifdef WIN32_UNIVERSAL_APP
+ //  If you use main() as your entry point when building a program on MS Windows then
+ //  there will be a black console window associated with your application.  If you
+ //  want your application to not have this console window then you need to build
