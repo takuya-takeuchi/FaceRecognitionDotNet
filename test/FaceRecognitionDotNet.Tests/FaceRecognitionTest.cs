@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using DlibDotNet;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FaceRecognitionDotNet.Tests
@@ -39,9 +40,21 @@ namespace FaceRecognitionDotNet.Tests
 
         private bool _HasHelenDataset = false;
 
+        private bool _HasGenderDataset = false;
+
         #endregion
 
         #region Methods 
+
+        [TestMethod]
+        public void ClassifyGender()
+        {
+            if (this._HasGenderDataset)
+            {
+                const string testName = nameof(this.ClassifyGender);
+                this.ClassifyGender(testName);
+            }
+        }
 
         [TestCleanup]
         public void Cleanup()
@@ -157,11 +170,11 @@ namespace FaceRecognitionDotNet.Tests
                     var endodings2 = this._FaceRecognition.FaceEncodings(image2, null, numJitters).ToArray();
 
                     foreach (var encoding in endodings1)
-                    foreach (var compareFace in FaceRecognition.CompareFaces(endodings2, encoding))
-                    {
-                        atLeast1Time = true;
-                        Assert.IsTrue(compareFace);
-                    }
+                        foreach (var compareFace in FaceRecognition.CompareFaces(endodings2, encoding))
+                        {
+                            atLeast1Time = true;
+                            Assert.IsTrue(compareFace);
+                        }
 
                     foreach (var encoding in endodings1)
                         encoding.Dispose();
@@ -516,22 +529,25 @@ namespace FaceRecognitionDotNet.Tests
                 if (string.IsNullOrWhiteSpace(result))
                     Assert.Fail($"{method.Name} does not return {typeof(string).FullName} value or return null or whitespace value.");
 
-                if (method.Name != "GetPosePredictor194PointModelLocation")
+                switch (method.Name)
                 {
-                    models.Add(result);
+                    case "GetPosePredictor194PointModelLocation":
+                        this._HasHelenDataset = File.Exists(Path.Combine(ModelDirectory, result));
+                        break;
+                    case "GetGenderNetworkModelLocation":
+                        this._HasGenderDataset = File.Exists(Path.Combine(ModelDirectory, result));
+                        break;
+                    default:
+                        models.Add(result);
 
-                    var path = Path.Combine(ModelDirectory, result);
-                    if (File.Exists(path))
-                        continue;
+                        var path = Path.Combine(ModelDirectory, result);
+                        if (File.Exists(path))
+                            continue;
 
-                    var binary = new HttpClient().GetByteArrayAsync($"{ModelBaseUrl}/{result}").Result;
-
-                    Directory.CreateDirectory(ModelDirectory);
-                    File.WriteAllBytes(path, binary);
-                }
-                else
-                {
-                    this._HasHelenDataset = File.Exists(Path.Combine(ModelDirectory, result));
+                        var binary = new HttpClient().GetByteArrayAsync($"{ModelBaseUrl}/{result}").Result;
+                        Directory.CreateDirectory(ModelDirectory);
+                        File.WriteAllBytes(path, binary);
+                        break;
                 }
             }
 
@@ -1567,6 +1583,26 @@ namespace FaceRecognitionDotNet.Tests
                     }
                 }
             }
+        }
+
+        private void ClassifyGender(string testName)
+        {
+            var groundTruth = new[]
+            {
+                new { Path = @"TestImages\Gender\BarackObama_male.jpg",            Gender = Gender.Male },
+                new { Path = @"TestImages\Gender\DianaPrincessOfWales_female.jpg", Gender = Gender.Female },
+                new { Path = @"TestImages\Gender\MaoAsada_female.jpg",             Gender = Gender.Female },
+                new { Path = @"TestImages\Gender\ShinzoAbe_male.jpg",              Gender = Gender.Male },
+                new { Path = @"TestImages\Gender\WhitneyHouston_female.jpg",       Gender = Gender.Female },
+            };
+
+            foreach (var gt in groundTruth)
+                using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                {
+                    var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                    var gender = this._FaceRecognition.ClassifyGender(image, location);
+                    Assert.IsTrue(gt.Gender == gender);
+                }
         }
 
         private IEnumerable<FullObjectDetection> RawFaceLandmarks(Image img, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)

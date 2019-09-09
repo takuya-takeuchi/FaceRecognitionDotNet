@@ -15,7 +15,7 @@ groupmod -g $GROUP_ID $NON_ROOT_USER
 export HOME=/home/$NON_ROOT_USER
 
 FRDNROOT=/opt/data/FaceRecognitionDotNet
-NUGETDIR=${FRDNROOT}//nuget
+NUGETDIR=${FRDNROOT}/nuget
 
 cd ${NUGETDIR}
 

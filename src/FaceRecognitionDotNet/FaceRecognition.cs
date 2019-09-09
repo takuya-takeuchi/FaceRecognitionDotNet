@@ -19,6 +19,8 @@ namespace FaceRecognitionDotNet
 
         #region Fields
 
+        private readonly LossMulticlassLog _GenderPredictorGender;
+
         private readonly ShapePredictor _PosePredictor194Point;
 
         private readonly ShapePredictor _PosePredictor68Point;
@@ -82,6 +84,20 @@ namespace FaceRecognitionDotNet
             {
                 this._PosePredictor194Point?.Dispose();
                 this._PosePredictor194Point = ShapePredictor.Deserialize(predictor194PointModel);
+            }
+
+            var predictorGenderModel = Path.Combine(directory, FaceRecognitionModels.GetGenderNetworkModelLocation());
+            if (File.Exists(predictorGenderModel))
+            {
+                var ret = NativeMethods.LossMulticlassLog_gender_train_type_create();
+                var networkId = LossMulticlassLogRegistry.GetId(ret);
+                if (LossMulticlassLogRegistry.Contains(networkId))
+                    NativeMethods.LossMulticlassLog_gender_train_type_delete(ret);
+                else
+                    LossMulticlassLogRegistry.Add(ret);
+
+                this._GenderPredictorGender?.Dispose();
+                this._GenderPredictorGender = LossMulticlassLog.Deserialize(predictorGenderModel, networkId);
             }
         }
 
@@ -439,6 +455,48 @@ namespace FaceRecognitionDotNet
                         yield return ret;
                     }
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Returns an gender from face location correspond to a face in specified image.
+        /// </summary>
+        /// <param name="image">The image contains a face.</param>
+        /// <param name="location">The location rectangle for a face.</param>
+        /// <returns>An gender from face location correspond to a face in specified image.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        public Gender ClassifyGender(Image image, Location location)
+        {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+            if (location == null)
+                throw new ArgumentNullException(nameof(location));
+
+            image.ThrowIfDisposed();
+            this.ThrowIfDisposed();
+
+            // GenderClassify uses _GenderPredictorGender so check here!!
+            if (this._GenderPredictorGender == null)
+                throw new NotSupportedException($"'{FaceRecognitionModels.GetGenderNetworkModelLocation()}' does not exist.");
+
+            if (!(image.Matrix is Matrix<RgbPixel> matrix))
+                throw new ArgumentException();
+
+            FullObjectDetection[] rawLandmark = null;
+
+            try
+            {
+                rawLandmark = this.RawFaceLandmarks(image, new[] { location }, PredictorModel.Small).ToArray();
+                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u, 0.25d))
+                using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
+                using (var results = this._GenderPredictorGender.Operator(new[] { faceChips }, 1))
+                    return results[0] == 0 ? Gender.Male : Gender.Female;
+            }
+            finally
+            {
+                if (rawLandmark != null)
+                    foreach (var fullObjectDetection in rawLandmark) fullObjectDetection.Dispose();
             }
         }
 
