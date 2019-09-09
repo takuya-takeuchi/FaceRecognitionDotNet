@@ -7,7 +7,7 @@
 #include "DlibDotNet.Native/dlib/export.h"
 #include "DlibDotNet.Native/dlib/shared.h"
 #include "defines.h"
-#include "DlibDotNet.Native.Dnn/dlib/dnn/loss/multiclass_log/LossMulticlassLog.cpp"
+#include "DlibDotNet.Native.Dnn/dlib/dnn/loss/multiclass_log/template.h"
 
 typedef unsigned long gender_out_type;
 typedef unsigned long gender_train_label_type;
