@@ -2,8 +2,8 @@ Param()
 
 # import class and function
 $ScriptPath = $PSScriptRoot
-$DlibDotNetRoot = Split-Path $ScriptPath -Parent
-$NugetPath = Join-Path $DlibDotNetRoot "nuget" | `
+$FaceRecognitionDotNetRoot = Split-Path $ScriptPath -Parent
+$NugetPath = Join-Path $FaceRecognitionDotNetRoot "nuget" | `
              Join-Path -ChildPath "BuildUtils.ps1"
 import-module $NugetPath -function *
 
@@ -11,8 +11,10 @@ $OperatingSystem="osx"
 
 # Store current directory
 $Current = Get-Location
-$DlibDotNetRoot = (Split-Path (Get-Location) -Parent)
-$DlibDotNetSourceRoot = Join-Path $DlibDotNetRoot src
+$FaceRecognitionDotNetRoot = (Split-Path (Get-Location) -Parent)
+$DlibDotNetRoot = Join-Path $FaceRecognitionDotNetRoot src | `
+                  Join-Path -ChildPath DlibDotNet
+$FaceRecognitionDotNetSourceRoot = Join-Path $FaceRecognitionDotNetRoot src
 
 $BuildSourceHash = [Config]::GetBinaryLibraryOSXHash()
 
@@ -31,13 +33,13 @@ foreach($BuildTarget in $BuildTargets)
    $architecture = $BuildTarget.Architecture
    $rid = $BuildTarget.RID
 
-   $Config = [Config]::new($DlibDotNetRoot, "Release", $target, $architecture, $platform, $option)
+   $Config = [Config]::new($FaceRecognitionDotNetRoot, "Release", $target, $architecture, $platform, $option)
    $libraryDir = Join-Path "artifacts" $Config.GetArtifactDirectoryName()
    $build = $Config.GetBuildDirectoryName($OperatingSystem)
 
    foreach ($key in $BuildSourceHash.keys)
    {
-      $srcDir = Join-Path $DlibDotNetSourceRoot $key
+      $srcDir = Join-Path $FaceRecognitionDotNetSourceRoot $key
 
       # Move to build target directory
       Set-Location -Path $srcDir
@@ -56,7 +58,7 @@ foreach($BuildTarget in $BuildTargets)
    # Copy output binary
    foreach ($key in $BuildSourceHash.keys)
    {
-      $srcDir = Join-Path $DlibDotNetSourceRoot $key
+      $srcDir = Join-Path $FaceRecognitionDotNetSourceRoot $key
       $dll = $BuildSourceHash[$key]
       $dstDir = Join-Path $Current $libraryDir
 
