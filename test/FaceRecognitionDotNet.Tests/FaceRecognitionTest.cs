@@ -51,8 +51,22 @@ namespace FaceRecognitionDotNet.Tests
         {
             if (this._HasGenderDataset)
             {
-                const string testName = nameof(this.ClassifyGender);
-                this.ClassifyGender(testName);
+                var groundTruth = new[]
+                {
+                    new { Path = @"TestImages\Gender\BarackObama_male.jpg",            Gender = Gender.Male },
+                    new { Path = @"TestImages\Gender\DianaPrincessOfWales_female.jpg", Gender = Gender.Female },
+                    new { Path = @"TestImages\Gender\MaoAsada_female.jpg",             Gender = Gender.Female },
+                    new { Path = @"TestImages\Gender\ShinzoAbe_male.jpg",              Gender = Gender.Male },
+                    new { Path = @"TestImages\Gender\WhitneyHouston_female.jpg",       Gender = Gender.Female },
+                };
+
+                foreach (var gt in groundTruth)
+                    using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                    {
+                        var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                        var gender = this._FaceRecognition.ClassifyGender(image, location);
+                        Assert.IsTrue(gt.Gender == gender, $"Failed to classify '{gt.Path}'");
+                    }
             }
         }
 
@@ -1583,26 +1597,6 @@ namespace FaceRecognitionDotNet.Tests
                     }
                 }
             }
-        }
-
-        private void ClassifyGender(string testName)
-        {
-            var groundTruth = new[]
-            {
-                new { Path = @"TestImages\Gender\BarackObama_male.jpg",            Gender = Gender.Male },
-                new { Path = @"TestImages\Gender\DianaPrincessOfWales_female.jpg", Gender = Gender.Female },
-                new { Path = @"TestImages\Gender\MaoAsada_female.jpg",             Gender = Gender.Female },
-                new { Path = @"TestImages\Gender\ShinzoAbe_male.jpg",              Gender = Gender.Male },
-                new { Path = @"TestImages\Gender\WhitneyHouston_female.jpg",       Gender = Gender.Female },
-            };
-
-            foreach (var gt in groundTruth)
-                using (var image = FaceRecognition.LoadImageFile(gt.Path))
-                {
-                    var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
-                    var gender = this._FaceRecognition.ClassifyGender(image, location);
-                    Assert.IsTrue(gt.Gender == gender);
-                }
         }
 
         private IEnumerable<FullObjectDetection> RawFaceLandmarks(Image img, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
