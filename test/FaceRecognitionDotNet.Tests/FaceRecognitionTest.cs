@@ -110,19 +110,19 @@ namespace FaceRecognitionDotNet.Tests
             {
                 foreach (var numJitters in new[] { 1, 2 })
                 {
-                    var endodings1 = this._FaceRecognition.FaceEncodings(image1, null, numJitters).ToArray();
-                    var endodings2 = this._FaceRecognition.FaceEncodings(image2, null, numJitters).ToArray();
+                    var encodings1 = this._FaceRecognition.FaceEncodings(image1, null, numJitters).ToArray();
+                    var encodings2 = this._FaceRecognition.FaceEncodings(image2, null, numJitters).ToArray();
 
-                    foreach (var encoding in endodings1)
-                        foreach (var compareFace in FaceRecognition.CompareFaces(endodings2, encoding))
+                    foreach (var encoding in encodings1)
+                        foreach (var compareFace in FaceRecognition.CompareFaces(encodings2, encoding))
                         {
                             atLeast1Time = true;
                             Assert.IsFalse(compareFace);
                         }
 
-                    foreach (var encoding in endodings1)
+                    foreach (var encoding in encodings1)
                         encoding.Dispose();
-                    foreach (var encoding in endodings2)
+                    foreach (var encoding in encodings2)
                         encoding.Dispose();
                 }
             }
