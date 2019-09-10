@@ -34,13 +34,11 @@ namespace FaceRecognitionDotNet.Dlib.Python
                 throw new ArgumentException("The array of images and the array of array of locations must be of the same size");
 
             foreach (var faces in batchFaces)
-            {
                 foreach (var f in faces)
                 {
                     if (f.Parts != 68 && f.Parts != 5)
                         throw new ArgumentException("The full_object_detection must use the iBUG 300W 68 point face landmark style or dlib's 5 point style.");
                 }
-            }
 
 
             var faceChips = new List<Matrix<RgbPixel>>();
@@ -53,14 +51,16 @@ namespace FaceRecognitionDotNet.Dlib.Python
                 foreach (var f in faces)
                     dets.Add(DlibDotNet.Dlib.GetFaceChipDetails(f, 150, 0.25));
 
-                var thisImageFaceChips = DlibDotNet.Dlib.ExtractImageChips<RgbPixel>(img.Matrix, dets);
+                using (var thisImageFaceChips = DlibDotNet.Dlib.ExtractImageChips<RgbPixel>(img.Matrix, dets))
+                    foreach (var chip in thisImageFaceChips)
+                        faceChips.Add(chip);
 
-                foreach (var chip in thisImageFaceChips)
-                    faceChips.Add(chip);
+                foreach (var det in dets)
+                    det.Dispose();
             }
-            
+
             var faceDescriptors = new List<List<Matrix<double>>>();
-            for(int i = 0, count = batchImages.Count; i < count; i++)
+            for (int i = 0, count = batchImages.Count; i < count; i++)
                 faceDescriptors.Add(new List<Matrix<double>>());
 
             if (numJitters <= 1)
@@ -70,10 +70,8 @@ namespace FaceRecognitionDotNet.Dlib.Python
                 var index = 0;
                 var list = descriptors.Select(matrix => matrix).ToArray();
                 for (var i = 0; i < batchFaces.Count(); ++i)
-                {
-                    for (var j = 0; j < batchFaces[i].Count(); ++j)
-                        faceDescriptors[i].Add(DlibDotNet.Dlib.MatrixCast<double>(list[index++]));
-                }
+                for (var j = 0; j < batchFaces[i].Count(); ++j)
+                    faceDescriptors[i].Add(DlibDotNet.Dlib.MatrixCast<double>(list[index++]));
 
                 if (index != list.Length)
                     throw new ApplicationException();
@@ -83,20 +81,18 @@ namespace FaceRecognitionDotNet.Dlib.Python
                 // extract descriptors and convert from float vectors to double vectors
                 var index = 0;
                 for (var i = 0; i < batchFaces.Count(); ++i)
+                for (var j = 0; j < batchFaces[i].Count(); ++j)
                 {
-                    for (var j = 0; j < batchFaces[i].Count(); ++j)
+                    var tmp = JitterImage(faceChips[index++], numJitters).ToArray();
+                    using (var tmp2 = net.Operator(tmp, 16))
+                    using (var mat = DlibDotNet.Dlib.Mat(tmp2))
                     {
-                        var tmp = JitterImage(faceChips[index++], numJitters).ToArray();
-                        using (var tmp2 = net.Operator(tmp, 16))
-                        using (var mat = DlibDotNet.Dlib.Mat(tmp2))
-                        {
-                            var r = DlibDotNet.Dlib.Mean<double>(mat);
-                            faceDescriptors[i].Add(r);
-                        }
-
-                        foreach (var matrix in tmp)
-                            matrix.Dispose();
+                        var r = DlibDotNet.Dlib.Mean<double>(mat);
+                        faceDescriptors[i].Add(r);
                     }
+
+                    foreach (var matrix in tmp)
+                        matrix.Dispose();
                 }
 
                 if (index != faceChips.Count)
