@@ -131,7 +131,7 @@ namespace FaceRecognitionDotNet.Tests
                         foreach (var compareFace in FaceRecognition.CompareFaces(encodings2, encoding))
                         {
                             atLeast1Time = true;
-                            Assert.IsFalse(compareFace);
+                            Assert.IsFalse(compareFace, $"{nameof(numJitters)}: {numJitters}");
                         }
 
                     foreach (var encoding in encodings1)
@@ -187,7 +187,7 @@ namespace FaceRecognitionDotNet.Tests
                         foreach (var compareFace in FaceRecognition.CompareFaces(endodings2, encoding))
                         {
                             atLeast1Time = true;
-                            Assert.IsTrue(compareFace);
+                            Assert.IsTrue(compareFace, $"{nameof(numJitters)}: {numJitters}");
                         }
 
                     foreach (var encoding in endodings1)
