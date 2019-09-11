@@ -25,79 +25,112 @@ namespace GenderTraining
             app.Description = "The program for training UTKFace dataset";
             app.HelpOption("-h|--help");
 
-            const uint epochDefault = 300;
-            const double learningRateDefault = 0.001d;
-            const double minLearningRateDefault = 0.00001d;
-            const uint minBatchSizeDefault = 256;
-            const uint validationDefault = 30;
-
-            var datasetOption = app.Option("-d|--dataset", "The directory of dataset", CommandOptionType.SingleValue);
-            var epochOption = app.Option("-e|--epoch", $"The epoch. Default is {epochDefault}", CommandOptionType.SingleValue);
-            var learningRateOption = app.Option("-l|--lr", $"The learning rate. Default is {learningRateDefault}", CommandOptionType.SingleValue);
-            var minLearningRateOption = app.Option("-m|--min-lr", $"The minimum learning rate. Default is {minLearningRateDefault}", CommandOptionType.SingleValue);
-            var minBatchSizeOption = app.Option("-b|--min-batchsize", $"The minimum batch size. Default is {minBatchSizeDefault}", CommandOptionType.SingleValue);
-            var validationOption = app.Option("-v|--validation-interval", $"The interval of validation. Default is {validationDefault}", CommandOptionType.SingleValue);
-
-            app.OnExecute(() =>
+            app.Command("train", command =>
             {
-                var dataset = datasetOption.Value();
-                if (!datasetOption.HasValue() || !Directory.Exists(dataset))
+                const uint epochDefault = 300;
+                const double learningRateDefault = 0.001d;
+                const double minLearningRateDefault = 0.00001d;
+                const uint minBatchSizeDefault = 256;
+                const uint validationDefault = 30;
+
+                var datasetOption = command.Option("-d|--dataset", "The directory of dataset", CommandOptionType.SingleValue);
+                var epochOption = command.Option("-e|--epoch", $"The epoch. Default is {epochDefault}", CommandOptionType.SingleValue);
+                var learningRateOption = command.Option("-l|--lr", $"The learning rate. Default is {learningRateDefault}", CommandOptionType.SingleValue);
+                var minLearningRateOption = command.Option("-m|--min-lr", $"The minimum learning rate. Default is {minLearningRateDefault}", CommandOptionType.SingleValue);
+                var minBatchSizeOption = command.Option("-b|--min-batchsize", $"The minimum batch size. Default is {minBatchSizeDefault}", CommandOptionType.SingleValue);
+                var validationOption = command.Option("-v|--validation-interval", $"The interval of validation. Default is {validationDefault}", CommandOptionType.SingleValue);
+
+                command.OnExecute(() =>
                 {
-                    Console.WriteLine("dataset does not exist");
-                    return -1;
-                }
+                    var dataset = datasetOption.Value();
+                    if (!datasetOption.HasValue() || !Directory.Exists(dataset))
+                    {
+                        Console.WriteLine("dataset does not exist");
+                        return -1;
+                    }
 
-                var epoch = epochDefault;
-                if (epochOption.HasValue() && !uint.TryParse(epochOption.Value(), out epoch))
-                {
-                    Console.WriteLine("epoch is invalid value");
-                    return -1;
-                }
+                    var epoch = epochDefault;
+                    if (epochOption.HasValue() && !uint.TryParse(epochOption.Value(), out epoch))
+                    {
+                        Console.WriteLine("epoch is invalid value");
+                        return -1;
+                    }
 
-                var learningRate = learningRateDefault;
-                if (learningRateOption.HasValue() && !double.TryParse(learningRateOption.Value(), NumberStyles.Float, Thread.CurrentThread.CurrentCulture.NumberFormat, out learningRate))
-                {
-                    Console.WriteLine("learning rate is invalid value");
-                    return -1;
-                }
+                    var learningRate = learningRateDefault;
+                    if (learningRateOption.HasValue() && !double.TryParse(learningRateOption.Value(), NumberStyles.Float, Thread.CurrentThread.CurrentCulture.NumberFormat, out learningRate))
+                    {
+                        Console.WriteLine("learning rate is invalid value");
+                        return -1;
+                    }
 
-                var minLearningRate = minLearningRateDefault;
-                if (minLearningRateOption.HasValue() && !double.TryParse(minLearningRateOption.Value(), NumberStyles.Float, Thread.CurrentThread.CurrentCulture.NumberFormat, out minLearningRate))
-                {
-                    Console.WriteLine("minimum learning rate is invalid value");
-                    return -1;
-                }
+                    var minLearningRate = minLearningRateDefault;
+                    if (minLearningRateOption.HasValue() && !double.TryParse(minLearningRateOption.Value(), NumberStyles.Float, Thread.CurrentThread.CurrentCulture.NumberFormat, out minLearningRate))
+                    {
+                        Console.WriteLine("minimum learning rate is invalid value");
+                        return -1;
+                    }
 
-                var minBatchSize = minBatchSizeDefault;
-                if (minBatchSizeOption.HasValue() && !uint.TryParse(minBatchSizeOption.Value(), out minBatchSize))
-                {
-                    Console.WriteLine("minimum batch size is invalid value");
-                    return -1;
-                }
+                    var minBatchSize = minBatchSizeDefault;
+                    if (minBatchSizeOption.HasValue() && !uint.TryParse(minBatchSizeOption.Value(), out minBatchSize))
+                    {
+                        Console.WriteLine("minimum batch size is invalid value");
+                        return -1;
+                    }
 
-                var validation = validationDefault;
-                if (validationOption.HasValue() && !uint.TryParse(validationOption.Value(), out validation) || validation == 0)
-                {
-                    Console.WriteLine("validation interval is invalid value");
-                    return -1;
-                }
+                    var validation = validationDefault;
+                    if (validationOption.HasValue() && !uint.TryParse(validationOption.Value(), out validation) || validation == 0)
+                    {
+                        Console.WriteLine("validation interval is invalid value");
+                        return -1;
+                    }
 
-                Console.WriteLine($"              Epoch: {epoch}");
-                Console.WriteLine($"      Learning Rate: {learningRate}");
-                Console.WriteLine($"  Min Learning Rate: {minLearningRate}");
-                Console.WriteLine($"     Min Batch Size: {minBatchSize}");
-                Console.WriteLine($"Validation Interval: {validation}");
-                Console.WriteLine();
+                    Console.WriteLine($"            Dataset: {dataset}");
+                    Console.WriteLine($"              Epoch: {epoch}");
+                    Console.WriteLine($"      Learning Rate: {learningRate}");
+                    Console.WriteLine($"  Min Learning Rate: {minLearningRate}");
+                    Console.WriteLine($"     Min Batch Size: {minBatchSize}");
+                    Console.WriteLine($"Validation Interval: {validation}");
+                    Console.WriteLine();
 
-                var baseName = $"utkface-gender-network_{epoch}_{learningRate}_{minLearningRate}_{minBatchSize}";
-                Train(baseName, dataset, epoch, learningRate, minLearningRate, minBatchSize, validation);
+                    var baseName = $"utkface-gender-network_{epoch}_{learningRate}_{minLearningRate}_{minBatchSize}";
+                    Train(baseName, dataset, epoch, learningRate, minLearningRate, minBatchSize, validation);
 
-                return 0;
+                    return 0;
+                });
             });
 
-            app.Execute(args);
+            app.Command("test", command =>
+            {
+                var datasetOption = command.Option("-d|--dataset", "The directory of dataset", CommandOptionType.SingleValue);
+                var modelOption = command.Option("-m|--model", $"The model file.", CommandOptionType.SingleValue);
 
-            return 0;
+                command.OnExecute(() =>
+                {
+                    var dataset = datasetOption.Value();
+                    if (!datasetOption.HasValue() || !Directory.Exists(dataset))
+                    {
+                        Console.WriteLine("dataset does not exist");
+                        return -1;
+                    }
+
+                    var model = modelOption.Value();
+                    if (!datasetOption.HasValue() || !File.Exists(model))
+                    {
+                        Console.WriteLine("model does not exist");
+                        return -1;
+                    }
+
+                    Console.WriteLine($"Dataset: {dataset}");
+                    Console.WriteLine($"  Model: {model}");
+                    Console.WriteLine();
+
+                    Test(dataset, model);
+
+                    return 0;
+                });
+            });
+            
+            return app.Execute(args);
         }
 
         #region Helpers
@@ -124,6 +157,39 @@ namespace GenderTraining
 
             images = imageList;
             labels = labelList;
+        }
+
+        private static void Test(string dataset, string model)
+        {
+            try
+            {
+                IList<Matrix<RgbPixel>> trainingImages;
+                IList<uint> trainingLabels;
+                IList<Matrix<RgbPixel>> testingImages;
+                IList<uint> testingLabels;
+
+                Console.WriteLine("Start load train images");
+                Load(Path.Combine(dataset, "train"), out trainingImages, out trainingLabels);
+                Console.WriteLine($"Load train images: {trainingImages.Count}");
+
+                Console.WriteLine("Start load test images");
+                Load(Path.Combine(dataset, "test"), out testingImages, out testingLabels);
+                Console.WriteLine($"Load test images: {testingImages.Count}");
+
+                // So with that out of the way, we can make a network instance.
+                var trainNet = NativeMethods.LossMulticlassLog_gender_train_type_create();
+                var networkId = LossMulticlassLogRegistry.GetId(trainNet);
+                LossMulticlassLogRegistry.Add(trainNet);
+
+                using (var net = LossMulticlassLog.Deserialize(model, networkId))
+                {
+                    Validation("", net, trainingImages, trainingLabels, testingImages, testingLabels, true, false, out _, out _);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         private static void Train(string baseName, string dataset, uint epoch, double learningRate, double minLearningRate, uint miniBatchSize, uint validation)
