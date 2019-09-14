@@ -260,9 +260,44 @@
             <returns>このメソッドが作成した <see cref="T:FaceRecognitionDotNet.Image"/>。</returns>
             <exception cref="T:System.IO.FileNotFoundException">指定したパスは存在しません。</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
+            <summary>
+            指定した画像内における、指定した位置に対応する顔画像の性別を返します。
+            </summary>
+            <param name="image">顔を含む画像。</param>
+            <param name="location">顔の位置の矩形。</param>
+            <returns>指定した画像内における、指定した位置に対応する顔画像の性別。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> または <paramref name="location"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> またはこのオブジェクトは破棄されています。</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
+            <summary>
+            指定した画像内における、指定した位置に対応する顔画像の性別の確率を返します。
+            </summary>
+            <param name="image">顔を含む画像。</param>
+            <param name="location">顔の位置の矩形。</param>
+            <returns>指定した画像内における、指定した位置に対応する顔画像の性別の確率。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> または <paramref name="location"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> またはこのオブジェクトは破棄されています。</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged">
             <summary>
             アンマネージ リソースを解放します。
+            </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Gender">
+            <summary>
+            性別を指定します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.Gender.Female">
+            <summary>
+            女性を示します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.Gender.Male">
+            <summary>
+            男性を示します。
             </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.Image">

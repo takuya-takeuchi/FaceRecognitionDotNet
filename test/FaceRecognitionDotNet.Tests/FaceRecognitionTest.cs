@@ -44,31 +44,7 @@ namespace FaceRecognitionDotNet.Tests
 
         #endregion
 
-        #region Methods 
-
-        [TestMethod]
-        public void ClassifyGender()
-        {
-            if (this._HasGenderDataset)
-            {
-                var groundTruth = new[]
-                {
-                    new { Path = @"TestImages\Gender\BarackObama_male.jpg",            Gender = Gender.Male },
-                    new { Path = @"TestImages\Gender\DianaPrincessOfWales_female.jpg", Gender = Gender.Female },
-                    new { Path = @"TestImages\Gender\MaoAsada_female.jpg",             Gender = Gender.Female },
-                    new { Path = @"TestImages\Gender\ShinzoAbe_male.jpg",              Gender = Gender.Male },
-                    new { Path = @"TestImages\Gender\WhitneyHouston_female.jpg",       Gender = Gender.Female },
-                };
-
-                foreach (var gt in groundTruth)
-                    using (var image = FaceRecognition.LoadImageFile(gt.Path))
-                    {
-                        var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
-                        var gender = this._FaceRecognition.ClassifyGender(image, location);
-                        Assert.IsTrue(gt.Gender == gender, $"Failed to classify '{gt.Path}'");
-                    }
-            }
-        }
+        #region Methods
 
         [TestCleanup]
         public void Cleanup()
@@ -912,6 +888,57 @@ namespace FaceRecognitionDotNet.Tests
 
                 foreach (var encoding in encodings)
                     Assert.IsTrue(encoding.IsDisposed, $"{typeof(FaceEncoding)} should be already disposed.");
+            }
+        }
+
+        [TestMethod]
+        public void PredictGender()
+        {
+            if (this._HasGenderDataset)
+            {
+                var groundTruth = new[]
+                {
+                    new { Path = @"TestImages\Gender\BarackObama_male.jpg",            Gender = Gender.Male },
+                    new { Path = @"TestImages\Gender\DianaPrincessOfWales_female.jpg", Gender = Gender.Female },
+                    new { Path = @"TestImages\Gender\MaoAsada_female.jpg",             Gender = Gender.Female },
+                    new { Path = @"TestImages\Gender\ShinzoAbe_male.jpg",              Gender = Gender.Male },
+                    new { Path = @"TestImages\Gender\WhitneyHouston_female.jpg",       Gender = Gender.Female },
+                };
+
+                foreach (var gt in groundTruth)
+                    using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                    {
+                        var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                        var gender = this._FaceRecognition.PredictGender(image, location);
+                        Assert.IsTrue(gt.Gender == gender, $"Failed to classify '{gt.Path}'");
+                    }
+            }
+        }
+
+        [TestMethod]
+        public void PredictProbabilityGender()
+        {
+            if (this._HasGenderDataset)
+            {
+                var groundTruth = new[]
+                {
+                    new { Path = @"TestImages\Gender\BarackObama_male.jpg",            Gender = Gender.Male },
+                    new { Path = @"TestImages\Gender\DianaPrincessOfWales_female.jpg", Gender = Gender.Female },
+                    new { Path = @"TestImages\Gender\MaoAsada_female.jpg",             Gender = Gender.Female },
+                    new { Path = @"TestImages\Gender\ShinzoAbe_male.jpg",              Gender = Gender.Male },
+                    new { Path = @"TestImages\Gender\WhitneyHouston_female.jpg",       Gender = Gender.Female },
+                };
+
+                foreach (var gt in groundTruth)
+                    using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                    {
+                        var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                        var probability = this._FaceRecognition.PredictProbabilityGender(image, location);
+
+                        var pos = gt.Gender;
+                        var neg = pos == Gender.Male ? Gender.Female : Gender.Male;
+                        Assert.IsTrue(probability[pos] > probability[neg], $"Failed to classify '{gt.Path}'. Probability: {probability[pos]}");
+                    }
             }
         }
 

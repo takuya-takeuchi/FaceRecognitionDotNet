@@ -459,48 +459,6 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
-        /// Returns an gender from face location correspond to a face in specified image.
-        /// </summary>
-        /// <param name="image">The image contains a face.</param>
-        /// <param name="location">The location rectangle for a face.</param>
-        /// <returns>An gender from face location correspond to a face in specified image.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
-        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
-        public Gender ClassifyGender(Image image, Location location)
-        {
-            if (image == null)
-                throw new ArgumentNullException(nameof(image));
-            if (location == null)
-                throw new ArgumentNullException(nameof(location));
-
-            image.ThrowIfDisposed();
-            this.ThrowIfDisposed();
-
-            // GenderClassify uses _GenderPredictorGender so check here!!
-            if (this._GenderPredictorGender == null)
-                throw new NotSupportedException($"'{FaceRecognitionModels.GetGenderNetworkModelLocation()}' does not exist.");
-
-            if (!(image.Matrix is Matrix<RgbPixel> matrix))
-                throw new ArgumentException();
-
-            FullObjectDetection[] rawLandmark = null;
-
-            try
-            {
-                rawLandmark = this.RawFaceLandmarks(image, new[] { location }, PredictorModel.Small).ToArray();
-                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u, 0.25d))
-                using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
-                using (var results = this._GenderPredictorGender.Operator(new[] { faceChips }, 1))
-                    return results[0] == 0 ? Gender.Male : Gender.Female;
-            }
-            finally
-            {
-                if (rawLandmark != null)
-                    foreach (var fullObjectDetection in rawLandmark) fullObjectDetection.Dispose();
-            }
-        }
-
-        /// <summary>
         /// Creates an <see cref="FaceEncoding"/> from the <see cref="double"/> array.
         /// </summary>
         /// <param name="encoding">The <see cref="double"/> array contains face encoding data.</param>
@@ -567,6 +525,96 @@ namespace FaceRecognitionDotNet
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Returns an gender of face image correspond to specified location in specified image.
+        /// </summary>
+        /// <param name="image">The image contains a face.</param>
+        /// <param name="location">The location rectangle for a face.</param>
+        /// <returns>An gender of face image correspond to specified location in specified image.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        public Gender PredictGender(Image image, Location location)
+        {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+            if (location == null)
+                throw new ArgumentNullException(nameof(location));
+
+            image.ThrowIfDisposed();
+            this.ThrowIfDisposed();
+
+            // GenderClassify uses _GenderPredictorGender so check here!!
+            if (this._GenderPredictorGender == null)
+                throw new NotSupportedException($"'{FaceRecognitionModels.GetGenderNetworkModelLocation()}' does not exist.");
+
+            if (!(image.Matrix is Matrix<RgbPixel> matrix))
+                throw new ArgumentException();
+
+            FullObjectDetection[] rawLandmark = null;
+
+            try
+            {
+                rawLandmark = this.RawFaceLandmarks(image, new[] { location }, PredictorModel.Small).ToArray();
+                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u, 0.25d))
+                using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
+                using (var results = this._GenderPredictorGender.Operator(new[] { faceChips }, 1))
+                    return results[0] == 0 ? Gender.Male : Gender.Female;
+            }
+            finally
+            {
+                if (rawLandmark != null)
+                    foreach (var fullObjectDetection in rawLandmark) fullObjectDetection.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Returns probabilities of gender of face image correspond to specified location in specified image.
+        /// </summary>
+        /// <param name="image">The image contains a face.</param>
+        /// <param name="location">The location rectangle for a face.</param>
+        /// <returns>Probabilities of gender of face image correspond to specified location in specified image.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        public IDictionary<Gender, float> PredictProbabilityGender(Image image, Location location)
+        {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+            if (location == null)
+                throw new ArgumentNullException(nameof(location));
+
+            image.ThrowIfDisposed();
+            this.ThrowIfDisposed();
+
+            // GenderClassify uses _GenderPredictorGender so check here!!
+            if (this._GenderPredictorGender == null)
+                throw new NotSupportedException($"'{FaceRecognitionModels.GetGenderNetworkModelLocation()}' does not exist.");
+
+            if (!(image.Matrix is Matrix<RgbPixel> matrix))
+                throw new ArgumentException();
+
+            FullObjectDetection[] rawLandmark = null;
+
+            try
+            {
+                rawLandmark = this.RawFaceLandmarks(image, new[] { location }, PredictorModel.Small).ToArray();
+                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u, 0.25d))
+                using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
+                {
+                    var results = this._GenderPredictorGender.Probability(faceChips, 1).ToArray();
+                    return new Dictionary<Gender, float>
+                    {
+                        { Gender.Male,   results[0][0] },
+                        { Gender.Female, results[0][1] }
+                    };
+                }
+            }
+            finally
+            {
+                if (rawLandmark != null)
+                    foreach (var fullObjectDetection in rawLandmark) fullObjectDetection.Dispose();
+            }
         }
 
         #region Helpers

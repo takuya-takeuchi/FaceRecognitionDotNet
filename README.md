@@ -40,7 +40,8 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |face_locations|FaceLocations||
 |load_image_file|LoadImageFile||
 |-|LoadImage|From memory data|
-|-|ClassifyGender|Use UTKFace dataset :warning:|
+|-|PredictGender|Use UTKFace dataset :warning:|
+|-|PredictProbabilityGender|Use UTKFace dataset :warning:|
 
 ##### :warning: Warning
 
