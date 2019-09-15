@@ -19,6 +19,8 @@ namespace FaceRecognitionDotNet
 
         #region Fields
 
+        private readonly LossMulticlassLog _AgePredictorGender;
+
         private readonly LossMulticlassLog _GenderPredictorGender;
 
         private readonly ShapePredictor _PosePredictor194Point;
@@ -84,6 +86,20 @@ namespace FaceRecognitionDotNet
             {
                 this._PosePredictor194Point?.Dispose();
                 this._PosePredictor194Point = ShapePredictor.Deserialize(predictor194PointModel);
+            }
+
+            var predictorAgeModel = Path.Combine(directory, FaceRecognitionModels.GetAgeNetworkModelLocation());
+            if (File.Exists(predictorAgeModel))
+            {
+                var ret = NativeMethods.LossMulticlassLog_age_train_type_create();
+                var networkId = LossMulticlassLogRegistry.GetId(ret);
+                if (LossMulticlassLogRegistry.Contains(networkId))
+                    NativeMethods.LossMulticlassLog_age_train_type_delete(ret);
+                else
+                    LossMulticlassLogRegistry.Add(ret);
+
+                this._AgePredictorGender?.Dispose();
+                this._AgePredictorGender = LossMulticlassLog.Deserialize(predictorAgeModel, networkId);
             }
 
             var predictorGenderModel = Path.Combine(directory, FaceRecognitionModels.GetGenderNetworkModelLocation());
@@ -528,6 +544,48 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
+        /// Returns an age group of face image correspond to specified location in specified image.
+        /// </summary>
+        /// <param name="image">The image contains a face.</param>
+        /// <param name="location">The location rectangle for a face.</param>
+        /// <returns>An age group of face image correspond to specified location in specified image.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        public uint PredictAge(Image image, Location location)
+        {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+            if (location == null)
+                throw new ArgumentNullException(nameof(location));
+
+            image.ThrowIfDisposed();
+            this.ThrowIfDisposed();
+
+            // GenderClassify uses _GenderPredictorGender so check here!!
+            if (this._AgePredictorGender == null)
+                throw new NotSupportedException($"'{FaceRecognitionModels.GetAgeNetworkModelLocation()}' does not exist.");
+
+            if (!(image.Matrix is Matrix<RgbPixel> matrix))
+                throw new ArgumentException();
+
+            FullObjectDetection[] rawLandmark = null;
+
+            try
+            {
+                rawLandmark = this.RawFaceLandmarks(image, new[] { location }, PredictorModel.Small).ToArray();
+                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u))
+                using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
+                using (var results = this._AgePredictorGender.Operator(new[] { faceChips }, 1))
+                    return results[0];
+            }
+            finally
+            {
+                if (rawLandmark != null)
+                    foreach (var fullObjectDetection in rawLandmark) fullObjectDetection.Dispose();
+            }
+        }
+
+        /// <summary>
         /// Returns an gender of face image correspond to specified location in specified image.
         /// </summary>
         /// <param name="image">The image contains a face.</param>
@@ -557,10 +615,55 @@ namespace FaceRecognitionDotNet
             try
             {
                 rawLandmark = this.RawFaceLandmarks(image, new[] { location }, PredictorModel.Small).ToArray();
-                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u, 0.25d))
+                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u))
                 using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
                 using (var results = this._GenderPredictorGender.Operator(new[] { faceChips }, 1))
                     return results[0] == 0 ? Gender.Male : Gender.Female;
+            }
+            finally
+            {
+                if (rawLandmark != null)
+                    foreach (var fullObjectDetection in rawLandmark) fullObjectDetection.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Returns probabilities of age group of face image correspond to specified location in specified image.
+        /// </summary>
+        /// <param name="image">The image contains a face.</param>
+        /// <param name="location">The location rectangle for a face.</param>
+        /// <returns>Probabilities of age group of face image correspond to specified location in specified image.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        public IDictionary<uint, float> PredictProbabilityAge(Image image, Location location)
+        {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+            if (location == null)
+                throw new ArgumentNullException(nameof(location));
+
+            image.ThrowIfDisposed();
+            this.ThrowIfDisposed();
+
+            // GenderClassify uses _GenderPredictorGender so check here!!
+            if (this._AgePredictorGender == null)
+                throw new NotSupportedException($"'{FaceRecognitionModels.GetAgeNetworkModelLocation()}' does not exist.");
+
+            if (!(image.Matrix is Matrix<RgbPixel> matrix))
+                throw new ArgumentException();
+
+            FullObjectDetection[] rawLandmark = null;
+
+            try
+            {
+                rawLandmark = this.RawFaceLandmarks(image, new[] { location }, PredictorModel.Small).ToArray();
+                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u, 0.25d))
+                using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
+                {
+                    var results = this._AgePredictorGender.Probability(faceChips, 1).ToArray();
+                    var predict = results[0];
+                    return predict.Select((n, index) => new { index, n }).ToDictionary(n => (uint)n.index, n => n.n);
+                }
             }
             finally
             {

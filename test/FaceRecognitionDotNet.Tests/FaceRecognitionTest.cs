@@ -40,6 +40,8 @@ namespace FaceRecognitionDotNet.Tests
 
         private bool _HasHelenDataset = false;
 
+        private bool _HasAgeDataset = false;
+
         private bool _HasGenderDataset = false;
 
         #endregion
@@ -527,6 +529,9 @@ namespace FaceRecognitionDotNet.Tests
                     case "GetGenderNetworkModelLocation":
                         this._HasGenderDataset = File.Exists(Path.Combine(ModelDirectory, result));
                         break;
+                    case "GetAgeNetworkModelLocation":
+                        this._HasAgeDataset = File.Exists(Path.Combine(ModelDirectory, result));
+                        break;
                     default:
                         models.Add(result);
 
@@ -892,6 +897,37 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [TestMethod]
+        public void PredictAge()
+        {
+            if (this._HasAgeDataset)
+            {
+                // 0: (0, 2)
+                // 1: (4, 6)
+                // 2: (8, 13)
+                // 3: (15, 20)
+                // 4: (25, 32)
+                // 5: (38, 43)
+                // 6: (48, 53)
+                // 7: (60, 100)
+                var groundTruth = new[]
+                {
+                    new { Path = @"TestImages\Age\NelsonMandela_2008_90.jpg",        Age = new uint[]{ 7 } },
+                    new { Path = @"TestImages\Age\MacaulayCulkin_1991_11.jpg",       Age = new uint[]{ 2, 3 } },
+                    new { Path = @"TestImages\Age\DianaPrincessOfWales_1997_36.jpg", Age = new uint[]{ 4, 5 } },
+                    new { Path = @"TestImages\Age\MaoAsada_2014_24.jpg",             Age = new uint[]{ 3, 4 } }
+                };
+
+                foreach (var gt in groundTruth)
+                    using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                    {
+                        var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                        var age = this._FaceRecognition.PredictAge(image, location);
+                        Assert.IsTrue(gt.Age.Contains(age), $"Failed to classify '{gt.Path}'");
+                    }
+            }
+        }
+
+        [TestMethod]
         public void PredictGender()
         {
             if (this._HasGenderDataset)
@@ -911,6 +947,41 @@ namespace FaceRecognitionDotNet.Tests
                         var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
                         var gender = this._FaceRecognition.PredictGender(image, location);
                         Assert.IsTrue(gt.Gender == gender, $"Failed to classify '{gt.Path}'");
+                    }
+            }
+        }
+
+        [TestMethod]
+        public void PredictProbabilityAge()
+        {
+            if (this._HasAgeDataset)
+            {
+                // 0: (0, 2)
+                // 1: (4, 6)
+                // 2: (8, 13)
+                // 3: (15, 20)
+                // 4: (25, 32)
+                // 5: (38, 43)
+                // 6: (48, 53)
+                // 7: (60, 100)
+                var groundTruth = new[]
+                {
+                    new { Path = @"TestImages\Age\NelsonMandela_2008_90.jpg",        Age = new uint[]{ 7 } },
+                    new { Path = @"TestImages\Age\MacaulayCulkin_1991_11.jpg",       Age = new uint[]{ 2, 3 } },
+                    new { Path = @"TestImages\Age\DianaPrincessOfWales_1997_36.jpg", Age = new uint[]{ 4, 5 } },
+                    new { Path = @"TestImages\Age\MaoAsada_2014_24.jpg",             Age = new uint[]{ 3, 4 } }
+                };
+
+                foreach (var gt in groundTruth)
+                    using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                    {
+                        var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                        var probability = this._FaceRecognition.PredictProbabilityAge(image, location);
+
+                        // Take top 2
+                        var order = probability.OrderByDescending(x => x.Value).Take(2).ToArray();
+                        var any = order.Select(pair => pair.Key).Any(u => gt.Age.Contains(u));
+                        Assert.IsTrue(any, $"Failed to classify '{gt.Path}'. Probability: 1 ({order[0].Key}-{order[0].Value}), 2 ({order[1].Key}-{order[1].Value})");
                     }
             }
         }

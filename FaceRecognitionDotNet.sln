@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindFacesInBatches", "examp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenderTraining", "examples\GenderTraining\GenderTraining.csproj", "{EAB3D0C4-D2E0-4F6A-A663-041B5584FF1F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgeTraining", "examples\AgeTraining\AgeTraining.csproj", "{8595BAC7-7EEC-49E6-9D78-01AFB15A30FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{EAB3D0C4-D2E0-4F6A-A663-041B5584FF1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAB3D0C4-D2E0-4F6A-A663-041B5584FF1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAB3D0C4-D2E0-4F6A-A663-041B5584FF1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8595BAC7-7EEC-49E6-9D78-01AFB15A30FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8595BAC7-7EEC-49E6-9D78-01AFB15A30FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8595BAC7-7EEC-49E6-9D78-01AFB15A30FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8595BAC7-7EEC-49E6-9D78-01AFB15A30FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{FCCD585F-1D3E-4AFB-9644-DAEC7B8CA6C4} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 		{5F7CB2DF-54E3-461F-9FA9-F8B4BAFC54AC} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 		{EAB3D0C4-D2E0-4F6A-A663-041B5584FF1F} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
+		{8595BAC7-7EEC-49E6-9D78-01AFB15A30FD} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D44C572-D749-4A76-A199-8C598A08AE8A}
