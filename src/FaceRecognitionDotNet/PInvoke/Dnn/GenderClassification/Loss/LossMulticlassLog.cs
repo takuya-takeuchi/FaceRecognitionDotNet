@@ -5,21 +5,21 @@ using System.Runtime.InteropServices;
 namespace DlibDotNet
 {
 
-    internal sealed class NativeMethods
+    internal sealed partial class NativeMethods
     {
 
         #region Fields
 
-        public const string NativeLibrary = "DlibDotNetNativeDnnGenderClassification";
+        public const string GenderClassificationNativeLibrary = "DlibDotNetNativeDnnGenderClassification";
 
-        public const CallingConvention CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl;
+        public const CallingConvention GenderClassificationCallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl;
         
         #endregion
 
-        [DllImport(NativeLibrary, CallingConvention = CallingConvention)]
+        [DllImport(GenderClassificationNativeLibrary, CallingConvention = GenderClassificationCallingConvention)]
         public static extern IntPtr LossMulticlassLog_gender_train_type_create();
 
-        [DllImport(NativeLibrary, CallingConvention = CallingConvention)]
+        [DllImport(GenderClassificationNativeLibrary, CallingConvention = GenderClassificationCallingConvention)]
         public static extern void LossMulticlassLog_gender_train_type_delete(IntPtr @base);
 
     }

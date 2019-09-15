@@ -29,6 +29,11 @@
             return "helen-dataset.dat";
         }
 
+        public static string GetAgeNetworkModelLocation()
+        {
+            return "adience-age-network.dat";
+        }
+
         public static string GetGenderNetworkModelLocation()
         {
             return "utkface-gender-network.dat";

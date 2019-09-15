@@ -4,13 +4,14 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using DlibDotNet;
 using DlibDotNet.Dnn;
 using Microsoft.Extensions.CommandLineUtils;
 using Dlib = DlibDotNet.Dlib;
 
-namespace GenderTraining
+namespace AgeTraining
 {
 
     internal class Program
@@ -27,8 +28,8 @@ namespace GenderTraining
         private static int Main(string[] args)
         {
             var app = new CommandLineApplication(false);
-            app.Name = nameof(GenderTraining);
-            app.Description = "The program for training UTKFace dataset";
+            app.Name = nameof(AgeTraining);
+            app.Description = "The program for training Adience OUI Unfiltered faces for gender and age classification dataset";
             app.HelpOption("-h|--help");
 
             app.Command("train", command =>
@@ -45,6 +46,7 @@ namespace GenderTraining
                 var minLearningRateOption = command.Option("-m|--min-lr", $"The minimum learning rate. Default is {minLearningRateDefault}", CommandOptionType.SingleValue);
                 var minBatchSizeOption = command.Option("-b|--min-batchsize", $"The minimum batch size. Default is {minBatchSizeDefault}", CommandOptionType.SingleValue);
                 var validationOption = command.Option("-v|--validation-interval", $"The interval of validation. Default is {validationDefault}", CommandOptionType.SingleValue);
+                var useMeanOption = command.Option("-u|--use-mean", "Use mean image", CommandOptionType.NoValue);
 
                 command.OnExecute(() =>
                 {
@@ -90,16 +92,19 @@ namespace GenderTraining
                         return -1;
                     }
 
+                    var useMean = useMeanOption.HasValue();
+
                     Console.WriteLine($"            Dataset: {dataset}");
                     Console.WriteLine($"              Epoch: {epoch}");
                     Console.WriteLine($"      Learning Rate: {learningRate}");
                     Console.WriteLine($"  Min Learning Rate: {minLearningRate}");
                     Console.WriteLine($"     Min Batch Size: {minBatchSize}");
                     Console.WriteLine($"Validation Interval: {validation}");
+                    Console.WriteLine($"           Use Mean: {useMean}");
                     Console.WriteLine();
 
-                    var baseName = $"utkface-gender-network_{epoch}_{learningRate}_{minLearningRate}_{minBatchSize}";
-                    Train(baseName, dataset, epoch, learningRate, minLearningRate, minBatchSize, validation);
+                    var baseName = $"adience-age-network_{epoch}_{learningRate}_{minLearningRate}_{minBatchSize}_{useMean}";
+                    Train(baseName, dataset, epoch, learningRate, minLearningRate, minBatchSize, validation, useMean);
 
                     return 0;
                 });
@@ -108,7 +113,7 @@ namespace GenderTraining
             app.Command("test", command =>
             {
                 var datasetOption = command.Option("-d|--dataset", "The directory of dataset", CommandOptionType.SingleValue);
-                var modelOption = command.Option("-m|--model", $"The model file.", CommandOptionType.SingleValue);
+                var modelOption = command.Option("-m|--model", "The model file.", CommandOptionType.SingleValue);
 
                 command.OnExecute(() =>
                 {
@@ -120,7 +125,7 @@ namespace GenderTraining
                     }
 
                     var model = modelOption.Value();
-                    if (!modelOption.HasValue() || !File.Exists(model))
+                    if (!datasetOption.HasValue() || !File.Exists(model))
                     {
                         Console.WriteLine("model does not exist");
                         return -1;
@@ -135,34 +140,243 @@ namespace GenderTraining
                     return 0;
                 });
             });
-            
+
+            app.Command("preprocess", command =>
+            {
+                var datasetOption = command.Option("-d|--dataset", "The directory of dataset", CommandOptionType.SingleValue);
+                var outputOption = command.Option("-o|--output", "The path to output preprocessed dataset", CommandOptionType.SingleValue);
+
+                command.OnExecute(() =>
+                {
+                    var dataset = datasetOption.Value();
+                    if (!datasetOption.HasValue() || !Directory.Exists(dataset))
+                    {
+                        Console.WriteLine("dataset does not exist");
+                        return -1;
+                    }
+
+                    var output = outputOption.Value();
+                    if (!outputOption.HasValue())
+                    {
+                        Console.WriteLine("output does not specify");
+                        return -1;
+                    }
+
+                    Directory.CreateDirectory(output);
+
+                    var types = new[]
+                    {
+                        "train", "test"
+                    };
+
+                    foreach (var type in types)
+                    {
+                        var imageDir = Path.Combine(dataset, type);
+                        if (!Directory.Exists(imageDir))
+                        {
+                            Console.WriteLine($"{imageDir} does not exist");
+                            return -1;
+                        }
+
+                        var csv = Path.Combine(dataset, $"{type}.csv");
+                        if (!File.Exists(csv))
+                        {
+                            Console.WriteLine($"{csv} does not exist");
+                            return -1;
+                        }
+
+                        File.Copy(csv, Path.Combine(output, $"{type}.csv"), true);
+
+                        Directory.CreateDirectory(Path.Combine(output, type));
+                    }
+
+                    Console.WriteLine($"Dataset: {dataset}");
+                    Console.WriteLine($" Output: {output}");
+                    Console.WriteLine();
+
+                    using (var posePredictor = ShapePredictor.Deserialize("shape_predictor_5_face_landmarks.dat"))
+                    using (var faceDetector = Dlib.GetFrontalFaceDetector())
+                    {
+                        foreach (var type in types)
+                            Preprocess(type, dataset, faceDetector, posePredictor, output);
+                    }
+
+                    return 0;
+                });
+            });
+
             return app.Execute(args);
         }
 
         #region Helpers
 
-        private static void Load(string directory, out IList<Matrix<RgbPixel>> images, out IList<uint> labels)
+        private static IDictionary<string, uint> ReadCsv(string path)
         {
-            var imageList = new List<Matrix<RgbPixel>>();
-            var labelList = new List<uint>();
-            foreach (var file in Directory.EnumerateFiles(directory))
-            {
-                var name = Path.GetFileName(file);
-                var s = name.Split('_');
-                if (s.Length != 4 || !uint.TryParse(s[1], out var gender))
-                    continue;
+            var results = new Dictionary<string, uint>();
 
-                using (var tmp = Dlib.LoadImageAsMatrix<RgbPixel>(file))
+            using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var sr = new StreamReader(fs))
+            {
+                var line = sr.ReadLine();
+                while (line != null)
                 {
-                    var m = new Matrix<RgbPixel>(Size, Size);
-                    Dlib.ResizeImage(tmp, m);
-                    imageList.Add(m);
-                    labelList.Add(gender);
+                    // "aligned\10171175@N06\landmark_aligned_face.1191.11674850055_0107e2c11e_o.jpg","(8, 12)"
+                    var match = Regex.Match(line, "^\"(?<path>[^\"]+)\",\"(?<age>[^\"]+)\"", RegexOptions.Compiled | RegexOptions.Singleline);
+                    if (match.Success)
+                    {
+                        var ages = new[]
+                        {
+                            "(0, 2)",
+                            "(4, 6)",
+                            "(8, 23)",
+                            "(15, 20)",
+                            "(25, 32)",
+                            "(38, 43)",
+                            "(48, 53)",
+                            "(60, 100)"
+                        };
+
+                        var index = Array.IndexOf(ages, match.Groups["age"].Value);
+                        if (index >= 0)
+                            results.Add(match.Groups["path"].Value, (uint)index);
+                    }
+
+                    line = sr.ReadLine();
                 }
             }
 
-            images = imageList;
-            labels = labelList;
+            return results;
+        }
+
+        private static void Load(string type, string directory, string meanImage, out IList<Matrix<RgbPixel>> images, out IList<uint> labels)
+        {
+            Matrix<RgbPixel> mean = null;
+
+            try
+            {
+                if (File.Exists(meanImage))
+                    mean = Dlib.LoadImageAsMatrix<RgbPixel>(meanImage);
+
+                var csv = ReadCsv(Path.Combine(directory, $"{type}.csv"));
+                var imageList = new List<Matrix<RgbPixel>>();
+                var labelList = new List<uint>();
+                foreach (var kvp in csv)
+                {
+                    var path = Path.Combine(directory, type, kvp.Key);
+                    if (!File.Exists(path))
+                        continue;
+
+                    using (var tmp = Dlib.LoadImageAsMatrix<RgbPixel>(path))
+                    {
+                        if (mean != null)
+                        {
+                            using (var m = new Matrix<RgbPixel>(Size, Size))
+                            {
+                                Dlib.ResizeImage(tmp, m);
+
+                                // ToDo: Support subtract operator on DlibDotNet
+                                // var ret = m - mean;
+                                var ret = new Matrix<RgbPixel>(Size, Size);
+                                for (var row = 0; row < Size; row++)
+                                for (var col = 0; col < Size; col++)
+                                {
+                                    var left = m[row, col];
+                                    var right = mean[row, col];
+                                    var red = left.Red - right.Red;
+                                    var green = left.Green - right.Green;
+                                    var blue = left.Blue - right.Blue;
+                                    ret[row, col] = new RgbPixel((byte)red, (byte)green, (byte)blue);
+                                }
+                                imageList.Add(ret);
+                            }
+                        }
+                        else
+                        {
+                            var m = new Matrix<RgbPixel>(Size, Size);
+                            Dlib.ResizeImage(tmp, m);
+                            imageList.Add(m);
+                        }
+
+                        labelList.Add(kvp.Value);
+                    }
+                }
+
+                images = imageList;
+                labels = labelList;
+            }
+            finally
+            {
+                mean?.Dispose();
+            }
+        }
+
+        private static void Preprocess(string type, string input, FrontalFaceDetector faceDetector, ShapePredictor posePredictor, string output)
+        {
+            var imageCount = 0;
+
+            var r = new ulong[Size * Size];
+            var g = new ulong[Size * Size];
+            var b = new ulong[Size * Size];
+
+            var csv = ReadCsv(Path.Combine(input, $"{type}.csv"));
+            var outputDir = Path.Combine(output, type);
+
+            foreach (var kvp in csv)
+                using (var tmp = Dlib.LoadImageAsMatrix<RgbPixel>(Path.Combine(input, type, kvp.Key)))
+                {
+                    var dets = faceDetector.Operator(tmp);
+                    if (!dets.Any())
+                    {
+                        Console.WriteLine($"Warning: Failed to detect face from '{kvp}'");
+                        continue;
+                    }
+
+                    // Get max size rectangle. It could be better face.
+                    var det = dets.Select((val, idx) => new { V = val, I = idx }).Aggregate((max, working) => (max.V.Area > working.V.Area) ? max : working).V;
+                    using (var ret = posePredictor.Detect(tmp, det))
+                    using (var chip = Dlib.GetFaceChipDetails(ret, Size, 0d))
+                    using (var faceChips = Dlib.ExtractImageChip<RgbPixel>(tmp, chip))
+                    {
+                        var dst = Path.Combine(outputDir, kvp.Key);
+                        var dstDir = Path.GetDirectoryName(dst);
+                        Directory.CreateDirectory(dstDir);
+                        Dlib.SaveJpeg(faceChips, Path.Combine(outputDir, kvp.Key), 100);
+
+                        var index = 0;
+                        for (var row = 0; row < Size; row++)
+                            for (var col = 0; col < Size; col++)
+                            {
+                                var rgb = faceChips[row, col];
+                                r[index] += rgb.Red;
+                                g[index] += rgb.Green;
+                                b[index] += rgb.Blue;
+                                index++;
+                            }
+                    }
+
+                    imageCount++;
+                }
+
+            using (var mean = new Matrix<RgbPixel>(Size, Size))
+            {
+                var index = 0;
+                for (var row = 0; row < Size; row++)
+                    for (var col = 0; col < Size; col++)
+                    {
+                        var red = (double)r[index] / imageCount;
+                        var green = (double)g[index] / imageCount;
+                        var blue = (double)b[index] / imageCount;
+
+                        var newRed = (byte)Math.Round(red);
+                        var newGreen = (byte)Math.Round(green);
+                        var newBlue = (byte)Math.Round(blue);
+                        mean[row, col] = new RgbPixel(newRed, newGreen, newBlue);
+
+                        index++;
+                    }
+
+                Dlib.SaveBmp(mean, Path.Combine(output, $"{type}.mean.bmp"));
+            }
         }
 
         private static void Test(string dataset, string model)
@@ -175,15 +389,15 @@ namespace GenderTraining
                 IList<uint> testingLabels;
 
                 Console.WriteLine("Start load train images");
-                Load(Path.Combine(dataset, "train"), out trainingImages, out trainingLabels);
+                Load("train", dataset, null, out trainingImages, out trainingLabels);
                 Console.WriteLine($"Load train images: {trainingImages.Count}");
 
                 Console.WriteLine("Start load test images");
-                Load(Path.Combine(dataset, "test"), out testingImages, out testingLabels);
+                Load("test", dataset,  null, out testingImages, out testingLabels);
                 Console.WriteLine($"Load test images: {testingImages.Count}");
 
                 // So with that out of the way, we can make a network instance.
-                var trainNet = NativeMethods.LossMulticlassLog_gender_train_type_create();
+                var trainNet = NativeMethods.LossMulticlassLog_age_train_type_create();
                 var networkId = LossMulticlassLogRegistry.GetId(trainNet);
                 LossMulticlassLogRegistry.Add(trainNet);
 
@@ -194,11 +408,11 @@ namespace GenderTraining
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(e);
             }
         }
 
-        private static void Train(string baseName, string dataset, uint epoch, double learningRate, double minLearningRate, uint miniBatchSize, uint validation)
+        private static void Train(string baseName, string dataset, uint epoch, double learningRate, double minLearningRate, uint miniBatchSize, uint validation, bool useMean)
         {
             try
             {
@@ -207,16 +421,18 @@ namespace GenderTraining
                 IList<Matrix<RgbPixel>> testingImages;
                 IList<uint> testingLabels;
 
+                var mean = useMean ? Path.Combine(dataset, "train.mean.bmp") : null;
+
                 Console.WriteLine("Start load train images");
-                Load(Path.Combine(dataset, "train"), out trainingImages, out trainingLabels);
+                Load("train", dataset, mean, out trainingImages, out trainingLabels);
                 Console.WriteLine($"Load train images: {trainingImages.Count}");
 
                 Console.WriteLine("Start load test images");
-                Load(Path.Combine(dataset, "test"), out testingImages, out testingLabels);
+                Load("test" , dataset, mean, out testingImages, out testingLabels);
                 Console.WriteLine($"Load test images: {testingImages.Count}");
 
                 // So with that out of the way, we can make a network instance.
-                var trainNet = NativeMethods.LossMulticlassLog_gender_train_type_create();
+                var trainNet = NativeMethods.LossMulticlassLog_age_train_type_create();
                 var networkId = LossMulticlassLogRegistry.GetId(trainNet);
                 LossMulticlassLogRegistry.Add(trainNet);
 
@@ -307,7 +523,7 @@ namespace GenderTraining
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(e);
             }
         }
 

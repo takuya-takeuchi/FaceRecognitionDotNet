@@ -36,12 +36,14 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |compare_faces|CompareFaces||
 |face_distance|FaceDistance||
 |face_encodings|FaceEncodings||
-|face_landmarks|FaceLandmarks|And support Helen dataset :warning:|
+|face_landmarks|FaceLandmarks|And support **Helen dataset** :warning:|
 |face_locations|FaceLocations||
 |load_image_file|LoadImageFile||
 |-|LoadImage|From memory data|
-|-|PredictGender|Use UTKFace dataset :warning:|
-|-|PredictProbabilityGender|Use UTKFace dataset :warning:|
+|-|PredictAge|Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
+|-|PredictGender|Use **UTKFace dataset** :warning:|
+|-|PredictProbabilityAge|Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
+|-|PredictProbabilityGender|Use **UTKFace dataset** :warning:|
 
 ##### :warning: Warning
 
@@ -49,6 +51,7 @@ You must train dataset by yourself.
 I will **NOT** provide pretrained model file due to avoiding license issue.
 You can check the following examples to train dataset.
 
+* examples/AgeTraining
 * examples/GenderTraining
 * examples/HelenTraining
 
