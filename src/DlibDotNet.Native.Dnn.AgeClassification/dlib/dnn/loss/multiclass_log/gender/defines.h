@@ -44,6 +44,11 @@ using age_train_type = loss_multiclass_log<fc8<
 							               relu<conv1<input_rgb_image_sized<227>
                                            >>>>>>>>>>>>>>>>>>>;
 
+static const std::vector<const char *>* age_train_type_labels = new std::vector<const char *>(
+{
+    "(0, 2)", "(4, 6)", "(8, 13)", "(15, 20)", "(25, 32)", "(38, 43)", "(48, 53)", "(60, 100)"
+});
+
 #pragma endregion type definitions
 
 #endif

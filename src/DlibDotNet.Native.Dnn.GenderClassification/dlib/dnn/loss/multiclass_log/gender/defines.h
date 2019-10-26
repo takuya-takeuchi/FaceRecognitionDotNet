@@ -51,6 +51,16 @@ using gender_train_type = loss_multiclass_log<fc8<
 							                  relu<conv1<input_rgb_image_sized<227>
                                               >>>>>>>>>>>>>>>>>>>;
 
+static const std::vector<const char *>* gender_test_type_labels = new std::vector<const char *>(
+{
+    "Male", "Female"
+});
+
+static const std::vector<const char *>* gender_train_type_labels = new std::vector<const char *>(
+{
+    "Male", "Female"
+});
+
 #pragma endregion type definitions
 
 #endif
