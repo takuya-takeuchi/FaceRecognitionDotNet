@@ -196,15 +196,17 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="faceEncodings"/> or <paramref name="faceToCompare"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceToCompare"/> is disposed. Or <paramref name="faceEncodings"/> contains disposed object.</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},System.Int32)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},System.Int32,FaceRecognitionDotNet.PredictorModel)">
             <summary>
             Returns an enumerable collection of face feature data corresponds to all faces in specified image.
             </summary>
             <param name="image">The image contains faces. The image can contain multiple faces.</param>
             <param name="knownFaceLocation">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
             <param name="numJitters">The number of times to re-sample the face when calculating encoding.</param>
+            <param name="model">The model of face detector.</param>
             <returns>An enumerable collection of face feature data corresponds to all faces in specified image.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> is null.</exception>
+            <exception cref="T:System.ArgumentException"><see cref="F:FaceRecognitionDotNet.PredictorModel.Helen"/> is not supported.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModel)">
@@ -260,6 +262,16 @@
             <returns>The <see cref="T:FaceRecognitionDotNet.Image"/> this method creates.</returns>
             <exception cref="T:System.IO.FileNotFoundException">The specified path does not exist.</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictAge(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns an age group of face image correspond to specified location in specified image.
+            </summary>
+            <param name="image">The image contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>An age group of face image correspond to specified location in specified image.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
             <summary>
             Returns an gender of face image correspond to specified location in specified image.
@@ -267,6 +279,16 @@
             <param name="image">The image contains a face.</param>
             <param name="location">The location rectangle for a face.</param>
             <returns>An gender of face image correspond to specified location in specified image.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityAge(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns probabilities of age group of face image correspond to specified location in specified image.
+            </summary>
+            <param name="image">The image contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>Probabilities of age group of face image correspond to specified location in specified image.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
         </member>

@@ -283,18 +283,22 @@ namespace FaceRecognitionDotNet
         /// <param name="image">The image contains faces. The image can contain multiple faces.</param>
         /// <param name="knownFaceLocation">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
         /// <param name="numJitters">The number of times to re-sample the face when calculating encoding.</param>
+        /// <param name="model">The model of face detector.</param>
         /// <returns>An enumerable collection of face feature data corresponds to all faces in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> is null.</exception>
+        /// <exception cref="ArgumentException"><see cref="PredictorModel.Helen"/> is not supported.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
-        public IEnumerable<FaceEncoding> FaceEncodings(Image image, IEnumerable<Location> knownFaceLocation = null, int numJitters = 1)
+        public IEnumerable<FaceEncoding> FaceEncodings(Image image, IEnumerable<Location> knownFaceLocation = null, int numJitters = 1, PredictorModel model = PredictorModel.Small)
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
+            if (model == PredictorModel.Helen)
+                throw new ArgumentException("FaceRecognitionDotNet.PredictorModel.Helen is not supported.", nameof(model));
 
             image.ThrowIfDisposed();
             this.ThrowIfDisposed();
 
-            var rawLandmarks = this.RawFaceLandmarks(image, knownFaceLocation, PredictorModel.Small);
+            var rawLandmarks = this.RawFaceLandmarks(image, knownFaceLocation, model);
             foreach (var landmark in rawLandmarks)
             {
                 var ret = new FaceEncoding(FaceRecognitionModelV1.ComputeFaceDescriptor(this._FaceEncoder, image, landmark, numJitters));
