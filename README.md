@@ -59,13 +59,13 @@ You can check the following examples to train dataset.
 
 #### Face Recognition
 
-<img src="images/1.png"/>
+<img src="images/1.png" width="480"/>
 
-<img src="images/2.png"/>
+<img src="images/2.png" width="480"/>
 
 #### Face Landmark
 
-<img src="images/3.jpg"/>
+<img src="images/3.jpg" width="480"/>
 
 ##### :bulb: NOTE
 
