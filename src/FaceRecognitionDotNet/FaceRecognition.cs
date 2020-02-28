@@ -377,54 +377,18 @@ namespace FaceRecognitionDotNet
                     case PredictorModel.Helen:
                         results.AddRange(landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<Point>>
                         {
-                            { FacePart.Chin,         Enumerable.Range(107,10).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range(118,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(129, 1).Select(i => landmarkTuple[i]))
-                                                                             .Concat( new [] { landmarkTuple[  0] })
-                                                                             .Concat( new [] { landmarkTuple[  1] })
-                                                                             .Concat( new [] { landmarkTuple[  2] })
-                                                                             .Concat( new [] { landmarkTuple[ 13] })
-                                                                             .Concat( new [] { landmarkTuple[ 24] })
-                                                                             .Concat( new [] { landmarkTuple[ 35] })
-                                                                             .Concat( new [] { landmarkTuple[ 46] })
-                                                                             .Concat( new [] { landmarkTuple[ 57] })
-                                                                             .Concat( new [] { landmarkTuple[ 68] })
-                                                                             .Concat( new [] { landmarkTuple[ 79] })
-                                                                             .Concat( new [] { landmarkTuple[ 90] })
-                                                                             .Concat( new [] { landmarkTuple[101] })
-                                                                             .Concat( new [] { landmarkTuple[106] })
-                                                                             .Concat( new [] { landmarkTuple[117] })
-                                                                             .Concat( new [] { landmarkTuple[128] })
-                                                                             .Concat( new [] { landmarkTuple[139] })
-                                                                             .Concat( new [] { landmarkTuple[150] })
-                                                                             .Concat( new [] { landmarkTuple[161] })
-                                                                             .Concat( new [] { landmarkTuple[172] })
-                                                                             .Concat( new [] { landmarkTuple[183] })  },
-                            { FacePart.LeftEyebrow,  Enumerable.Range( 84, 6).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range( 91,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(102, 4).Select(i => landmarkTuple[i])) },
-                            { FacePart.RightEyebrow, Enumerable.Range( 62, 6).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range( 69,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range( 80, 4).Select(i => landmarkTuple[i])) },
-                            { FacePart.Nose,         Enumerable.Range(130, 9).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range(140, 8).Select(i => landmarkTuple[i])) },
-                            { FacePart.LeftEye,      Enumerable.Range( 40, 6).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range( 47,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range( 61, 1).Select(i => landmarkTuple[i])) },
-                            { FacePart.RightEye,     Enumerable.Range( 18, 6).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range( 25,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range( 39, 1).Select(i => landmarkTuple[i])) },
-                            { FacePart.TopLip,       Enumerable.Range(148, 2).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range(151,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(162, 2).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(179, 4).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(184,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(  3, 1).Select(i => landmarkTuple[i])) },
-                            { FacePart.BottomLip,    Enumerable.Range(163, 9).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range(173, 7).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(  3,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range( 14, 4).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(148, 1).Select(i => landmarkTuple[i])) }
+                            { FacePart.Chin,         Enumerable.Range(  0,41).Select(i => landmarkTuple[i]) },
+                            { FacePart.LeftEyebrow,  Enumerable.Range(174,20).Select(i => landmarkTuple[i]) },
+                            { FacePart.RightEyebrow, Enumerable.Range(154,20).Select(i => landmarkTuple[i]) },
+                            { FacePart.Nose,         Enumerable.Range( 41,17).Select(i => landmarkTuple[i]) },
+                            { FacePart.LeftEye,      Enumerable.Range(134,20).Select(i => landmarkTuple[i]) },
+                            { FacePart.RightEye,     Enumerable.Range(114,20).Select(i => landmarkTuple[i]) },
+                            { FacePart.TopLip,       Enumerable.Range( 58,14).Select(i => landmarkTuple[i])
+                                                                             .Concat( Enumerable.Range(86,15).Reverse().Select(i => landmarkTuple[i])) },
+                            { FacePart.BottomLip,    Enumerable.Range(100,14).Select(i => landmarkTuple[i])
+                                                                             .Concat( new [] { landmarkTuple[86] })
+                                                                             .Concat( new [] { landmarkTuple[58] })
+                                                                             .Concat( Enumerable.Range(71,15).Reverse().Select(i => landmarkTuple[i])) }
                         }));
                         break;
                     default:

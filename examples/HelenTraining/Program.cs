@@ -128,7 +128,7 @@ namespace HelenTraining
                                         for (var i = 1; i < txt.Length; i++)
                                         {
                                             var tmp = txt[i].Split(',').Select(s => s.Trim()).Select(float.Parse).Select(s => (int)s).ToArray();
-                                            parts.Add(new Part { X = tmp[0], Y = tmp[1], Name = $"{i - 1}" });
+                                            parts.Add(new Part { X = tmp[0], Y = tmp[1], Name = $"{i - 1:D3}" });
                                         }
 
                                         var image = new Image
