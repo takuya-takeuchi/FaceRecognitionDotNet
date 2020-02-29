@@ -51,22 +51,26 @@ class Config
    
    static $BuildLibraryWindowsHash = 
    @{
-      "DlibDotNet.Native.Dnn.GenderClassification"     = "DlibDotNetNativeDnnGenderClassification.dll";
+      "DlibDotNet.Native.Dnn.GenderClassification"  = "DlibDotNetNativeDnnGenderClassification.dll";
+      "DlibDotNet.Native.Dnn.AgeClassification"     = "DlibDotNetNativeDnnAgeClassification.dll";
    }
    
    static $BuildLibraryLinuxHash = 
    @{
-      "DlibDotNet.Native.Dnn.GenderClassification"     = "libDlibDotNetNativeDnnGenderClassification.so";
+      "DlibDotNet.Native.Dnn.GenderClassification"  = "libDlibDotNetNativeDnnGenderClassification.so";
+      "DlibDotNet.Native.Dnn.AgeClassification"     = "libDlibDotNetNativeDnnAgeClassification.so";
    }
    
    static $BuildLibraryOSXHash = 
    @{
-      "DlibDotNet.Native.Dnn.GenderClassification"     = "libDlibDotNetNativeDnnGenderClassification.dylib";
+      "DlibDotNet.Native.Dnn.GenderClassification"  = "libDlibDotNetNativeDnnGenderClassification.dylib";
+      "DlibDotNet.Native.Dnn.AgeClassification"     = "libDlibDotNetNativeDnnAgeClassification.dylib";
    }
    
    static $BuildLibraryIOSHash = 
    @{
-      "DlibDotNet.Native.Dnn.GenderClassification"     = "libDlibDotNetNativeDnnGenderClassification.a";
+      "DlibDotNet.Native.Dnn.GenderClassification"  = "libDlibDotNetNativeDnnGenderClassification.a";
+      "DlibDotNet.Native.Dnn.AgeClassification"     = "libDlibDotNetNativeDnnAgeClassification.a";
    }
 
    [string]   $_Root
