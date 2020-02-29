@@ -4,7 +4,7 @@ cmake_policy(SET CMP0054 NEW)
 
 set(PROJ_NAME DlibDotNetNativeDnnGenderClassification)
 
-project(${PROJ_NAME} VERSION 19.17.0)
+project(${PROJ_NAME} VERSION 1.0.0)
 
 # OS info
 message("-------------------------------------------------------")
@@ -21,10 +21,10 @@ message("-- Binaries: ${CMAKE_CURRENT_BINARY_DIR}")
 message("-------------------------------------------------------")
 
 # Version info
-set(VERSION_MAJOR 19)
-set(VERSION_MINOR 17)
-set(VERSION_PATCH 0)
-set(VERSION_DATE 20190813)
+set(VERSION_MAJOR 1)
+set(VERSION_MINOR 2)
+set(VERSION_PATCH 3)
+set(VERSION_DATE 14)
 
 # Only GCC requires -fPIC
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
