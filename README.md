@@ -1,4 +1,4 @@
-# ![Alt text](nuget/face48.png "FaceRecognition.Net") FaceRecognition.Net [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)]() [![codecov](https://codecov.io/gh/takuya-takeuchi/FaceRecognitionDotNet/branch/master/graph/badge.svg)](https://codecov.io/gh/takuya-takeuchi/FaceRecognitionDotNet)
+# ![Alt text](nuget/face48.png "FaceRecognitionDotNet") FaceRecognitionDotNet [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)]() [![codecov](https://codecov.io/gh/takuya-takeuchi/FaceRecognitionDotNet/branch/master/graph/badge.svg)](https://codecov.io/gh/takuya-takeuchi/FaceRecognitionDotNet)
 
 The world's simplest facial recognition api for .NET  
 This repository is porting https://github.com/ageitgey/face_recognition by C#.
