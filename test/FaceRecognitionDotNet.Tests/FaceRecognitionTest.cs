@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using DlibDotNet;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace FaceRecognitionDotNet.Tests
 {
@@ -16,7 +17,9 @@ namespace FaceRecognitionDotNet.Tests
     public class FaceRecognitionTest : IDisposable
     {
 
-        #region Fields 
+        #region Fields
+
+        private readonly ITestOutputHelper _TestOutputHelper;
 
         private FaceRecognition _FaceRecognition;
 
@@ -46,8 +49,10 @@ namespace FaceRecognitionDotNet.Tests
 
         #region Constructors
 
-        public FaceRecognitionTest()
+        public FaceRecognitionTest(ITestOutputHelper testOutputHelper)
         {
+            this._TestOutputHelper = testOutputHelper;
+
             var faceRecognition = typeof(FaceRecognition);
             var type = faceRecognition.Assembly.GetTypes().FirstOrDefault(t => t.Name == "FaceRecognitionModels");
             if (type == null)
