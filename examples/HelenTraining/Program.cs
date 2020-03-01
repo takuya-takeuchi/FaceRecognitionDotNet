@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 using DlibDotNet;
 using FaceRecognitionDotNet;
 using Microsoft.Extensions.CommandLineUtils;
+using Point = DlibDotNet.Point;
 
 namespace HelenTraining
 {
@@ -127,7 +128,7 @@ namespace HelenTraining
                                         for (var i = 1; i < txt.Length; i++)
                                         {
                                             var tmp = txt[i].Split(',').Select(s => s.Trim()).Select(float.Parse).Select(s => (int)s).ToArray();
-                                            parts.Add(new Part { X = tmp[0], Y = tmp[1], Name = $"{i - 1}" });
+                                            parts.Add(new Part { X = tmp[0], Y = tmp[1], Name = $"{i - 1:D3}" });
                                         }
 
                                         var image = new Image
@@ -151,8 +152,8 @@ namespace HelenTraining
                                                 using (var p = new Pen(Color.Red, bitmap.Width / 400f))
                                                     g.DrawRectangle(p, b.Left, b.Top, b.Width, b.Height);
 
-                                                    foreach (var part in b.Part)
-                                                        g.FillEllipse(Brushes.GreenYellow, part.X, part.Y, 5, 5);
+                                                foreach (var part in b.Part)
+                                                    g.FillEllipse(Brushes.GreenYellow, part.X, part.Y, 5, 5);
                                             }
 
                                             var result = Path.Combine(extractPath, "Result");
@@ -196,7 +197,7 @@ namespace HelenTraining
                 command.HelpOption("-?|-h|--help");
                 var threadOption = command.Option("-t|--threads", "number of threads", CommandOptionType.SingleValue);
                 var xmlOption = command.Option("-x|--xml", "generated xml file from helen dataset", CommandOptionType.SingleValue);
-                
+
                 command.OnExecute(() =>
                 {
                     if (!xmlOption.HasValue())
@@ -321,25 +322,85 @@ namespace HelenTraining
                             return 0;
                         }
 
+                        gw.Clear(Color.White);
+
                         var b = new DlibDotNet.Rectangle(loc.Left, loc.Top, loc.Right, loc.Bottom);
                         var detection = predictor.Detect(mat, b);
 
                         using (var p = new Pen(Color.Red, bitmap.Width / 200f))
                         {
                             g.DrawRectangle(p, loc.Left, b.Top, b.Width, b.Height);
-                            gw.Clear(Color.White);
                             gw.DrawRectangle(p, loc.Left, b.Top, b.Width, b.Height);
                         }
 
-                        for (int i = 0, parts = (int)detection.Parts; i < parts; i++)
-                        {
-                            var part = detection.GetPart((uint)i);
-                            g.FillEllipse(Brushes.GreenYellow, part.X, part.Y, 15, 15);
-                            gw.DrawString($"{i}", SystemFonts.DefaultFont, Brushes.Black, part.X, part.Y);
-                        }
+                        DrawLandmarkPoints(g, gw, Enumerable.Range(0, (int)detection.Parts).Select(s => detection.GetPart((uint)s)).ToArray());
 
                         bitmap.Save("demo.jpg", ImageFormat.Jpeg);
                         white.Save("white.jpg", ImageFormat.Jpeg);
+                    }
+
+                    return 0;
+                });
+            });
+
+            app.Command("check", command =>
+            {
+                command.HelpOption("-?|-h|--help");
+                var imageOption = command.Option("-i|--image", "test image file", CommandOptionType.SingleValue);
+                var annotationOption = command.Option("-a|--annotation", "annotation file path", CommandOptionType.SingleValue);
+
+                command.OnExecute(() =>
+                {
+                    if (!imageOption.HasValue())
+                    {
+                        Console.WriteLine("image option is missing");
+                        app.ShowHelp();
+                        return -1;
+                    }
+
+                    if (!annotationOption.HasValue())
+                    {
+                        Console.WriteLine("annotation option is missing");
+                        app.ShowHelp();
+                        return -1;
+                    }
+
+                    var imageFile = imageOption.Value();
+                    if (!File.Exists(imageFile))
+                    {
+                        Console.WriteLine($"'{imageFile}' is not found");
+                        app.ShowHelp();
+                        return -1;
+                    }
+
+                    var annotation = annotationOption.Value();
+                    if (!File.Exists(annotation))
+                    {
+                        Console.WriteLine($"'{annotation}' is not found");
+                        app.ShowHelp();
+                        return -1;
+                    }
+
+                    using (var bitmap = (Bitmap)System.Drawing.Image.FromFile(imageFile))
+                    using (var white = new Bitmap(bitmap.Width, bitmap.Height))
+                    using (var g = Graphics.FromImage(bitmap))
+                    using (var gw = Graphics.FromImage(white))
+                    {
+                        var txt = File.ReadAllLines(annotation);
+
+                        var location = new List<Part>();
+                        for (var i = 1; i < txt.Length; i++)
+                        {
+                            var tmp = txt[i].Split(',').Select(s => s.Trim()).Select(float.Parse).Select(s => (int)s).ToArray();
+                            location.Add(new Part { X = tmp[0], Y = tmp[1], Name = $"{i - 1}" });
+                        }
+
+                        gw.Clear(Color.White);
+
+                        DrawLandmarkPoints(g, gw, location.Select(part => new Point((int)part.X, (int)part.Y)).ToArray());
+
+                        bitmap.Save("check-landmark.jpg", ImageFormat.Jpeg);
+                        white.Save("check-landmark-white.jpg", ImageFormat.Jpeg);
                     }
 
                     return 0;
@@ -351,8 +412,14 @@ namespace HelenTraining
 
         #region Helpers
 
-        private static void ExtractTrain()
+        private static void DrawLandmarkPoints(Graphics graphics, Graphics graphicsWhite, IList<Point> landmark)
         {
+            for (int i = 0, parts = landmark.Count; i < parts; i++)
+            {
+                var part = landmark[i];
+                graphics.FillEllipse(Brushes.GreenYellow, part.X, part.Y, 15, 15);
+                graphicsWhite.DrawString($"{i}", SystemFonts.DefaultFont, Brushes.Black, part.X, part.Y);
+            }
         }
 
         #endregion

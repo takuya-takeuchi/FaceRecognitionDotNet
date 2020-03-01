@@ -1,1 +1,0 @@
-nuget pack FaceRecognitionDotNet.MKL.nuspec

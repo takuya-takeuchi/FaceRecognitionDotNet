@@ -19,6 +19,10 @@ namespace FaceRecognitionDotNet
 
         #region Fields
 
+        private readonly LossMulticlassLog _AgePredictorGender;
+
+        private readonly LossMulticlassLog _GenderPredictorGender;
+
         private readonly ShapePredictor _PosePredictor194Point;
 
         private readonly ShapePredictor _PosePredictor68Point;
@@ -83,6 +87,34 @@ namespace FaceRecognitionDotNet
                 this._PosePredictor194Point?.Dispose();
                 this._PosePredictor194Point = ShapePredictor.Deserialize(predictor194PointModel);
             }
+
+            var predictorAgeModel = Path.Combine(directory, FaceRecognitionModels.GetAgeNetworkModelLocation());
+            if (File.Exists(predictorAgeModel))
+            {
+                var ret = NativeMethods.LossMulticlassLog_age_train_type_create();
+                var networkId = LossMulticlassLogRegistry.GetId(ret);
+                if (LossMulticlassLogRegistry.Contains(networkId))
+                    NativeMethods.LossMulticlassLog_age_train_type_delete(ret);
+                else
+                    LossMulticlassLogRegistry.Add(ret);
+
+                this._AgePredictorGender?.Dispose();
+                this._AgePredictorGender = LossMulticlassLog.Deserialize(predictorAgeModel, networkId);
+            }
+
+            var predictorGenderModel = Path.Combine(directory, FaceRecognitionModels.GetGenderNetworkModelLocation());
+            if (File.Exists(predictorGenderModel))
+            {
+                var ret = NativeMethods.LossMulticlassLog_gender_train_type_create();
+                var networkId = LossMulticlassLogRegistry.GetId(ret);
+                if (LossMulticlassLogRegistry.Contains(networkId))
+                    NativeMethods.LossMulticlassLog_gender_train_type_delete(ret);
+                else
+                    LossMulticlassLogRegistry.Add(ret);
+
+                this._GenderPredictorGender?.Dispose();
+                this._GenderPredictorGender = LossMulticlassLog.Deserialize(predictorGenderModel, networkId);
+            }
         }
 
         #endregion
@@ -112,6 +144,9 @@ namespace FaceRecognitionDotNet
         /// <exception cref="ArgumentNullException"><paramref name="images"/> is null.</exception>
         public IEnumerable<Location[]> BatchFaceLocations(IEnumerable<Image> images, int numberOfTimesToUpsample = 1, int batchSize = 128)
         {
+            if (images == null)
+                throw new ArgumentNullException(nameof(images));
+
             var imagesArray = images.ToArray();
             if (!imagesArray.Any())
                 yield break;
@@ -248,18 +283,22 @@ namespace FaceRecognitionDotNet
         /// <param name="image">The image contains faces. The image can contain multiple faces.</param>
         /// <param name="knownFaceLocation">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
         /// <param name="numJitters">The number of times to re-sample the face when calculating encoding.</param>
+        /// <param name="model">The model of face detector.</param>
         /// <returns>An enumerable collection of face feature data corresponds to all faces in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> is null.</exception>
+        /// <exception cref="ArgumentException"><see cref="PredictorModel.Helen"/> is not supported.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
-        public IEnumerable<FaceEncoding> FaceEncodings(Image image, IEnumerable<Location> knownFaceLocation = null, int numJitters = 1)
+        public IEnumerable<FaceEncoding> FaceEncodings(Image image, IEnumerable<Location> knownFaceLocation = null, int numJitters = 1, PredictorModel model = PredictorModel.Small)
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
+            if (model == PredictorModel.Helen)
+                throw new ArgumentException("FaceRecognitionDotNet.PredictorModel.Helen is not supported.", nameof(model));
 
             image.ThrowIfDisposed();
             this.ThrowIfDisposed();
 
-            var rawLandmarks = this.RawFaceLandmarks(image, knownFaceLocation, PredictorModel.Small);
+            var rawLandmarks = this.RawFaceLandmarks(image, knownFaceLocation, model);
             foreach (var landmark in rawLandmarks)
             {
                 var ret = new FaceEncoding(FaceRecognitionModelV1.ComputeFaceDescriptor(this._FaceEncoder, image, landmark, numJitters));
@@ -338,54 +377,18 @@ namespace FaceRecognitionDotNet
                     case PredictorModel.Helen:
                         results.AddRange(landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<Point>>
                         {
-                            { FacePart.Chin,         Enumerable.Range(107,10).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range(118,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(129, 1).Select(i => landmarkTuple[i]))
-                                                                             .Concat( new [] { landmarkTuple[  0] })
-                                                                             .Concat( new [] { landmarkTuple[  1] })
-                                                                             .Concat( new [] { landmarkTuple[  2] })
-                                                                             .Concat( new [] { landmarkTuple[ 13] })
-                                                                             .Concat( new [] { landmarkTuple[ 24] })
-                                                                             .Concat( new [] { landmarkTuple[ 35] })
-                                                                             .Concat( new [] { landmarkTuple[ 46] })
-                                                                             .Concat( new [] { landmarkTuple[ 57] })
-                                                                             .Concat( new [] { landmarkTuple[ 68] })
-                                                                             .Concat( new [] { landmarkTuple[ 79] })
-                                                                             .Concat( new [] { landmarkTuple[ 90] })
-                                                                             .Concat( new [] { landmarkTuple[101] })
-                                                                             .Concat( new [] { landmarkTuple[106] })
-                                                                             .Concat( new [] { landmarkTuple[117] })
-                                                                             .Concat( new [] { landmarkTuple[128] })
-                                                                             .Concat( new [] { landmarkTuple[139] })
-                                                                             .Concat( new [] { landmarkTuple[150] })
-                                                                             .Concat( new [] { landmarkTuple[161] })
-                                                                             .Concat( new [] { landmarkTuple[172] })
-                                                                             .Concat( new [] { landmarkTuple[183] })  },
-                            { FacePart.LeftEyebrow,  Enumerable.Range( 84, 6).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range( 91,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(102, 4).Select(i => landmarkTuple[i])) },
-                            { FacePart.RightEyebrow, Enumerable.Range( 62, 6).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range( 69,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range( 80, 4).Select(i => landmarkTuple[i])) },
-                            { FacePart.Nose,         Enumerable.Range(130, 9).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range(140, 8).Select(i => landmarkTuple[i])) },
-                            { FacePart.LeftEye,      Enumerable.Range( 40, 6).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range( 47,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range( 61, 1).Select(i => landmarkTuple[i])) },
-                            { FacePart.RightEye,     Enumerable.Range( 18, 6).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range( 25,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range( 39, 1).Select(i => landmarkTuple[i])) },
-                            { FacePart.TopLip,       Enumerable.Range(148, 2).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range(151,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(162, 2).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(179, 4).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(184,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(  3, 1).Select(i => landmarkTuple[i])) },
-                            { FacePart.BottomLip,    Enumerable.Range(163, 9).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range(173, 7).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(  3,10).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range( 14, 4).Select(i => landmarkTuple[i]))
-                                                                             .Concat( Enumerable.Range(148, 1).Select(i => landmarkTuple[i])) }
+                            { FacePart.Chin,         Enumerable.Range(  0,41).Select(i => landmarkTuple[i]) },
+                            { FacePart.LeftEyebrow,  Enumerable.Range(174,20).Select(i => landmarkTuple[i]) },
+                            { FacePart.RightEyebrow, Enumerable.Range(154,20).Select(i => landmarkTuple[i]) },
+                            { FacePart.Nose,         Enumerable.Range( 41,17).Select(i => landmarkTuple[i]) },
+                            { FacePart.LeftEye,      Enumerable.Range(134,20).Select(i => landmarkTuple[i]) },
+                            { FacePart.RightEye,     Enumerable.Range(114,20).Select(i => landmarkTuple[i]) },
+                            { FacePart.TopLip,       Enumerable.Range( 58,14).Select(i => landmarkTuple[i])
+                                                                             .Concat( Enumerable.Range(86,15).Reverse().Select(i => landmarkTuple[i])) },
+                            { FacePart.BottomLip,    Enumerable.Range(100,14).Select(i => landmarkTuple[i])
+                                                                             .Concat( new [] { landmarkTuple[86] })
+                                                                             .Concat( new [] { landmarkTuple[58] })
+                                                                             .Concat( Enumerable.Range(71,15).Reverse().Select(i => landmarkTuple[i])) }
                         }));
                         break;
                     default:
@@ -506,6 +509,183 @@ namespace FaceRecognitionDotNet
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Returns an age group of face image correspond to specified location in specified image.
+        /// </summary>
+        /// <param name="image">The image contains a face.</param>
+        /// <param name="location">The location rectangle for a face.</param>
+        /// <returns>An age group of face image correspond to specified location in specified image.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        public uint PredictAge(Image image, Location location)
+        {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+            if (location == null)
+                throw new ArgumentNullException(nameof(location));
+
+            image.ThrowIfDisposed();
+            this.ThrowIfDisposed();
+
+            // GenderClassify uses _GenderPredictorGender so check here!!
+            if (this._AgePredictorGender == null)
+                throw new NotSupportedException($"'{FaceRecognitionModels.GetAgeNetworkModelLocation()}' does not exist.");
+
+            if (!(image.Matrix is Matrix<RgbPixel> matrix))
+                throw new ArgumentException();
+
+            FullObjectDetection[] rawLandmark = null;
+
+            try
+            {
+                rawLandmark = this.RawFaceLandmarks(image, new[] { location }, PredictorModel.Small).ToArray();
+                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u))
+                using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
+                using (var results = this._AgePredictorGender.Operator(new[] { faceChips }, 1))
+                    return results[0];
+            }
+            finally
+            {
+                if (rawLandmark != null)
+                    foreach (var fullObjectDetection in rawLandmark) fullObjectDetection.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Returns an gender of face image correspond to specified location in specified image.
+        /// </summary>
+        /// <param name="image">The image contains a face.</param>
+        /// <param name="location">The location rectangle for a face.</param>
+        /// <returns>An gender of face image correspond to specified location in specified image.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        public Gender PredictGender(Image image, Location location)
+        {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+            if (location == null)
+                throw new ArgumentNullException(nameof(location));
+
+            image.ThrowIfDisposed();
+            this.ThrowIfDisposed();
+
+            // GenderClassify uses _GenderPredictorGender so check here!!
+            if (this._GenderPredictorGender == null)
+                throw new NotSupportedException($"'{FaceRecognitionModels.GetGenderNetworkModelLocation()}' does not exist.");
+
+            if (!(image.Matrix is Matrix<RgbPixel> matrix))
+                throw new ArgumentException();
+
+            FullObjectDetection[] rawLandmark = null;
+
+            try
+            {
+                rawLandmark = this.RawFaceLandmarks(image, new[] { location }, PredictorModel.Small).ToArray();
+                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u))
+                using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
+                using (var results = this._GenderPredictorGender.Operator(new[] { faceChips }, 1))
+                    return results[0] == 0 ? Gender.Male : Gender.Female;
+            }
+            finally
+            {
+                if (rawLandmark != null)
+                    foreach (var fullObjectDetection in rawLandmark) fullObjectDetection.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Returns probabilities of age group of face image correspond to specified location in specified image.
+        /// </summary>
+        /// <param name="image">The image contains a face.</param>
+        /// <param name="location">The location rectangle for a face.</param>
+        /// <returns>Probabilities of age group of face image correspond to specified location in specified image.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        public IDictionary<uint, float> PredictProbabilityAge(Image image, Location location)
+        {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+            if (location == null)
+                throw new ArgumentNullException(nameof(location));
+
+            image.ThrowIfDisposed();
+            this.ThrowIfDisposed();
+
+            // GenderClassify uses _GenderPredictorGender so check here!!
+            if (this._AgePredictorGender == null)
+                throw new NotSupportedException($"'{FaceRecognitionModels.GetAgeNetworkModelLocation()}' does not exist.");
+
+            if (!(image.Matrix is Matrix<RgbPixel> matrix))
+                throw new ArgumentException();
+
+            FullObjectDetection[] rawLandmark = null;
+
+            try
+            {
+                rawLandmark = this.RawFaceLandmarks(image, new[] { location }, PredictorModel.Small).ToArray();
+                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u, 0.25d))
+                using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
+                {
+                    var results = this._AgePredictorGender.Probability(faceChips, 1).ToArray();
+                    var predict = results[0];
+                    return predict.Select((n, index) => new { index, n }).ToDictionary(n => (uint)n.index, n => n.n);
+                }
+            }
+            finally
+            {
+                if (rawLandmark != null)
+                    foreach (var fullObjectDetection in rawLandmark) fullObjectDetection.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Returns probabilities of gender of face image correspond to specified location in specified image.
+        /// </summary>
+        /// <param name="image">The image contains a face.</param>
+        /// <param name="location">The location rectangle for a face.</param>
+        /// <returns>Probabilities of gender of face image correspond to specified location in specified image.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        public IDictionary<Gender, float> PredictProbabilityGender(Image image, Location location)
+        {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+            if (location == null)
+                throw new ArgumentNullException(nameof(location));
+
+            image.ThrowIfDisposed();
+            this.ThrowIfDisposed();
+
+            // GenderClassify uses _GenderPredictorGender so check here!!
+            if (this._GenderPredictorGender == null)
+                throw new NotSupportedException($"'{FaceRecognitionModels.GetGenderNetworkModelLocation()}' does not exist.");
+
+            if (!(image.Matrix is Matrix<RgbPixel> matrix))
+                throw new ArgumentException();
+
+            FullObjectDetection[] rawLandmark = null;
+
+            try
+            {
+                rawLandmark = this.RawFaceLandmarks(image, new[] { location }, PredictorModel.Small).ToArray();
+                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u, 0.25d))
+                using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
+                {
+                    var results = this._GenderPredictorGender.Probability(faceChips, 1).ToArray();
+                    return new Dictionary<Gender, float>
+                    {
+                        { Gender.Male,   results[0][0] },
+                        { Gender.Female, results[0][1] }
+                    };
+                }
+            }
+            finally
+            {
+                if (rawLandmark != null)
+                    foreach (var fullObjectDetection in rawLandmark) fullObjectDetection.Dispose();
+            }
         }
 
         #region Helpers

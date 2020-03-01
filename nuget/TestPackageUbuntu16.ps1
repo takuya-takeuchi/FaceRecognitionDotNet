@@ -11,6 +11,7 @@ Param([Parameter(
 
 Set-StrictMode -Version Latest
 
+$RidOperatingSystem="linux"
 $OperatingSystem="ubuntu"
 $OperatingSystemVersion="16"
 
@@ -27,21 +28,24 @@ $DockerFileDir = Join-Path $DockerDir test  | `
                  Join-Path -ChildPath $OperatingSystemVersion
 
 $BuildTargets = @()
-$BuildTargets += New-Object PSObject -Property @{Target = "cpu";  Architecture = 64; CUDA = 0;   Package = "FaceRecognitionDotNet"         }
-$BuildTargets += New-Object PSObject -Property @{Target = "mkl";  Architecture = 64; CUDA = 0;   Package = "FaceRecognitionDotNet.MKL"     }
-$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 92;  Package = "FaceRecognitionDotNet.CUDA92"  }
-$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 100; Package = "FaceRecognitionDotNet.CUDA100" }
-$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 101; Package = "FaceRecognitionDotNet.CUDA101" }
+$BuildTargets += New-Object PSObject -Property @{Target = "cpu";  Architecture = 64; CUDA = 0;   Package = "FaceRecognitionDotNet";         PlatformTarget="x64"; Postfix = "/x64"; RID = "$RidOperatingSystem-x64"; }
+$BuildTargets += New-Object PSObject -Property @{Target = "mkl";  Architecture = 64; CUDA = 0;   Package = "FaceRecognitionDotNet.MKL";     PlatformTarget="x64"; Postfix = "/x64"; RID = "$RidOperatingSystem-x64"; }
+$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 92;  Package = "FaceRecognitionDotNet.CUDA92";  PlatformTarget="x64"; Postfix = "";     RID = "$RidOperatingSystem-x64"; }
+$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 100; Package = "FaceRecognitionDotNet.CUDA100"; PlatformTarget="x64"; Postfix = "";     RID = "$RidOperatingSystem-x64"; }
+$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 101; Package = "FaceRecognitionDotNet.CUDA101"; PlatformTarget="x64"; Postfix = "";     RID = "$RidOperatingSystem-x64"; }
 
 foreach($BuildTarget in $BuildTargets)
 {
    $target = $BuildTarget.Target
    $cudaVersion = $BuildTarget.CUDA
    $package = $BuildTarget.Package
+   $platformTarget = $BuildTarget.PlatformTarget
+   $rid = $BuildTarget.RID
+   $postfix = $BuildTarget.Postfix
    if ($target -ne "cuda")
    {
-      $dockername = "facerecognition/test/$OperatingSystem/$OperatingSystemVersion/$Target"
-      $imagename  = "dlibdotnet/runtime/$OperatingSystem/$OperatingSystemVersion/$Target"
+      $dockername = "facerecognition/test/$OperatingSystem/$OperatingSystemVersion/$Target" + $postfix
+      $imagename  = "dlibdotnet/runtime/$OperatingSystem/$OperatingSystemVersion/$Target" + $postfix
    }
    else
    {

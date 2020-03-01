@@ -204,7 +204,9 @@
             <param name="knownFaceLocation">顔に対する矩形位置の列挙可能なコレクション。null を指定した場合、メソッドが顔の位置を探索します。</param>
             <param name="numJitters">エンコーディングを計算する際の顔のリサンプリング回数。</param>
             <returns>指定した画像内の全ての顔に対応する顔特徴データの列挙可能なコレクション。</returns>
+            <param name="model">画像内で顔の検出を行う顔検出器のモデル。</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> が null です。</exception>
+            <exception cref="T:System.ArgumentException"><see cref="F:FaceRecognitionDotNet.PredictorModel.Helen"/> はサポートされていません。</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> またはこのオブジェクトは破棄されています。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModel)">
@@ -260,9 +262,64 @@
             <returns>このメソッドが作成した <see cref="T:FaceRecognitionDotNet.Image"/>。</returns>
             <exception cref="T:System.IO.FileNotFoundException">指定したパスは存在しません。</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictAge(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
+            <summary>
+            指定した画像内における、指定した位置に対応する顔画像の年齢グループを返します。
+            </summary>
+            <param name="image">顔を含む画像。</param>
+            <param name="location">顔の位置の矩形。</param>
+            <returns>指定した画像内における、指定した位置に対応する顔画像の年齢グループ。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> または <paramref name="location"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> またはこのオブジェクトは破棄されています。</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
+            <summary>
+            指定した画像内における、指定した位置に対応する顔画像の性別を返します。
+            </summary>
+            <param name="image">顔を含む画像。</param>
+            <param name="location">顔の位置の矩形。</param>
+            <returns>指定した画像内における、指定した位置に対応する顔画像の性別。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> または <paramref name="location"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> またはこのオブジェクトは破棄されています。</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityAge(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
+            <summary>
+            指定した画像内における、指定した位置に対応する顔画像の年齢グループの確率を返します。
+            </summary>
+            <param name="image">顔を含む画像。</param>
+            <param name="location">顔の位置の矩形。</param>
+            <returns>指定した画像内における、指定した位置に対応する顔画像の年齢グループの確率。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> または <paramref name="location"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> またはこのオブジェクトは破棄されています。</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
+            <summary>
+            指定した画像内における、指定した位置に対応する顔画像の性別の確率を返します。
+            </summary>
+            <param name="image">顔を含む画像。</param>
+            <param name="location">顔の位置の矩形。</param>
+            <returns>指定した画像内における、指定した位置に対応する顔画像の性別の確率。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> または <paramref name="location"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> またはこのオブジェクトは破棄されています。</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged">
             <summary>
             アンマネージ リソースを解放します。
+            </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Gender">
+            <summary>
+            性別を指定します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.Gender.Female">
+            <summary>
+            女性を示します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.Gender.Male">
+            <summary>
+            男性を示します。
             </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.Image">
