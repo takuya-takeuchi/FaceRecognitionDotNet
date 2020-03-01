@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenderTraining", "examples\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgeTraining", "examples\AgeTraining\AgeTraining.csproj", "{8595BAC7-7EEC-49E6-9D78-01AFB15A30FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaceRecognitionDotNet.Tests", "test\FaceRecognitionDotNet.Tests\FaceRecognitionDotNet.Tests.csproj", "{28A36B74-6D83-47B4-9AD6-A252902DBC99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaceRecognitionDotNet.Tests", "test\FaceRecognitionDotNet.Tests\FaceRecognitionDotNet.Tests.csproj", "{28A36B74-6D83-47B4-9AD6-A252902DBC99}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomClassificationDemo", "examples\CustomClassificationDemo\CustomClassificationDemo.csproj", "{F4092804-340D-4553-B9E5-7C6555D317B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{28A36B74-6D83-47B4-9AD6-A252902DBC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28A36B74-6D83-47B4-9AD6-A252902DBC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28A36B74-6D83-47B4-9AD6-A252902DBC99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4092804-340D-4553-B9E5-7C6555D317B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4092804-340D-4553-B9E5-7C6555D317B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4092804-340D-4553-B9E5-7C6555D317B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4092804-340D-4553-B9E5-7C6555D317B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +103,7 @@ Global
 		{EAB3D0C4-D2E0-4F6A-A663-041B5584FF1F} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 		{8595BAC7-7EEC-49E6-9D78-01AFB15A30FD} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 		{28A36B74-6D83-47B4-9AD6-A252902DBC99} = {501D0145-416F-42A7-B636-02A4F783C97C}
+		{F4092804-340D-4553-B9E5-7C6555D317B7} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D44C572-D749-4A76-A199-8C598A08AE8A}
