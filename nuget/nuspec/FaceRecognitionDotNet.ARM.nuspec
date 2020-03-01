@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>FaceRecognitionDotNet.ARM</id>
-    <version>1.2.3.13</version>
+    <version>1.2.3.14</version>
     <title>FaceRecognitionDotNet (for ARM)</title>
     <authors>Takuya Takeuchi</authors>
     <owners>Takuya Takeuchi</owners>
@@ -14,12 +14,12 @@
 
 This library is ported from https://github.com/ageitgey/face_recognition by C#.</description>
     <releaseNotes></releaseNotes>
-    <copyright>© Takuya Takeuchi 2018-2019</copyright>
+    <copyright>© Takuya Takeuchi 2018-2020</copyright>
     <tags>.net machinelearning face-recognition</tags>
     <serviceable>true</serviceable>
     <dependencies>
       <group targetFramework="netstandard2.0">
-        <dependency id="DlibDotNet.ARM" version="19.17.0.20190623" />
+        <dependency id="DlibDotNet.ARM" version="19.18.0.20200301" />
       </group>
     </dependencies>
   </metadata>

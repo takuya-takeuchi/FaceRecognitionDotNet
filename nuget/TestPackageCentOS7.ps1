@@ -11,9 +11,9 @@ Param([Parameter(
 
 Set-StrictMode -Version Latest
 
-$RidOperatingSystem="linux"
-$OperatingSystem="ubuntu"
-$OperatingSystemVersion="16"
+$RidOperatingSystem="centos"
+$OperatingSystem="centos"
+$OperatingSystemVersion="7"
 
 # Store current directory
 $Current = Get-Location
@@ -42,6 +42,7 @@ foreach($BuildTarget in $BuildTargets)
    $platformTarget = $BuildTarget.PlatformTarget
    $rid = $BuildTarget.RID
    $postfix = $BuildTarget.Postfix
+
    if ($target -ne "cuda")
    {
       $dockername = "facerecognition/test/$OperatingSystem/$OperatingSystemVersion/$Target" + $postfix
@@ -51,7 +52,7 @@ foreach($BuildTarget in $BuildTargets)
    {
       $cudaVersion = ($cudaVersion / 10).ToString("0.0")
       $dockername = "facerecognition/test/$OperatingSystem/$OperatingSystemVersion/$Target/$cudaVersion"
-      $imagename = "dlibdotnet/runtime/$OperatingSystem/$OperatingSystemVersion/$Target/$cudaVersion"
+      $imagename  = "dlibdotnet/runtime/$OperatingSystem/$OperatingSystemVersion/$Target/$cudaVersion"
    }
 
    Write-Host "Start docker build -t $dockername $DockerFileDir --build-arg IMAGE_NAME=""$imagename""" -ForegroundColor Green
@@ -90,5 +91,5 @@ foreach($BuildTarget in $BuildTargets)
    }
 }
 
-# Move to Root directory 
+# Move to Root directory
 Set-Location -Path $Current

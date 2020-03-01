@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>FaceRecognitionDotNet.CUDA100</id>
-    <version>1.2.3.13</version>
+    <version>1.2.3.14</version>
     <title>FaceRecognitionDotNet for CUDA 10.0</title>
     <authors>Takuya Takeuchi</authors>
     <owners>Takuya Takeuchi</owners>
@@ -14,20 +14,35 @@
 
 This library is ported from https://github.com/ageitgey/face_recognition by C#.</description>
     <releaseNotes></releaseNotes>
-    <copyright>© Takuya Takeuchi 2018-2019</copyright>
+    <copyright>© Takuya Takeuchi 2018-2020</copyright>
     <tags>.net machinelearning face-recognition</tags>
     <serviceable>true</serviceable>
     <dependencies>
       <group targetFramework="netstandard2.0">
-        <dependency id="DlibDotNet.CUDA100" version="19.17.0.20190623" />
+        <dependency id="DlibDotNet.CUDA100" version="19.18.0.20200301" />
       </group>
     </dependencies>
   </metadata>
   <files>
+    <!-- <file src="build\FaceRecognitionDotNet.props" target="build\FaceRecognitionDotNet.props" /> -->
+    <!-- allows the 'DlibDotNet' package to read runtimes\** folder -->
+    <file src="build\FaceRecognitionDotNet.targets" target="build\FaceRecognitionDotNet.targets" />
+    <!-- cross-targetting via compile-time references -->
+    <file src="ref\**\*" target="ref" />
+    <file src="..\artifacts\cuda-100\runtimes\**\*" target="runtimes" />
+
     <file src="..\..\src\FaceRecognitionDotNet\bin\Release\netstandard2.0\FaceRecognitionDotNet.dll" target="lib\netstandard2.0" />
     <file src="..\..\src\FaceRecognitionDotNet\bin\Release\netstandard2.0\FaceRecognitionDotNet.xml" target="lib\netstandard2.0" />
     <file src="..\..\src\FaceRecognitionDotNet\docs\ja\*.xml" target="lib\netstandard2.0\ja" />
     
+    <!-- Age and Gender classification -->
+    <file src="..\artifacts\cuda-100\runtimes\win-x64\native\DlibDotNetNativeDnnAgeClassification.dll" target="runtimes\win-x64\native\DlibDotNetNativeDnnAgeClassification.dll" />
+    <file src="..\artifacts\cuda-100\runtimes\win-x64\native\DlibDotNetNativeDnnGenderClassification.dll" target="runtimes\win-x64\native\DlibDotNetNativeDnnGenderClassification.dll" />
+    <file src="..\artifacts\cuda-100\runtimes\linux-x64\native\libDlibDotNetNativeDnnAgeClassification.so" target="runtimes\linux-x64\native\libDlibDotNetNativeDnnAgeClassification.so" />
+    <file src="..\artifacts\cuda-100\runtimes\linux-x64\native\libDlibDotNetNativeDnnGenderClassification.so" target="runtimes\linux-x64\native\libDlibDotNetNativeDnnGenderClassification.so" />
+    <file src="..\artifacts\cuda-100\runtimes\centos-x64\native\libDlibDotNetNativeDnnAgeClassification.so" target="runtimes\centos-x64\native\libDlibDotNetNativeDnnAgeClassification.so" />
+    <file src="..\artifacts\cuda-100\runtimes\centos-x64\native\libDlibDotNetNativeDnnGenderClassification.so" target="runtimes\centos-x64\native\libDlibDotNetNativeDnnGenderClassification.so" />
+        
     <!-- license -->
     <file src="..\..\LICENSE.txt" target="" /> 
   </files>

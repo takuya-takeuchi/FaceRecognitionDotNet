@@ -25,7 +25,7 @@ namespace FaceRecognitionDotNet.Tests
 
         private const string ImageDirectory = "Images";
 
-        private const string ModelDirectory = "Models";
+        private readonly string ModelDirectory = "Models";
 
         private const string ModelTempDirectory = "TempModels";
 
@@ -52,6 +52,12 @@ namespace FaceRecognitionDotNet.Tests
         public FaceRecognitionTest(ITestOutputHelper testOutputHelper)
         {
             this._TestOutputHelper = testOutputHelper;
+
+            var dir = Environment.GetEnvironmentVariable("FaceRecognitionDotNetModelDir");
+            if (Directory.Exists(dir))
+            {
+                ModelDirectory = dir;
+            }
 
             var faceRecognition = typeof(FaceRecognition);
             var type = faceRecognition.Assembly.GetTypes().FirstOrDefault(t => t.Name == "FaceRecognitionModels");
@@ -847,13 +853,18 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void LoadImageFail()
         {
+            Image image = null;
             try
             {
-                FaceRecognition.LoadImageFile("test.bmp");
+                image = FaceRecognition.LoadImageFile("test.bmp");
                 Assert.True(false, "test.bmp directory is missing and LoadImageFile method should throw exception.");
             }
             catch (FileNotFoundException)
             {
+            }
+            finally
+            {
+                image?.Dispose();
             }
         }
 
@@ -916,10 +927,10 @@ namespace FaceRecognitionDotNet.Tests
                 // 7: (60, 100)
                 var groundTruth = new[]
                 {
-                    new { Path = @"TestImages\Age\NelsonMandela_2008_90.jpg",        Age = new uint[]{ 7 } },
-                    new { Path = @"TestImages\Age\MacaulayCulkin_1991_11.jpg",       Age = new uint[]{ 2, 3 } },
-                    new { Path = @"TestImages\Age\DianaPrincessOfWales_1997_36.jpg", Age = new uint[]{ 4, 5 } },
-                    new { Path = @"TestImages\Age\MaoAsada_2014_24.jpg",             Age = new uint[]{ 3, 4 } }
+                    new { Path = Path.Combine("TestImages", "Age", "NelsonMandela_2008_90.jpg"),        Age = new uint[]{ 7 } },
+                    new { Path = Path.Combine("TestImages", "Age", "MacaulayCulkin_1991_11.jpg"),       Age = new uint[]{ 2, 3 } },
+                    new { Path = Path.Combine("TestImages", "Age", "DianaPrincessOfWales_1997_36.jpg"), Age = new uint[]{ 4, 5 } },
+                    new { Path = Path.Combine("TestImages", "Age", "MaoAsada_2014_24.jpg"),             Age = new uint[]{ 3, 4 } }
                 };
 
                 foreach (var gt in groundTruth)
@@ -939,11 +950,11 @@ namespace FaceRecognitionDotNet.Tests
             {
                 var groundTruth = new[]
                 {
-                    new { Path = @"TestImages\Gender\BarackObama_male.jpg",            Gender = Gender.Male },
-                    new { Path = @"TestImages\Gender\DianaPrincessOfWales_female.jpg", Gender = Gender.Female },
-                    new { Path = @"TestImages\Gender\MaoAsada_female.jpg",             Gender = Gender.Female },
-                    new { Path = @"TestImages\Gender\ShinzoAbe_male.jpg",              Gender = Gender.Male },
-                    new { Path = @"TestImages\Gender\WhitneyHouston_female.jpg",       Gender = Gender.Female },
+                    new { Path = Path.Combine("TestImages", "Gender", "BarackObama_male.jpg"),            Gender = Gender.Male },
+                    new { Path = Path.Combine("TestImages", "Gender", "DianaPrincessOfWales_female.jpg"), Gender = Gender.Female },
+                    new { Path = Path.Combine("TestImages", "Gender", "MaoAsada_female.jpg"),             Gender = Gender.Female },
+                    new { Path = Path.Combine("TestImages", "Gender", "ShinzoAbe_male.jpg"),              Gender = Gender.Male },
+                    new { Path = Path.Combine("TestImages", "Gender", "WhitneyHouston_female.jpg"),       Gender = Gender.Female },
                 };
 
                 foreach (var gt in groundTruth)
@@ -971,10 +982,10 @@ namespace FaceRecognitionDotNet.Tests
                 // 7: (60, 100)
                 var groundTruth = new[]
                 {
-                    new { Path = @"TestImages\Age\NelsonMandela_2008_90.jpg",        Age = new uint[]{ 7 } },
-                    new { Path = @"TestImages\Age\MacaulayCulkin_1991_11.jpg",       Age = new uint[]{ 2, 3 } },
-                    new { Path = @"TestImages\Age\DianaPrincessOfWales_1997_36.jpg", Age = new uint[]{ 4, 5 } },
-                    new { Path = @"TestImages\Age\MaoAsada_2014_24.jpg",             Age = new uint[]{ 3, 4 } }
+                    new { Path = Path.Combine("TestImages", "Age", "NelsonMandela_2008_90.jpg"),        Age = new uint[]{ 7 } },
+                    new { Path = Path.Combine("TestImages", "Age", "MacaulayCulkin_1991_11.jpg"),       Age = new uint[]{ 2, 3 } },
+                    new { Path = Path.Combine("TestImages", "Age", "DianaPrincessOfWales_1997_36.jpg"), Age = new uint[]{ 4, 5 } },
+                    new { Path = Path.Combine("TestImages", "Age", "MaoAsada_2014_24.jpg"),             Age = new uint[]{ 3, 4 } }
                 };
 
                 foreach (var gt in groundTruth)
@@ -998,11 +1009,11 @@ namespace FaceRecognitionDotNet.Tests
             {
                 var groundTruth = new[]
                 {
-                    new { Path = @"TestImages\Gender\BarackObama_male.jpg",            Gender = Gender.Male },
-                    new { Path = @"TestImages\Gender\DianaPrincessOfWales_female.jpg", Gender = Gender.Female },
-                    new { Path = @"TestImages\Gender\MaoAsada_female.jpg",             Gender = Gender.Female },
-                    new { Path = @"TestImages\Gender\ShinzoAbe_male.jpg",              Gender = Gender.Male },
-                    new { Path = @"TestImages\Gender\WhitneyHouston_female.jpg",       Gender = Gender.Female },
+                    new { Path = Path.Combine("TestImages", "Gender", "BarackObama_male.jpg"),            Gender = Gender.Male },
+                    new { Path = Path.Combine("TestImages", "Gender", "DianaPrincessOfWales_female.jpg"), Gender = Gender.Female },
+                    new { Path = Path.Combine("TestImages", "Gender", "MaoAsada_female.jpg"),             Gender = Gender.Female },
+                    new { Path = Path.Combine("TestImages", "Gender", "ShinzoAbe_male.jpg"),              Gender = Gender.Male },
+                    new { Path = Path.Combine("TestImages", "Gender", "WhitneyHouston_female.jpg"),       Gender = Gender.Female },
                 };
 
                 foreach (var gt in groundTruth)
@@ -1086,6 +1097,9 @@ namespace FaceRecognitionDotNet.Tests
                 Assert.True(detectedFaces.Length == 1);
                 Assert.True(AssertAlmostEqual(detectedFaces[0].Rect.Top, 144, 25));
                 Assert.True(AssertAlmostEqual(detectedFaces[0].Rect.Bottom, 389, 25));
+
+                foreach (var detectedFace in detectedFaces)
+                    detectedFace.Dispose();
             }
         }
 
@@ -1098,6 +1112,9 @@ namespace FaceRecognitionDotNet.Tests
                 Assert.True(detectedFaces.Length == 1);
                 Assert.True(AssertAlmostEqual(detectedFaces[0].Rect.Top, 259, 25));
                 Assert.True(AssertAlmostEqual(detectedFaces[0].Rect.Bottom, 552, 25));
+
+                foreach (var detectedFace in detectedFaces)
+                    detectedFace.Dispose();
             }
         }
 
@@ -1224,6 +1241,8 @@ namespace FaceRecognitionDotNet.Tests
 
                 var matchResult = FaceRecognition.CompareFaces(facesToCompare, encoding).ToArray();
                 Assert.True(matchResult.Length == 0);
+
+                encoding.Dispose();
             }
         }
 
@@ -1385,6 +1404,8 @@ namespace FaceRecognitionDotNet.Tests
 
                 var distanceResult = FaceRecognition.FaceDistances(facesToCompare, encoding).ToArray();
                 Assert.True(distanceResult.Length == 0);
+
+                encoding.Dispose();
             }
         }
 
@@ -1396,6 +1417,9 @@ namespace FaceRecognitionDotNet.Tests
                 var encodings = this._FaceRecognition.FaceEncodings(img).ToArray();
                 Assert.True(encodings.Length == 1);
                 Assert.True(encodings[0].Size == 128);
+
+                foreach (var encoding in encodings) 
+                    encoding.Dispose();
             }
         }
 
@@ -1549,6 +1573,9 @@ namespace FaceRecognitionDotNet.Tests
                 Assert.True(faceLandmarks[0].Parts == 68);
                 Assert.True(exampleLandmark.X == 552);
                 Assert.True(exampleLandmark.Y == 399);
+
+                foreach (var faceLandmark in faceLandmarks)
+                    faceLandmark.Dispose();
             }
         }
 
@@ -1561,6 +1588,9 @@ namespace FaceRecognitionDotNet.Tests
                 Assert.True(detectedFaces.Length == 1);
                 Assert.True(detectedFaces[0].Rect.Top == 142);
                 Assert.True(detectedFaces[0].Rect.Bottom == 409);
+
+                foreach (var detectedFace in detectedFaces)
+                    detectedFace.Dispose();
             }
         }
 
@@ -1573,6 +1603,9 @@ namespace FaceRecognitionDotNet.Tests
                 Assert.True(detectedFaces.Length == 1);
                 Assert.True(detectedFaces[0].Rect.Top == 290);
                 Assert.True(detectedFaces[0].Rect.Bottom == 558);
+
+                foreach (var detectedFace in detectedFaces)
+                    detectedFace.Dispose();
             }
         }
 
@@ -1591,6 +1624,10 @@ namespace FaceRecognitionDotNet.Tests
                     Assert.True(tmp[0].Rect.Top == 154);
                     Assert.True(tmp[0].Rect.Bottom == 390);
                 }
+
+                foreach (var batchedDetectedFace in batchedDetectedFaces)
+                foreach (var rect in batchedDetectedFace)
+                        rect.Dispose();
             }
         }
 
