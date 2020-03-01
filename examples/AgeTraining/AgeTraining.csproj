@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <Authors>Takuya Takeuchi</Authors>
-    <Description>Sample of DlibDotNet</Description>
+    <Description>Example of FaceRecognitionDotNet</Description>
     <Company />
     <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
