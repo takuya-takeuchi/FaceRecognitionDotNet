@@ -4,10 +4,9 @@ using DlibDotNet;
 namespace FaceRecognitionDotNet.Extensions
 {
 
-    public abstract class GenderEstimator : DisposableObject, IExtension
+    public abstract class GenderEstimator : DisposableObject
     {
-
-
+        
         #region Properties
 
         public abstract Gender[] Labels

@@ -4,7 +4,7 @@ using DlibDotNet;
 namespace FaceRecognitionDotNet.Extensions
 {
 
-    public abstract class AgeEstimator : DisposableObject, IExtension
+    public abstract class AgeEstimator : DisposableObject
     {
 
         #region Properties

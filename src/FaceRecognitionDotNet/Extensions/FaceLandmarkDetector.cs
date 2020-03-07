@@ -4,7 +4,7 @@ using DlibDotNet;
 namespace FaceRecognitionDotNet.Extensions
 {
 
-    public abstract class FaceLandmarkDetector : DisposableObject, IExtension
+    public abstract class FaceLandmarkDetector : DisposableObject
     {
 
         #region Methods
