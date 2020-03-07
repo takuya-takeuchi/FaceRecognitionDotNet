@@ -14,14 +14,14 @@ namespace FaceRecognitionDotNet.Extensions
             return this.RawDetect(image.Matrix, locations);
         }
 
-        public IEnumerable<IDictionary<FacePart, IEnumerable<Point>>> GetLandmarks(IEnumerable<Point[]> landmarkTuples)
+        public IEnumerable<Dictionary<FacePart, IEnumerable<Point>>> GetLandmarks(IEnumerable<Point[]> landmarkTuples)
         {
             return this.RawGetLandmarks(landmarkTuples);
         }
 
         protected abstract IEnumerable<FullObjectDetection> RawDetect(MatrixBase matrix, IEnumerable<Location> locations);
         
-        protected abstract IEnumerable<IDictionary<FacePart, IEnumerable<Point>>> RawGetLandmarks(IEnumerable<Point[]> landmarkTuples);
+        protected abstract IEnumerable<Dictionary<FacePart, IEnumerable<Point>>> RawGetLandmarks(IEnumerable<Point[]> landmarkTuples);
 
         #endregion
 

@@ -55,10 +55,16 @@ namespace FaceRecognitionDotNet.Extensions
             if (!(matrix is Matrix<RgbPixel> mat))
                 throw new ArgumentException();
 
-            using (var det = new FullObjectDetection(new Rectangle(location.Left, location.Top, location.Right, location.Bottom)))
-            using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(det, 227u))
-            using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
-            using (var results = this._Network.Operator(new[] { faceChips }, 1))
+            var rect = new Rectangle(location.Left, location.Top, location.Right, location.Bottom);
+            var dPoint = new[]
+            {
+                new DPoint(rect.Left, rect.Top),
+                new DPoint(rect.Right, rect.Top),
+                new DPoint(rect.Left, rect.Bottom),
+                new DPoint(rect.Right, rect.Bottom),
+            };
+            using (var img = DlibDotNet.Dlib.ExtractImage4Points(mat, dPoint, 227, 227))
+            using (var results = this._Network.Operator(new[] { img }, 1))
                 return results[0] == 0 ? Gender.Male : Gender.Female;
         }
 
@@ -67,11 +73,17 @@ namespace FaceRecognitionDotNet.Extensions
             if (!(matrix is Matrix<RgbPixel> mat))
                 throw new ArgumentException();
 
-            using (var det = new FullObjectDetection(new Rectangle(location.Left, location.Top, location.Right, location.Bottom)))
-            using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(det, 227u, 0.25d))
-            using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
+            var rect = new Rectangle(location.Left, location.Top, location.Right, location.Bottom);
+            var dPoint = new[]
             {
-                var results = this._Network.Probability(faceChips, 1).ToArray();
+                new DPoint(rect.Left, rect.Top),
+                new DPoint(rect.Right, rect.Top),
+                new DPoint(rect.Left, rect.Bottom),
+                new DPoint(rect.Right, rect.Bottom),
+            };
+            using (var img = DlibDotNet.Dlib.ExtractImage4Points(mat, dPoint, 227, 227))
+            {
+                var results = this._Network.Probability(img, 1).ToArray();
                 return new Dictionary<Gender, float>
                 {
                     { Gender.Male,   results[0][0] },

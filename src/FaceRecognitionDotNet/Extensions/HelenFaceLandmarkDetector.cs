@@ -41,7 +41,7 @@ namespace FaceRecognitionDotNet.Extensions
             }
         }
 
-        protected override IEnumerable<IDictionary<FacePart, IEnumerable<Point>>> RawGetLandmarks(IEnumerable<Point[]> landmarkTuples)
+        protected override IEnumerable<Dictionary<FacePart, IEnumerable<Point>>> RawGetLandmarks(IEnumerable<Point[]> landmarkTuples)
         {
             return landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<Point>>
             {
