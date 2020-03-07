@@ -18,9 +18,9 @@
         Small,
         
         /// <summary>
-        /// Specifies that the detector of helen dataset. The detector returns 194 points for represent face. 
+        /// Specifies that the custom detector.
         /// </summary>
-        Helen
+        Custom
 
     }
 

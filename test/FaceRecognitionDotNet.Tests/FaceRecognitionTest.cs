@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using DlibDotNet;
+using FaceRecognitionDotNet.Extensions;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -39,11 +40,11 @@ namespace FaceRecognitionDotNet.Tests
 
         private const string TwoPersonFile = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
-        private bool _HasHelenDataset = false;
+        private string _HelenModelFile = null;
 
-        private bool _HasAgeDataset = false;
+        private string _AgeEstimatorModelFile = null;
 
-        private bool _HasGenderDataset = false;
+        private string _GenderEstimatorModelFile = null;
 
         #endregion
 
@@ -76,13 +77,13 @@ namespace FaceRecognitionDotNet.Tests
                 switch (method.Name)
                 {
                     case "GetPosePredictor194PointModelLocation":
-                        this._HasHelenDataset = File.Exists(Path.Combine(ModelDirectory, result));
+                        this._HelenModelFile = Path.Combine(ModelDirectory, result);
                         break;
                     case "GetGenderNetworkModelLocation":
-                        this._HasGenderDataset = File.Exists(Path.Combine(ModelDirectory, result));
+                        this._GenderEstimatorModelFile = Path.Combine(ModelDirectory, result);
                         break;
                     case "GetAgeNetworkModelLocation":
-                        this._HasAgeDataset = File.Exists(Path.Combine(ModelDirectory, result));
+                        this._AgeEstimatorModelFile = Path.Combine(ModelDirectory, result);
                         break;
                     default:
                         models.Add(result);
@@ -144,28 +145,23 @@ namespace FaceRecognitionDotNet.Tests
                 foreach (var numJitters in new[] { 1, 2 })
                     foreach (var model in Enum.GetValues(typeof(PredictorModel)).Cast<PredictorModel>())
                     {
-                        try
-                        {
-                            var encodings1 = this._FaceRecognition.FaceEncodings(image1, null, numJitters, model).ToArray();
-                            var encodings2 = this._FaceRecognition.FaceEncodings(image2, null, numJitters, model).ToArray();
+                        if (model == PredictorModel.Custom)
+                            continue;
 
-                            foreach (var encoding in encodings1)
-                            foreach (var compareFace in FaceRecognition.CompareFaces(encodings2, encoding))
-                            {
-                                atLeast1Time = true;
-                                Assert.False(compareFace, $"{nameof(numJitters)}: {numJitters}");
-                            }
+                        var encodings1 = this._FaceRecognition.FaceEncodings(image1, null, numJitters, model).ToArray();
+                        var encodings2 = this._FaceRecognition.FaceEncodings(image2, null, numJitters, model).ToArray();
 
-                            foreach (var encoding in encodings1)
-                                encoding.Dispose();
-                            foreach (var encoding in encodings2)
-                                encoding.Dispose();
-                        }
-                        catch (ArgumentException)
+                        foreach (var encoding in encodings1)
+                        foreach (var compareFace in FaceRecognition.CompareFaces(encodings2, encoding))
                         {
-                            if (model != PredictorModel.Helen)
-                                throw;
+                            atLeast1Time = true;
+                            Assert.False(compareFace, $"{nameof(numJitters)}: {numJitters}");
                         }
+
+                        foreach (var encoding in encodings1)
+                            encoding.Dispose();
+                        foreach (var encoding in encodings2)
+                            encoding.Dispose();
                     }
             }
 
@@ -209,28 +205,23 @@ namespace FaceRecognitionDotNet.Tests
                 foreach (var numJitters in new[] { 1, 2 })
                     foreach (var model in Enum.GetValues(typeof(PredictorModel)).Cast<PredictorModel>())
                     {
-                        try
-                        {
-                            var endodings1 = this._FaceRecognition.FaceEncodings(image1, null, numJitters, model).ToArray();
-                            var endodings2 = this._FaceRecognition.FaceEncodings(image2, null, numJitters, model).ToArray();
+                        if (model == PredictorModel.Custom)
+                            continue;
 
-                            foreach (var encoding in endodings1)
-                            foreach (var compareFace in FaceRecognition.CompareFaces(endodings2, encoding))
-                            {
-                                atLeast1Time = true;
-                                Assert.True(compareFace, $"{nameof(numJitters)}: {numJitters}");
-                            }
+                        var endodings1 = this._FaceRecognition.FaceEncodings(image1, null, numJitters, model).ToArray();
+                        var endodings2 = this._FaceRecognition.FaceEncodings(image2, null, numJitters, model).ToArray();
 
-                            foreach (var encoding in endodings1)
-                                encoding.Dispose();
-                            foreach (var encoding in endodings2)
-                                encoding.Dispose();
-                        }
-                        catch (ArgumentException)
+                        foreach (var encoding in endodings1)
+                        foreach (var compareFace in FaceRecognition.CompareFaces(endodings2, encoding))
                         {
-                            if (model != PredictorModel.Helen)
-                                throw;
+                            atLeast1Time = true;
+                            Assert.True(compareFace, $"{nameof(numJitters)}: {numJitters}");
                         }
+
+                        foreach (var encoding in endodings1)
+                            encoding.Dispose();
+                        foreach (var encoding in endodings2)
+                            encoding.Dispose();
                     }
             }
 
@@ -525,11 +516,24 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void FaceLandmarkHelen()
         {
-            if (this._HasHelenDataset)
+            if (!File.Exists(this._HelenModelFile)) 
+                return;
+
+            const string testName = nameof(this.FaceLandmarkHelen);
+
+            try
             {
-                const string testName = nameof(this.FaceLandmarkHelen);
-                this.FaceLandmark(testName, PredictorModel.Helen, true);
-                this.FaceLandmark(testName, PredictorModel.Helen, false);
+                using (var detector = new HelenFaceLandmarkDetector(this._HelenModelFile))
+                {
+                    this._FaceRecognition.CustomFaceLandmarkDetector = detector;
+
+                    this.FaceLandmark(testName, PredictorModel.Custom, true);
+                    this.FaceLandmark(testName, PredictorModel.Custom, false);
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomFaceLandmarkDetector = null;
             }
         }
 
@@ -916,117 +920,165 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void PredictAge()
         {
-            if (this._HasAgeDataset)
-            {
-                // 0: (0, 2)
-                // 1: (4, 6)
-                // 2: (8, 13)
-                // 3: (15, 20)
-                // 4: (25, 32)
-                // 5: (38, 43)
-                // 6: (48, 53)
-                // 7: (60, 100)
-                var groundTruth = new[]
-                {
-                    new { Path = Path.Combine("TestImages", "Age", "NelsonMandela_2008_90.jpg"),        Age = new uint[]{ 7 } },
-                    new { Path = Path.Combine("TestImages", "Age", "MacaulayCulkin_1991_11.jpg"),       Age = new uint[]{ 2, 3 } },
-                    new { Path = Path.Combine("TestImages", "Age", "DianaPrincessOfWales_1997_36.jpg"), Age = new uint[]{ 4, 5 } },
-                    new { Path = Path.Combine("TestImages", "Age", "MaoAsada_2014_24.jpg"),             Age = new uint[]{ 3, 4 } }
-                };
+            if (!File.Exists(this._AgeEstimatorModelFile)) 
+                return;
 
-                foreach (var gt in groundTruth)
-                    using (var image = FaceRecognition.LoadImageFile(gt.Path))
+            try
+            {
+                using (var estimator = new SimpleAgeEstimator(this._AgeEstimatorModelFile))
+                {
+                    this._FaceRecognition.CustomAgeEstimator = estimator;
+
+                    // 0: (0, 2)
+                    // 1: (4, 6)
+                    // 2: (8, 13)
+                    // 3: (15, 20)
+                    // 4: (25, 32)
+                    // 5: (38, 43)
+                    // 6: (48, 53)
+                    // 7: (60, 100)
+                    var groundTruth = new[]
                     {
-                        var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
-                        var age = this._FaceRecognition.PredictAge(image, location);
-                        Assert.True(gt.Age.Contains(age), $"Failed to classify '{gt.Path}'");
-                    }
+                        new { Path = Path.Combine("TestImages", "Age", "NelsonMandela_2008_90.jpg"),        Age = new uint[]{ 7 } },
+                        new { Path = Path.Combine("TestImages", "Age", "MacaulayCulkin_1991_11.jpg"),       Age = new uint[]{ 2, 3 } },
+                        new { Path = Path.Combine("TestImages", "Age", "DianaPrincessOfWales_1997_36.jpg"), Age = new uint[]{ 4, 5 } },
+                        new { Path = Path.Combine("TestImages", "Age", "MaoAsada_2014_24.jpg"),             Age = new uint[]{ 3, 4 } }
+                    };
+
+                    foreach (var gt in groundTruth)
+                        using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                        {
+                            var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                            var age = this._FaceRecognition.PredictAge(image, location);
+                            Assert.True(gt.Age.Contains(age), $"Failed to classify '{gt.Path}'");
+                        }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomAgeEstimator = null;
             }
         }
 
         [Fact]
         public void PredictGender()
         {
-            if (this._HasGenderDataset)
-            {
-                var groundTruth = new[]
-                {
-                    new { Path = Path.Combine("TestImages", "Gender", "BarackObama_male.jpg"),            Gender = Gender.Male },
-                    new { Path = Path.Combine("TestImages", "Gender", "DianaPrincessOfWales_female.jpg"), Gender = Gender.Female },
-                    new { Path = Path.Combine("TestImages", "Gender", "MaoAsada_female.jpg"),             Gender = Gender.Female },
-                    new { Path = Path.Combine("TestImages", "Gender", "ShinzoAbe_male.jpg"),              Gender = Gender.Male },
-                    new { Path = Path.Combine("TestImages", "Gender", "WhitneyHouston_female.jpg"),       Gender = Gender.Female },
-                };
+            if (!File.Exists(this._GenderEstimatorModelFile))
+                return;
 
-                foreach (var gt in groundTruth)
-                    using (var image = FaceRecognition.LoadImageFile(gt.Path))
+            try
+            {
+                using (var estimator = new SimpleGenderEstimator(this._GenderEstimatorModelFile))
+                {
+                    this._FaceRecognition.CustomGenderEstimator = estimator;
+
+                    var groundTruth = new[]
                     {
-                        var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
-                        var gender = this._FaceRecognition.PredictGender(image, location);
-                        Assert.True(gt.Gender == gender, $"Failed to classify '{gt.Path}'");
-                    }
+                        new { Path = Path.Combine("TestImages", "Gender", "BarackObama_male.jpg"),            Gender = Gender.Male },
+                        new { Path = Path.Combine("TestImages", "Gender", "DianaPrincessOfWales_female.jpg"), Gender = Gender.Female },
+                        new { Path = Path.Combine("TestImages", "Gender", "MaoAsada_female.jpg"),             Gender = Gender.Female },
+                        new { Path = Path.Combine("TestImages", "Gender", "ShinzoAbe_male.jpg"),              Gender = Gender.Male },
+                        new { Path = Path.Combine("TestImages", "Gender", "WhitneyHouston_female.jpg"),       Gender = Gender.Female },
+                    };
+
+                    foreach (var gt in groundTruth)
+                        using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                        {
+                            var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                            var gender = this._FaceRecognition.PredictGender(image, location);
+                            Assert.True(gt.Gender == gender, $"Failed to classify '{gt.Path}'");
+                        }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomGenderEstimator = null;
             }
         }
 
         [Fact]
         public void PredictProbabilityAge()
         {
-            if (this._HasAgeDataset)
+            if (!File.Exists(this._AgeEstimatorModelFile))
+                return;
+
+            try
             {
-                // 0: (0, 2)
-                // 1: (4, 6)
-                // 2: (8, 13)
-                // 3: (15, 20)
-                // 4: (25, 32)
-                // 5: (38, 43)
-                // 6: (48, 53)
-                // 7: (60, 100)
-                var groundTruth = new[]
+                using (var estimator = new SimpleAgeEstimator(this._AgeEstimatorModelFile))
                 {
-                    new { Path = Path.Combine("TestImages", "Age", "NelsonMandela_2008_90.jpg"),        Age = new uint[]{ 7 } },
-                    new { Path = Path.Combine("TestImages", "Age", "MacaulayCulkin_1991_11.jpg"),       Age = new uint[]{ 2, 3 } },
-                    new { Path = Path.Combine("TestImages", "Age", "DianaPrincessOfWales_1997_36.jpg"), Age = new uint[]{ 4, 5 } },
-                    new { Path = Path.Combine("TestImages", "Age", "MaoAsada_2014_24.jpg"),             Age = new uint[]{ 3, 4 } }
-                };
+                    this._FaceRecognition.CustomAgeEstimator = estimator;
 
-                foreach (var gt in groundTruth)
-                    using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                    // 0: (0, 2)
+                    // 1: (4, 6)
+                    // 2: (8, 13)
+                    // 3: (15, 20)
+                    // 4: (25, 32)
+                    // 5: (38, 43)
+                    // 6: (48, 53)
+                    // 7: (60, 100)
+                    var groundTruth = new[]
                     {
-                        var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
-                        var probability = this._FaceRecognition.PredictProbabilityAge(image, location);
+                        new {Path = Path.Combine("TestImages", "Age", "NelsonMandela_2008_90.jpg"),        Age = new uint[] {7}},
+                        new {Path = Path.Combine("TestImages", "Age", "MacaulayCulkin_1991_11.jpg"),       Age = new uint[] {2, 3}},
+                        new {Path = Path.Combine("TestImages", "Age", "DianaPrincessOfWales_1997_36.jpg"), Age = new uint[] {4, 5}},
+                        new {Path = Path.Combine("TestImages", "Age", "MaoAsada_2014_24.jpg"),             Age = new uint[] {3, 4}}
+                    };
 
-                        // Take top 2
-                        var order = probability.OrderByDescending(x => x.Value).Take(2).ToArray();
-                        var any = order.Select(pair => pair.Key).Any(u => gt.Age.Contains(u));
-                        Assert.True(any, $"Failed to classify '{gt.Path}'. Probability: 1 ({order[0].Key}-{order[0].Value}), 2 ({order[1].Key}-{order[1].Value})");
-                    }
+                    foreach (var gt in groundTruth)
+                        using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                        {
+                            var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                            var probability = this._FaceRecognition.PredictProbabilityAge(image, location);
+
+                            // Take top 2
+                            var order = probability.OrderByDescending(x => x.Value).Take(2).ToArray();
+                            var any = order.Select(pair => pair.Key).Any(u => gt.Age.Contains(u));
+                            Assert.True(any, $"Failed to classify '{gt.Path}'. Probability: 1 ({order[0].Key}-{order[0].Value}), 2 ({order[1].Key}-{order[1].Value})");
+                        }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomAgeEstimator = null;
             }
         }
 
         [Fact]
         public void PredictProbabilityGender()
         {
-            if (this._HasGenderDataset)
+            if (!File.Exists(this._GenderEstimatorModelFile))
+                return;
+
+            try
             {
-                var groundTruth = new[]
+                using (var estimator = new SimpleGenderEstimator(this._GenderEstimatorModelFile))
                 {
-                    new { Path = Path.Combine("TestImages", "Gender", "BarackObama_male.jpg"),            Gender = Gender.Male },
-                    new { Path = Path.Combine("TestImages", "Gender", "DianaPrincessOfWales_female.jpg"), Gender = Gender.Female },
-                    new { Path = Path.Combine("TestImages", "Gender", "MaoAsada_female.jpg"),             Gender = Gender.Female },
-                    new { Path = Path.Combine("TestImages", "Gender", "ShinzoAbe_male.jpg"),              Gender = Gender.Male },
-                    new { Path = Path.Combine("TestImages", "Gender", "WhitneyHouston_female.jpg"),       Gender = Gender.Female },
-                };
-
-                foreach (var gt in groundTruth)
-                    using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                    this._FaceRecognition.CustomGenderEstimator = estimator;
+                    
+                    var groundTruth = new[]
                     {
-                        var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
-                        var probability = this._FaceRecognition.PredictProbabilityGender(image, location);
+                        new {Path = Path.Combine("TestImages", "Gender", "BarackObama_male.jpg"),            Gender = Gender.Male},
+                        new {Path = Path.Combine("TestImages", "Gender", "DianaPrincessOfWales_female.jpg"), Gender = Gender.Female},
+                        new {Path = Path.Combine("TestImages", "Gender", "MaoAsada_female.jpg"),             Gender = Gender.Female},
+                        new {Path = Path.Combine("TestImages", "Gender", "ShinzoAbe_male.jpg"),              Gender = Gender.Male},
+                        new {Path = Path.Combine("TestImages", "Gender", "WhitneyHouston_female.jpg"),       Gender = Gender.Female},
+                    };
 
-                        var pos = gt.Gender;
-                        var neg = pos == Gender.Male ? Gender.Female : Gender.Male;
-                        Assert.True(probability[pos] > probability[neg], $"Failed to classify '{gt.Path}'. Probability: {probability[pos]}");
-                    }
+                    foreach (var gt in groundTruth)
+                        using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                        {
+                            var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                            var probability = this._FaceRecognition.PredictProbabilityGender(image, location);
+
+                            var pos = gt.Gender;
+                            var neg = pos == Gender.Male ? Gender.Female : Gender.Male;
+                            Assert.True(probability[pos] > probability[neg], $"Failed to classify '{gt.Path}'. Probability: {probability[pos]}");
+                        }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomGenderEstimator = null;
             }
         }
 
