@@ -31,14 +31,10 @@ namespace FaceRecognitionDotNet.Extensions
 
         #region Overrides
 
-        protected override IEnumerable<FullObjectDetection> RawDetect(MatrixBase matrix, IEnumerable<Location> locations)
+        protected override FullObjectDetection RawDetect(MatrixBase matrix, Location location)
         {
-            foreach (var location in locations)
-            {
-                var rect = new Rectangle(location.Left, location.Top, location.Right, location.Top);
-                var ret = this._Predictor.Detect(matrix, rect);
-                yield return ret;
-            }
+            var rect = new Rectangle(location.Left, location.Top, location.Right, location.Top);
+            return this._Predictor.Detect(matrix, rect);
         }
 
         protected override IEnumerable<Dictionary<FacePart, IEnumerable<Point>>> RawGetLandmarks(IEnumerable<Point[]> landmarkTuples)

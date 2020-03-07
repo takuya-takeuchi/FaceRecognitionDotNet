@@ -9,9 +9,9 @@ namespace FaceRecognitionDotNet.Extensions
 
         #region Methods
 
-        public IEnumerable<FullObjectDetection> Detect(Image image, IEnumerable<Location> locations)
+        public FullObjectDetection Detect(Image image, Location location)
         {
-            return this.RawDetect(image.Matrix, locations);
+            return this.RawDetect(image.Matrix, location);
         }
 
         public IEnumerable<Dictionary<FacePart, IEnumerable<Point>>> GetLandmarks(IEnumerable<Point[]> landmarkTuples)
@@ -19,7 +19,7 @@ namespace FaceRecognitionDotNet.Extensions
             return this.RawGetLandmarks(landmarkTuples);
         }
 
-        protected abstract IEnumerable<FullObjectDetection> RawDetect(MatrixBase matrix, IEnumerable<Location> locations);
+        protected abstract FullObjectDetection RawDetect(MatrixBase matrix, Location location);
         
         protected abstract IEnumerable<Dictionary<FacePart, IEnumerable<Point>>> RawGetLandmarks(IEnumerable<Point[]> landmarkTuples);
 

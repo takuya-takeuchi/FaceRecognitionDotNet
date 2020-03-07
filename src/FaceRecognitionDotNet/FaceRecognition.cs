@@ -613,8 +613,14 @@ namespace FaceRecognitionDotNet
             
             if (model == PredictorModel.Custom)
             {
-                foreach (var detection in this._CustomFaceLandmarkDetector.Detect(faceImage, faceLocations))
-                    yield return detection;
+                foreach (var rect in tmp)
+                {
+                    var r = rect.Rect;
+                    var location = new Location(r.Left, r.Top, r.Right, r.Bottom);
+                    var ret = this._CustomFaceLandmarkDetector.Detect(faceImage, location);
+                    rect.Dispose();
+                    yield return ret;
+                }
             }
             else
             {
