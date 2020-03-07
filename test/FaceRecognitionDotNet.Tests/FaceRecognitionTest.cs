@@ -444,10 +444,11 @@ namespace FaceRecognitionDotNet.Tests
             }
 
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
+            foreach (var model in new[] { PredictorModel.Small, PredictorModel.Large })
             {
                 using (var image = FaceRecognition.LoadImageFile(path, mode))
                 {
-                    var encodings = this._FaceRecognition.FaceEncodings(image).ToArray();
+                    var encodings = this._FaceRecognition.FaceEncodings(image, model: model).ToArray();
                     Assert.True(encodings.Length > 1, "");
 
                     foreach (var encoding in encodings)
