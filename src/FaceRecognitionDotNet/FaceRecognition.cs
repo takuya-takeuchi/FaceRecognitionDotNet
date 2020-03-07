@@ -87,18 +87,27 @@ namespace FaceRecognitionDotNet
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the custom age estimator that user defined.
+        /// </summary>
         public AgeEstimator CustomAgeEstimator
         {
             get => this._CustomAgeEstimator;
             set => this._CustomAgeEstimator = value;
         }
 
+        /// <summary>
+        /// Gets or sets the custom gender estimator that user defined.
+        /// </summary>
         public GenderEstimator CustomGenderEstimator
         {
             get => this._CustomGenderEstimator;
             set => this._CustomGenderEstimator = value;
         }
 
+        /// <summary>
+        /// Gets or sets the custom face landmark detector that user defined.
+        /// </summary>
         public FaceLandmarkDetector CustomFaceLandmarkDetector
         {
             get => this._CustomFaceLandmarkDetector;
@@ -106,7 +115,7 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
-        /// Gets or sets the character encoding to convert System.String to byte[] for internal library.
+        /// Gets or sets the character encoding to convert <see cref="System.String"/> to array of <see cref="byte"/> for internal library.
         /// </summary>
         public static Encoding InternalEncoding
         {
@@ -270,20 +279,14 @@ namespace FaceRecognitionDotNet
         /// <param name="model">The model of face detector.</param>
         /// <returns>An enumerable collection of face feature data corresponds to all faces in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> is null.</exception>
-        /// <exception cref="ArgumentException"><see cref="PredictorModel.Helen"/> is not supported.</exception>
-        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object or custom face landmark detector is disposed.</exception>
+        /// <exception cref="NotSupportedException"><see cref="PredictorModel.Custom"/> is not supported.</exception>
         public IEnumerable<FaceEncoding> FaceEncodings(Image image, IEnumerable<Location> knownFaceLocation = null, int numJitters = 1, PredictorModel model = PredictorModel.Small)
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
             if (model == PredictorModel.Custom)
-            {
-                if (this._CustomFaceLandmarkDetector == null)
-                    throw new NotSupportedException("The custom face landmark detector is not ready.");
-
-                if (this._CustomFaceLandmarkDetector.IsDisposed)
-                    throw new ObjectDisposedException("", "The custom gender estimator is disposed.");
-            }
+                throw new NotSupportedException("FaceRecognitionDotNet.PredictorModel.Custom is not supported.");
 
             image.ThrowIfDisposed();
             this.ThrowIfDisposed();
@@ -305,8 +308,8 @@ namespace FaceRecognitionDotNet
         /// <param name="model">The model of face detector.</param>
         /// <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
         /// <exception cref="ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
-        /// <exception cref="ObjectDisposedException"><paramref name="faceImage"/> or this object is disposed.</exception>
-        /// <exception cref="NotSupportedException">helen-dataset.dat does not exist.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="faceImage"/> or this object or custom face landmark detector is disposed.</exception>
+        /// <exception cref="NotSupportedException">The custom face landmark detector is not ready.</exception>
         public IEnumerable<IDictionary<FacePart, IEnumerable<Point>>> FaceLandmark(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
         {
             if (faceImage == null)
@@ -321,7 +324,7 @@ namespace FaceRecognitionDotNet
                     throw new NotSupportedException("The custom face landmark detector is not ready.");
 
                 if (this._CustomFaceLandmarkDetector.IsDisposed)
-                    throw new ObjectDisposedException("", "The custom gender estimator is disposed.");
+                    throw new ObjectDisposedException($"{nameof(CustomFaceLandmarkDetector)}", "The custom face landmark detector is disposed.");
             }
 
             var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, model).ToArray();
@@ -493,13 +496,14 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
-        /// Returns an age group of face image correspond to specified location in specified image.
+        /// Returns an index of age group of face image correspond to specified location in specified image.
         /// </summary>
         /// <param name="image">The image contains a face.</param>
         /// <param name="location">The location rectangle for a face.</param>
-        /// <returns>An age group of face image correspond to specified location in specified image.</returns>
+        /// <returns>An index of age group of face image correspond to specified location in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
-        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object or custom age estimator is disposed.</exception>
+        /// <exception cref="NotSupportedException">The custom age estimator is not ready.</exception>
         public uint PredictAge(Image image, Location location)
         {
             if (image == null)
@@ -514,7 +518,7 @@ namespace FaceRecognitionDotNet
                 throw new NotSupportedException("The custom age estimator is not ready.");
 
             if (this._CustomAgeEstimator.IsDisposed)
-                throw new ObjectDisposedException("", "The custom age estimator is disposed.");
+                throw new ObjectDisposedException($"{nameof(CustomAgeEstimator)}", "The custom age estimator is disposed.");
 
             return this._CustomAgeEstimator.Predict(image, location);
         }
@@ -526,7 +530,8 @@ namespace FaceRecognitionDotNet
         /// <param name="location">The location rectangle for a face.</param>
         /// <returns>An gender of face image correspond to specified location in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
-        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object or custom gender estimator is disposed.</exception>
+        /// <exception cref="NotSupportedException">The custom gender estimator is not ready.</exception>
         public Gender PredictGender(Image image, Location location)
         {
             if (image == null)
@@ -541,7 +546,7 @@ namespace FaceRecognitionDotNet
                 throw new NotSupportedException("The custom gender estimator is not ready.");
 
             if (this._CustomGenderEstimator.IsDisposed)
-                throw new ObjectDisposedException("", "The custom gender estimator is disposed.");
+                throw new ObjectDisposedException($"{nameof(CustomGenderEstimator)}", "The custom gender estimator is disposed.");
 
             return this._CustomGenderEstimator.Predict(image, location);
         }
@@ -553,7 +558,8 @@ namespace FaceRecognitionDotNet
         /// <param name="location">The location rectangle for a face.</param>
         /// <returns>Probabilities of age group of face image correspond to specified location in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
-        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object or custom age estimator is disposed.</exception>
+        /// <exception cref="NotSupportedException">The custom age estimator is not ready.</exception>
         public IDictionary<uint, float> PredictProbabilityAge(Image image, Location location)
         {
             if (image == null)
@@ -568,7 +574,7 @@ namespace FaceRecognitionDotNet
                 throw new NotSupportedException("The custom age estimator is not ready.");
 
             if (this._CustomAgeEstimator.IsDisposed)
-                throw new ObjectDisposedException("", "The custom age estimator is disposed.");
+                throw new ObjectDisposedException($"{nameof(CustomAgeEstimator)}", "The custom age estimator is disposed.");
 
             return this._CustomAgeEstimator.PredictProbability(image, location);
         }
@@ -580,7 +586,8 @@ namespace FaceRecognitionDotNet
         /// <param name="location">The location rectangle for a face.</param>
         /// <returns>Probabilities of gender of face image correspond to specified location in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
-        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object or custom gender estimator is disposed.</exception>
+        /// <exception cref="NotSupportedException">The custom gender estimator is not ready.</exception>
         public IDictionary<Gender, float> PredictProbabilityGender(Image image, Location location)
         {
             if (image == null)
@@ -595,7 +602,7 @@ namespace FaceRecognitionDotNet
                 throw new NotSupportedException("The custom gender estimator is not ready.");
 
             if (this._CustomGenderEstimator.IsDisposed)
-                throw new ObjectDisposedException("", "The custom gender estimator is disposed.");
+                throw new ObjectDisposedException($"{nameof(CustomGenderEstimator)}", "The custom gender estimator is disposed.");
 
             return this._CustomGenderEstimator.PredictProbability(image, location);
         }

@@ -41,6 +41,198 @@
             </summary>
             <param name="disposing">Indicate value whether <see cref="M:System.IDisposable.Dispose"/> method was called.</param>
         </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.AgeEstimator">
+            <summary>
+            An abstract base class that provides functionality to estimate human age from face image.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Extensions.AgeEstimator.Groups">
+            <summary>
+            Gets the collection of age group this estimator returns in derived classes.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.AgeEstimator.RawPredict(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns an index of age group of face image correspond to specified location in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>An index of age group of face image correspond to specified location in specified image.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.AgeEstimator.RawPredictProbability(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns probabilities of age group of face image correspond to specified location in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>Probabilities of age group of face image correspond to specified location in specified image.</returns>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.AgeRange">
+            <summary>
+            Represents a range that has start and end age.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.AgeRange.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Instantiates a new <see cref="T:FaceRecognitionDotNet.Extensions.AgeRange"/> instance with the specified starting and ending ages.
+            </summary>
+            <param name="start">The inclusive age index of the range.</param>
+            <param name="end">The exclusive end age of the range.</param>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Extensions.AgeRange.End">
+            <summary>
+            Gets an age that represents the exclusive end of the range.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Extensions.AgeRange.Start">
+            <summary>
+            Gets the inclusive start of the <see cref="T:FaceRecognitionDotNet.Extensions.AgeRange"/>.
+            </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.FaceLandmarkDetector">
+            <summary>
+            An abstract base class that provides functionality to detect face parts locations from face image.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawDetect(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns an object contains information of face parts corresponds to specified location in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>An object contains information of face parts.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawGetLandmarks(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Point[]})">
+            <summary>
+            Returns an enumerable collection of dictionary of face parts locations (eyes, nose, etc).
+            </summary>
+            <param name="landmarkTuples">The enumerable collection of face parts location.</param>
+            <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.GenderEstimator">
+            <summary>
+            An abstract base class that provides functionality to estimate human gender from face image.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Extensions.GenderEstimator.Labels">
+            <summary>
+            Gets the collection of gender label this estimator returns in derived classes.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.GenderEstimator.RawPredict(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns an gender of face image correspond to specified location in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>An gender of face image correspond to specified location in specified image.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.GenderEstimator.RawPredictProbability(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns probabilities of gender of face image correspond to specified location in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>Probabilities of gender of face image correspond to specified location in specified image.</returns>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector">
+            <summary>
+            The face landmark detector which was trained by helen dataset. This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector"/> class with the model file path that this detector uses.
+            </summary>
+            <param name="modelPath">The model file path that this detector uses.</param>
+            <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawDetect(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns an object contains information of face parts corresponds to specified location in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>An object contains information of face parts.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawGetLandmarks(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Point[]})">
+            <summary>
+            Returns an enumerable collection of dictionary of face parts locations (eyes, nose, etc).
+            </summary>
+            <param name="landmarkTuples">The enumerable collection of face parts location.</param>
+            <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.DisposeUnmanaged">
+            <summary>
+            Releases all unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator">
+            <summary>
+            The age estimator which was trained by Adience dataset. This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator"/> class with the model file path that this estimator uses.
+            </summary>
+            <param name="modelPath">The model file path that this estimator uses.</param>
+            <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.Groups">
+            <summary>
+            Gets the collection of age group this estimator returns in derived classes.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.RawPredict(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns an index of age group of face image correspond to specified location in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>An index of age group of face image correspond to specified location in specified image.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.RawPredictProbability(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns probabilities of age group of face image correspond to specified location in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>Probabilities of age group of face image correspond to specified location in specified image.</returns>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator">
+            <summary>
+            The age estimator which was trained by UTKFace dataset. This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator"/> class with the model file path that this estimator uses.
+            </summary>
+            <param name="modelPath">The model file path that this estimator uses.</param>
+            <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.Labels">
+            <summary>
+            Gets the collection of gender label this estimator returns in derived classes.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.RawPredict(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns an gender of face image correspond to specified location in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>An gender of face image correspond to specified location in specified image.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.RawPredictProbability(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns probabilities of gender of face image correspond to specified location in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>Probabilities of gender of face image correspond to specified location in specified image.</returns>
+        </member>
         <member name="T:FaceRecognitionDotNet.FaceEncoding">
             <summary>
             Represents a feature data of face. This class cannot be inherited.
@@ -131,9 +323,24 @@
             <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
             <exception cref="T:System.IO.DirectoryNotFoundException">The specified directory path is not found.</exception>
         </member>
+        <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomAgeEstimator">
+            <summary>
+            Gets or sets the custom age estimator that user defined.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomGenderEstimator">
+            <summary>
+            Gets or sets the custom gender estimator that user defined.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomFaceLandmarkDetector">
+            <summary>
+            Gets or sets the custom face landmark detector that user defined.
+            </summary>
+        </member>
         <member name="P:FaceRecognitionDotNet.FaceRecognition.InternalEncoding">
             <summary>
-            Gets or sets the character encoding to convert System.String to byte[] for internal library.
+            Gets or sets the character encoding to convert <see cref="T:System.String"/> to array of <see cref="T:System.Byte"/> for internal library.
             </summary>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Image},System.Int32,System.Int32)">
@@ -206,8 +413,8 @@
             <param name="model">The model of face detector.</param>
             <returns>An enumerable collection of face feature data corresponds to all faces in specified image.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> is null.</exception>
-            <exception cref="T:System.ArgumentException"><see cref="F:FaceRecognitionDotNet.PredictorModel.Helen"/> is not supported.</exception>
-            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object or custom face landmark detector is disposed.</exception>
+            <exception cref="T:System.NotSupportedException"><see cref="F:FaceRecognitionDotNet.PredictorModel.Custom"/> is not supported.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModel)">
             <summary>
@@ -218,8 +425,8 @@
             <param name="model">The model of face detector.</param>
             <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
-            <exception cref="T:System.ObjectDisposedException"><paramref name="faceImage"/> or this object is disposed.</exception>
-            <exception cref="T:System.NotSupportedException">helen-dataset.dat does not exist.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="faceImage"/> or this object or custom face landmark detector is disposed.</exception>
+            <exception cref="T:System.NotSupportedException">The custom face landmark detector is not ready.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image,System.Int32,FaceRecognitionDotNet.Model)">
             <summary>
@@ -264,13 +471,14 @@
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictAge(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
             <summary>
-            Returns an age group of face image correspond to specified location in specified image.
+            Returns an index of age group of face image correspond to specified location in specified image.
             </summary>
             <param name="image">The image contains a face.</param>
             <param name="location">The location rectangle for a face.</param>
-            <returns>An age group of face image correspond to specified location in specified image.</returns>
+            <returns>An index of age group of face image correspond to specified location in specified image.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
-            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object or custom age estimator is disposed.</exception>
+            <exception cref="T:System.NotSupportedException">The custom age estimator is not ready.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
             <summary>
@@ -280,7 +488,8 @@
             <param name="location">The location rectangle for a face.</param>
             <returns>An gender of face image correspond to specified location in specified image.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
-            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object or custom gender estimator is disposed.</exception>
+            <exception cref="T:System.NotSupportedException">The custom gender estimator is not ready.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityAge(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
             <summary>
@@ -290,7 +499,8 @@
             <param name="location">The location rectangle for a face.</param>
             <returns>Probabilities of age group of face image correspond to specified location in specified image.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
-            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object or custom age estimator is disposed.</exception>
+            <exception cref="T:System.NotSupportedException">The custom age estimator is not ready.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
             <summary>
@@ -300,7 +510,8 @@
             <param name="location">The location rectangle for a face.</param>
             <returns>Probabilities of gender of face image correspond to specified location in specified image.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
-            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object or custom gender estimator is disposed.</exception>
+            <exception cref="T:System.NotSupportedException">The custom gender estimator is not ready.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged">
             <summary>
@@ -515,9 +726,9 @@
             Specifies that the small scale detector. The detector returns 5 points for represent face. 
             </summary>
         </member>
-        <member name="F:FaceRecognitionDotNet.PredictorModel.Helen">
+        <member name="F:FaceRecognitionDotNet.PredictorModel.Custom">
             <summary>
-            Specifies that the detector of helen dataset. The detector returns 194 points for represent face. 
+            Specifies that the custom detector.
             </summary>
         </member>
     </members>

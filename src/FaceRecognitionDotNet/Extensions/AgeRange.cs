@@ -25,7 +25,7 @@
         #region Properties
 
         /// <summary>
-        /// Gets an age that represents the exclusive end age of the range.
+        /// Gets an age that represents the exclusive end of the range.
         /// </summary>
         public int End
         {
@@ -33,7 +33,7 @@
         }
 
         /// <summary>
-        /// Gets the inclusive start age of the Range.
+        /// Gets the inclusive start of the <see cref="T:FaceRecognitionDotNet.Extensions.AgeRange"/>.
         /// </summary>
         public int Start
         {

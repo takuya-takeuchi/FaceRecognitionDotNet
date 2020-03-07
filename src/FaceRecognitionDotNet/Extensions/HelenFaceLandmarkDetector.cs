@@ -6,6 +6,9 @@ using DlibDotNet;
 namespace FaceRecognitionDotNet.Extensions
 {
 
+    /// <summary>
+    /// The face landmark detector which was trained by helen dataset. This class cannot be inherited.
+    /// </summary>
     public sealed class HelenFaceLandmarkDetector : FaceLandmarkDetector
     {
 
@@ -17,6 +20,11 @@ namespace FaceRecognitionDotNet.Extensions
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HelenFaceLandmarkDetector"/> class with the model file path that this detector uses.
+        /// </summary>
+        /// <param name="modelPath">The model file path that this detector uses.</param>
+        /// <exception cref="FileNotFoundException">The model file is not found.</exception>
         public HelenFaceLandmarkDetector(string modelPath)
         {
             if (!File.Exists(modelPath))
@@ -31,12 +39,23 @@ namespace FaceRecognitionDotNet.Extensions
 
         #region Overrides
 
+        /// <summary>
+        /// Returns an object contains information of face parts corresponds to specified location in specified image.
+        /// </summary>
+        /// <param name="matrix">The matrix contains a face.</param>
+        /// <param name="location">The location rectangle for a face.</param>
+        /// <returns>An object contains information of face parts.</returns>
         protected override FullObjectDetection RawDetect(MatrixBase matrix, Location location)
         {
             var rect = new Rectangle(location.Left, location.Top, location.Right, location.Top);
             return this._Predictor.Detect(matrix, rect);
         }
 
+        /// <summary>
+        /// Returns an enumerable collection of dictionary of face parts locations (eyes, nose, etc).
+        /// </summary>
+        /// <param name="landmarkTuples">The enumerable collection of face parts location.</param>
+        /// <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
         protected override IEnumerable<Dictionary<FacePart, IEnumerable<Point>>> RawGetLandmarks(IEnumerable<Point[]> landmarkTuples)
         {
             return landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<Point>>

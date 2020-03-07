@@ -8,6 +8,9 @@ using DlibDotNet.Dnn;
 namespace FaceRecognitionDotNet.Extensions
 {
 
+    /// <summary>
+    /// The age estimator which was trained by Adience dataset. This class cannot be inherited.
+    /// </summary>
     public sealed class SimpleAgeEstimator : AgeEstimator
     {
 
@@ -19,6 +22,11 @@ namespace FaceRecognitionDotNet.Extensions
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SimpleAgeEstimator"/> class with the model file path that this estimator uses.
+        /// </summary>
+        /// <param name="modelPath">The model file path that this estimator uses.</param>
+        /// <exception cref="FileNotFoundException">The model file is not found.</exception>
         public SimpleAgeEstimator(string modelPath)
         {
             if (!File.Exists(modelPath))
@@ -38,7 +46,10 @@ namespace FaceRecognitionDotNet.Extensions
 
         #region Properties
 
-        public override AgeRange[] Labels
+        /// <summary>
+        /// Gets the collection of age group this estimator returns in derived classes.
+        /// </summary>
+        public override AgeRange[] Groups
         {
             get
             {
@@ -60,6 +71,12 @@ namespace FaceRecognitionDotNet.Extensions
 
         #region Methods
 
+        /// <summary>
+        /// Returns an index of age group of face image correspond to specified location in specified image.
+        /// </summary>
+        /// <param name="matrix">The matrix contains a face.</param>
+        /// <param name="location">The location rectangle for a face.</param>
+        /// <returns>An index of age group of face image correspond to specified location in specified image.</returns>
         public override uint RawPredict(MatrixBase matrix, Location location)
         {
             if (!(matrix is Matrix<RgbPixel> mat))
@@ -78,6 +95,12 @@ namespace FaceRecognitionDotNet.Extensions
                 return results[0];
         }
 
+        /// <summary>
+        /// Returns probabilities of age group of face image correspond to specified location in specified image.
+        /// </summary>
+        /// <param name="matrix">The matrix contains a face.</param>
+        /// <param name="location">The location rectangle for a face.</param>
+        /// <returns>Probabilities of age group of face image correspond to specified location in specified image.</returns>
         public override IDictionary<uint, float> RawPredictProbability(MatrixBase matrix, Location location)
         {
             if (!(matrix is Matrix<RgbPixel> mat))
