@@ -51,9 +51,9 @@ You must train dataset by yourself.
 I will **NOT** provide pretrained model file due to avoiding license issue.
 You can check the following examples to train dataset.
 
-* examples/AgeTraining
-* examples/GenderTraining
-* examples/HelenTraining
+* tools/AgeTraining
+* tools/GenderTraining
+* tools/HelenTraining
 
 ## Demo
 
