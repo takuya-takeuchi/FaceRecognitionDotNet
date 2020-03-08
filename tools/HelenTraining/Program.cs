@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 using DlibDotNet;
 using FaceRecognitionDotNet;
 using Microsoft.Extensions.CommandLineUtils;
+using ImageFormat = System.Drawing.Imaging.ImageFormat;
 using Point = DlibDotNet.Point;
 
 namespace HelenTraining
