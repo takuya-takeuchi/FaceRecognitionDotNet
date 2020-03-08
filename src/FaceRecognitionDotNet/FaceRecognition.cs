@@ -6,6 +6,7 @@ using System.Text;
 using DlibDotNet;
 using DlibDotNet.Dnn;
 using FaceRecognitionDotNet.Dlib.Python;
+using FaceRecognitionDotNet.Extensions;
 using Rectangle = DlibDotNet.Rectangle;
 
 namespace FaceRecognitionDotNet
@@ -19,12 +20,6 @@ namespace FaceRecognitionDotNet
 
         #region Fields
 
-        private readonly LossMulticlassLog _AgePredictorGender;
-
-        private readonly LossMulticlassLog _GenderPredictorGender;
-
-        private readonly ShapePredictor _PosePredictor194Point;
-
         private readonly ShapePredictor _PosePredictor68Point;
 
         private readonly ShapePredictor _PosePredictor5Point;
@@ -34,6 +29,12 @@ namespace FaceRecognitionDotNet
         private readonly LossMetric _FaceEncoder;
 
         private readonly FrontalFaceDetector _FaceDetector;
+
+        private FaceLandmarkDetector _CustomFaceLandmarkDetector;
+
+        private AgeEstimator _CustomAgeEstimator;
+
+        private GenderEstimator _CustomGenderEstimator;
 
         #endregion
 
@@ -80,41 +81,6 @@ namespace FaceRecognitionDotNet
 
             this._FaceEncoder?.Dispose();
             this._FaceEncoder = LossMetric.Deserialize(faceRecognitionModel);
-
-            var predictor194PointModel = Path.Combine(directory, FaceRecognitionModels.GetPosePredictor194PointModelLocation());
-            if (File.Exists(predictor194PointModel))
-            {
-                this._PosePredictor194Point?.Dispose();
-                this._PosePredictor194Point = ShapePredictor.Deserialize(predictor194PointModel);
-            }
-
-            var predictorAgeModel = Path.Combine(directory, FaceRecognitionModels.GetAgeNetworkModelLocation());
-            if (File.Exists(predictorAgeModel))
-            {
-                var ret = NativeMethods.LossMulticlassLog_age_train_type_create();
-                var networkId = LossMulticlassLogRegistry.GetId(ret);
-                if (LossMulticlassLogRegistry.Contains(networkId))
-                    NativeMethods.LossMulticlassLog_age_train_type_delete(ret);
-                else
-                    LossMulticlassLogRegistry.Add(ret);
-
-                this._AgePredictorGender?.Dispose();
-                this._AgePredictorGender = LossMulticlassLog.Deserialize(predictorAgeModel, networkId);
-            }
-
-            var predictorGenderModel = Path.Combine(directory, FaceRecognitionModels.GetGenderNetworkModelLocation());
-            if (File.Exists(predictorGenderModel))
-            {
-                var ret = NativeMethods.LossMulticlassLog_gender_train_type_create();
-                var networkId = LossMulticlassLogRegistry.GetId(ret);
-                if (LossMulticlassLogRegistry.Contains(networkId))
-                    NativeMethods.LossMulticlassLog_gender_train_type_delete(ret);
-                else
-                    LossMulticlassLogRegistry.Add(ret);
-
-                this._GenderPredictorGender?.Dispose();
-                this._GenderPredictorGender = LossMulticlassLog.Deserialize(predictorGenderModel, networkId);
-            }
         }
 
         #endregion
@@ -122,7 +88,34 @@ namespace FaceRecognitionDotNet
         #region Properties
 
         /// <summary>
-        /// Gets or sets the character encoding to convert System.String to byte[] for internal library.
+        /// Gets or sets the custom age estimator that user defined.
+        /// </summary>
+        public AgeEstimator CustomAgeEstimator
+        {
+            get => this._CustomAgeEstimator;
+            set => this._CustomAgeEstimator = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the custom gender estimator that user defined.
+        /// </summary>
+        public GenderEstimator CustomGenderEstimator
+        {
+            get => this._CustomGenderEstimator;
+            set => this._CustomGenderEstimator = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the custom face landmark detector that user defined.
+        /// </summary>
+        public FaceLandmarkDetector CustomFaceLandmarkDetector
+        {
+            get => this._CustomFaceLandmarkDetector;
+            set => this._CustomFaceLandmarkDetector = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the character encoding to convert <see cref="System.String"/> to array of <see cref="byte"/> for internal library.
         /// </summary>
         public static Encoding InternalEncoding
         {
@@ -286,14 +279,14 @@ namespace FaceRecognitionDotNet
         /// <param name="model">The model of face detector.</param>
         /// <returns>An enumerable collection of face feature data corresponds to all faces in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> is null.</exception>
-        /// <exception cref="ArgumentException"><see cref="PredictorModel.Helen"/> is not supported.</exception>
-        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object or custom face landmark detector is disposed.</exception>
+        /// <exception cref="NotSupportedException"><see cref="PredictorModel.Custom"/> is not supported.</exception>
         public IEnumerable<FaceEncoding> FaceEncodings(Image image, IEnumerable<Location> knownFaceLocation = null, int numJitters = 1, PredictorModel model = PredictorModel.Small)
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
-            if (model == PredictorModel.Helen)
-                throw new ArgumentException("FaceRecognitionDotNet.PredictorModel.Helen is not supported.", nameof(model));
+            if (model == PredictorModel.Custom)
+                throw new NotSupportedException("FaceRecognitionDotNet.PredictorModel.Custom is not supported.");
 
             image.ThrowIfDisposed();
             this.ThrowIfDisposed();
@@ -315,8 +308,8 @@ namespace FaceRecognitionDotNet
         /// <param name="model">The model of face detector.</param>
         /// <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
         /// <exception cref="ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
-        /// <exception cref="ObjectDisposedException"><paramref name="faceImage"/> or this object is disposed.</exception>
-        /// <exception cref="NotSupportedException">helen-dataset.dat does not exist.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="faceImage"/> or this object or custom face landmark detector is disposed.</exception>
+        /// <exception cref="NotSupportedException">The custom face landmark detector is not ready.</exception>
         public IEnumerable<IDictionary<FacePart, IEnumerable<Point>>> FaceLandmark(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
         {
             if (faceImage == null)
@@ -325,9 +318,14 @@ namespace FaceRecognitionDotNet
             faceImage.ThrowIfDisposed();
             this.ThrowIfDisposed();
 
-            // RawFaceLandmarks uses _PosePredictor194Point so check here!!
-            if (model == PredictorModel.Helen && this._PosePredictor194Point == null)
-                throw new NotSupportedException($"'{FaceRecognitionModels.GetPosePredictor194PointModelLocation()}' does not exist.");
+            if (model == PredictorModel.Custom)
+            {
+                if (this._CustomFaceLandmarkDetector == null) 
+                    throw new NotSupportedException("The custom face landmark detector is not ready.");
+
+                if (this._CustomFaceLandmarkDetector.IsDisposed)
+                    throw new ObjectDisposedException($"{nameof(CustomFaceLandmarkDetector)}", "The custom face landmark detector is disposed.");
+            }
 
             var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, model).ToArray();
             var landmarkTuples = landmarks.Select(landmark => Enumerable.Range(0, (int)landmark.Parts)
@@ -374,22 +372,8 @@ namespace FaceRecognitionDotNet
                             { FacePart.RightEye, Enumerable.Range(0,2).Select(i => landmarkTuple[i]).ToArray() }
                         }));
                         break;
-                    case PredictorModel.Helen:
-                        results.AddRange(landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<Point>>
-                        {
-                            { FacePart.Chin,         Enumerable.Range(  0,41).Select(i => landmarkTuple[i]) },
-                            { FacePart.LeftEyebrow,  Enumerable.Range(174,20).Select(i => landmarkTuple[i]) },
-                            { FacePart.RightEyebrow, Enumerable.Range(154,20).Select(i => landmarkTuple[i]) },
-                            { FacePart.Nose,         Enumerable.Range( 41,17).Select(i => landmarkTuple[i]) },
-                            { FacePart.LeftEye,      Enumerable.Range(134,20).Select(i => landmarkTuple[i]) },
-                            { FacePart.RightEye,     Enumerable.Range(114,20).Select(i => landmarkTuple[i]) },
-                            { FacePart.TopLip,       Enumerable.Range( 58,14).Select(i => landmarkTuple[i])
-                                                                             .Concat( Enumerable.Range(86,15).Reverse().Select(i => landmarkTuple[i])) },
-                            { FacePart.BottomLip,    Enumerable.Range(100,14).Select(i => landmarkTuple[i])
-                                                                             .Concat( new [] { landmarkTuple[86] })
-                                                                             .Concat( new [] { landmarkTuple[58] })
-                                                                             .Concat( Enumerable.Range(71,15).Reverse().Select(i => landmarkTuple[i])) }
-                        }));
+                    case PredictorModel.Custom:
+                        results.AddRange(this._CustomFaceLandmarkDetector.GetLandmarks(landmarkTuples));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(model), model, null);
@@ -512,13 +496,14 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
-        /// Returns an age group of face image correspond to specified location in specified image.
+        /// Returns an index of age group of face image correspond to specified location in specified image.
         /// </summary>
         /// <param name="image">The image contains a face.</param>
         /// <param name="location">The location rectangle for a face.</param>
-        /// <returns>An age group of face image correspond to specified location in specified image.</returns>
+        /// <returns>An index of age group of face image correspond to specified location in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
-        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object or custom age estimator is disposed.</exception>
+        /// <exception cref="NotSupportedException">The custom age estimator is not ready.</exception>
         public uint PredictAge(Image image, Location location)
         {
             if (image == null)
@@ -529,28 +514,13 @@ namespace FaceRecognitionDotNet
             image.ThrowIfDisposed();
             this.ThrowIfDisposed();
 
-            // GenderClassify uses _GenderPredictorGender so check here!!
-            if (this._AgePredictorGender == null)
-                throw new NotSupportedException($"'{FaceRecognitionModels.GetAgeNetworkModelLocation()}' does not exist.");
+            if (this._CustomAgeEstimator == null)
+                throw new NotSupportedException("The custom age estimator is not ready.");
 
-            if (!(image.Matrix is Matrix<RgbPixel> matrix))
-                throw new ArgumentException();
+            if (this._CustomAgeEstimator.IsDisposed)
+                throw new ObjectDisposedException($"{nameof(CustomAgeEstimator)}", "The custom age estimator is disposed.");
 
-            FullObjectDetection[] rawLandmark = null;
-
-            try
-            {
-                rawLandmark = this.RawFaceLandmarks(image, new[] { location }, PredictorModel.Small).ToArray();
-                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u))
-                using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
-                using (var results = this._AgePredictorGender.Operator(new[] { faceChips }, 1))
-                    return results[0];
-            }
-            finally
-            {
-                if (rawLandmark != null)
-                    foreach (var fullObjectDetection in rawLandmark) fullObjectDetection.Dispose();
-            }
+            return this._CustomAgeEstimator.Predict(image, location);
         }
 
         /// <summary>
@@ -560,7 +530,8 @@ namespace FaceRecognitionDotNet
         /// <param name="location">The location rectangle for a face.</param>
         /// <returns>An gender of face image correspond to specified location in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
-        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object or custom gender estimator is disposed.</exception>
+        /// <exception cref="NotSupportedException">The custom gender estimator is not ready.</exception>
         public Gender PredictGender(Image image, Location location)
         {
             if (image == null)
@@ -571,28 +542,13 @@ namespace FaceRecognitionDotNet
             image.ThrowIfDisposed();
             this.ThrowIfDisposed();
 
-            // GenderClassify uses _GenderPredictorGender so check here!!
-            if (this._GenderPredictorGender == null)
-                throw new NotSupportedException($"'{FaceRecognitionModels.GetGenderNetworkModelLocation()}' does not exist.");
+            if (this._CustomGenderEstimator == null)
+                throw new NotSupportedException("The custom gender estimator is not ready.");
 
-            if (!(image.Matrix is Matrix<RgbPixel> matrix))
-                throw new ArgumentException();
+            if (this._CustomGenderEstimator.IsDisposed)
+                throw new ObjectDisposedException($"{nameof(CustomGenderEstimator)}", "The custom gender estimator is disposed.");
 
-            FullObjectDetection[] rawLandmark = null;
-
-            try
-            {
-                rawLandmark = this.RawFaceLandmarks(image, new[] { location }, PredictorModel.Small).ToArray();
-                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u))
-                using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
-                using (var results = this._GenderPredictorGender.Operator(new[] { faceChips }, 1))
-                    return results[0] == 0 ? Gender.Male : Gender.Female;
-            }
-            finally
-            {
-                if (rawLandmark != null)
-                    foreach (var fullObjectDetection in rawLandmark) fullObjectDetection.Dispose();
-            }
+            return this._CustomGenderEstimator.Predict(image, location);
         }
 
         /// <summary>
@@ -602,7 +558,8 @@ namespace FaceRecognitionDotNet
         /// <param name="location">The location rectangle for a face.</param>
         /// <returns>Probabilities of age group of face image correspond to specified location in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
-        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object or custom age estimator is disposed.</exception>
+        /// <exception cref="NotSupportedException">The custom age estimator is not ready.</exception>
         public IDictionary<uint, float> PredictProbabilityAge(Image image, Location location)
         {
             if (image == null)
@@ -613,31 +570,13 @@ namespace FaceRecognitionDotNet
             image.ThrowIfDisposed();
             this.ThrowIfDisposed();
 
-            // GenderClassify uses _GenderPredictorGender so check here!!
-            if (this._AgePredictorGender == null)
-                throw new NotSupportedException($"'{FaceRecognitionModels.GetAgeNetworkModelLocation()}' does not exist.");
+            if (this._CustomAgeEstimator == null)
+                throw new NotSupportedException("The custom age estimator is not ready.");
 
-            if (!(image.Matrix is Matrix<RgbPixel> matrix))
-                throw new ArgumentException();
+            if (this._CustomAgeEstimator.IsDisposed)
+                throw new ObjectDisposedException($"{nameof(CustomAgeEstimator)}", "The custom age estimator is disposed.");
 
-            FullObjectDetection[] rawLandmark = null;
-
-            try
-            {
-                rawLandmark = this.RawFaceLandmarks(image, new[] { location }, PredictorModel.Small).ToArray();
-                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u, 0.25d))
-                using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
-                {
-                    var results = this._AgePredictorGender.Probability(faceChips, 1).ToArray();
-                    var predict = results[0];
-                    return predict.Select((n, index) => new { index, n }).ToDictionary(n => (uint)n.index, n => n.n);
-                }
-            }
-            finally
-            {
-                if (rawLandmark != null)
-                    foreach (var fullObjectDetection in rawLandmark) fullObjectDetection.Dispose();
-            }
+            return this._CustomAgeEstimator.PredictProbability(image, location);
         }
 
         /// <summary>
@@ -647,7 +586,8 @@ namespace FaceRecognitionDotNet
         /// <param name="location">The location rectangle for a face.</param>
         /// <returns>Probabilities of gender of face image correspond to specified location in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
-        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object is disposed.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object or custom gender estimator is disposed.</exception>
+        /// <exception cref="NotSupportedException">The custom gender estimator is not ready.</exception>
         public IDictionary<Gender, float> PredictProbabilityGender(Image image, Location location)
         {
             if (image == null)
@@ -658,34 +598,13 @@ namespace FaceRecognitionDotNet
             image.ThrowIfDisposed();
             this.ThrowIfDisposed();
 
-            // GenderClassify uses _GenderPredictorGender so check here!!
-            if (this._GenderPredictorGender == null)
-                throw new NotSupportedException($"'{FaceRecognitionModels.GetGenderNetworkModelLocation()}' does not exist.");
+            if (this._CustomGenderEstimator == null)
+                throw new NotSupportedException("The custom gender estimator is not ready.");
 
-            if (!(image.Matrix is Matrix<RgbPixel> matrix))
-                throw new ArgumentException();
+            if (this._CustomGenderEstimator.IsDisposed)
+                throw new ObjectDisposedException($"{nameof(CustomGenderEstimator)}", "The custom gender estimator is disposed.");
 
-            FullObjectDetection[] rawLandmark = null;
-
-            try
-            {
-                rawLandmark = this.RawFaceLandmarks(image, new[] { location }, PredictorModel.Small).ToArray();
-                using (var chip = DlibDotNet.Dlib.GetFaceChipDetails(rawLandmark[0], 227u, 0.25d))
-                using (var faceChips = DlibDotNet.Dlib.ExtractImageChip<RgbPixel>(matrix, chip))
-                {
-                    var results = this._GenderPredictorGender.Probability(faceChips, 1).ToArray();
-                    return new Dictionary<Gender, float>
-                    {
-                        { Gender.Male,   results[0][0] },
-                        { Gender.Female, results[0][1] }
-                    };
-                }
-            }
-            finally
-            {
-                if (rawLandmark != null)
-                    foreach (var fullObjectDetection in rawLandmark) fullObjectDetection.Dispose();
-            }
+            return this._CustomGenderEstimator.PredictProbability(image, location);
         }
 
         #region Helpers
@@ -698,23 +617,34 @@ namespace FaceRecognitionDotNet
                 tmp = this.RawFaceLocations(faceImage);
             else
                 tmp = faceLocations.Select(l => new MModRect { Rect = new Rectangle { Bottom = l.Bottom, Left = l.Left, Top = l.Top, Right = l.Right } });
-
-            var posePredictor = this._PosePredictor68Point;
-            switch (model)
+            
+            if (model == PredictorModel.Custom)
             {
-                case PredictorModel.Small:
-                    posePredictor = this._PosePredictor5Point;
-                    break;
-                case PredictorModel.Helen:
-                    posePredictor = this._PosePredictor194Point;
-                    break;
+                foreach (var rect in tmp)
+                {
+                    var r = rect.Rect;
+                    var location = new Location(r.Left, r.Top, r.Right, r.Bottom);
+                    var ret = this._CustomFaceLandmarkDetector.Detect(faceImage, location);
+                    rect.Dispose();
+                    yield return ret;
+                }
             }
-
-            foreach (var rect in tmp)
+            else
             {
-                var ret = posePredictor.Detect(faceImage.Matrix, rect);
-                rect.Dispose();
-                yield return ret;
+                var posePredictor = this._PosePredictor68Point;
+                switch (model)
+                {
+                    case PredictorModel.Small:
+                        posePredictor = this._PosePredictor5Point;
+                        break;
+                }
+
+                foreach (var rect in tmp)
+                {
+                    var ret = posePredictor.Detect(faceImage.Matrix, rect);
+                    rect.Dispose();
+                    yield return ret;
+                }
             }
         }
 
