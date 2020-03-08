@@ -383,6 +383,16 @@
             <exception cref="T:System.IO.FileNotFoundException">モデルファイルが見つかりません。</exception>
             <exception cref="T:System.IO.DirectoryNotFoundException">指定したディレクトリ パスが見つかりません。</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.CropFaces(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location})">
+            <summary>
+            顔の位置の列挙可能なコレクションで指定された画像を切り抜きます。
+            </summary>
+            <param name="image">顔を含む画像。</param>
+            <param name="locations">顔に対する矩形位置の列挙可能なコレクション。</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> または <paramref name="locations"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> は破棄されています。</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistance(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding)">
             <summary>
             既知の顔エンコーディングと比較し、顔ユークリッド距離を取得します。
@@ -548,9 +558,37 @@
             画像の幅を取得します。
             </summary>
         </member>
+        <member name="M:FaceRecognitionDotNet.Image.Save(System.String,FaceRecognitionDotNet.ImageFormat)">
+            <summary>
+            この <see cref="T:FaceRecognitionDotNet.Image"/> を、指定した形式で指定したファイルに保存します。
+            </summary>
+            <param name="filename">この <see cref="T:FaceRecognitionDotNet.Image"/> の保存先ファイルの名前を格納している文字列。</param>
+            <param name="format">この <see cref="T:FaceRecognitionDotNet.Image"/> の <see cref="T:FaceRecognitionDotNet.ImageFormat"/>。</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="filename"/> が null です。</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.Image.DisposeUnmanaged">
             <summary>
             アンマネージ リソースを解放します。
+            </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.ImageFormat">
+            <summary>
+            イメージのファイル形式を指定します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.ImageFormat.Bmp">
+            <summary>
+            ビットマップ (BMP) イメージ形式を指定します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.ImageFormat.Jpeg">
+            <summary>
+            JPEG (Joint Photographic Experts Group) イメージ形式を指定します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.ImageFormat.Png">
+            <summary>
+            W3C PNG (Portable Network Graphics) イメージ形式を指定します。
             </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.Location">

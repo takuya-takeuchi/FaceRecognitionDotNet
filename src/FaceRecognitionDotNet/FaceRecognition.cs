@@ -217,6 +217,53 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
+        /// Crop a specified image with enumerable collection of face locations.
+        /// </summary>
+        /// <param name="image">The image contains a face.</param>
+        /// <param name="locations">The enumerable collection of location rectangle for faces.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="locations"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> is disposed.</exception>
+        public static IEnumerable<Image> CropFaces(Image image, IEnumerable<Location> locations)
+        {
+            if (image == null) 
+                throw new ArgumentNullException(nameof(image));
+            if (locations == null) 
+                throw new ArgumentNullException(nameof(locations));
+
+            image.ThrowIfDisposed();
+
+            foreach (var location in locations)
+            {
+                var rect = new Rectangle(location.Left, location.Top, location.Right, location.Bottom);
+                var dPoint = new[]
+                {
+                    new DPoint(rect.Left, rect.Top),
+                    new DPoint(rect.Right, rect.Top),
+                    new DPoint(rect.Left, rect.Bottom),
+                    new DPoint(rect.Right, rect.Bottom),
+                };
+
+                var width = (int)rect.Width;
+                var height = (int)rect.Height;
+
+                switch (image.Mode)
+                {
+                    case Mode.Rgb:
+                        var rgb = image.Matrix as Matrix<RgbPixel>;
+                        yield return new Image(DlibDotNet.Dlib.ExtractImage4Points(rgb, dPoint, width, height),
+                                               Mode.Rgb);
+                        break;
+                    case Mode.Greyscale:
+                        var gray = image.Matrix as Matrix<byte>;
+                        yield return new Image(DlibDotNet.Dlib.ExtractImage4Points(gray, dPoint, width, height),
+                                               Mode.Rgb);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
         /// Compare a face encoding to a known face encoding and get a euclidean distance for comparison face.
         /// </summary>
         /// <param name="faceEncoding">The face encoding to compare.</param>

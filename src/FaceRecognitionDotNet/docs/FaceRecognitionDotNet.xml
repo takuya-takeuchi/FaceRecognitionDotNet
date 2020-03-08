@@ -383,6 +383,16 @@
             <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
             <exception cref="T:System.IO.DirectoryNotFoundException">The specified directory path is not found.</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.CropFaces(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location})">
+            <summary>
+            Crop a specified image with enumerable collection of face locations.
+            </summary>
+            <param name="image">The image contains a face.</param>
+            <param name="locations">The enumerable collection of location rectangle for faces.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> or <paramref name="locations"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> is disposed.</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistance(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding)">
             <summary>
             Compare a face encoding to a known face encoding and get a euclidean distance for comparison face.
@@ -548,9 +558,37 @@
             Gets the width of the image.
             </summary>
         </member>
+        <member name="M:FaceRecognitionDotNet.Image.Save(System.String,FaceRecognitionDotNet.ImageFormat)">
+            <summary>
+            Saves this <see cref="T:FaceRecognitionDotNet.Image"/> to the specified file.
+            </summary>
+            <param name="filename">A string that contains the name of the file to which to save this <see cref="T:FaceRecognitionDotNet.Image"/>.</param>
+            <param name="format">The <see cref="T:FaceRecognitionDotNet.ImageFormat"/> for this <see cref="T:FaceRecognitionDotNet.Image"/>.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="filename"/> is null.</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.Image.DisposeUnmanaged">
             <summary>
             Releases all unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.ImageFormat">
+            <summary>
+            Specifies the file format of the image.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.ImageFormat.Bmp">
+            <summary>
+            Specifies that the bitmap (BMP) image format.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.ImageFormat.Jpeg">
+            <summary>
+            Specifies that the Joint Photographic Experts Group (JPEG) image format.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.ImageFormat.Png">
+            <summary>
+            Specifies that the W3C Portable Network Graphics (PNG) image format.
             </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.Location">

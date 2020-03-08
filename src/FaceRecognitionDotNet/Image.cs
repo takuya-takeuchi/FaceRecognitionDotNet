@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using DlibDotNet;
 
 namespace FaceRecognitionDotNet
@@ -61,6 +62,35 @@ namespace FaceRecognitionDotNet
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Saves this <see cref="Image"/> to the specified file.
+        /// </summary>
+        /// <param name="filename">A string that contains the name of the file to which to save this <see cref="Image"/>.</param>
+        /// <param name="format">The <see cref="ImageFormat"/> for this <see cref="Image"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="filename"/> is null.</exception>
+        public void Save(string filename, ImageFormat format)
+        {
+            if (filename == null) 
+                throw new ArgumentNullException(nameof(filename));
+
+            var directory = Path.GetDirectoryName(filename);
+            if (!Directory.Exists(directory) && !string.IsNullOrWhiteSpace(directory))
+                Directory.CreateDirectory(directory);
+
+            switch (format)
+            {
+                case ImageFormat.Bmp:
+                    DlibDotNet.Dlib.SaveBmp(this._Matrix, filename);
+                    break;
+                case ImageFormat.Jpeg:
+                    DlibDotNet.Dlib.SaveJpeg(this._Matrix, filename);
+                    break;
+                case ImageFormat.Png:
+                    DlibDotNet.Dlib.SavePng(this._Matrix, filename);
+                    break;
+            }
+        }
 
         #region Overrides 
 

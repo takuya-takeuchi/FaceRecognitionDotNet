@@ -230,6 +230,44 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
+        public void CropFaces()
+        {
+            const string testName = nameof(this.CropFaces);
+
+            var path = Path.Combine(ImageDirectory, TwoPersonFile);
+            if (!File.Exists(path))
+            {
+                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path, binary);
+            }
+
+            foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
+            {
+                using (var image = FaceRecognition.LoadImageFile(path, mode))
+                {
+                    var locations = this._FaceRecognition.FaceLocations(image).ToArray();
+                    Assert.True(locations.Length == 2, $"{mode}");
+
+                    var images = FaceRecognition.CropFaces(image, locations).ToArray();
+                    for (var index = 1; index <= images.Length; index++)
+                    {
+                        var croppedImage = images[index - 1];
+
+                        var directory = Path.Combine(ResultDirectory, testName);
+                        Directory.CreateDirectory(directory);
+
+                        var dst = Path.Combine(directory, $"{mode}-{index}.jpg");
+                        croppedImage.Save(dst, ImageFormat.Jpeg);
+
+                        croppedImage.Dispose();
+                    }
+                }
+            }
+        }
+
+        [Fact]
         public void CreateFail1()
         {
             Directory.CreateDirectory(ModelTempDirectory);
@@ -1734,7 +1772,7 @@ namespace FaceRecognitionDotNet.Tests
                                 Directory.CreateDirectory(directory);
 
                                 var dst = Path.Combine(directory, $"{facePart}-{mode}-known_{useKnownLocation}.bmp");
-                                bitmap.Save(dst, ImageFormat.Bmp);
+                                bitmap.Save(dst, System.Drawing.Imaging.ImageFormat.Bmp);
                             }
                         }
 
@@ -1752,7 +1790,7 @@ namespace FaceRecognitionDotNet.Tests
                         Directory.CreateDirectory(directory);
 
                         var dst = Path.Combine(directory, $"All-{mode}-known_{useKnownLocation}.bmp");
-                        bitmap.Save(dst, ImageFormat.Bmp);
+                        bitmap.Save(dst, System.Drawing.Imaging.ImageFormat.Bmp);
                     }
                 }
             }
@@ -1786,7 +1824,7 @@ namespace FaceRecognitionDotNet.Tests
                         Directory.CreateDirectory(directory);
 
                         var dst = Path.Combine(directory, $"All-{mode}-{numberOfTimesToUpsample}.bmp");
-                        bitmap.Save(dst, ImageFormat.Bmp);
+                        bitmap.Save(dst, System.Drawing.Imaging.ImageFormat.Bmp);
                     }
                 }
             }

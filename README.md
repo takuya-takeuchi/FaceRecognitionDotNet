@@ -39,6 +39,7 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |face_landmarks|FaceLandmarks|And support **Helen dataset** :warning:|
 |face_locations|FaceLocations||
 |load_image_file|LoadImageFile||
+|-|CropFaces|Crop image with specified locations|
 |-|LoadImage|From memory data|
 |-|PredictAge|Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
 |-|PredictGender|Use **UTKFace dataset** :warning:|
