@@ -152,11 +152,11 @@ namespace FaceRecognitionDotNet.Tests
                         var encodings2 = this._FaceRecognition.FaceEncodings(image2, null, numJitters, model).ToArray();
 
                         foreach (var encoding in encodings1)
-                        foreach (var compareFace in FaceRecognition.CompareFaces(encodings2, encoding))
-                        {
-                            atLeast1Time = true;
-                            Assert.False(compareFace, $"{nameof(numJitters)}: {numJitters}");
-                        }
+                            foreach (var compareFace in FaceRecognition.CompareFaces(encodings2, encoding))
+                            {
+                                atLeast1Time = true;
+                                Assert.False(compareFace, $"{nameof(numJitters)}: {numJitters}");
+                            }
 
                         foreach (var encoding in encodings1)
                             encoding.Dispose();
@@ -212,11 +212,11 @@ namespace FaceRecognitionDotNet.Tests
                         var endodings2 = this._FaceRecognition.FaceEncodings(image2, null, numJitters, model).ToArray();
 
                         foreach (var encoding in endodings1)
-                        foreach (var compareFace in FaceRecognition.CompareFaces(endodings2, encoding))
-                        {
-                            atLeast1Time = true;
-                            Assert.True(compareFace, $"{nameof(numJitters)}: {numJitters}");
-                        }
+                            foreach (var compareFace in FaceRecognition.CompareFaces(endodings2, encoding))
+                            {
+                                atLeast1Time = true;
+                                Assert.True(compareFace, $"{nameof(numJitters)}: {numJitters}");
+                            }
 
                         foreach (var encoding in endodings1)
                             encoding.Dispose();
@@ -473,40 +473,40 @@ namespace FaceRecognitionDotNet.Tests
             }
 
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
-            foreach (var model in new[] { PredictorModel.Small, PredictorModel.Large })
-            {
-                using (var image = FaceRecognition.LoadImageFile(path, mode))
+                foreach (var model in new[] { PredictorModel.Small, PredictorModel.Large })
                 {
-                    var encodings = this._FaceRecognition.FaceEncodings(image, model: model).ToArray();
-                    Assert.True(encodings.Length > 1, "");
-
-                    foreach (var encoding in encodings)
+                    using (var image = FaceRecognition.LoadImageFile(path, mode))
                     {
-                        encoding.Dispose();
+                        var encodings = this._FaceRecognition.FaceEncodings(image, model: model).ToArray();
+                        Assert.True(encodings.Length > 1, "");
 
-                        try
+                        foreach (var encoding in encodings)
                         {
                             encoding.Dispose();
-                        }
-                        catch
-                        {
-                            Assert.True(false, $"{typeof(FaceEncoding)} must not throw exception even though {nameof(FaceEncoding.Dispose)} method is called again.");
+
+                            try
+                            {
+                                encoding.Dispose();
+                            }
+                            catch
+                            {
+                                Assert.True(false, $"{typeof(FaceEncoding)} must not throw exception even though {nameof(FaceEncoding.Dispose)} method is called again.");
+                            }
+
+                            try
+                            {
+                                var _ = encoding.Size;
+                                Assert.True(false, $"{nameof(FaceEncoding.Size)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
+                            }
+                            catch
+                            {
+                            }
                         }
 
-                        try
-                        {
-                            var _ = encoding.Size;
-                            Assert.True(false, $"{nameof(FaceEncoding.Size)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
-                        }
-                        catch
-                        {
-                        }
+                        foreach (var encoding in encodings)
+                            Assert.True(encoding.IsDisposed, $"{typeof(FaceEncoding)} should be already disposed.");
                     }
-
-                    foreach (var encoding in encodings)
-                        Assert.True(encoding.IsDisposed, $"{typeof(FaceEncoding)} should be already disposed.");
                 }
-            }
         }
 
         [Fact]
@@ -554,7 +554,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void FaceLandmarkHelen()
         {
-            if (!File.Exists(this._HelenModelFile)) 
+            if (!File.Exists(this._HelenModelFile))
                 return;
 
             const string testName = nameof(this.FaceLandmarkHelen);
@@ -715,7 +715,7 @@ namespace FaceRecognitionDotNet.Tests
             {
                 var bytes = array2D.ToBytes();
 
-                var image = FaceRecognition.LoadImage(bytes, array2D.Rows, array2D.Columns, 3);
+                var image = FaceRecognition.LoadImage(bytes, array2D.Rows, array2D.Columns, array2D.Columns * 3, Mode.Rgb);
                 Assert.True(image.Width == 419, $"Width of {path} is wrong");
                 Assert.True(image.Height == 600, $"Height of {path} is wrong");
 
@@ -752,6 +752,77 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
+        public void LoadImage2()
+        {
+            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
+            const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
+
+            var path = Path.Combine(ImageDirectory, file);
+            if (!File.Exists(path))
+            {
+                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path, binary);
+            }
+
+            using (var bitmap = (Bitmap)System.Drawing.Image.FromFile(path))
+            {
+                BitmapData bitmapData = null;
+
+                try
+                {
+                    var rect = new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height);
+                    bitmapData = bitmap.LockBits(rect, ImageLockMode.ReadOnly, bitmap.PixelFormat);
+
+                    var array = bitmapData.Scan0;
+                    var stride = bitmapData.Stride;
+
+                    // ToDo: Windows Bitmap is BGR so it should convert it. But this test case does not take care of accuracy.
+                    var image = FaceRecognition.LoadImage(array, bitmapData.Height, bitmapData.Width, stride, Mode.Rgb);
+                    Assert.True(image.Width == 419, $"Width of {path} is wrong");
+                    Assert.True(image.Height == 600, $"Height of {path} is wrong");
+
+                    image.Dispose();
+                    Assert.True(image.IsDisposed, $"{typeof(Image)} should be already disposed.");
+
+                    try
+                    {
+                        image.Dispose();
+                    }
+                    catch
+                    {
+                        Assert.True(false, $"{typeof(Image)} must not throw exception even though {nameof(Image.Dispose)} method is called again.");
+                    }
+
+                    try
+                    {
+                        var _ = image.Width;
+                        Assert.True(false, $"{nameof(Image.Width)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
+                    }
+                    catch
+                    {
+                    }
+
+                    try
+                    {
+                        var _ = image.Height;
+                        Assert.True(false, $"{nameof(Image.Height)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
+                    }
+                    catch
+                    {
+                    }
+
+                }
+                finally
+                {
+                    if (bitmapData != null)
+                        bitmap.UnlockBits(bitmapData);
+                }
+            }
+        }
+
+        [Fact]
         public void LoadImageGrayscale()
         {
             const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
@@ -772,7 +843,7 @@ namespace FaceRecognitionDotNet.Tests
                 DlibDotNet.Dlib.AssignImage(array2DGray, array2D);
                 var bytes = array2DGray.ToBytes();
 
-                using (var image = FaceRecognition.LoadImage(bytes, array2DGray.Rows, array2DGray.Columns, 1))
+                using (var image = FaceRecognition.LoadImage(bytes, array2DGray.Rows, array2DGray.Columns, array2D.Columns * 1, Mode.Greyscale))
                 {
                     Assert.True(image.Width == 419, $"Width of {path} is wrong");
                     Assert.True(image.Height == 600, $"Height of {path} is wrong");
@@ -815,7 +886,7 @@ namespace FaceRecognitionDotNet.Tests
         {
             try
             {
-                var _ = FaceRecognition.LoadImage(null, 100, 100, 3);
+                var _ = FaceRecognition.LoadImage(null, 100, 100, 300, Mode.Rgb);
                 Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentNullException)}.");
             }
             catch (ArgumentNullException)
@@ -824,7 +895,30 @@ namespace FaceRecognitionDotNet.Tests
 
             try
             {
-                var _ = FaceRecognition.LoadImage(new byte[100 * 100 * 2], 100, 100, 2);
+                var _ = FaceRecognition.LoadImage(new byte[100 * 100 * 3], 100, 100, 400, Mode.Rgb);
+                Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentOutOfRangeException)}.");
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+            }
+        }
+
+        [Fact]
+        public void LoadImage2Exception()
+        {
+            try
+            {
+                var _ = FaceRecognition.LoadImage(IntPtr.Zero, 100, 100, 300, Mode.Rgb);
+                Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentException)}.");
+            }
+            catch (ArgumentException)
+            {
+            }
+
+            try
+            {
+                var dummy = (IntPtr) 10;
+                var _ = FaceRecognition.LoadImage(dummy, 100, 100, 50, Mode.Rgb);
                 Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentOutOfRangeException)}.");
             }
             catch (ArgumentOutOfRangeException)
@@ -851,7 +945,7 @@ namespace FaceRecognitionDotNet.Tests
 
             var array2D = DlibDotNet.Dlib.LoadImage<RgbPixel>(path);
             var bytes = array2D.ToBytes();
-            var image2 = FaceRecognition.LoadImage(bytes, array2D.Rows, array2D.Columns, 3);
+            var image2 = FaceRecognition.LoadImage(bytes, array2D.Rows, array2D.Columns, array2D.Columns * 3, Mode.Rgb);
 
             var location1 = this._FaceRecognition.FaceLocations(image1).ToArray();
             var location2 = this._FaceRecognition.FaceLocations(image2).ToArray();
@@ -958,7 +1052,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void PredictAge()
         {
-            if (!File.Exists(this._AgeEstimatorModelFile)) 
+            if (!File.Exists(this._AgeEstimatorModelFile))
                 return;
 
             try
@@ -1092,7 +1186,7 @@ namespace FaceRecognitionDotNet.Tests
                 using (var estimator = new SimpleGenderEstimator(this._GenderEstimatorModelFile))
                 {
                     this._FaceRecognition.CustomGenderEstimator = estimator;
-                    
+
                     var groundTruth = new[]
                     {
                         new {Path = Path.Combine("TestImages", "Gender", "BarackObama_male.jpg"),            Gender = Gender.Male},
@@ -1509,7 +1603,7 @@ namespace FaceRecognitionDotNet.Tests
                 Assert.True(encodings.Length == 1);
                 Assert.True(encodings[0].Size == 128);
 
-                foreach (var encoding in encodings) 
+                foreach (var encoding in encodings)
                     encoding.Dispose();
             }
         }
@@ -1717,7 +1811,7 @@ namespace FaceRecognitionDotNet.Tests
                 }
 
                 foreach (var batchedDetectedFace in batchedDetectedFaces)
-                foreach (var rect in batchedDetectedFace)
+                    foreach (var rect in batchedDetectedFace)
                         rect.Dispose();
             }
         }

@@ -499,24 +499,85 @@ namespace FaceRecognitionDotNet
         /// <param name="array">The <see cref="byte"/> array contains image data.</param>
         /// <param name="row">The number of rows in a image data.</param>
         /// <param name="column">The number of columns in a image data.</param>
-        /// <param name="elementSize">The image element size in bytes.</param>
+        /// <param name="stride">The stride width in bytes.</param>
+        /// <param name="mode">A image color mode.</param>
         /// <returns>The <see cref="Image"/> this method creates.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="array"/> is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="elementSize"/> must be 3 or 1.</exception>
-        public static Image LoadImage(byte[] array, int row, int column, int elementSize)
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="row"/> is less than 0.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="column"/> is less than 0.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="stride"/> is less than 0.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="stride"/> is less than <paramref name="column"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="row"/> x <paramref name="stride"/> is less than <see cref="Array.Length"/>.</exception>
+        public static Image LoadImage(byte[] array, int row, int column, int stride, Mode mode)
         {
             if (array == null)
                 throw new ArgumentNullException(nameof(array));
+            if (row < 0)
+                throw new ArgumentOutOfRangeException($"{nameof(row)}", $"{nameof(row)} is less than 0.");
+            if (column < 0)
+                throw new ArgumentOutOfRangeException($"{nameof(column)}", $"{nameof(column)} is less than 0.");
+            if (stride < 0)
+                throw new ArgumentOutOfRangeException($"{nameof(stride)}", $"{nameof(stride)} is less than 0.");
+            if (stride < column)
+                throw new ArgumentOutOfRangeException($"{nameof(stride)}", $"{nameof(stride)} is less than {nameof(column)}.");
+            var min = row * stride;
+            if (!(array.Length >= min))
+                throw new ArgumentOutOfRangeException("", $"{nameof(row)} x {nameof(stride)} is less than {nameof(Array)}.{nameof(Array.Length)}.");
 
-            switch (elementSize)
+            unsafe
             {
-                case 3:
-                    return new Image(new Matrix<RgbPixel>(array, row, column, elementSize), Mode.Rgb);
-                case 1:
-                    return new Image(new Matrix<byte>(array, row, column, elementSize), Mode.Greyscale);
+                fixed (byte* p = &array[0])
+                {
+                    var ptr = (IntPtr) p;
+                    switch (mode)
+                    {
+                        case Mode.Rgb:
+                            return new Image(new Matrix<RgbPixel>(ptr, row, column, stride), Mode.Rgb);
+                        case Mode.Greyscale:
+                            return new Image(new Matrix<byte>(ptr, row, column, stride), Mode.Greyscale);
+                    }
+                }
             }
 
-            throw new ArgumentOutOfRangeException($"{nameof(elementSize)} must be 3 or 1.");
+            return null;
+        }
+
+        /// <summary>
+        /// Creates an <see cref="Image"/> from the unmanaged memory pointer indicates <see cref="byte"/> array image data.
+        /// </summary>
+        /// <param name="array">The unmanaged memory pointer indicates <see cref="byte"/> array image data.</param>
+        /// <param name="row">The number of rows in a image data.</param>
+        /// <param name="column">The number of columns in a image data.</param>
+        /// <param name="stride">The stride width in bytes.</param>
+        /// <param name="mode">A image color mode.</param>
+        /// <returns>The <see cref="Image"/> this method creates.</returns>
+        /// <exception cref="ArgumentException"><paramref name="array"/> is <see cref="IntPtr.Zero"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="row"/> is less than 0.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="column"/> is less than 0.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="stride"/> is less than 0.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="stride"/> is less than <paramref name="column"/>.</exception>
+        public static Image LoadImage(IntPtr array, int row, int column, int stride, Mode mode)
+        {
+            if (array == IntPtr.Zero)
+                throw new ArgumentException($"{nameof(array)} is {nameof(IntPtr)}.{nameof(IntPtr.Zero)}", nameof(array));
+            if (row < 0)
+                throw new ArgumentOutOfRangeException($"{nameof(row)}", $"{nameof(row)} is less than 0.");
+            if (column < 0)
+                throw new ArgumentOutOfRangeException($"{nameof(column)}", $"{nameof(column)} is less than 0.");
+            if (stride < 0)
+                throw new ArgumentOutOfRangeException($"{nameof(stride)}", $"{nameof(stride)} is less than 0.");
+            if (stride < column)
+                throw new ArgumentOutOfRangeException($"{nameof(stride)}", $"{nameof(stride)} is less than {nameof(column)}.");
+
+            switch (mode)
+            {
+                case Mode.Rgb:
+                    return new Image(new Matrix<RgbPixel>(array, row, column, stride), mode);
+                case Mode.Greyscale:
+                    return new Image(new Matrix<byte>(array, row, column, stride), mode);
+            }
+
+            return null;
         }
 
         /// <summary>

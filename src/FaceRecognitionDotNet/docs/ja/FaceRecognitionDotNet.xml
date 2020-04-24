@@ -458,17 +458,38 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="encoding"/> が null です。</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="encoding"/> は 128 です。</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Byte[],System.Int32,System.Int32,System.Int32)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Byte[],System.Int32,System.Int32,System.Int32,FaceRecognitionDotNet.Mode)">
             <summary>
             <see cref="T:System.Byte"/> 配列から <see cref="T:FaceRecognitionDotNet.Image"/> を作成します。
             </summary>
             <param name="array">画像データを含む <see cref="T:System.Byte"/> 配列。</param>
             <param name="row">画像データの行数。</param>
             <param name="column">画像データの列数。</param>
-            <param name="elementSize">画像要素のバイト単位のサイズ。</param>
+            <param name="stride">バイト単位のストライド。</param>
+            <param name="mode">画像のカラー モード。</param>
             <returns>このメソッドが作成した <see cref="T:FaceRecognitionDotNet.Image"/>。</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="array"/> が null です。</exception>
-            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="elementSize"/> は 3 または 1 です。</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="row"/> が 0 未満です。</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="column"/> が 0 未満です。</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="stride"/> が 0 未満です。</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="stride"/> が <paramref name="column"/> 未満です。</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="row"/> x <paramref name="stride"/> が <see cref="P:System.Array.Length"/> 未満です。</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadImage(System.IntPtr,System.Int32,System.Int32,System.Int32,FaceRecognitionDotNet.Mode)">
+            <summary>
+            画像データを含む <see cref="T:System.Byte"/> 配列を指し示すアンマネージド メモリ ポインターから <see cref="T:FaceRecognitionDotNet.Image"/> を作成します。
+            </summary>
+            <param name="array">画像データを含む <see cref="T:System.Byte"/> 配列を指し示すアンマネージド メモリ ポインター。</param>
+            <param name="row">画像データの行数。</param>
+            <param name="column">画像データの列数。</param>
+            <param name="stride">バイト単位のストライド。</param>
+            <param name="mode">画像のカラー モード。</param>
+            <returns>このメソッドが作成した <see cref="T:FaceRecognitionDotNet.Image"/>。</returns>
+            <exception cref="T:System.ArgumentException"><paramref name="array"/> が <see cref="F:System.IntPtr.Zero"/> です。</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="row"/> が 0 未満です。</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="column"/> が 0 未満です。</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="stride"/> が 0 未満です。</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="stride"/> が <paramref name="column"/> 未満です。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.LoadImageFile(System.String,FaceRecognitionDotNet.Mode)">
             <summary>
