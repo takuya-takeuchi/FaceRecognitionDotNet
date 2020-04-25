@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelenTraining", "tools\Hele
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlinkDetection", "examples\BlinkDetection\BlinkDetection.csproj", "{29E51D3D-7AEF-419E-9604-49116E28A211}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RgbBgr", "examples\RgbBgr\RgbBgr.csproj", "{13DDB1E7-EF71-48BA-A1E7-365C94783709}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,10 @@ Global
 		{29E51D3D-7AEF-419E-9604-49116E28A211}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29E51D3D-7AEF-419E-9604-49116E28A211}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29E51D3D-7AEF-419E-9604-49116E28A211}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13DDB1E7-EF71-48BA-A1E7-365C94783709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13DDB1E7-EF71-48BA-A1E7-365C94783709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13DDB1E7-EF71-48BA-A1E7-365C94783709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13DDB1E7-EF71-48BA-A1E7-365C94783709}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +119,7 @@ Global
 		{44781AB4-D08C-4FDA-92EF-55C7CE9D5A18} = {8C8838E0-B002-426F-9B25-4C1F65A6D33D}
 		{86A8F7D7-E3D6-4478-856E-B0FA91F5ABFA} = {8C8838E0-B002-426F-9B25-4C1F65A6D33D}
 		{29E51D3D-7AEF-419E-9604-49116E28A211} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
+		{13DDB1E7-EF71-48BA-A1E7-365C94783709} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D44C572-D749-4A76-A199-8C598A08AE8A}
