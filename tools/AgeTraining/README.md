@@ -10,7 +10,9 @@ Age classes are **(0, 2)**, **(4, 6)**, **(8, 13)**, **(15, 20)**, **(25, 32)**,
 1. Open command prompt and change to &lt;AgeTraining_dir&gt;
 1. Type the following command
 ````
-dotnet build -c Release
+$ dotnet remove reference ../../src/FaceRecognitionDotNet\FaceRecognitionDotNet.csproj
+$ dotnet add package FaceRecognitionDotNet
+$ dotnet build -c Release
 ````
 2. Copy ***DlibDotNetNative.dll***, ***DlibDotNetNativeDnn.dll*** and ***DlibDotNetNativeDnnAgeClassification.dll*** to output directory; &lt;AgeTraining_dir&gt;\bin\Release\netcoreapp2.0.
 

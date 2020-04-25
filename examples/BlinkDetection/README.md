@@ -14,7 +14,9 @@ This sample requires model files and webcam.
 1. Open command prompt and change to &lt;BlinkDetection_dir&gt;
 1. Type the following command
 ````
-dotnet build -c Release
+$ dotnet remove reference ../../src/FaceRecognitionDotNet\FaceRecognitionDotNet.csproj
+$ dotnet add package FaceRecognitionDotNet
+$ dotnet build -c Release
 ````
 
 ## 3. Run

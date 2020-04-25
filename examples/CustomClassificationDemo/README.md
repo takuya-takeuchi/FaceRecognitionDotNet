@@ -22,7 +22,9 @@ And you must generate the following model files and copy to &lt;CustomClassifica
 1. Open command prompt and change to &lt;CustomClassificationDemo_dir&gt;
 1. Type the following command
 ````
-dotnet build -c Release
+$ dotnet remove reference ../../src/FaceRecognitionDotNet\FaceRecognitionDotNet.csproj
+$ dotnet add package FaceRecognitionDotNet
+$ dotnet build -c Release
 ````
 3. Copy ***DlibDotNetNative.dll***, ***DlibDotNetNativeDnn.dll***, ***DlibDotNetNativeDnnAgeClassification.dll*** and ***DlibDotNetNativeDnnGenderClassification.dll***  to output directory; &lt;CustomClassificationDemo_dir&gt;\bin\Release\netcoreapp2.0.
    * if you use FaceRecognitionDotNet with CUDA, you must copy also cuda libraries.
