@@ -40,7 +40,7 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |face_locations|FaceLocations||
 |load_image_file|LoadImageFile||
 |-|CropFaces|Crop image with specified locations|
-|-|EyeBlinkDetect|Detect person is blinking or not<br>Support Large model and **Helen dataset**  :warning:|
+|-|EyeBlinkDetect|Detect person is blinking or not<br>Support Large model and **Helen dataset** :warning:|
 |-|LoadImage|From memory data|
 |-|PredictAge|Predict human age.<br>Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
 |-|PredictGender|Predict human gender.<br>Use **UTKFace dataset** :warning:|
@@ -114,4 +114,3 @@ You can check the following examples to train dataset.
 > **Author:** shimat
 > 
 > **Principal Use:** Loading image data by opencv wrapper for example
-
