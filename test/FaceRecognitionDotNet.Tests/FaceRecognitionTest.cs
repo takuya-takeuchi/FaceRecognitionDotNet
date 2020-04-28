@@ -328,6 +328,35 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
+        public void EyeBlinkLargeDetect()
+        {
+            using (var detector = new EyeAspectRatioLargeEyeBlinkDetector(0.2, 0.2)) 
+                this.EyeBlinkDetect(detector, PredictorModel.Large);
+        }
+
+        [Fact]
+        public void EyeBlinkHelenDetect()
+        {
+            if (!File.Exists(this._HelenModelFile))
+                return;
+
+            try
+            {
+                using (var faceLandmarkDetector = new HelenFaceLandmarkDetector(this._HelenModelFile))
+                {
+                    this._FaceRecognition.CustomFaceLandmarkDetector = faceLandmarkDetector;
+
+                    using (var detector = new EyeAspectRatioHelenEyeBlinkDetector(0.05, 0.05))
+                        this.EyeBlinkDetect(detector, PredictorModel.Custom);
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomFaceLandmarkDetector = null;
+            }
+        }
+
+        [Fact]
         public void FaceDistance()
         {
             var bidenUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Biden_2013.jpg";
@@ -1821,6 +1850,33 @@ namespace FaceRecognitionDotNet.Tests
         private static bool AssertAlmostEqual(int actual, int expected, int delta)
         {
             return expected - delta <= actual && actual <= expected + delta;
+        }
+
+        private void EyeBlinkDetect(EyeBlinkDetector eyeBlinkDetector, PredictorModel model)
+        {
+            try
+            {
+                this._FaceRecognition.CustomEyeBlinkDetector = eyeBlinkDetector;
+
+                var groundTruth = new[]
+                {
+                    new { Path = Path.Combine("TestImages", "EyeBlink", "Adele_Haenel_Cannes_2016.jpg"),        Left = true,  Right = false },
+                    new { Path = Path.Combine("TestImages", "EyeBlink", "Adele_Haenel_Cannes_2016_mirror.jpg"), Left = false, Right = true },
+                };
+
+                foreach (var gt in groundTruth)
+                    using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                    {
+                        var landmark = this._FaceRecognition.FaceLandmark(image, null, model).ToArray()[0];
+                        this._FaceRecognition.EyeBlinkDetect(landmark, out var leftBlink, out var rightBlink);
+                        Assert.True(leftBlink == gt.Left,   $"Failed to detect '{gt.Path}' for left eye");
+                        Assert.True(rightBlink == gt.Right, $"Failed to detect '{gt.Path}' for right eye");
+                    }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomEyeBlinkDetector = null;
+            }
         }
 
         private void FaceLandmark(string testName, PredictorModel model, bool useKnownLocation)

@@ -36,6 +36,8 @@ namespace FaceRecognitionDotNet
 
         private GenderEstimator _CustomGenderEstimator;
 
+        private EyeBlinkDetector _CustomEyeBlinkDetector;
+
         #endregion
 
         #region Constructors
@@ -94,6 +96,15 @@ namespace FaceRecognitionDotNet
         {
             get => this._CustomAgeEstimator;
             set => this._CustomAgeEstimator = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the custom eye blink detector that user defined.
+        /// </summary>
+        public EyeBlinkDetector CustomEyeBlinkDetector
+        {
+            get => this._CustomEyeBlinkDetector;
+            set => this._CustomEyeBlinkDetector = value;
         }
 
         /// <summary>
@@ -261,6 +272,23 @@ namespace FaceRecognitionDotNet
                         break;
                 }
             }
+        }
+
+        /// <summary>
+        /// Detects the values whether human eye's blink or not from face landmark.
+        /// </summary>
+        /// <param name="landmark">The dictionary of face parts locations (eyes, nose, etc).</param>
+        /// <param name="leftBlink">When this method returns, contains <value>true</value>, if the left eye blinks; otherwise, <value>false</value>.</param>
+        /// <param name="rightBlink">When this method returns, contains <value>true</value>, if the right eye blinks; otherwise, <value>false</value>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="landmark"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="landmark"/> does not contain <see cref="FacePart.LeftEye"/> or <see cref="FacePart.RightEye"/>.</exception>
+        /// <exception cref="NotSupportedException">The custom eye blink detector is not ready.</exception>
+        public void EyeBlinkDetect(IDictionary<FacePart, IEnumerable<Point>> landmark, out bool leftBlink, out bool rightBlink)
+        {
+            if (this._CustomEyeBlinkDetector == null)
+                throw new NotSupportedException("The custom eye blink detector is not ready.");
+
+            this._CustomEyeBlinkDetector.Detect(landmark, out leftBlink, out rightBlink);
         }
 
         /// <summary>

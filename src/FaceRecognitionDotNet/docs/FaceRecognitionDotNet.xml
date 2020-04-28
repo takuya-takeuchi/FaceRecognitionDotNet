@@ -89,6 +89,97 @@
             Gets the inclusive start of the <see cref="T:FaceRecognitionDotNet.Extensions.AgeRange"/>.
             </summary>
         </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector">
+            <summary>
+            An abstract base class that provides functionality to detect human eye's blink base on eye aspect ratio (EAR).
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.#ctor(System.Double,System.Double,System.Int32[],System.Int32[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector"/> class with the threshold and eye point indices for left and right eyes.
+            </summary>
+            <param name="leftRatioThreshold">The threshold to decide that left eye blinks or not.</param>
+            <param name="rightRatioThreshold">The threshold to decide that right eye blinks or not.</param>
+            <param name="leftEyePointIndices">The indices of left eye location to calculate eye aspect ratio.</param>
+            <param name="rightEyePointIndices">The indices of right eye location to calculate eye aspect ratio.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="leftEyePointIndices"/> or <paramref name="rightEyePointIndices"/> is null.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="leftEyePointIndices"/> or <paramref name="rightEyePointIndices"/> does not contain 6 elements.</exception>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftEyePointIndices">
+            <summary>
+            Gets the array of the indices of left eye location to be used calculating eye aspect ratio.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftRatioThreshold">
+            <summary>
+            Gets the threshold to decide that left eye blinks or not.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightEyePointIndices">
+            <summary>
+            Gets the array of the indices of right eye location to be used calculating eye aspect ratio.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightRatioThreshold">
+            <summary>
+            Gets the threshold to decide that right eye blinks or not.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Point}},System.Boolean@,System.Boolean@)">
+            <summary>
+            Detects the values whether human eye's blink or not from face landmark.
+            </summary>
+            <param name="landmark">The dictionary of face parts locations (eyes, nose, etc).</param>
+            <param name="leftBlink">When this method returns, contains <value>true</value>, if the left eye blinks; otherwise, <value>false</value>.</param>
+            <param name="rightBlink">When this method returns, contains <value>true</value>, if the right eye blinks; otherwise, <value>false</value>.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="landmark"/> is null.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="landmark"/> does not contain <see cref="F:FaceRecognitionDotNet.FacePart.LeftEye"/> or <see cref="F:FaceRecognitionDotNet.FacePart.RightEye"/>.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.GetEar(System.Collections.Generic.IList{FaceRecognitionDotNet.Point},System.Collections.Generic.IList{System.Int32})">
+            <summary>
+            Return an eye aspect ratio.
+            </summary>
+            <param name="eye">The collection of location corresponding to human eye.</param>
+            <param name="eyePointIndices">The collection of the indices of eye location to be used calculating eye aspect ratio.</param>
+            <returns>Eye aspect ratio.</returns>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector">
+            <summary>
+            The eye blink detector for face landmark which was trained by helen dataset. This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector.#ctor(System.Double,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector"/> class with the threshold for left and right eyes.
+            </summary>
+            <param name="leftRatioThreshold">The threshold to decide that left eye blinks or not.</param>
+            <param name="rightRatioThreshold">The threshold to decide that right eye blinks or not.</param>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector">
+            <summary>
+            The eye blink detector for <see cref="F:FaceRecognitionDotNet.PredictorModel.Large"/>. This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector.#ctor(System.Double,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector"/> class with the threshold for left and right eyes.
+            </summary>
+            <param name="leftRatioThreshold">The threshold to decide that left eye blinks or not.</param>
+            <param name="rightRatioThreshold">The threshold to decide that right eye blinks or not.</param>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.EyeBlinkDetector">
+            <summary>
+            An abstract base class that provides functionality to detect human eye's blink from face landmark.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.EyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Point}},System.Boolean@,System.Boolean@)">
+            <summary>
+            Detects the values whether human eye's blink or not from face landmark.
+            </summary>
+            <param name="landmark">The dictionary of face parts locations (eyes, nose, etc).</param>
+            <param name="leftBlink">When this method returns, contains <value>true</value>, if the left eye blinks; otherwise, <value>false</value>.</param>
+            <param name="rightBlink">When this method returns, contains <value>true</value>, if the right eye blinks; otherwise, <value>false</value>.</param>
+        </member>
         <member name="T:FaceRecognitionDotNet.Extensions.FaceLandmarkDetector">
             <summary>
             An abstract base class that provides functionality to detect face parts locations from face image.
@@ -328,6 +419,11 @@
             Gets or sets the custom age estimator that user defined.
             </summary>
         </member>
+        <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomEyeBlinkDetector">
+            <summary>
+            Gets or sets the custom eye blink detector that user defined.
+            </summary>
+        </member>
         <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomGenderEstimator">
             <summary>
             Gets or sets the custom gender estimator that user defined.
@@ -392,6 +488,17 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> or <paramref name="locations"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> is disposed.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.EyeBlinkDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Point}},System.Boolean@,System.Boolean@)">
+            <summary>
+            Detects the values whether human eye's blink or not from face landmark.
+            </summary>
+            <param name="landmark">The dictionary of face parts locations (eyes, nose, etc).</param>
+            <param name="leftBlink">When this method returns, contains <value>true</value>, if the left eye blinks; otherwise, <value>false</value>.</param>
+            <param name="rightBlink">When this method returns, contains <value>true</value>, if the right eye blinks; otherwise, <value>false</value>.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="landmark"/> is null.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="landmark"/> does not contain <see cref="F:FaceRecognitionDotNet.FacePart.LeftEye"/> or <see cref="F:FaceRecognitionDotNet.FacePart.RightEye"/>.</exception>
+            <exception cref="T:System.NotSupportedException">The custom eye blink detector is not ready.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistance(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding)">
             <summary>

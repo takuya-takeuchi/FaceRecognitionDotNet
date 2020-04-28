@@ -71,7 +71,7 @@ namespace FaceRecognitionDotNet.Extensions
         /// <param name="matrix">The matrix contains a face.</param>
         /// <param name="location">The location rectangle for a face.</param>
         /// <returns>An gender of face image correspond to specified location in specified image.</returns>
-        public override Gender RawPredict(MatrixBase matrix, Location location)
+        protected override Gender RawPredict(MatrixBase matrix, Location location)
         {
             if (!(matrix is Matrix<RgbPixel> mat))
                 throw new ArgumentException();
@@ -95,7 +95,7 @@ namespace FaceRecognitionDotNet.Extensions
         /// <param name="matrix">The matrix contains a face.</param>
         /// <param name="location">The location rectangle for a face.</param>
         /// <returns>Probabilities of gender of face image correspond to specified location in specified image.</returns>
-        public override IDictionary<Gender, float> RawPredictProbability(MatrixBase matrix, Location location)
+        protected override IDictionary<Gender, float> RawPredictProbability(MatrixBase matrix, Location location)
         {
             if (!(matrix is Matrix<RgbPixel> mat))
                 throw new ArgumentException();

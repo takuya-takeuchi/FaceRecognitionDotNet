@@ -40,11 +40,12 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |face_locations|FaceLocations||
 |load_image_file|LoadImageFile||
 |-|CropFaces|Crop image with specified locations|
+|-|EyeBlinkDetect|Detect person is blinking or not<br>Support Large model and **Helen dataset**  :warning:|
 |-|LoadImage|From memory data|
-|-|PredictAge|Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
-|-|PredictGender|Use **UTKFace dataset** :warning:|
-|-|PredictProbabilityAge|Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
-|-|PredictProbabilityGender|Use **UTKFace dataset** :warning:|
+|-|PredictAge|Predict human age.<br>Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
+|-|PredictGender|Predict human gender.<br>Use **UTKFace dataset** :warning:|
+|-|PredictProbabilityAge|Predict probability of human age.<br>Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
+|-|PredictProbabilityGender|Predict probability of human gender.<br>Use **UTKFace dataset** :warning:|
 
 ##### :warning: Warning
 

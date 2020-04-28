@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using FaceRecognitionDotNet;
+using FaceRecognitionDotNet.Extensions;
 using Microsoft.Extensions.CommandLineUtils;
 using OpenCvSharp;
 using Point = FaceRecognitionDotNet.Point;
@@ -36,6 +37,8 @@ namespace BlinkDetection
                 using (var fr = FaceRecognition.Create("models"))
                 using (var videoCapture = new VideoCapture(0))
                 {
+                    fr.CustomEyeBlinkDetector = new EyeAspectRatioLargeEyeBlinkDetector(0.2, 0.2);
+
                     while (true)
                     {
                         using (var frame = videoCapture.RetrieveMat())
@@ -64,7 +67,6 @@ namespace BlinkDetection
                                         var leftEye = faceLandmark[FacePart.LeftEye].ToArray();
                                         var rightEye = faceLandmark[FacePart.RightEye].ToArray();
 
-
                                         var color = new Scalar(255, 0, 0);
                                         var thickness = 2;
 
@@ -79,10 +81,9 @@ namespace BlinkDetection
                                         Cv2.ImShow("Video", smallFrame);
                                         Cv2.WaitKey(1);
 
-                                        var earLeft = GetEar(leftEye);
-                                        var earRight = GetEar(rightEye);
+                                         fr.EyeBlinkDetect(faceLandmark, out var leftBlink, out var rightBlink);
 
-                                        var closed = earLeft < 0.2 && earRight < 0.2;
+                                        var closed = leftBlink && rightBlink;
 
                                         if (closed)
                                             closedCount += 1;
@@ -118,33 +119,6 @@ namespace BlinkDetection
 
             app.Execute(args);
         }
-
-        #region Helpers
-
-        private static double Euclidean(Point p1, Point p2)
-        {
-            return Math.Sqrt(Math.Pow(p1.X - p2.X, 2.0) + Math.Pow(p1.Y - p2.Y, 2.0));
-        }
-
-        private static double GetEar(IList<Point> eye)
-        {
-            // compute the euclidean distances between the two sets of
-            // vertical eye landmarks (x, y)-coordinates
-            var a = Euclidean(eye[1], eye[5]);
-            var b = Euclidean(eye[2], eye[4]);
-
-            // compute the euclidean distance between the horizontal
-            // eye landmark (x, y)-coordinates
-            var c = Euclidean(eye[0], eye[3]);
-
-            // compute the eye aspect ratio
-            var ear = (a + b) / (2.0 * c);
-
-            // return the eye aspect ratio
-            return ear;
-        }
-
-        #endregion
 
         #endregion
 
