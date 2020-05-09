@@ -17,11 +17,19 @@ This library is ported from https://github.com/ageitgey/face_recognition by C#.<
     <copyright>© Takuya Takeuchi 2018-2020</copyright>
     <tags>.net machinelearning face-recognition</tags>
     <serviceable>true</serviceable>
+
     <dependencies>
+      <group targetFramework="net461">
+        <dependency id="DlibDotNet" version="19.18.0.20200429" />
+      </group>
       <group targetFramework="netstandard2.0">
-        <dependency id="DlibDotNet.MKL" version="19.18.0.20200301" />
+        <dependency id="System.Drawing.Common" version="4.7.0" />
+        <dependency id="DlibDotNet" version="19.18.0.20200429" />
       </group>
     </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Drawing" targetFramework="net461" />
+    </frameworkAssemblies>
   </metadata>
   <files>
     <!-- <file src="build\FaceRecognitionDotNet.props" target="build\FaceRecognitionDotNet.props" /> -->
@@ -33,7 +41,10 @@ This library is ported from https://github.com/ageitgey/face_recognition by C#.<
 
     <file src="..\..\src\FaceRecognitionDotNet\bin\Release\netstandard2.0\FaceRecognitionDotNet.dll" target="lib\netstandard2.0" />
     <file src="..\..\src\FaceRecognitionDotNet\bin\Release\netstandard2.0\FaceRecognitionDotNet.xml" target="lib\netstandard2.0" />
+    <file src="..\..\src\FaceRecognitionDotNet\bin\Release\net461\FaceRecognitionDotNet.dll" target="lib\net461" />
+    <file src="..\..\src\FaceRecognitionDotNet\bin\Release\net461\FaceRecognitionDotNet.xml" target="lib\net461" />
     <file src="..\..\src\FaceRecognitionDotNet\docs\ja\*.xml" target="lib\netstandard2.0\ja" />
+    <file src="..\..\src\FaceRecognitionDotNet\docs\ja\*.xml" target="lib\net461\ja" />
     
     <!-- Age and Gender classification -->
     <file src="..\artifacts\mkl\runtimes\win-x64\native\DlibDotNetNativeDnnAgeClassification.dll" target="runtimes\win-x64\native\DlibDotNetNativeDnnAgeClassification.dll" />

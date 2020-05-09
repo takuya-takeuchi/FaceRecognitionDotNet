@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using DlibDotNet;
 using DlibDotNet.Dnn;
@@ -237,9 +240,9 @@ namespace FaceRecognitionDotNet
         /// <exception cref="ObjectDisposedException"><paramref name="image"/> is disposed.</exception>
         public static IEnumerable<Image> CropFaces(Image image, IEnumerable<Location> locations)
         {
-            if (image == null) 
+            if (image == null)
                 throw new ArgumentNullException(nameof(image));
-            if (locations == null) 
+            if (locations == null)
                 throw new ArgumentNullException(nameof(locations));
 
             image.ThrowIfDisposed();
@@ -395,7 +398,7 @@ namespace FaceRecognitionDotNet
 
             if (model == PredictorModel.Custom)
             {
-                if (this._CustomFaceLandmarkDetector == null) 
+                if (this._CustomFaceLandmarkDetector == null)
                     throw new NotSupportedException("The custom face landmark detector is not ready.");
 
                 if (this._CustomFaceLandmarkDetector.IsDisposed)
@@ -522,6 +525,111 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
+        /// Creates an <see cref="Image"/> from the specified existing bitmap image.
+        /// </summary>
+        /// <param name="bitmap">The <see cref="Bitmap"/> from which to create the new <see cref="Image"/>.</param>
+        /// <returns>The <see cref="Image"/> this method creates.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="bitmap"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The specified <see cref="PixelFormat"/> is not supported.</exception>
+        public static Image LoadImage(Bitmap bitmap)
+        {
+            var width = bitmap.Width;
+            var height = bitmap.Height;
+            var rect = new System.Drawing.Rectangle(0, 0, width, height);
+            var format = bitmap.PixelFormat;
+
+            Mode mode;
+            int srcChannel;
+            int dstChannel;
+            switch (format)
+            {
+                case PixelFormat.Format8bppIndexed:
+                    mode = Mode.Greyscale;
+                    srcChannel = 1;
+                    dstChannel = 1;
+                    break;
+                case PixelFormat.Format24bppRgb:
+                    mode = Mode.Rgb;
+                    srcChannel = 3;
+                    dstChannel = 3;
+                    break;
+                case PixelFormat.Format32bppRgb:
+                case PixelFormat.Format32bppArgb:
+                    mode = Mode.Rgb;
+                    srcChannel = 4;
+                    dstChannel = 3;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException($"{nameof(bitmap)}", $"The specified {nameof(PixelFormat)} is not supported.");
+            }
+
+            BitmapData data = null;
+
+            try
+            {
+                data = bitmap.LockBits(rect, ImageLockMode.ReadOnly, format);
+
+                unsafe
+                {
+                    var array = new byte[width * height * dstChannel];
+                    fixed (byte* pArray = &array[0])
+                    {
+                        var dst = pArray;
+
+                        switch (srcChannel)
+                        {
+                            case 1:
+                                {
+                                    var src = data.Scan0;
+                                    var stride = data.Stride;
+
+                                    for (var h = 0; h < height; h++)
+                                        Marshal.Copy(IntPtr.Add(src, h * stride), array, h * width, width * dstChannel);
+                                }
+                                break;
+                            case 3:
+                            case 4:
+                                {
+                                    var src = (byte*)data.Scan0;
+                                    var stride = data.Stride;
+
+                                    for (var h = 0; h < height; h++)
+                                    {
+                                        var srcOffset = h * stride;
+                                        var dstOffset = h * width * dstChannel;
+
+                                        for (var w = 0; w < width; w++)
+                                        {
+                                            // BGR order to RGB order
+                                            dst[dstOffset + w * dstChannel + 0] = src[srcOffset + w * srcChannel + 2];
+                                            dst[dstOffset + w * dstChannel + 1] = src[srcOffset + w * srcChannel + 1];
+                                            dst[dstOffset + w * dstChannel + 2] = src[srcOffset + w * srcChannel + 0];
+                                        }
+                                    }
+                                }
+                                break;
+                        }
+
+                        var ptr = (IntPtr)pArray;
+                        switch (mode)
+                        {
+                            case Mode.Rgb:
+                                return new Image(new Matrix<RgbPixel>(ptr, height, width, width * 3), Mode.Rgb);
+                            case Mode.Greyscale:
+                                return new Image(new Matrix<byte>(ptr, height, width, width), Mode.Greyscale);
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                if (data != null) bitmap.UnlockBits(data);
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Creates an <see cref="Image"/> from the <see cref="byte"/> array.
         /// </summary>
         /// <param name="array">The <see cref="byte"/> array contains image data.</param>
@@ -556,7 +664,7 @@ namespace FaceRecognitionDotNet
             {
                 fixed (byte* p = &array[0])
                 {
-                    var ptr = (IntPtr) p;
+                    var ptr = (IntPtr)p;
                     switch (mode)
                     {
                         case Mode.Rgb:
@@ -569,7 +677,7 @@ namespace FaceRecognitionDotNet
 
             return null;
         }
-
+        
         /// <summary>
         /// Creates an <see cref="Image"/> from the unmanaged memory pointer indicates <see cref="byte"/> array image data.
         /// </summary>
@@ -753,7 +861,7 @@ namespace FaceRecognitionDotNet
                 tmp = this.RawFaceLocations(faceImage);
             else
                 tmp = faceLocations.Select(l => new MModRect { Rect = new Rectangle { Bottom = l.Bottom, Left = l.Left, Top = l.Top, Right = l.Right } });
-            
+
             if (model == PredictorModel.Custom)
             {
                 foreach (var rect in tmp)

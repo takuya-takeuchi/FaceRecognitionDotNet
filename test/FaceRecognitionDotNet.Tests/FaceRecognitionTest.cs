@@ -330,7 +330,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void EyeBlinkLargeDetect()
         {
-            using (var detector = new EyeAspectRatioLargeEyeBlinkDetector(0.2, 0.2)) 
+            using (var detector = new EyeAspectRatioLargeEyeBlinkDetector(0.2, 0.2))
                 this.EyeBlinkDetect(detector, PredictorModel.Large);
         }
 
@@ -946,7 +946,7 @@ namespace FaceRecognitionDotNet.Tests
 
             try
             {
-                var dummy = (IntPtr) 10;
+                var dummy = (IntPtr)10;
                 var _ = FaceRecognition.LoadImage(dummy, 100, 100, 50, Mode.Rgb);
                 Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentOutOfRangeException)}.");
             }
@@ -1742,6 +1742,53 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
+        public void TestLoadBitmap()
+        {
+            Location mono = null;
+            Location color = null;
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama_8bppIndexed.bmp"), Mode.Greyscale))
+                mono = this._FaceRecognition.FaceLocations(img).ToArray().FirstOrDefault();
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama_24bppRgb.bmp")))
+                color = this._FaceRecognition.FaceLocations(img).ToArray().FirstOrDefault();
+
+            var targets = new[]
+            {
+                new { Action = new Func<Bitmap>(() => (Bitmap)System.Drawing.Image.FromFile(Path.Combine("TestImages", "obama_8bppIndexed.bmp"))), Format = PixelFormat.Format8bppIndexed, Expect = mono },
+                new { Action = new Func<Bitmap>(() => (Bitmap)System.Drawing.Image.FromFile(Path.Combine("TestImages", "obama_24bppRgb.bmp"))),    Format = PixelFormat.Format24bppRgb,    Expect = color },
+                new { Action = new Func<Bitmap>(() => (Bitmap)System.Drawing.Image.FromFile(Path.Combine("TestImages", "obama_32bppArgb.bmp"))),   Format = PixelFormat.Format32bppArgb,   Expect = color },
+                new { Action = new Func<Bitmap>(() =>
+                {
+                    using(var tmp = (Bitmap)System.Drawing.Image.FromFile(Path.Combine("TestImages", "obama_32bppArgb.bmp")))
+                    {
+                        var bitmap = new Bitmap(tmp.Width,tmp.Height,PixelFormat.Format32bppRgb );
+                        var rect = new System.Drawing.Rectangle(System.Drawing.Point.Empty, tmp.Size);
+                        using(var g = Graphics.FromImage(bitmap))
+                            g.DrawImage(tmp, rect,rect, GraphicsUnit.Pixel);
+                        return bitmap;
+                    }
+                }), Format = PixelFormat.Format32bppRgb, Expect = color }
+            };
+            foreach (var target in targets)
+            {
+                using (var bitmap = target.Action.Invoke())
+                {
+                    Assert.True(bitmap.PixelFormat == target.Format);
+                    using (var img = FaceRecognition.LoadImage(bitmap))
+                    {
+                        Assert.True(img.Height == 1137);
+                        Assert.True(img.Width == 910);
+
+                        var location = this._FaceRecognition.FaceLocations(img).ToArray().FirstOrDefault();
+                        Assert.True(location.Left == target.Expect.Left);
+                        Assert.True(location.Top == target.Expect.Top);
+                        Assert.True(location.Right == target.Expect.Right);
+                        Assert.True(location.Bottom == target.Expect.Bottom);
+                    }
+                }
+            }
+        }
+
+        [Fact]
         public void TestLoadImageFile32Bit()
         {
             using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "32bit.png")))
@@ -1869,7 +1916,7 @@ namespace FaceRecognitionDotNet.Tests
                     {
                         var landmark = this._FaceRecognition.FaceLandmark(image, null, model).ToArray()[0];
                         this._FaceRecognition.EyeBlinkDetect(landmark, out var leftBlink, out var rightBlink);
-                        Assert.True(leftBlink == gt.Left,   $"Failed to detect '{gt.Path}' for left eye");
+                        Assert.True(leftBlink == gt.Left, $"Failed to detect '{gt.Path}' for left eye");
                         Assert.True(rightBlink == gt.Right, $"Failed to detect '{gt.Path}' for right eye");
                     }
             }

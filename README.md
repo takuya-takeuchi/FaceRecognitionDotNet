@@ -41,7 +41,7 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |load_image_file|LoadImageFile||
 |-|CropFaces|Crop image with specified locations|
 |-|EyeBlinkDetect|Detect person is blinking or not<br>Support Large model and **Helen dataset** :warning:|
-|-|LoadImage|From memory data|
+|-|LoadImage|From memory data or System.Drawing.Bitmap|
 |-|PredictAge|Predict human age.<br>Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
 |-|PredictGender|Predict human gender.<br>Use **UTKFace dataset** :warning:|
 |-|PredictProbabilityAge|Predict probability of human age.<br>Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
