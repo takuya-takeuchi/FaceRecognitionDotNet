@@ -63,17 +63,13 @@ You can check the following examples to train dataset.
 
 #### Face Recognition
 
-<img src="images/1.png" width="480"/>
+<img src="images/1.png" width="480"/> <img src="images/2.png" width="480"/>
 
-<img src="images/2.png" width="480"/>
+#### Other Face Functions
 
-#### Face Landmark
-
-<img src="images/3.jpg" width="240"/>
-
-#### Age and Gender Classification
-
-<img src="examples/CustomClassificationDemo/images/result.png" width="240"/>
+|Face Landmark|Age and Gender Classification|Head Pose Estimation|
+|---|---|---|
+|<img src="images/3.jpg" width="240"/>|<img src="examples/CustomClassificationDemo/images/result.png" width="240"/>|<img src="images/4.png" width="240"/>|
 
 ## Dependencies Libraries and Products
 
