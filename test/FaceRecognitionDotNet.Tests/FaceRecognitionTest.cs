@@ -1296,7 +1296,7 @@ namespace FaceRecognitionDotNet.Tests
                                             g.DrawEllipse(Pens.GreenYellow, p.Point.X - pointSize, p.Point.Y - pointSize, pointSize * 2, pointSize * 2);
                                         }
 
-                                    DrawAxis(g, bitmap.Width, bitmap.Height, headPose.Roll, headPose.Pitch, headPose.Yaw, 150);
+                                    DrawAxis(g, landmarks[FacePart.NoseTip], headPose.Roll, headPose.Pitch, headPose.Yaw, 150);
                                 }
 
                                 var directory = Path.Combine(ResultDirectory, testName);
@@ -1976,7 +1976,7 @@ namespace FaceRecognitionDotNet.Tests
             return expected - delta <= actual && actual <= expected + delta;
         }
 
-        private static void DrawAxis(Graphics g, int width, int height, double roll, double pitch, double yaw, uint size)
+        private static void DrawAxis(Graphics g, IEnumerable<FacePoint> nose, double roll, double pitch, double yaw, uint size)
         {
             // https://github.com/natanielruiz/deep-head-pose/blob/master/code/utils.py
             // plot_pose_cube
@@ -1984,8 +1984,8 @@ namespace FaceRecognitionDotNet.Tests
             yaw = -(yaw * Math.PI / 180);
             roll = roll * Math.PI / 180;
 
-            var tdx = width / 2;
-            var tdy = height / 2;
+            var tdx = (nose.Max(p => p.Point.X) + nose.Min(p => p.Point.X)) / 2;
+            var tdy = (nose.Max(p => p.Point.Y) + nose.Min(p => p.Point.Y)) / 2;
 
             // X-Axis pointing to right. drawn in red
             var x1 = size * (Math.Cos(yaw) * Math.Cos(roll)) + tdx;
