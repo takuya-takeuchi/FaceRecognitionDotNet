@@ -91,7 +91,7 @@ namespace FaceRecognitionDotNet.Extensions
         /// <param name="rightBlink">When this method returns, contains <value>true</value>, if the right eye blinks; otherwise, <value>false</value>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="landmark"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="landmark"/> does not contain <see cref="FacePart.LeftEye"/> or <see cref="FacePart.RightEye"/>.</exception>
-        protected override void RawDetect(IDictionary<FacePart, IEnumerable<Point>> landmark, out bool leftBlink, out bool rightBlink)
+        protected override void RawDetect(IDictionary<FacePart, IEnumerable<FacePoint>> landmark, out bool leftBlink, out bool rightBlink)
         {
             if (landmark == null) 
                 throw new ArgumentNullException(nameof(landmark));
@@ -113,7 +113,7 @@ namespace FaceRecognitionDotNet.Extensions
         /// <param name="eye">The collection of location corresponding to human eye.</param>
         /// <param name="eyePointIndices">The collection of the indices of eye location to be used calculating eye aspect ratio.</param>
         /// <returns>Eye aspect ratio.</returns>
-        protected double GetEar(IList<Point> eye, IList<int> eyePointIndices)
+        protected double GetEar(IList<FacePoint> eye, IList<int> eyePointIndices)
         {
             // https://www.pyimagesearch.com/2017/04/24/eye-blink-detection-opencv-python-dlib/
 
@@ -135,9 +135,9 @@ namespace FaceRecognitionDotNet.Extensions
 
         #region Helpers
 
-        private static double Euclidean(Point p1, Point p2)
+        private static double Euclidean(FacePoint p1, FacePoint p2)
         {
-            return Math.Sqrt(Math.Pow(p1.X - p2.X, 2.0) + Math.Pow(p1.Y - p2.Y, 2.0));
+            return Math.Sqrt(Math.Pow(p1.Point.X - p2.Point.X, 2.0) + Math.Pow(p1.Point.Y - p2.Point.Y, 2.0));
         }
 
         #endregion

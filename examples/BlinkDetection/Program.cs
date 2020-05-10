@@ -70,8 +70,8 @@ namespace BlinkDetection
                                         var color = new Scalar(255, 0, 0);
                                         var thickness = 2;
 
-                                        var lp = new OpenCvSharp.Point(leftEye[0].X, leftEye[0].Y);
-                                        var rp = new OpenCvSharp.Point(rightEye[rightEye.Length - 1].X, rightEye[rightEye.Length - 1].Y);
+                                        var lp = new OpenCvSharp.Point(leftEye[0].Point.X, leftEye[0].Point.Y);
+                                        var rp = new OpenCvSharp.Point(rightEye[rightEye.Length - 1].Point.X, rightEye[rightEye.Length - 1].Point.Y);
                                         var l = Math.Min(lp.X, rp.X);
                                         var r = Math.Max(lp.X, rp.X);
                                         var t = Math.Min(lp.Y, rp.Y);

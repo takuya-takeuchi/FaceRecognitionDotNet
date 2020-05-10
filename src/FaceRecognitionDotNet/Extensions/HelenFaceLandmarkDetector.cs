@@ -56,9 +56,9 @@ namespace FaceRecognitionDotNet.Extensions
         /// </summary>
         /// <param name="landmarkTuples">The enumerable collection of face parts location.</param>
         /// <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
-        protected override IEnumerable<Dictionary<FacePart, IEnumerable<Point>>> RawGetLandmarks(IEnumerable<Point[]> landmarkTuples)
+        protected override IEnumerable<Dictionary<FacePart, IEnumerable<FacePoint>>> RawGetLandmarks(IEnumerable<FacePoint[]> landmarkTuples)
         {
-            return landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<Point>>
+            return landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<FacePoint>>
             {
                 { FacePart.Chin,         Enumerable.Range(  0,41).Select(i => landmarkTuple[i]) },
                 { FacePart.LeftEyebrow,  Enumerable.Range(174,20).Select(i => landmarkTuple[i]) },

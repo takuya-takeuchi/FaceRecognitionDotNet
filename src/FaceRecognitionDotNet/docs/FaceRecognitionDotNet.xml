@@ -125,7 +125,7 @@
             Gets the threshold to decide that right eye blinks or not.
             </summary>
         </member>
-        <member name="M:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Point}},System.Boolean@,System.Boolean@)">
+        <member name="M:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}},System.Boolean@,System.Boolean@)">
             <summary>
             Detects the values whether human eye's blink or not from face landmark.
             </summary>
@@ -135,7 +135,7 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="landmark"/> is null.</exception>
             <exception cref="T:System.ArgumentException"><paramref name="landmark"/> does not contain <see cref="F:FaceRecognitionDotNet.FacePart.LeftEye"/> or <see cref="F:FaceRecognitionDotNet.FacePart.RightEye"/>.</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.GetEar(System.Collections.Generic.IList{FaceRecognitionDotNet.Point},System.Collections.Generic.IList{System.Int32})">
+        <member name="M:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.GetEar(System.Collections.Generic.IList{FaceRecognitionDotNet.FacePoint},System.Collections.Generic.IList{System.Int32})">
             <summary>
             Return an eye aspect ratio.
             </summary>
@@ -172,7 +172,7 @@
             An abstract base class that provides functionality to detect human eye's blink from face landmark.
             </summary>
         </member>
-        <member name="M:FaceRecognitionDotNet.Extensions.EyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Point}},System.Boolean@,System.Boolean@)">
+        <member name="M:FaceRecognitionDotNet.Extensions.EyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}},System.Boolean@,System.Boolean@)">
             <summary>
             Detects the values whether human eye's blink or not from face landmark.
             </summary>
@@ -193,7 +193,7 @@
             <param name="location">The location rectangle for a face.</param>
             <returns>An object contains information of face parts.</returns>
         </member>
-        <member name="M:FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawGetLandmarks(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Point[]})">
+        <member name="M:FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawGetLandmarks(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint[]})">
             <summary>
             Returns an enumerable collection of dictionary of face parts locations (eyes, nose, etc).
             </summary>
@@ -226,6 +226,19 @@
             <param name="location">The location rectangle for a face.</param>
             <returns>Probabilities of gender of face image correspond to specified location in specified image.</returns>
         </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.HeadPoseEstimator">
+            <summary>
+            An abstract base class that provides functionality to estimate human head pose from face landmark.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.HeadPoseEstimator.RawPredict(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}})">
+            <summary>
+            Returns a head pose estimated from face parts locations.
+            </summary>
+            <param name="landmark">The dictionary of face parts locations (eyes, nose, etc).</param>
+            <returns>A head pose estimated from face parts locations.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="landmark"/> is null.</exception>
+        </member>
         <member name="T:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector">
             <summary>
             The face landmark detector which was trained by helen dataset. This class cannot be inherited.
@@ -246,7 +259,7 @@
             <param name="location">The location rectangle for a face.</param>
             <returns>An object contains information of face parts.</returns>
         </member>
-        <member name="M:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawGetLandmarks(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Point[]})">
+        <member name="M:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawGetLandmarks(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint[]})">
             <summary>
             Returns an enumerable collection of dictionary of face parts locations (eyes, nose, etc).
             </summary>
@@ -323,6 +336,34 @@
             <param name="matrix">The matrix contains a face.</param>
             <param name="location">The location rectangle for a face.</param>
             <returns>Probabilities of gender of face image correspond to specified location in specified image.</returns>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator">
+            <summary>
+            The head pose estimator which was trained by 300W-LP dataset. This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator"/> class with the model files to estimate head pose.
+            </summary>
+            <param name="rollModelFile">The model file path to estimate roll angle.</param>
+            <param name="pitchModelFile">The model file path to estimate pitch angle.</param>
+            <param name="yawModelFile">The model file path to estimate yaw angle.</param>
+            <exception cref="T:System.IO.FileNotFoundException"><paramref name="rollModelFile"/>, <paramref name="pitchModelFile"/> or <paramref name="yawModelFile"/> does not exist.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.RawPredict(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}})">
+            <summary>
+            Returns a head pose estimated from face parts locations.
+            </summary>
+            <param name="landmark">The dictionary of face parts locations (eyes, nose, etc).</param>
+            <returns>A head pose estimated from face parts locations.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="landmark"/> is null.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="landmark"/> does not have 68 points.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.DisposeUnmanaged">
+            <summary>
+            Releases all unmanaged resources.
+            </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.FaceEncoding">
             <summary>
@@ -401,6 +442,64 @@
             Specifies the nose.
             </summary>
         </member>
+        <member name="T:FaceRecognitionDotNet.FacePoint">
+            <summary>
+            Represents an coordinate and index of face parts.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FacePoint.#ctor(FaceRecognitionDotNet.Point,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.FacePoint"/> class with the specified coordinates and index.
+            </summary>
+            <param name="point">The coordinate of face parts.</param>
+            <param name="index">The index of face parts.</param>
+        </member>
+        <member name="P:FaceRecognitionDotNet.FacePoint.Point">
+            <summary>
+            Gets the coordinate of this <see cref="T:FaceRecognitionDotNet.FacePoint"/>.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.FacePoint.Index">
+            <summary>
+            Gets the index of this <see cref="T:FaceRecognitionDotNet.FacePoint"/>.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FacePoint.Equals(FaceRecognitionDotNet.FacePoint)">
+            <summary>
+            Compares two <see cref="T:FaceRecognitionDotNet.FacePoint"/> class for equality.
+            </summary>
+            <param name="other">The point to compare to this instance.</param>
+            <returns><code>true</code> if both <see cref="T:FaceRecognitionDotNet.FacePoint"/> class contain the same <see cref="P:FaceRecognitionDotNet.FacePoint.Point"/> and <see cref="P:FaceRecognitionDotNet.FacePoint.Index"/> values; otherwise, <code>false</code>.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FacePoint.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is a <see cref="T:FaceRecognitionDotNet.FacePoint"/> and whether it contains the same data as this <see cref="T:FaceRecognitionDotNet.FacePoint"/>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare.</param>
+            <returns><code>true</code> if <paramref name="obj"/> is a <see cref="T:FaceRecognitionDotNet.FacePoint"/> and contains the same <see cref="P:FaceRecognitionDotNet.FacePoint.Point"/> and <see cref="P:FaceRecognitionDotNet.FacePoint.Index"/> values as this <see cref="T:FaceRecognitionDotNet.FacePoint"/>; otherwise, <code>false</code>.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FacePoint.GetHashCode">
+            <summary>
+            Returns the hash code for this <see cref="T:FaceRecognitionDotNet.FacePoint"/>.
+            </summary>
+            <returns>The hash code for this <see cref="T:FaceRecognitionDotNet.FacePoint"/> class.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FacePoint.op_Equality(FaceRecognitionDotNet.FacePoint,FaceRecognitionDotNet.FacePoint)">
+            <summary>
+            Compares two <see cref="T:FaceRecognitionDotNet.FacePoint"/> class for equality.
+            </summary>
+            <param name="point1">The first <see cref="T:FaceRecognitionDotNet.FacePoint"/> class to compare.</param>
+            <param name="point2">The second <see cref="T:FaceRecognitionDotNet.FacePoint"/> class to compare.</param>
+            <returns><code>true</code> if both the <see cref="P:FaceRecognitionDotNet.FacePoint.Point"/> and <see cref="P:FaceRecognitionDotNet.FacePoint.Index"/> of <paramref name="point1"/> and <paramref name="point2"/> are equal; otherwise, <code>false</code>.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FacePoint.op_Inequality(FaceRecognitionDotNet.FacePoint,FaceRecognitionDotNet.FacePoint)">
+            <summary>
+            Compares two <see cref="T:FaceRecognitionDotNet.FacePoint"/> class for inequality.
+            </summary>
+            <param name="point1">The first <see cref="T:FaceRecognitionDotNet.FacePoint"/> class to compare.</param>
+            <param name="point2">The second <see cref="T:FaceRecognitionDotNet.FacePoint"/> class to compare.</param>
+            <returns><code>true</code> if <paramref name="point1"/> and <paramref name="point2"/> have different <see cref="P:FaceRecognitionDotNet.FacePoint.Point"/> or <see cref="P:FaceRecognitionDotNet.FacePoint.Index"/>; <code>false</code> if <paramref name="point1"/> and <paramref name="point2"/> have the same <see cref="P:FaceRecognitionDotNet.FacePoint.Point"/> and <see cref="P:FaceRecognitionDotNet.FacePoint.Index"/>.</returns>
+        </member>
         <member name="T:FaceRecognitionDotNet.FaceRecognition">
             <summary>
             Provides the method to find and recognize face methods. This class cannot be inherited.
@@ -432,6 +531,11 @@
         <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomFaceLandmarkDetector">
             <summary>
             Gets or sets the custom face landmark detector that user defined.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomHeadPoseEstimator">
+            <summary>
+            Gets or sets the custom head pose estimator that user defined.
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.FaceRecognition.InternalEncoding">
@@ -489,7 +593,7 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> or <paramref name="locations"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> is disposed.</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.EyeBlinkDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Point}},System.Boolean@,System.Boolean@)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.EyeBlinkDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}},System.Boolean@,System.Boolean@)">
             <summary>
             Detects the values whether human eye's blink or not from face landmark.
             </summary>
@@ -660,6 +764,15 @@
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object or custom gender estimator is disposed.</exception>
             <exception cref="T:System.NotSupportedException">The custom gender estimator is not ready.</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictHeadPose(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}})">
+            <summary>
+            Returns a head pose estimated from face parts locations.
+            </summary>
+            <param name="landmark">The dictionary of face parts locations (eyes, nose, etc).</param>
+            <returns>A head pose estimated from face parts locations.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="landmark"/> is null.</exception>
+            <exception cref="T:System.NotSupportedException">The custom head pose estimator is not ready.</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged">
             <summary>
             Releases all unmanaged resources.
@@ -679,6 +792,70 @@
             <summary>
             Specifies that the male.
             </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.HeadPose">
+            <summary>
+            Represents an head pose.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.HeadPose.#ctor(System.Double,System.Double,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.HeadPose"/> class with the specified roll, pitch and yaw.
+            </summary>
+            <param name="roll">The roll angle.</param>
+            <param name="pitch">The pitch angle.</param>
+            <param name="yaw">The yaw angle.</param>
+        </member>
+        <member name="P:FaceRecognitionDotNet.HeadPose.Pitch">
+            <summary>
+            Gets the pitch angle of this <see cref="T:FaceRecognitionDotNet.HeadPose"/>.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.HeadPose.Roll">
+            <summary>
+            Gets the roll angle of this <see cref="T:FaceRecognitionDotNet.HeadPose"/>.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.HeadPose.Yaw">
+            <summary>
+            Gets the yaw angle of this <see cref="T:FaceRecognitionDotNet.HeadPose"/>.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.HeadPose.Equals(FaceRecognitionDotNet.HeadPose)">
+            <summary>
+            Compares two <see cref="T:FaceRecognitionDotNet.HeadPose"/> class for equality.
+            </summary>
+            <param name="other">The pose to compare to this instance.</param>
+            <returns><code>true</code> if both <see cref="T:FaceRecognitionDotNet.HeadPose"/> class contain the same <see cref="P:FaceRecognitionDotNet.HeadPose.Roll"/>, <see cref="P:FaceRecognitionDotNet.HeadPose.Pitch"/> and <see cref="P:FaceRecognitionDotNet.HeadPose.Yaw"/> values; otherwise, <code>false</code>.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.HeadPose.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is a <see cref="T:FaceRecognitionDotNet.HeadPose"/> and whether it contains the same data as this <see cref="T:FaceRecognitionDotNet.HeadPose"/>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare.</param>
+            <returns><code>true</code> if <paramref name="obj"/> is a <see cref="T:FaceRecognitionDotNet.HeadPose"/> and contains the same <see cref="P:FaceRecognitionDotNet.HeadPose.Roll"/>, <see cref="P:FaceRecognitionDotNet.HeadPose.Pitch"/> and <see cref="P:FaceRecognitionDotNet.HeadPose.Yaw"/> values as this <see cref="T:FaceRecognitionDotNet.HeadPose"/>; otherwise, <code>false</code>.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.HeadPose.GetHashCode">
+            <summary>
+            Returns the hash code for this <see cref="T:FaceRecognitionDotNet.HeadPose"/>.
+            </summary>
+            <returns>The hash code for this <see cref="T:FaceRecognitionDotNet.HeadPose"/> structure.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.HeadPose.op_Equality(FaceRecognitionDotNet.HeadPose,FaceRecognitionDotNet.HeadPose)">
+            <summary>
+            Compares two <see cref="T:FaceRecognitionDotNet.HeadPose"/> class for equality.
+            </summary>
+            <param name="pose1">The first <see cref="T:FaceRecognitionDotNet.HeadPose"/> structure to compare.</param>
+            <param name="pose2">The second <see cref="T:FaceRecognitionDotNet.HeadPose"/> structure to compare.</param>
+            <returns><code>true</code> if the <see cref="P:FaceRecognitionDotNet.HeadPose.Roll"/>, <see cref="P:FaceRecognitionDotNet.HeadPose.Pitch"/> and <see cref="P:FaceRecognitionDotNet.HeadPose.Yaw"/> of <paramref name="pose1"/> and <paramref name="pose2"/> are equal; otherwise, <code>false</code>.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.HeadPose.op_Inequality(FaceRecognitionDotNet.HeadPose,FaceRecognitionDotNet.HeadPose)">
+            <summary>
+            Compares two <see cref="T:FaceRecognitionDotNet.HeadPose"/> class for inequality.
+            </summary>
+            <param name="pose1">The first <see cref="T:FaceRecognitionDotNet.HeadPose"/> structure to compare.</param>
+            <param name="pose2">The second <see cref="T:FaceRecognitionDotNet.HeadPose"/> structure to compare.</param>
+            <returns><code>true</code> if <paramref name="pose1"/> and <paramref name="pose2"/> have different <see cref="P:FaceRecognitionDotNet.HeadPose.Roll"/> or <see cref="P:FaceRecognitionDotNet.HeadPose.Yaw"/>; <code>false</code> if <paramref name="pose1"/> and <paramref name="pose2"/> have the same <see cref="P:FaceRecognitionDotNet.HeadPose.Roll"/>, <see cref="P:FaceRecognitionDotNet.HeadPose.Pitch"/> and <see cref="P:FaceRecognitionDotNet.HeadPose.Yaw"/>.</returns>
         </member>
         <member name="T:FaceRecognitionDotNet.Image">
             <summary>

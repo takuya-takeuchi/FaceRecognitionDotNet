@@ -11,7 +11,7 @@ namespace FaceRecognitionDotNet.Extensions
 
         #region Methods
 
-        internal void Detect(IDictionary<FacePart, IEnumerable<Point>> landmark, out bool leftBlink, out bool rightBlink)
+        internal void Detect(IDictionary<FacePart, IEnumerable<FacePoint>> landmark, out bool leftBlink, out bool rightBlink)
         {
             this.RawDetect(landmark, out leftBlink, out rightBlink);
         }
@@ -22,7 +22,7 @@ namespace FaceRecognitionDotNet.Extensions
         /// <param name="landmark">The dictionary of face parts locations (eyes, nose, etc).</param>
         /// <param name="leftBlink">When this method returns, contains <value>true</value>, if the left eye blinks; otherwise, <value>false</value>.</param>
         /// <param name="rightBlink">When this method returns, contains <value>true</value>, if the right eye blinks; otherwise, <value>false</value>.</param>
-        protected abstract void RawDetect(IDictionary<FacePart, IEnumerable<Point>> landmark, out bool leftBlink, out bool rightBlink);
+        protected abstract void RawDetect(IDictionary<FacePart, IEnumerable<FacePoint>> landmark, out bool leftBlink, out bool rightBlink);
 
         #endregion
 

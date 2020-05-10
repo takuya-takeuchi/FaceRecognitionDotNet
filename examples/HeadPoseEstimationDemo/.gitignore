@@ -1,0 +1,7 @@
+models/300w-lp-yaw-krls_0.001_0.1.dat
+models/300w-lp-pitch-krls_0.001_0.1.dat
+models/300w-lp-roll-krls_0.001_0.1.dat
+models/mmod_human_face_detector.dat
+models/shape_predictor_5_face_landmarks.dat
+models/shape_predictor_68_face_landmarks.dat
+models/dlib_face_recognition_resnet_model_v1.dat

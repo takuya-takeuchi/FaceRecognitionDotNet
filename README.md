@@ -46,6 +46,7 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |-|PredictGender|Predict human gender.<br>Use **UTKFace dataset** :warning:|
 |-|PredictProbabilityAge|Predict probability of human age.<br>Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
 |-|PredictProbabilityGender|Predict probability of human gender.<br>Use **UTKFace dataset** :warning:|
+|-|PredictHeadPose|Predict human head pose.<br>Use **300W-LP dataset** :warning:|
 
 ##### :warning: Warning
 
@@ -55,6 +56,7 @@ You can check the following examples to train dataset.
 
 * tools/AgeTraining
 * tools/GenderTraining
+* tools/HeadPoseTraining
 * tools/HelenTraining
 
 ## Demo

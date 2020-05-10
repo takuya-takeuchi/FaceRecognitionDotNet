@@ -17,7 +17,7 @@ namespace FaceRecognitionDotNet.Extensions
             return this.RawDetect(image.Matrix, location);
         }
 
-        internal IEnumerable<Dictionary<FacePart, IEnumerable<Point>>> GetLandmarks(IEnumerable<Point[]> landmarkTuples)
+        internal IEnumerable<Dictionary<FacePart, IEnumerable<FacePoint>>> GetLandmarks(IEnumerable<FacePoint[]> landmarkTuples)
         {
             return this.RawGetLandmarks(landmarkTuples);
         }
@@ -35,7 +35,7 @@ namespace FaceRecognitionDotNet.Extensions
         /// </summary>
         /// <param name="landmarkTuples">The enumerable collection of face parts location.</param>
         /// <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
-        protected abstract IEnumerable<Dictionary<FacePart, IEnumerable<Point>>> RawGetLandmarks(IEnumerable<Point[]> landmarkTuples);
+        protected abstract IEnumerable<Dictionary<FacePart, IEnumerable<FacePoint>>> RawGetLandmarks(IEnumerable<FacePoint[]> landmarkTuples);
 
         #endregion
 

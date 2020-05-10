@@ -40,11 +40,17 @@ namespace FaceRecognitionDotNet.Tests
 
         private const string TwoPersonFile = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
-        private string _HelenModelFile = null;
+        private readonly string _HelenModelFile;
 
-        private string _AgeEstimatorModelFile = null;
+        private readonly string _AgeEstimatorModelFile;
 
-        private string _GenderEstimatorModelFile = null;
+        private readonly string _GenderEstimatorModelFile;
+
+        private readonly string _RollEstimateorModelFile;
+
+        private readonly string _PitchEstimateorModelFile;
+
+        private readonly string _YawEstimateorModelFile;
 
         #endregion
 
@@ -59,6 +65,10 @@ namespace FaceRecognitionDotNet.Tests
             {
                 ModelDirectory = dir;
             }
+
+            this._RollEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-roll-krls_0.001_0.1.dat");
+            this._PitchEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-pitch-krls_0.001_0.1.dat");
+            this._YawEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-yaw-krls_0.001_0.1.dat");
 
             var faceRecognition = typeof(FaceRecognition);
             var type = faceRecognition.Assembly.GetTypes().FirstOrDefault(t => t.Name == "FaceRecognitionModels");
@@ -1244,6 +1254,73 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
+        public void PredictHeadPose()
+        {
+            const string testName = nameof(PredictHeadPose);
+
+            if (!File.Exists(this._RollEstimateorModelFile))
+                return;
+            if (!File.Exists(this._PitchEstimateorModelFile))
+                return;
+            if (!File.Exists(this._YawEstimateorModelFile))
+                return;
+
+            try
+            {
+                using (var estimator = new SimpleHeadPoseEstimator(this._RollEstimateorModelFile,
+                                                                   this._PitchEstimateorModelFile,
+                                                                   this._YawEstimateorModelFile))
+                {
+                    this._FaceRecognition.CustomHeadPoseEstimator = estimator;
+
+                    const int pointSize = 2;
+                    const double diff = 20.00;
+                    var groundTruth = new[]
+                    {
+                        new { Path = Path.Combine("TestImages", "HeadPose", "AFW_134212_1_4.jpg"), Pose = new HeadPose(-12.5080101676021,-24.7073657941586, 46.8672622731993) },
+                    };
+
+                    foreach (var gt in groundTruth)
+                        using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                        {
+                            var landmarks = this._FaceRecognition.FaceLandmark(image, null, PredictorModel.Large).ToArray()[0];
+                            var headPose = this._FaceRecognition.PredictHeadPose(landmarks);
+
+                            using (var bitmap = System.Drawing.Image.FromFile(gt.Path))
+                            {
+                                using (var g = Graphics.FromImage(bitmap))
+                                {
+                                    foreach (var landmark in landmarks.Values)
+                                        foreach (var p in landmark)
+                                        {
+                                            g.DrawEllipse(Pens.GreenYellow, p.Point.X - pointSize, p.Point.Y - pointSize, pointSize * 2, pointSize * 2);
+                                        }
+
+                                    DrawAxis(g, bitmap.Width, bitmap.Height, headPose.Roll, headPose.Pitch, headPose.Yaw, 150);
+                                }
+
+                                var directory = Path.Combine(ResultDirectory, testName);
+                                Directory.CreateDirectory(directory);
+
+                                var filename = Path.GetFileName(gt.Path);
+                                filename = Path.ChangeExtension(filename, ".png");
+                                var dst = Path.Combine(directory, filename);
+                                bitmap.Save(dst, System.Drawing.Imaging.ImageFormat.Png);
+                            }
+
+                            Assert.InRange(headPose.Roll, gt.Pose.Roll - diff, gt.Pose.Roll + diff);
+                            Assert.InRange(headPose.Pitch, gt.Pose.Pitch - diff, gt.Pose.Pitch + diff);
+                            Assert.InRange(headPose.Yaw, gt.Pose.Yaw - diff, gt.Pose.Yaw + diff);
+                        }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomHeadPoseEstimator = null;
+            }
+        }
+
+        [Fact]
         public void TestBatchedFaceLocations()
         {
             using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
@@ -1684,7 +1761,7 @@ namespace FaceRecognitionDotNet.Tests
 
                 var facePartPoints = faceLandmarks[0][FacePart.Chin].ToArray();
                 for (var index = 0; index < facePartPoints.Length; index++)
-                    Assert.True(facePartPoints[index] == points[index]);
+                    Assert.True(facePartPoints[index].Point == points[index]);
             }
         }
 
@@ -1713,7 +1790,7 @@ namespace FaceRecognitionDotNet.Tests
 
                 var facePartPoints = faceLandmarks[0][FacePart.NoseTip].ToArray();
                 for (var index = 0; index < facePartPoints.Length; index++)
-                    Assert.True(facePartPoints[index] == points[index]);
+                    Assert.True(facePartPoints[index].Point == points[index]);
             }
         }
 
@@ -1899,6 +1976,38 @@ namespace FaceRecognitionDotNet.Tests
             return expected - delta <= actual && actual <= expected + delta;
         }
 
+        private static void DrawAxis(Graphics g, int width, int height, double roll, double pitch, double yaw, uint size)
+        {
+            // https://github.com/natanielruiz/deep-head-pose/blob/master/code/utils.py
+            // plot_pose_cube
+            pitch = pitch * Math.PI / 180;
+            yaw = -(yaw * Math.PI / 180);
+            roll = roll * Math.PI / 180;
+
+            var tdx = width / 2;
+            var tdy = height / 2;
+
+            // X-Axis pointing to right. drawn in red
+            var x1 = size * (Math.Cos(yaw) * Math.Cos(roll)) + tdx;
+            var y1 = size * (Math.Cos(pitch) * Math.Sin(roll) + Math.Cos(roll) * Math.Sin(pitch) * Math.Sin(yaw)) + tdy;
+
+            // Y-Axis | drawn in green
+            // v
+            var x2 = size * (-Math.Cos(yaw) * Math.Sin(roll)) + tdx;
+            var y2 = size * (Math.Cos(pitch) * Math.Cos(roll) - Math.Sin(pitch) * Math.Sin(yaw) * Math.Sin(roll)) + tdy;
+
+            // Z-Axis (out of the screen) drawn in blue
+            var x3 = size * (Math.Sin(yaw)) + tdx;
+            var y3 = size * (-Math.Cos(yaw) * Math.Sin(pitch)) + tdy;
+
+            using (var pen = new Pen(Color.Red, 3))
+                g.DrawLine(pen, tdx, tdy, (int)x1, (int)y1);
+            using (var pen = new Pen(Color.Green, 3))
+                g.DrawLine(pen, tdx, tdy, (int)x2, (int)y2);
+            using (var pen = new Pen(Color.Blue, 3))
+                g.DrawLine(pen, tdx, tdy, (int)x3, (int)y3);
+        }
+
         private void EyeBlinkDetect(EyeBlinkDetector eyeBlinkDetector, PredictorModel model)
         {
             try
@@ -1959,7 +2068,7 @@ namespace FaceRecognitionDotNet.Tests
                                     if (landmark.ContainsKey(facePart))
                                     {
                                         draw = true;
-                                        foreach (var p in landmark[facePart].ToArray())
+                                        foreach (var p in landmark[facePart].Select((point, i) => point.Point).ToArray())
                                             g.DrawEllipse(Pens.GreenYellow, p.X - pointSize, p.Y - pointSize, pointSize * 2, pointSize * 2);
                                     }
 
@@ -1980,7 +2089,7 @@ namespace FaceRecognitionDotNet.Tests
                                 foreach (var points in landmark.Values)
                                     foreach (var p in points)
                                     {
-                                        g.DrawEllipse(Pens.GreenYellow, p.X - pointSize, p.Y - pointSize, pointSize * 2, pointSize * 2);
+                                        g.DrawEllipse(Pens.GreenYellow, p.Point.X - pointSize, p.Point.Y - pointSize, pointSize * 2, pointSize * 2);
                                     }
 
                         var directory = Path.Combine(ResultDirectory, testName);

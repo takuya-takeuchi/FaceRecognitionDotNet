@@ -41,6 +41,8 @@ namespace FaceRecognitionDotNet
 
         private EyeBlinkDetector _CustomEyeBlinkDetector;
 
+        private HeadPoseEstimator _CustomHeadPoseEstimator;
+
         #endregion
 
         #region Constructors
@@ -126,6 +128,15 @@ namespace FaceRecognitionDotNet
         {
             get => this._CustomFaceLandmarkDetector;
             set => this._CustomFaceLandmarkDetector = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the custom head pose estimator that user defined.
+        /// </summary>
+        public HeadPoseEstimator CustomHeadPoseEstimator
+        {
+            get => this._CustomHeadPoseEstimator;
+            set => this._CustomHeadPoseEstimator = value;
         }
 
         /// <summary>
@@ -286,7 +297,7 @@ namespace FaceRecognitionDotNet
         /// <exception cref="ArgumentNullException"><paramref name="landmark"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="landmark"/> does not contain <see cref="FacePart.LeftEye"/> or <see cref="FacePart.RightEye"/>.</exception>
         /// <exception cref="NotSupportedException">The custom eye blink detector is not ready.</exception>
-        public void EyeBlinkDetect(IDictionary<FacePart, IEnumerable<Point>> landmark, out bool leftBlink, out bool rightBlink)
+        public void EyeBlinkDetect(IDictionary<FacePart, IEnumerable<FacePoint>> landmark, out bool leftBlink, out bool rightBlink)
         {
             if (this._CustomEyeBlinkDetector == null)
                 throw new NotSupportedException("The custom eye blink detector is not ready.");
@@ -388,7 +399,7 @@ namespace FaceRecognitionDotNet
         /// <exception cref="ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="faceImage"/> or this object or custom face landmark detector is disposed.</exception>
         /// <exception cref="NotSupportedException">The custom face landmark detector is not ready.</exception>
-        public IEnumerable<IDictionary<FacePart, IEnumerable<Point>>> FaceLandmark(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
+        public IEnumerable<IDictionary<FacePart, IEnumerable<FacePoint>>> FaceLandmark(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
         {
             if (faceImage == null)
                 throw new ArgumentNullException(nameof(faceImage));
@@ -407,9 +418,9 @@ namespace FaceRecognitionDotNet
 
             var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, model).ToArray();
             var landmarkTuples = landmarks.Select(landmark => Enumerable.Range(0, (int)landmark.Parts)
-                                          .Select(index => new Point(landmark.GetPart((uint)index))).ToArray());
+                                          .Select(index => new FacePoint(new Point(landmark.GetPart((uint)index)), index)).ToArray());
 
-            var results = new List<Dictionary<FacePart, IEnumerable<Point>>>();
+            var results = new List<Dictionary<FacePart, IEnumerable<FacePoint>>>();
 
             try
             {
@@ -418,7 +429,7 @@ namespace FaceRecognitionDotNet
                 switch (model)
                 {
                     case PredictorModel.Large:
-                        results.AddRange(landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<Point>>
+                        results.AddRange(landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<FacePoint>>
                         {
                             { FacePart.Chin,         Enumerable.Range(0,17).Select(i => landmarkTuple[i]).ToArray() },
                             { FacePart.LeftEyebrow,  Enumerable.Range(17,5).Select(i => landmarkTuple[i]).ToArray() },
@@ -443,7 +454,7 @@ namespace FaceRecognitionDotNet
                         }));
                         break;
                     case PredictorModel.Small:
-                        results.AddRange(landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<Point>>
+                        results.AddRange(landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<FacePoint>>
                         {
                             { FacePart.NoseTip,  Enumerable.Range(4,1).Select(i => landmarkTuple[i]).ToArray() },
                             { FacePart.LeftEye,  Enumerable.Range(2,2).Select(i => landmarkTuple[i]).ToArray() },
@@ -677,7 +688,7 @@ namespace FaceRecognitionDotNet
 
             return null;
         }
-        
+
         /// <summary>
         /// Creates an <see cref="Image"/> from the unmanaged memory pointer indicates <see cref="byte"/> array image data.
         /// </summary>
@@ -849,6 +860,21 @@ namespace FaceRecognitionDotNet
                 throw new ObjectDisposedException($"{nameof(CustomGenderEstimator)}", "The custom gender estimator is disposed.");
 
             return this._CustomGenderEstimator.PredictProbability(image, location);
+        }
+
+        /// <summary>
+        /// Returns a head pose estimated from face parts locations.
+        /// </summary>
+        /// <param name="landmark">The dictionary of face parts locations (eyes, nose, etc).</param>
+        /// <returns>A head pose estimated from face parts locations.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="landmark"/> is null.</exception>
+        /// <exception cref="NotSupportedException">The custom head pose estimator is not ready.</exception>
+        public HeadPose PredictHeadPose(IDictionary<FacePart, IEnumerable<FacePoint>> landmark)
+        {
+            if (this._CustomHeadPoseEstimator == null)
+                throw new NotSupportedException("The custom head pose estimator is not ready.");
+
+            return this._CustomHeadPoseEstimator.Predict(landmark);
         }
 
         #region Helpers
