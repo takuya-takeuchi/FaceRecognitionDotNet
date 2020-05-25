@@ -23,9 +23,9 @@ namespace FaceRecognitionDotNet.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="leftEyePointIndices"/> or <paramref name="rightEyePointIndices"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="leftEyePointIndices"/> or <paramref name="rightEyePointIndices"/> does not contain 6 elements.</exception>
         protected EyeAspectRatioBaseEyeBlinkDetector(double leftRatioThreshold,
-            double rightRatioThreshold,
-            int[] leftEyePointIndices,
-            int[] rightEyePointIndices)
+                                                     double rightRatioThreshold,
+                                                     int[] leftEyePointIndices,
+                                                     int[] rightEyePointIndices)
         {
             if (leftEyePointIndices == null)
                 throw new ArgumentException(nameof(leftEyePointIndices));
