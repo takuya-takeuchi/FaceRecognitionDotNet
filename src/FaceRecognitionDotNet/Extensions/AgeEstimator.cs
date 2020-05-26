@@ -40,7 +40,7 @@ namespace FaceRecognitionDotNet.Extensions
         /// <param name="matrix">The matrix contains a face.</param>
         /// <param name="location">The location rectangle for a face.</param>
         /// <returns>An index of age group of face image correspond to specified location in specified image.</returns>
-        public abstract uint RawPredict(MatrixBase matrix, Location location);
+        protected abstract uint RawPredict(MatrixBase matrix, Location location);
 
         /// <summary>
         /// Returns probabilities of age group of face image correspond to specified location in specified image.
@@ -48,7 +48,7 @@ namespace FaceRecognitionDotNet.Extensions
         /// <param name="matrix">The matrix contains a face.</param>
         /// <param name="location">The location rectangle for a face.</param>
         /// <returns>Probabilities of age group of face image correspond to specified location in specified image.</returns>
-        public abstract IDictionary<uint, float> RawPredictProbability(MatrixBase matrix, Location location);
+        protected abstract IDictionary<uint, float> RawPredictProbability(MatrixBase matrix, Location location);
 
         #endregion
 

@@ -27,7 +27,9 @@ Download the following files to &lt;HelenTraining_dir&gt;. You need not to extra
 1. Open command prompt and change to &lt;HelenTraining_dir&gt;
 1. Type the following command
 ````
-dotnet build -c Release
+$ dotnet remove reference ../../src/FaceRecognitionDotNet\FaceRecognitionDotNet.csproj
+$ dotnet add package FaceRecognitionDotNet
+$ dotnet build -c Release
 ````
 2. Copy ***DlibDotNetNative.dll*** and ***DlibDotNetDnn.dll*** to output directory; &lt;HelenTraining_dir&gt;\bin\Release\netcoreapp2.0.
    * if you use FaceRecognitionDotNet with CUDA, you must copy also cuda libraries.

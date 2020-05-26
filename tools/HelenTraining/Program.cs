@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -258,6 +259,7 @@ namespace HelenTraining
                 var imageOption = command.Option("-i|--image", "test image file", CommandOptionType.SingleValue);
                 var modelOption = command.Option("-m|--model", "model file", CommandOptionType.SingleValue);
                 var directoryOption = command.Option("-d|--directory", "model files directory path", CommandOptionType.SingleValue);
+                var scaleOption = command.Option("-s|--scale", "scale ration", CommandOptionType.SingleValue);
 
                 command.OnExecute(() =>
                 {
@@ -278,6 +280,14 @@ namespace HelenTraining
                     if (!modelOption.HasValue())
                     {
                         Console.WriteLine("model option is missing");
+                        app.ShowHelp();
+                        return -1;
+                    }
+
+                    var scale = 1.0f;
+                    if (scaleOption.HasValue() && !float.TryParse(scaleOption.Value(), NumberStyles.Float, null, out scale))
+                    {
+                        Console.WriteLine("scale option must be float value");
                         app.ShowHelp();
                         return -1;
                     }
@@ -312,8 +322,9 @@ namespace HelenTraining
                     using (var image = FaceRecognition.LoadImageFile(imageFile))
                     using (var mat = Dlib.LoadImageAsMatrix<RgbPixel>(imageFile))
                     using (var bitmap = (Bitmap)System.Drawing.Image.FromFile(imageFile))
-                    using (var white = new Bitmap(bitmap.Width, bitmap.Height))
-                    using (var g = Graphics.FromImage(bitmap))
+                    using (var org = new Bitmap((int)(bitmap.Width * scale), (int)(bitmap.Height * scale)))
+                    using (var white = new Bitmap((int)(bitmap.Width * scale), (int)(bitmap.Height * scale)))
+                    using (var g = Graphics.FromImage(org))
                     using (var gw = Graphics.FromImage(white))
                     {
                         var loc = _FaceRecognition.FaceLocations(image).FirstOrDefault();
@@ -323,20 +334,21 @@ namespace HelenTraining
                             return 0;
                         }
 
+                        g.DrawImage(bitmap, new System.Drawing.Rectangle(0 ,0, org.Width, org.Height), new System.Drawing.Rectangle(0,0,bitmap.Width,bitmap.Height), GraphicsUnit.Pixel);
                         gw.Clear(Color.White);
 
                         var b = new DlibDotNet.Rectangle(loc.Left, loc.Top, loc.Right, loc.Bottom);
                         var detection = predictor.Detect(mat, b);
 
-                        using (var p = new Pen(Color.Red, bitmap.Width / 200f))
+                        using (var p = new Pen(Color.Red, bitmap.Width * scale / 200f))
                         {
-                            g.DrawRectangle(p, loc.Left, b.Top, b.Width, b.Height);
-                            gw.DrawRectangle(p, loc.Left, b.Top, b.Width, b.Height);
+                            g.DrawRectangle(p, loc.Left * scale, b.Top * scale, b.Width * scale, b.Height * scale);
+                            gw.DrawRectangle(p, loc.Left * scale, b.Top * scale, b.Width * scale, b.Height * scale);
                         }
 
-                        DrawLandmarkPoints(g, gw, Enumerable.Range(0, (int)detection.Parts).Select(s => detection.GetPart((uint)s)).ToArray());
+                        DrawLandmarkPoints(g, gw, scale, Enumerable.Range(0, (int)detection.Parts).Select(s => detection.GetPart((uint)s)).ToArray());
 
-                        bitmap.Save("demo.jpg", ImageFormat.Jpeg);
+                        org.Save("demo.jpg", ImageFormat.Jpeg);
                         white.Save("white.jpg", ImageFormat.Jpeg);
                     }
 
@@ -398,7 +410,7 @@ namespace HelenTraining
 
                         gw.Clear(Color.White);
 
-                        DrawLandmarkPoints(g, gw, location.Select(part => new Point((int)part.X, (int)part.Y)).ToArray());
+                        DrawLandmarkPoints(g, gw, 1.0f, location.Select(part => new Point((int)part.X, (int)part.Y)).ToArray());
 
                         bitmap.Save("check-landmark.jpg", ImageFormat.Jpeg);
                         white.Save("check-landmark-white.jpg", ImageFormat.Jpeg);
@@ -413,13 +425,13 @@ namespace HelenTraining
 
         #region Helpers
 
-        private static void DrawLandmarkPoints(Graphics graphics, Graphics graphicsWhite, IList<Point> landmark)
+        private static void DrawLandmarkPoints(Graphics graphics, Graphics graphicsWhite, float scale, IList<Point> landmark)
         {
             for (int i = 0, parts = landmark.Count; i < parts; i++)
             {
                 var part = landmark[i];
-                graphics.FillEllipse(Brushes.GreenYellow, part.X, part.Y, 15, 15);
-                graphicsWhite.DrawString($"{i}", SystemFonts.DefaultFont, Brushes.Black, part.X, part.Y);
+                graphics.FillEllipse(Brushes.GreenYellow, part.X * scale, part.Y * scale, 15, 15);
+                graphicsWhite.DrawString($"{i}", SystemFonts.DefaultFont, Brushes.Black, part.X * scale, part.Y * scale);
             }
         }
 

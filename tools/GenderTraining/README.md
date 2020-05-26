@@ -9,7 +9,9 @@ This program aims to train human face images to classify gender.
 1. Open command prompt and change to &lt;GenderTraining_dir&gt;
 1. Type the following command
 ````
-dotnet build -c Release
+$ dotnet remove reference ../../src/FaceRecognitionDotNet\FaceRecognitionDotNet.csproj
+$ dotnet add package FaceRecognitionDotNet
+$ dotnet build -c Release
 ````
 2. Copy ***DlibDotNetNative.dll***, ***DlibDotNetNativeDnn.dll*** and ***DlibDotNetNativeDnnGenderClassification.dll*** to output directory; &lt;GenderTraining_dir&gt;\bin\Release\netcoreapp2.0.
 

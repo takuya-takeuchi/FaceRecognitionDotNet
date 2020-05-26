@@ -1,6 +1,6 @@
 set PROJECT=test\FaceRecognitionDotNet.Tests\FaceRecognitionDotNet.Tests
 set PACKAGECPU=FaceRecognitionDotNet
-set PACKAGECUDA=FaceRecognitionDotNet.CUDA92
+set PACKAGECUDA=FaceRecognitionDotNet.CUDA102
 set NUGETDIR=%cd%\nuget
 
 dotnet remove %PROJECT%.csproj package %PACKAGECPU%

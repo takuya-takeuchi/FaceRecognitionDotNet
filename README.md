@@ -19,6 +19,9 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |FaceRecognitionDotNet for CUDA 10.1|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA101.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA101)|
 ||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA101.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA101)|
 ||OSX|-|-|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA101.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA101)|
+|FaceRecognitionDotNet for CUDA 10.2|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA102.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA102)|
+||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA102.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA102)|
+||OSX|-|-|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA102.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA102)|
 |FaceRecognitionDotNet for Intel MKL|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
 ||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
 ||OSX|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
@@ -40,11 +43,13 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |face_locations|FaceLocations||
 |load_image_file|LoadImageFile||
 |-|CropFaces|Crop image with specified locations|
-|-|LoadImage|From memory data|
-|-|PredictAge|Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
-|-|PredictGender|Use **UTKFace dataset** :warning:|
-|-|PredictProbabilityAge|Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
-|-|PredictProbabilityGender|Use **UTKFace dataset** :warning:|
+|-|EyeBlinkDetect|Detect person is blinking or not<br>Support Large model and **Helen dataset** :warning:|
+|-|LoadImage|From memory data or System.Drawing.Bitmap|
+|-|PredictAge|Predict human age.<br>Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
+|-|PredictGender|Predict human gender.<br>Use **UTKFace dataset** :warning:|
+|-|PredictProbabilityAge|Predict probability of human age.<br>Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
+|-|PredictProbabilityGender|Predict probability of human gender.<br>Use **UTKFace dataset** :warning:|
+|-|PredictHeadPose|Predict human head pose.<br>Use **300W-LP dataset** :warning:|
 
 ##### :warning: Warning
 
@@ -54,23 +59,20 @@ You can check the following examples to train dataset.
 
 * tools/AgeTraining
 * tools/GenderTraining
+* tools/HeadPoseTraining
 * tools/HelenTraining
 
 ## Demo
 
 #### Face Recognition
 
-<img src="images/1.png" width="480"/>
+<img src="images/1.png" width="480"/> <img src="images/2.png" width="480"/>
 
-<img src="images/2.png" width="480"/>
+#### Other Face Functions
 
-#### Face Landmark
-
-<img src="images/3.jpg" width="240"/>
-
-#### Age and Gender Classification
-
-<img src="examples/CustomClassificationDemo/images/result.png" width="240"/>
+|Face Landmark|Age and Gender Classification|Head Pose Estimation|
+|---|---|---|
+|<img src="images/3.jpg" width="240"/>|<img src="examples/CustomClassificationDemo/images/result.png" width="240"/>|<img src="images/4.png" width="240"/>|
 
 ## Dependencies Libraries and Products
 
@@ -113,4 +115,3 @@ You can check the following examples to train dataset.
 > **Author:** shimat
 > 
 > **Principal Use:** Loading image data by opencv wrapper for example
-

@@ -14,7 +14,9 @@ This sample requires test image and model files.
 1. Open command prompt and change to &lt;Benchmark_dir&gt;
 1. Type the following command
 ````
-dotnet build -c Release
+$ dotnet remove reference ../../src/FaceRecognitionDotNet\FaceRecognitionDotNet.csproj
+$ dotnet add package FaceRecognitionDotNet
+$ dotnet build -c Release
 ````
 2. Copy ***DlibDotNet.dll***, ***DlibDotNet.Native.dll*** and ***DlibDotNet.Dnn.dll*** to output directory; &lt;Benchmark_dir&gt;\bin\Release\netcoreapp2.0.
    * if you use FaceRecognitionDotNet with CUDA, you must copy also cuda libraries.

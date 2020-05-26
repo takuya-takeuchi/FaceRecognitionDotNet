@@ -40,7 +40,7 @@ namespace FaceRecognitionDotNet.Extensions
         /// <param name="matrix">The matrix contains a face.</param>
         /// <param name="location">The location rectangle for a face.</param>
         /// <returns>An gender of face image correspond to specified location in specified image.</returns>
-        public abstract Gender RawPredict(MatrixBase matrix, Location location);
+        protected abstract Gender RawPredict(MatrixBase matrix, Location location);
 
         /// <summary>
         /// Returns probabilities of gender of face image correspond to specified location in specified image.
@@ -48,7 +48,7 @@ namespace FaceRecognitionDotNet.Extensions
         /// <param name="matrix">The matrix contains a face.</param>
         /// <param name="location">The location rectangle for a face.</param>
         /// <returns>Probabilities of gender of face image correspond to specified location in specified image.</returns>
-        public abstract IDictionary<Gender, float> RawPredictProbability(MatrixBase matrix, Location location);
+        protected abstract IDictionary<Gender, float> RawPredictProbability(MatrixBase matrix, Location location);
 
         #endregion
 

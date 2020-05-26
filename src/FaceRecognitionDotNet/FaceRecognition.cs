@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using DlibDotNet;
 using DlibDotNet.Dnn;
@@ -35,6 +38,10 @@ namespace FaceRecognitionDotNet
         private AgeEstimator _CustomAgeEstimator;
 
         private GenderEstimator _CustomGenderEstimator;
+
+        private EyeBlinkDetector _CustomEyeBlinkDetector;
+
+        private HeadPoseEstimator _CustomHeadPoseEstimator;
 
         #endregion
 
@@ -97,6 +104,15 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
+        /// Gets or sets the custom eye blink detector that user defined.
+        /// </summary>
+        public EyeBlinkDetector CustomEyeBlinkDetector
+        {
+            get => this._CustomEyeBlinkDetector;
+            set => this._CustomEyeBlinkDetector = value;
+        }
+
+        /// <summary>
         /// Gets or sets the custom gender estimator that user defined.
         /// </summary>
         public GenderEstimator CustomGenderEstimator
@@ -112,6 +128,15 @@ namespace FaceRecognitionDotNet
         {
             get => this._CustomFaceLandmarkDetector;
             set => this._CustomFaceLandmarkDetector = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the custom head pose estimator that user defined.
+        /// </summary>
+        public HeadPoseEstimator CustomHeadPoseEstimator
+        {
+            get => this._CustomHeadPoseEstimator;
+            set => this._CustomHeadPoseEstimator = value;
         }
 
         /// <summary>
@@ -226,9 +251,9 @@ namespace FaceRecognitionDotNet
         /// <exception cref="ObjectDisposedException"><paramref name="image"/> is disposed.</exception>
         public static IEnumerable<Image> CropFaces(Image image, IEnumerable<Location> locations)
         {
-            if (image == null) 
+            if (image == null)
                 throw new ArgumentNullException(nameof(image));
-            if (locations == null) 
+            if (locations == null)
                 throw new ArgumentNullException(nameof(locations));
 
             image.ThrowIfDisposed();
@@ -261,6 +286,23 @@ namespace FaceRecognitionDotNet
                         break;
                 }
             }
+        }
+
+        /// <summary>
+        /// Detects the values whether human eye's blink or not from face landmark.
+        /// </summary>
+        /// <param name="landmark">The dictionary of face parts locations (eyes, nose, etc).</param>
+        /// <param name="leftBlink">When this method returns, contains <value>true</value>, if the left eye blinks; otherwise, <value>false</value>.</param>
+        /// <param name="rightBlink">When this method returns, contains <value>true</value>, if the right eye blinks; otherwise, <value>false</value>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="landmark"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="landmark"/> does not contain <see cref="FacePart.LeftEye"/> or <see cref="FacePart.RightEye"/>.</exception>
+        /// <exception cref="NotSupportedException">The custom eye blink detector is not ready.</exception>
+        public void EyeBlinkDetect(IDictionary<FacePart, IEnumerable<FacePoint>> landmark, out bool leftBlink, out bool rightBlink)
+        {
+            if (this._CustomEyeBlinkDetector == null)
+                throw new NotSupportedException("The custom eye blink detector is not ready.");
+
+            this._CustomEyeBlinkDetector.Detect(landmark, out leftBlink, out rightBlink);
         }
 
         /// <summary>
@@ -357,7 +399,7 @@ namespace FaceRecognitionDotNet
         /// <exception cref="ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="faceImage"/> or this object or custom face landmark detector is disposed.</exception>
         /// <exception cref="NotSupportedException">The custom face landmark detector is not ready.</exception>
-        public IEnumerable<IDictionary<FacePart, IEnumerable<Point>>> FaceLandmark(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
+        public IEnumerable<IDictionary<FacePart, IEnumerable<FacePoint>>> FaceLandmark(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
         {
             if (faceImage == null)
                 throw new ArgumentNullException(nameof(faceImage));
@@ -367,7 +409,7 @@ namespace FaceRecognitionDotNet
 
             if (model == PredictorModel.Custom)
             {
-                if (this._CustomFaceLandmarkDetector == null) 
+                if (this._CustomFaceLandmarkDetector == null)
                     throw new NotSupportedException("The custom face landmark detector is not ready.");
 
                 if (this._CustomFaceLandmarkDetector.IsDisposed)
@@ -376,9 +418,9 @@ namespace FaceRecognitionDotNet
 
             var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, model).ToArray();
             var landmarkTuples = landmarks.Select(landmark => Enumerable.Range(0, (int)landmark.Parts)
-                                          .Select(index => new Point(landmark.GetPart((uint)index))).ToArray());
+                                          .Select(index => new FacePoint(new Point(landmark.GetPart((uint)index)), index)).ToArray());
 
-            var results = new List<Dictionary<FacePart, IEnumerable<Point>>>();
+            var results = new List<Dictionary<FacePart, IEnumerable<FacePoint>>>();
 
             try
             {
@@ -387,7 +429,7 @@ namespace FaceRecognitionDotNet
                 switch (model)
                 {
                     case PredictorModel.Large:
-                        results.AddRange(landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<Point>>
+                        results.AddRange(landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<FacePoint>>
                         {
                             { FacePart.Chin,         Enumerable.Range(0,17).Select(i => landmarkTuple[i]).ToArray() },
                             { FacePart.LeftEyebrow,  Enumerable.Range(17,5).Select(i => landmarkTuple[i]).ToArray() },
@@ -412,7 +454,7 @@ namespace FaceRecognitionDotNet
                         }));
                         break;
                     case PredictorModel.Small:
-                        results.AddRange(landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<Point>>
+                        results.AddRange(landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<FacePoint>>
                         {
                             { FacePart.NoseTip,  Enumerable.Range(4,1).Select(i => landmarkTuple[i]).ToArray() },
                             { FacePart.LeftEye,  Enumerable.Range(2,2).Select(i => landmarkTuple[i]).ToArray() },
@@ -494,29 +536,195 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
+        /// Creates an <see cref="Image"/> from the specified existing bitmap image.
+        /// </summary>
+        /// <param name="bitmap">The <see cref="Bitmap"/> from which to create the new <see cref="Image"/>.</param>
+        /// <returns>The <see cref="Image"/> this method creates.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="bitmap"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The specified <see cref="PixelFormat"/> is not supported.</exception>
+        public static Image LoadImage(Bitmap bitmap)
+        {
+            var width = bitmap.Width;
+            var height = bitmap.Height;
+            var rect = new System.Drawing.Rectangle(0, 0, width, height);
+            var format = bitmap.PixelFormat;
+
+            Mode mode;
+            int srcChannel;
+            int dstChannel;
+            switch (format)
+            {
+                case PixelFormat.Format8bppIndexed:
+                    mode = Mode.Greyscale;
+                    srcChannel = 1;
+                    dstChannel = 1;
+                    break;
+                case PixelFormat.Format24bppRgb:
+                    mode = Mode.Rgb;
+                    srcChannel = 3;
+                    dstChannel = 3;
+                    break;
+                case PixelFormat.Format32bppRgb:
+                case PixelFormat.Format32bppArgb:
+                    mode = Mode.Rgb;
+                    srcChannel = 4;
+                    dstChannel = 3;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException($"{nameof(bitmap)}", $"The specified {nameof(PixelFormat)} is not supported.");
+            }
+
+            BitmapData data = null;
+
+            try
+            {
+                data = bitmap.LockBits(rect, ImageLockMode.ReadOnly, format);
+
+                unsafe
+                {
+                    var array = new byte[width * height * dstChannel];
+                    fixed (byte* pArray = &array[0])
+                    {
+                        var dst = pArray;
+
+                        switch (srcChannel)
+                        {
+                            case 1:
+                                {
+                                    var src = data.Scan0;
+                                    var stride = data.Stride;
+
+                                    for (var h = 0; h < height; h++)
+                                        Marshal.Copy(IntPtr.Add(src, h * stride), array, h * width, width * dstChannel);
+                                }
+                                break;
+                            case 3:
+                            case 4:
+                                {
+                                    var src = (byte*)data.Scan0;
+                                    var stride = data.Stride;
+
+                                    for (var h = 0; h < height; h++)
+                                    {
+                                        var srcOffset = h * stride;
+                                        var dstOffset = h * width * dstChannel;
+
+                                        for (var w = 0; w < width; w++)
+                                        {
+                                            // BGR order to RGB order
+                                            dst[dstOffset + w * dstChannel + 0] = src[srcOffset + w * srcChannel + 2];
+                                            dst[dstOffset + w * dstChannel + 1] = src[srcOffset + w * srcChannel + 1];
+                                            dst[dstOffset + w * dstChannel + 2] = src[srcOffset + w * srcChannel + 0];
+                                        }
+                                    }
+                                }
+                                break;
+                        }
+
+                        var ptr = (IntPtr)pArray;
+                        switch (mode)
+                        {
+                            case Mode.Rgb:
+                                return new Image(new Matrix<RgbPixel>(ptr, height, width, width * 3), Mode.Rgb);
+                            case Mode.Greyscale:
+                                return new Image(new Matrix<byte>(ptr, height, width, width), Mode.Greyscale);
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                if (data != null) bitmap.UnlockBits(data);
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Creates an <see cref="Image"/> from the <see cref="byte"/> array.
         /// </summary>
         /// <param name="array">The <see cref="byte"/> array contains image data.</param>
         /// <param name="row">The number of rows in a image data.</param>
         /// <param name="column">The number of columns in a image data.</param>
-        /// <param name="elementSize">The image element size in bytes.</param>
+        /// <param name="stride">The stride width in bytes.</param>
+        /// <param name="mode">A image color mode.</param>
         /// <returns>The <see cref="Image"/> this method creates.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="array"/> is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="elementSize"/> must be 3 or 1.</exception>
-        public static Image LoadImage(byte[] array, int row, int column, int elementSize)
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="row"/> is less than 0.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="column"/> is less than 0.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="stride"/> is less than 0.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="stride"/> is less than <paramref name="column"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="row"/> x <paramref name="stride"/> is less than <see cref="Array.Length"/>.</exception>
+        public static Image LoadImage(byte[] array, int row, int column, int stride, Mode mode)
         {
             if (array == null)
                 throw new ArgumentNullException(nameof(array));
+            if (row < 0)
+                throw new ArgumentOutOfRangeException($"{nameof(row)}", $"{nameof(row)} is less than 0.");
+            if (column < 0)
+                throw new ArgumentOutOfRangeException($"{nameof(column)}", $"{nameof(column)} is less than 0.");
+            if (stride < 0)
+                throw new ArgumentOutOfRangeException($"{nameof(stride)}", $"{nameof(stride)} is less than 0.");
+            if (stride < column)
+                throw new ArgumentOutOfRangeException($"{nameof(stride)}", $"{nameof(stride)} is less than {nameof(column)}.");
+            var min = row * stride;
+            if (!(array.Length >= min))
+                throw new ArgumentOutOfRangeException("", $"{nameof(row)} x {nameof(stride)} is less than {nameof(Array)}.{nameof(Array.Length)}.");
 
-            switch (elementSize)
+            unsafe
             {
-                case 3:
-                    return new Image(new Matrix<RgbPixel>(array, row, column, elementSize), Mode.Rgb);
-                case 1:
-                    return new Image(new Matrix<byte>(array, row, column, elementSize), Mode.Greyscale);
+                fixed (byte* p = &array[0])
+                {
+                    var ptr = (IntPtr)p;
+                    switch (mode)
+                    {
+                        case Mode.Rgb:
+                            return new Image(new Matrix<RgbPixel>(ptr, row, column, stride), Mode.Rgb);
+                        case Mode.Greyscale:
+                            return new Image(new Matrix<byte>(ptr, row, column, stride), Mode.Greyscale);
+                    }
+                }
             }
 
-            throw new ArgumentOutOfRangeException($"{nameof(elementSize)} must be 3 or 1.");
+            return null;
+        }
+
+        /// <summary>
+        /// Creates an <see cref="Image"/> from the unmanaged memory pointer indicates <see cref="byte"/> array image data.
+        /// </summary>
+        /// <param name="array">The unmanaged memory pointer indicates <see cref="byte"/> array image data.</param>
+        /// <param name="row">The number of rows in a image data.</param>
+        /// <param name="column">The number of columns in a image data.</param>
+        /// <param name="stride">The stride width in bytes.</param>
+        /// <param name="mode">A image color mode.</param>
+        /// <returns>The <see cref="Image"/> this method creates.</returns>
+        /// <exception cref="ArgumentException"><paramref name="array"/> is <see cref="IntPtr.Zero"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="row"/> is less than 0.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="column"/> is less than 0.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="stride"/> is less than 0.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="stride"/> is less than <paramref name="column"/>.</exception>
+        public static Image LoadImage(IntPtr array, int row, int column, int stride, Mode mode)
+        {
+            if (array == IntPtr.Zero)
+                throw new ArgumentException($"{nameof(array)} is {nameof(IntPtr)}.{nameof(IntPtr.Zero)}", nameof(array));
+            if (row < 0)
+                throw new ArgumentOutOfRangeException($"{nameof(row)}", $"{nameof(row)} is less than 0.");
+            if (column < 0)
+                throw new ArgumentOutOfRangeException($"{nameof(column)}", $"{nameof(column)} is less than 0.");
+            if (stride < 0)
+                throw new ArgumentOutOfRangeException($"{nameof(stride)}", $"{nameof(stride)} is less than 0.");
+            if (stride < column)
+                throw new ArgumentOutOfRangeException($"{nameof(stride)}", $"{nameof(stride)} is less than {nameof(column)}.");
+
+            switch (mode)
+            {
+                case Mode.Rgb:
+                    return new Image(new Matrix<RgbPixel>(array, row, column, stride), mode);
+                case Mode.Greyscale:
+                    return new Image(new Matrix<byte>(array, row, column, stride), mode);
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -654,6 +862,21 @@ namespace FaceRecognitionDotNet
             return this._CustomGenderEstimator.PredictProbability(image, location);
         }
 
+        /// <summary>
+        /// Returns a head pose estimated from face parts locations.
+        /// </summary>
+        /// <param name="landmark">The dictionary of face parts locations (eyes, nose, etc).</param>
+        /// <returns>A head pose estimated from face parts locations.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="landmark"/> is null.</exception>
+        /// <exception cref="NotSupportedException">The custom head pose estimator is not ready.</exception>
+        public HeadPose PredictHeadPose(IDictionary<FacePart, IEnumerable<FacePoint>> landmark)
+        {
+            if (this._CustomHeadPoseEstimator == null)
+                throw new NotSupportedException("The custom head pose estimator is not ready.");
+
+            return this._CustomHeadPoseEstimator.Predict(landmark);
+        }
+
         #region Helpers
 
         private IEnumerable<FullObjectDetection> RawFaceLandmarks(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
@@ -664,7 +887,7 @@ namespace FaceRecognitionDotNet
                 tmp = this.RawFaceLocations(faceImage);
             else
                 tmp = faceLocations.Select(l => new MModRect { Rect = new Rectangle { Bottom = l.Bottom, Left = l.Left, Top = l.Top, Right = l.Right } });
-            
+
             if (model == PredictorModel.Custom)
             {
                 foreach (var rect in tmp)

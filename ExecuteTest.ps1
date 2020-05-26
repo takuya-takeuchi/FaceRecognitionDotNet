@@ -1,5 +1,4 @@
-$CodecovVersion = "1.7.1"
-$CoverletVersion = "1.4.1"
+$CodecovVersion = "1.10.0"
 
 # check Codecov Token
 $token = $env:CODECOV_TOKEN
@@ -12,8 +11,9 @@ if ([string]::IsNullOrEmpty($token))
 Write-Host "Environmental Value 'CODECOV_TOKEN' is ${token}." -ForegroundColor Green
 
 # install coverlet
-dotnet tool install --global coverlet.console --version $CoverletVersion > $null
+dotnet tool install --global coverlet.console > $null
 dotnet add test\FaceRecognitionDotNet.Tests\FaceRecognitionDotNet.Tests.csproj package coverlet.msbuild > $null
+dotnet add test\FaceRecognitionDotNet.Tests\FaceRecognitionDotNet.Tests.csproj package coverlet.collector > $null
 # install codecov but it is not used from test project
 dotnet add test\FaceRecognitionDotNet.Tests\FaceRecognitionDotNet.Tests.csproj package Codecov --version $CodecovVersion > $null
 
@@ -22,11 +22,14 @@ Write-Host "Start Test and collect Coverage." -ForegroundColor Green
 dotnet test test\FaceRecognitionDotNet.Tests\FaceRecognitionDotNet.Tests.csproj `
             /p:CollectCoverage=true `
             /p:CoverletOutputFormat=opencover `
-            /p:Exclude="[DlibDotNet]*" `
-            -c Release
+            /p:Exclude="[DlibDotNet]*"
 Write-Host "End Test and collect Coverage." -ForegroundColor Green
 
 $path = (dotnet nuget locals global-packages --list).Replace('info : global-packages: ', '').Trim()
+if ($path)
+{
+    $path = (dotnet nuget locals global-packages --list).Replace('global-packages: ', '').Trim()
+}
 $path =  Join-Path $path "codecov" | `
          Join-Path -ChildPath $CodecovVersion
 

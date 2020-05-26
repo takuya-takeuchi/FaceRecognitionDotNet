@@ -119,6 +119,7 @@ $BuildTargets += New-Object PSObject -Property @{Target = "cpu";  Architecture =
 $BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 92;  Package = "FaceRecognitionDotNet.CUDA92"  }
 $BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 100; Package = "FaceRecognitionDotNet.CUDA100" }
 $BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 101; Package = "FaceRecognitionDotNet.CUDA101" }
+$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 102; Package = "FaceRecognitionDotNet.CUDA102" }
 $BuildTargets += New-Object PSObject -Property @{Target = "mkl";  Architecture = 64; CUDA = 0;   Package = "FaceRecognitionDotNet.MKL"     }
 
 
@@ -143,6 +144,13 @@ $tmp101.Add("$env:CUDA_PATH_V10_1\bin\cudnn64_7.dll")
 $tmp101.Add("$env:CUDA_PATH_V10_1\bin\curand64_10.dll")
 $tmp101.Add("$env:CUDA_PATH_V10_1\bin\cusolver64_10.dll")
 
+# For FaceRecognitionDotNet.CUDA102
+$tmp102 = New-Object 'System.Collections.Generic.List[string]'
+$tmp102.Add("$env:CUDA_PATH_V10_2\bin\cublas64_10.dll")
+$tmp102.Add("$env:CUDA_PATH_V10_2\bin\cudnn64_7.dll")
+$tmp102.Add("$env:CUDA_PATH_V10_2\bin\curand64_10.dll")
+$tmp102.Add("$env:CUDA_PATH_V10_2\bin\cusolver64_10.dll")
+
 # For mkl
 $tmpmkl = New-Object 'System.Collections.Generic.List[string]'
 $tmpmkl.Add("$env:MKL_WIN\redist\intel64_win\mkl\mkl_core.dll")
@@ -153,6 +161,7 @@ $tmpmkl.Add("$env:MKL_WIN\redist\intel64_win\compiler\libiomp5md.dll")
 $DependencyHash = @{"FaceRecognitionDotNet.CUDA92"  = $tmp92;
                     "FaceRecognitionDotNet.CUDA100" = $tmp100;
                     "FaceRecognitionDotNet.CUDA101" = $tmp101;
+                    "FaceRecognitionDotNet.CUDA102" = $tmp102;
                     "FaceRecognitionDotNet.MKL"     = $tmpmkl}
 
 # Store current directory

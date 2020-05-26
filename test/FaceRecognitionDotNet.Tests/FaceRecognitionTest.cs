@@ -40,11 +40,17 @@ namespace FaceRecognitionDotNet.Tests
 
         private const string TwoPersonFile = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
-        private string _HelenModelFile = null;
+        private readonly string _HelenModelFile;
 
-        private string _AgeEstimatorModelFile = null;
+        private readonly string _AgeEstimatorModelFile;
 
-        private string _GenderEstimatorModelFile = null;
+        private readonly string _GenderEstimatorModelFile;
+
+        private readonly string _RollEstimateorModelFile;
+
+        private readonly string _PitchEstimateorModelFile;
+
+        private readonly string _YawEstimateorModelFile;
 
         #endregion
 
@@ -59,6 +65,10 @@ namespace FaceRecognitionDotNet.Tests
             {
                 ModelDirectory = dir;
             }
+
+            this._RollEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-roll-krls_0.001_0.1.dat");
+            this._PitchEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-pitch-krls_0.001_0.1.dat");
+            this._YawEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-yaw-krls_0.001_0.1.dat");
 
             var faceRecognition = typeof(FaceRecognition);
             var type = faceRecognition.Assembly.GetTypes().FirstOrDefault(t => t.Name == "FaceRecognitionModels");
@@ -152,11 +162,11 @@ namespace FaceRecognitionDotNet.Tests
                         var encodings2 = this._FaceRecognition.FaceEncodings(image2, null, numJitters, model).ToArray();
 
                         foreach (var encoding in encodings1)
-                        foreach (var compareFace in FaceRecognition.CompareFaces(encodings2, encoding))
-                        {
-                            atLeast1Time = true;
-                            Assert.False(compareFace, $"{nameof(numJitters)}: {numJitters}");
-                        }
+                            foreach (var compareFace in FaceRecognition.CompareFaces(encodings2, encoding))
+                            {
+                                atLeast1Time = true;
+                                Assert.False(compareFace, $"{nameof(numJitters)}: {numJitters}");
+                            }
 
                         foreach (var encoding in encodings1)
                             encoding.Dispose();
@@ -212,11 +222,11 @@ namespace FaceRecognitionDotNet.Tests
                         var endodings2 = this._FaceRecognition.FaceEncodings(image2, null, numJitters, model).ToArray();
 
                         foreach (var encoding in endodings1)
-                        foreach (var compareFace in FaceRecognition.CompareFaces(endodings2, encoding))
-                        {
-                            atLeast1Time = true;
-                            Assert.True(compareFace, $"{nameof(numJitters)}: {numJitters}");
-                        }
+                            foreach (var compareFace in FaceRecognition.CompareFaces(endodings2, encoding))
+                            {
+                                atLeast1Time = true;
+                                Assert.True(compareFace, $"{nameof(numJitters)}: {numJitters}");
+                            }
 
                         foreach (var encoding in endodings1)
                             encoding.Dispose();
@@ -324,6 +334,35 @@ namespace FaceRecognitionDotNet.Tests
             finally
             {
                 faceRecognition?.Dispose();
+            }
+        }
+
+        [Fact]
+        public void EyeBlinkLargeDetect()
+        {
+            using (var detector = new EyeAspectRatioLargeEyeBlinkDetector(0.2, 0.2))
+                this.EyeBlinkDetect(detector, PredictorModel.Large);
+        }
+
+        [Fact]
+        public void EyeBlinkHelenDetect()
+        {
+            if (!File.Exists(this._HelenModelFile))
+                return;
+
+            try
+            {
+                using (var faceLandmarkDetector = new HelenFaceLandmarkDetector(this._HelenModelFile))
+                {
+                    this._FaceRecognition.CustomFaceLandmarkDetector = faceLandmarkDetector;
+
+                    using (var detector = new EyeAspectRatioHelenEyeBlinkDetector(0.05, 0.05))
+                        this.EyeBlinkDetect(detector, PredictorModel.Custom);
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomFaceLandmarkDetector = null;
             }
         }
 
@@ -473,40 +512,40 @@ namespace FaceRecognitionDotNet.Tests
             }
 
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
-            foreach (var model in new[] { PredictorModel.Small, PredictorModel.Large })
-            {
-                using (var image = FaceRecognition.LoadImageFile(path, mode))
+                foreach (var model in new[] { PredictorModel.Small, PredictorModel.Large })
                 {
-                    var encodings = this._FaceRecognition.FaceEncodings(image, model: model).ToArray();
-                    Assert.True(encodings.Length > 1, "");
-
-                    foreach (var encoding in encodings)
+                    using (var image = FaceRecognition.LoadImageFile(path, mode))
                     {
-                        encoding.Dispose();
+                        var encodings = this._FaceRecognition.FaceEncodings(image, model: model).ToArray();
+                        Assert.True(encodings.Length > 1, "");
 
-                        try
+                        foreach (var encoding in encodings)
                         {
                             encoding.Dispose();
-                        }
-                        catch
-                        {
-                            Assert.True(false, $"{typeof(FaceEncoding)} must not throw exception even though {nameof(FaceEncoding.Dispose)} method is called again.");
+
+                            try
+                            {
+                                encoding.Dispose();
+                            }
+                            catch
+                            {
+                                Assert.True(false, $"{typeof(FaceEncoding)} must not throw exception even though {nameof(FaceEncoding.Dispose)} method is called again.");
+                            }
+
+                            try
+                            {
+                                var _ = encoding.Size;
+                                Assert.True(false, $"{nameof(FaceEncoding.Size)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
+                            }
+                            catch
+                            {
+                            }
                         }
 
-                        try
-                        {
-                            var _ = encoding.Size;
-                            Assert.True(false, $"{nameof(FaceEncoding.Size)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
-                        }
-                        catch
-                        {
-                        }
+                        foreach (var encoding in encodings)
+                            Assert.True(encoding.IsDisposed, $"{typeof(FaceEncoding)} should be already disposed.");
                     }
-
-                    foreach (var encoding in encodings)
-                        Assert.True(encoding.IsDisposed, $"{typeof(FaceEncoding)} should be already disposed.");
                 }
-            }
         }
 
         [Fact]
@@ -554,7 +593,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void FaceLandmarkHelen()
         {
-            if (!File.Exists(this._HelenModelFile)) 
+            if (!File.Exists(this._HelenModelFile))
                 return;
 
             const string testName = nameof(this.FaceLandmarkHelen);
@@ -715,7 +754,7 @@ namespace FaceRecognitionDotNet.Tests
             {
                 var bytes = array2D.ToBytes();
 
-                var image = FaceRecognition.LoadImage(bytes, array2D.Rows, array2D.Columns, 3);
+                var image = FaceRecognition.LoadImage(bytes, array2D.Rows, array2D.Columns, array2D.Columns * 3, Mode.Rgb);
                 Assert.True(image.Width == 419, $"Width of {path} is wrong");
                 Assert.True(image.Height == 600, $"Height of {path} is wrong");
 
@@ -752,6 +791,77 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
+        public void LoadImage2()
+        {
+            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
+            const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
+
+            var path = Path.Combine(ImageDirectory, file);
+            if (!File.Exists(path))
+            {
+                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path, binary);
+            }
+
+            using (var bitmap = (Bitmap)System.Drawing.Image.FromFile(path))
+            {
+                BitmapData bitmapData = null;
+
+                try
+                {
+                    var rect = new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height);
+                    bitmapData = bitmap.LockBits(rect, ImageLockMode.ReadOnly, bitmap.PixelFormat);
+
+                    var array = bitmapData.Scan0;
+                    var stride = bitmapData.Stride;
+
+                    // ToDo: Windows Bitmap is BGR so it should convert it. But this test case does not take care of accuracy.
+                    var image = FaceRecognition.LoadImage(array, bitmapData.Height, bitmapData.Width, stride, Mode.Rgb);
+                    Assert.True(image.Width == 419, $"Width of {path} is wrong");
+                    Assert.True(image.Height == 600, $"Height of {path} is wrong");
+
+                    image.Dispose();
+                    Assert.True(image.IsDisposed, $"{typeof(Image)} should be already disposed.");
+
+                    try
+                    {
+                        image.Dispose();
+                    }
+                    catch
+                    {
+                        Assert.True(false, $"{typeof(Image)} must not throw exception even though {nameof(Image.Dispose)} method is called again.");
+                    }
+
+                    try
+                    {
+                        var _ = image.Width;
+                        Assert.True(false, $"{nameof(Image.Width)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
+                    }
+                    catch
+                    {
+                    }
+
+                    try
+                    {
+                        var _ = image.Height;
+                        Assert.True(false, $"{nameof(Image.Height)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
+                    }
+                    catch
+                    {
+                    }
+
+                }
+                finally
+                {
+                    if (bitmapData != null)
+                        bitmap.UnlockBits(bitmapData);
+                }
+            }
+        }
+
+        [Fact]
         public void LoadImageGrayscale()
         {
             const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
@@ -772,7 +882,7 @@ namespace FaceRecognitionDotNet.Tests
                 DlibDotNet.Dlib.AssignImage(array2DGray, array2D);
                 var bytes = array2DGray.ToBytes();
 
-                using (var image = FaceRecognition.LoadImage(bytes, array2DGray.Rows, array2DGray.Columns, 1))
+                using (var image = FaceRecognition.LoadImage(bytes, array2DGray.Rows, array2DGray.Columns, array2D.Columns * 1, Mode.Greyscale))
                 {
                     Assert.True(image.Width == 419, $"Width of {path} is wrong");
                     Assert.True(image.Height == 600, $"Height of {path} is wrong");
@@ -815,7 +925,7 @@ namespace FaceRecognitionDotNet.Tests
         {
             try
             {
-                var _ = FaceRecognition.LoadImage(null, 100, 100, 3);
+                var _ = FaceRecognition.LoadImage(null, 100, 100, 300, Mode.Rgb);
                 Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentNullException)}.");
             }
             catch (ArgumentNullException)
@@ -824,7 +934,30 @@ namespace FaceRecognitionDotNet.Tests
 
             try
             {
-                var _ = FaceRecognition.LoadImage(new byte[100 * 100 * 2], 100, 100, 2);
+                var _ = FaceRecognition.LoadImage(new byte[100 * 100 * 3], 100, 100, 400, Mode.Rgb);
+                Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentOutOfRangeException)}.");
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+            }
+        }
+
+        [Fact]
+        public void LoadImage2Exception()
+        {
+            try
+            {
+                var _ = FaceRecognition.LoadImage(IntPtr.Zero, 100, 100, 300, Mode.Rgb);
+                Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentException)}.");
+            }
+            catch (ArgumentException)
+            {
+            }
+
+            try
+            {
+                var dummy = (IntPtr)10;
+                var _ = FaceRecognition.LoadImage(dummy, 100, 100, 50, Mode.Rgb);
                 Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentOutOfRangeException)}.");
             }
             catch (ArgumentOutOfRangeException)
@@ -851,7 +984,7 @@ namespace FaceRecognitionDotNet.Tests
 
             var array2D = DlibDotNet.Dlib.LoadImage<RgbPixel>(path);
             var bytes = array2D.ToBytes();
-            var image2 = FaceRecognition.LoadImage(bytes, array2D.Rows, array2D.Columns, 3);
+            var image2 = FaceRecognition.LoadImage(bytes, array2D.Rows, array2D.Columns, array2D.Columns * 3, Mode.Rgb);
 
             var location1 = this._FaceRecognition.FaceLocations(image1).ToArray();
             var location2 = this._FaceRecognition.FaceLocations(image2).ToArray();
@@ -958,7 +1091,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void PredictAge()
         {
-            if (!File.Exists(this._AgeEstimatorModelFile)) 
+            if (!File.Exists(this._AgeEstimatorModelFile))
                 return;
 
             try
@@ -1092,7 +1225,7 @@ namespace FaceRecognitionDotNet.Tests
                 using (var estimator = new SimpleGenderEstimator(this._GenderEstimatorModelFile))
                 {
                     this._FaceRecognition.CustomGenderEstimator = estimator;
-                    
+
                     var groundTruth = new[]
                     {
                         new {Path = Path.Combine("TestImages", "Gender", "BarackObama_male.jpg"),            Gender = Gender.Male},
@@ -1117,6 +1250,73 @@ namespace FaceRecognitionDotNet.Tests
             finally
             {
                 this._FaceRecognition.CustomGenderEstimator = null;
+            }
+        }
+
+        [Fact]
+        public void PredictHeadPose()
+        {
+            const string testName = nameof(PredictHeadPose);
+
+            if (!File.Exists(this._RollEstimateorModelFile))
+                return;
+            if (!File.Exists(this._PitchEstimateorModelFile))
+                return;
+            if (!File.Exists(this._YawEstimateorModelFile))
+                return;
+
+            try
+            {
+                using (var estimator = new SimpleHeadPoseEstimator(this._RollEstimateorModelFile,
+                                                                   this._PitchEstimateorModelFile,
+                                                                   this._YawEstimateorModelFile))
+                {
+                    this._FaceRecognition.CustomHeadPoseEstimator = estimator;
+
+                    const int pointSize = 2;
+                    const double diff = 20.00;
+                    var groundTruth = new[]
+                    {
+                        new { Path = Path.Combine("TestImages", "HeadPose", "AFW_134212_1_4.jpg"), Pose = new HeadPose(-12.5080101676021,-24.7073657941586, 46.8672622731993) },
+                    };
+
+                    foreach (var gt in groundTruth)
+                        using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                        {
+                            var landmarks = this._FaceRecognition.FaceLandmark(image, null, PredictorModel.Large).ToArray()[0];
+                            var headPose = this._FaceRecognition.PredictHeadPose(landmarks);
+
+                            using (var bitmap = System.Drawing.Image.FromFile(gt.Path))
+                            {
+                                using (var g = Graphics.FromImage(bitmap))
+                                {
+                                    foreach (var landmark in landmarks.Values)
+                                        foreach (var p in landmark)
+                                        {
+                                            g.DrawEllipse(Pens.GreenYellow, p.Point.X - pointSize, p.Point.Y - pointSize, pointSize * 2, pointSize * 2);
+                                        }
+
+                                    DrawAxis(g, landmarks[FacePart.NoseTip], headPose.Roll, headPose.Pitch, headPose.Yaw, 150);
+                                }
+
+                                var directory = Path.Combine(ResultDirectory, testName);
+                                Directory.CreateDirectory(directory);
+
+                                var filename = Path.GetFileName(gt.Path);
+                                filename = Path.ChangeExtension(filename, ".png");
+                                var dst = Path.Combine(directory, filename);
+                                bitmap.Save(dst, System.Drawing.Imaging.ImageFormat.Png);
+                            }
+
+                            Assert.InRange(headPose.Roll, gt.Pose.Roll - diff, gt.Pose.Roll + diff);
+                            Assert.InRange(headPose.Pitch, gt.Pose.Pitch - diff, gt.Pose.Pitch + diff);
+                            Assert.InRange(headPose.Yaw, gt.Pose.Yaw - diff, gt.Pose.Yaw + diff);
+                        }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomHeadPoseEstimator = null;
             }
         }
 
@@ -1509,7 +1709,7 @@ namespace FaceRecognitionDotNet.Tests
                 Assert.True(encodings.Length == 1);
                 Assert.True(encodings[0].Size == 128);
 
-                foreach (var encoding in encodings) 
+                foreach (var encoding in encodings)
                     encoding.Dispose();
             }
         }
@@ -1561,7 +1761,7 @@ namespace FaceRecognitionDotNet.Tests
 
                 var facePartPoints = faceLandmarks[0][FacePart.Chin].ToArray();
                 for (var index = 0; index < facePartPoints.Length; index++)
-                    Assert.True(facePartPoints[index] == points[index]);
+                    Assert.True(facePartPoints[index].Point == points[index]);
             }
         }
 
@@ -1590,7 +1790,7 @@ namespace FaceRecognitionDotNet.Tests
 
                 var facePartPoints = faceLandmarks[0][FacePart.NoseTip].ToArray();
                 for (var index = 0; index < facePartPoints.Length; index++)
-                    Assert.True(facePartPoints[index] == points[index]);
+                    Assert.True(facePartPoints[index].Point == points[index]);
             }
         }
 
@@ -1615,6 +1815,53 @@ namespace FaceRecognitionDotNet.Tests
             {
                 Assert.True(img.Height == 1137);
                 Assert.True(img.Width == 910);
+            }
+        }
+
+        [Fact]
+        public void TestLoadBitmap()
+        {
+            Location mono = null;
+            Location color = null;
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama_8bppIndexed.bmp"), Mode.Greyscale))
+                mono = this._FaceRecognition.FaceLocations(img).ToArray().FirstOrDefault();
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama_24bppRgb.bmp")))
+                color = this._FaceRecognition.FaceLocations(img).ToArray().FirstOrDefault();
+
+            var targets = new[]
+            {
+                new { Action = new Func<Bitmap>(() => (Bitmap)System.Drawing.Image.FromFile(Path.Combine("TestImages", "obama_8bppIndexed.bmp"))), Format = PixelFormat.Format8bppIndexed, Expect = mono },
+                new { Action = new Func<Bitmap>(() => (Bitmap)System.Drawing.Image.FromFile(Path.Combine("TestImages", "obama_24bppRgb.bmp"))),    Format = PixelFormat.Format24bppRgb,    Expect = color },
+                new { Action = new Func<Bitmap>(() => (Bitmap)System.Drawing.Image.FromFile(Path.Combine("TestImages", "obama_32bppArgb.bmp"))),   Format = PixelFormat.Format32bppArgb,   Expect = color },
+                new { Action = new Func<Bitmap>(() =>
+                {
+                    using(var tmp = (Bitmap)System.Drawing.Image.FromFile(Path.Combine("TestImages", "obama_32bppArgb.bmp")))
+                    {
+                        var bitmap = new Bitmap(tmp.Width,tmp.Height,PixelFormat.Format32bppRgb );
+                        var rect = new System.Drawing.Rectangle(System.Drawing.Point.Empty, tmp.Size);
+                        using(var g = Graphics.FromImage(bitmap))
+                            g.DrawImage(tmp, rect,rect, GraphicsUnit.Pixel);
+                        return bitmap;
+                    }
+                }), Format = PixelFormat.Format32bppRgb, Expect = color }
+            };
+            foreach (var target in targets)
+            {
+                using (var bitmap = target.Action.Invoke())
+                {
+                    Assert.True(bitmap.PixelFormat == target.Format);
+                    using (var img = FaceRecognition.LoadImage(bitmap))
+                    {
+                        Assert.True(img.Height == 1137);
+                        Assert.True(img.Width == 910);
+
+                        var location = this._FaceRecognition.FaceLocations(img).ToArray().FirstOrDefault();
+                        Assert.True(location.Left == target.Expect.Left);
+                        Assert.True(location.Top == target.Expect.Top);
+                        Assert.True(location.Right == target.Expect.Right);
+                        Assert.True(location.Bottom == target.Expect.Bottom);
+                    }
+                }
             }
         }
 
@@ -1717,7 +1964,7 @@ namespace FaceRecognitionDotNet.Tests
                 }
 
                 foreach (var batchedDetectedFace in batchedDetectedFaces)
-                foreach (var rect in batchedDetectedFace)
+                    foreach (var rect in batchedDetectedFace)
                         rect.Dispose();
             }
         }
@@ -1727,6 +1974,65 @@ namespace FaceRecognitionDotNet.Tests
         private static bool AssertAlmostEqual(int actual, int expected, int delta)
         {
             return expected - delta <= actual && actual <= expected + delta;
+        }
+
+        private static void DrawAxis(Graphics g, IEnumerable<FacePoint> nose, double roll, double pitch, double yaw, uint size)
+        {
+            // https://github.com/natanielruiz/deep-head-pose/blob/master/code/utils.py
+            // plot_pose_cube
+            pitch = pitch * Math.PI / 180;
+            yaw = -(yaw * Math.PI / 180);
+            roll = roll * Math.PI / 180;
+
+            var tdx = (nose.Max(p => p.Point.X) + nose.Min(p => p.Point.X)) / 2;
+            var tdy = (nose.Max(p => p.Point.Y) + nose.Min(p => p.Point.Y)) / 2;
+
+            // X-Axis pointing to right. drawn in red
+            var x1 = size * (Math.Cos(yaw) * Math.Cos(roll)) + tdx;
+            var y1 = size * (Math.Cos(pitch) * Math.Sin(roll) + Math.Cos(roll) * Math.Sin(pitch) * Math.Sin(yaw)) + tdy;
+
+            // Y-Axis | drawn in green
+            // v
+            var x2 = size * (-Math.Cos(yaw) * Math.Sin(roll)) + tdx;
+            var y2 = size * (Math.Cos(pitch) * Math.Cos(roll) - Math.Sin(pitch) * Math.Sin(yaw) * Math.Sin(roll)) + tdy;
+
+            // Z-Axis (out of the screen) drawn in blue
+            var x3 = size * (Math.Sin(yaw)) + tdx;
+            var y3 = size * (-Math.Cos(yaw) * Math.Sin(pitch)) + tdy;
+
+            using (var pen = new Pen(Color.Red, 3))
+                g.DrawLine(pen, tdx, tdy, (int)x1, (int)y1);
+            using (var pen = new Pen(Color.Green, 3))
+                g.DrawLine(pen, tdx, tdy, (int)x2, (int)y2);
+            using (var pen = new Pen(Color.Blue, 3))
+                g.DrawLine(pen, tdx, tdy, (int)x3, (int)y3);
+        }
+
+        private void EyeBlinkDetect(EyeBlinkDetector eyeBlinkDetector, PredictorModel model)
+        {
+            try
+            {
+                this._FaceRecognition.CustomEyeBlinkDetector = eyeBlinkDetector;
+
+                var groundTruth = new[]
+                {
+                    new { Path = Path.Combine("TestImages", "EyeBlink", "Adele_Haenel_Cannes_2016.jpg"),        Left = true,  Right = false },
+                    new { Path = Path.Combine("TestImages", "EyeBlink", "Adele_Haenel_Cannes_2016_mirror.jpg"), Left = false, Right = true },
+                };
+
+                foreach (var gt in groundTruth)
+                    using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                    {
+                        var landmark = this._FaceRecognition.FaceLandmark(image, null, model).ToArray()[0];
+                        this._FaceRecognition.EyeBlinkDetect(landmark, out var leftBlink, out var rightBlink);
+                        Assert.True(leftBlink == gt.Left, $"Failed to detect '{gt.Path}' for left eye");
+                        Assert.True(rightBlink == gt.Right, $"Failed to detect '{gt.Path}' for right eye");
+                    }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomEyeBlinkDetector = null;
+            }
         }
 
         private void FaceLandmark(string testName, PredictorModel model, bool useKnownLocation)
@@ -1762,7 +2068,7 @@ namespace FaceRecognitionDotNet.Tests
                                     if (landmark.ContainsKey(facePart))
                                     {
                                         draw = true;
-                                        foreach (var p in landmark[facePart].ToArray())
+                                        foreach (var p in landmark[facePart].Select((point, i) => point.Point).ToArray())
                                             g.DrawEllipse(Pens.GreenYellow, p.X - pointSize, p.Y - pointSize, pointSize * 2, pointSize * 2);
                                     }
 
@@ -1783,7 +2089,7 @@ namespace FaceRecognitionDotNet.Tests
                                 foreach (var points in landmark.Values)
                                     foreach (var p in points)
                                     {
-                                        g.DrawEllipse(Pens.GreenYellow, p.X - pointSize, p.Y - pointSize, pointSize * 2, pointSize * 2);
+                                        g.DrawEllipse(Pens.GreenYellow, p.Point.X - pointSize, p.Point.Y - pointSize, pointSize * 2, pointSize * 2);
                                     }
 
                         var directory = Path.Combine(ResultDirectory, testName);
