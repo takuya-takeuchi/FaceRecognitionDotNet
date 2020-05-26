@@ -19,6 +19,9 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |FaceRecognitionDotNet for CUDA 10.1|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA101.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA101)|
 ||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA101.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA101)|
 ||OSX|-|-|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA101.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA101)|
+|FaceRecognitionDotNet for CUDA 10.2|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA102.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA102)|
+||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA102.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA102)|
+||OSX|-|-|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA102.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA102)|
 |FaceRecognitionDotNet for Intel MKL|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
 ||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
 ||OSX|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
