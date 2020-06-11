@@ -375,6 +375,13 @@
             Gets the size of feature data.
             </summary>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceEncoding.GetRawEncoding">
+            <summary>
+            Gets a feature data of face as raw format.
+            </summary>
+            <returns>A <see cref="T:System.Double"/> array that represents a feature data.</returns>
+            <remarks><see cref="T:FaceRecognitionDotNet.FaceEncoding"/> class supports serialization. This method is for interoperability between FaceRecognitionDotNet and dlib.</remarks>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceEncoding.DisposeUnmanaged">
             <summary>
             Releases all unmanaged resources.

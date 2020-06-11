@@ -663,8 +663,6 @@ namespace FaceRecognitionDotNet.Tests
 
             bool atLeast1Time = false;
 
-            var getMatrix = typeof(FaceEncoding).GetField("_Encoding", BindingFlags.Instance | BindingFlags.NonPublic);
-
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
             {
                 using (var image1 = FaceRecognition.LoadImageFile(path1, mode))
@@ -674,15 +672,12 @@ namespace FaceRecognitionDotNet.Tests
                     {
                         atLeast1Time = true;
 
-                        var matrix = getMatrix.GetValue(e1) as Matrix<double>;
-                        Assert.NotNull(matrix);
-
-                        var fe = matrix.ToArray();
+                        var fe = e1.GetRawEncoding();
 
                         using (var e2 = FaceRecognition.LoadFaceEncoding(fe))
                         {
                             var distance = FaceRecognition.FaceDistance(e1, e2);
-                            Console.WriteLine($"Original: {distance}");
+                            this._TestOutputHelper.WriteLine($"Original: {distance}");
                             Assert.True(Math.Abs(distance) < double.Epsilon);
                         }
 
@@ -690,7 +685,7 @@ namespace FaceRecognitionDotNet.Tests
                         using (var e2 = FaceRecognition.LoadFaceEncoding(fe))
                         {
                             var distance = FaceRecognition.FaceDistance(e1, e2);
-                            Console.WriteLine($"Modified: {distance}");
+                            this._TestOutputHelper.WriteLine($"Modified: {distance}");
                             Assert.True(Math.Abs(distance) > double.Epsilon);
                         }
                     }

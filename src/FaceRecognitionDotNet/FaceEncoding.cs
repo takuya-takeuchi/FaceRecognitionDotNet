@@ -59,6 +59,17 @@ namespace FaceRecognitionDotNet
 
         #region Methods
 
+        /// <summary>
+        /// Gets a feature data of face as raw format.
+        /// </summary>
+        /// <returns>A <see cref="double"/> array that represents a feature data.</returns>
+        /// <remarks><see cref="FaceEncoding"/> class supports serialization. This method is for interoperability between FaceRecognitionDotNet and dlib.</remarks>
+        public double[] GetRawEncoding()
+        {
+            this.ThrowIfDisposed();
+            return this._Encoding.ToArray();
+        }
+
         #region Overrides 
 
         /// <summary>
