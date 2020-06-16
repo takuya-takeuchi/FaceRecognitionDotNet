@@ -131,7 +131,7 @@ namespace FaceDetection
 
         private static void TestImage(string imageToCheck, Model model)
         {
-            using (var unknownImage = FaceRecognition.LoadImageFile(imageToCheck))
+            using (var unknownImage = Image.Load(imageToCheck))
             {
                 var faceLocations = _FaceRecognition.FaceLocations(unknownImage, 0, model).ToArray();
 

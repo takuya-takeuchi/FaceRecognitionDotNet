@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using FaceRecognitionDotNet;
 using FaceRecognitionDotNet.Extensions;
+using Image = FaceRecognitionDotNet.Image;
 
 namespace CustomClassificationDemo
 {
@@ -17,7 +18,7 @@ namespace CustomClassificationDemo
             var imageFile = "DianaPrincessOfWales_1997_36.jpg";
 
             using (var fr = FaceRecognition.Create("models"))
-            using (var image = FaceRecognition.LoadImageFile(imageFile))
+            using (var image = Image.Load(imageFile))
             using (var bitmap = (Bitmap)System.Drawing.Image.FromFile(imageFile))
             using (var g = Graphics.FromImage(bitmap))
             {

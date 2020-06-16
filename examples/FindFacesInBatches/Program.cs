@@ -70,7 +70,7 @@ namespace FindFacesInBatches
                                 var array = new byte[tmp.Width * tmp.Height * tmp.ElemSize()];
                                 Marshal.Copy(tmp.Data, array, 0, array.Length);
 
-                                var image = FaceRecognition.LoadImage(array, tmp.Rows, tmp.Cols, tmp.Width * tmp.ElemSize(), Mode.Rgb);
+                                var image = Image.Load(array, tmp.Rows, tmp.Cols, tmp.Width * tmp.ElemSize(), Mode.Rgb);
 
                                 // Save each frame of the video to a list
                                 frameCount += 1;

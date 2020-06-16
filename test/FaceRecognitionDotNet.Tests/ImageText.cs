@@ -25,7 +25,7 @@ namespace FaceRecognitionDotNet.Tests
                 new { Name = "saved.png", Format = ImageFormat.Png },
             };
 
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var img = Image.Load(Path.Combine("TestImages", "obama.jpg")))
             {
                 var directory = Path.Combine(ResultDirectory, testName);
                 Directory.CreateDirectory(directory);

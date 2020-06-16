@@ -110,26 +110,26 @@ namespace Benchmark
 
         private static Tuple<Image, Location[]> SetupEncodeFace(string path)
         {
-            var image = FaceRecognition.LoadImageFile(path);
+            var image = Image.Load(path);
             var locations = FaceRecognition.FaceLocations(image).ToArray();
             return new Tuple<Image, Location[]>(image, locations);
         }
 
         private static Image SetupEndToEnd(string path)
         {
-            return FaceRecognition.LoadImageFile(path);
+            return Image.Load(path);
         }
 
         private static Tuple<Image, Location[]> SetupFaceLandmarks(string path)
         {
-            var image = FaceRecognition.LoadImageFile(path);
+            var image = Image.Load(path);
             var locations = FaceRecognition.FaceLocations(image).ToArray();
             return new Tuple<Image, Location[]>(image, locations);
         }
 
         private static Image SetupLocateFaces(string path)
         {
-            return FaceRecognition.LoadImageFile(path);
+            return Image.Load(path);
         }
 
         private static void TestEncodeFace(Tuple<Image, Location[]> tuple)

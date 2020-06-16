@@ -116,7 +116,7 @@ namespace HelenTraining
                             if (File.Exists(path))
                             {
                                 found = true;
-                                using (var fi = FaceRecognition.LoadImageFile(path))
+                                using (var fi = FaceRecognitionDotNet.Image.Load(path))
                                 {
                                     var locations = _FaceRecognition.FaceLocations(fi, 1, Model.Hog).ToArray();
                                     if (locations.Length != 1)
@@ -319,7 +319,7 @@ namespace HelenTraining
                     _FaceRecognition = FaceRecognition.Create(directory);
 
                     using (var predictor = ShapePredictor.Deserialize(modelFile))
-                    using (var image = FaceRecognition.LoadImageFile(imageFile))
+                    using (var image = FaceRecognitionDotNet.Image.Load(imageFile))
                     using (var mat = Dlib.LoadImageAsMatrix<RgbPixel>(imageFile))
                     using (var bitmap = (Bitmap)System.Drawing.Image.FromFile(imageFile))
                     using (var org = new Bitmap((int)(bitmap.Width * scale), (int)(bitmap.Height * scale)))

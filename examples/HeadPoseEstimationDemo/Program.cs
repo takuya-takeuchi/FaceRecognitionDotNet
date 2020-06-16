@@ -50,7 +50,7 @@ namespace HeadPoseEstimationDemo
                                 // get the correct face landmarks
                                 var bytes = new byte[rows * cols * elems];
                                 Marshal.Copy(smallFrame.Data, bytes, 0, bytes.Length);
-                                using (var rgbSmallFrame = FaceRecognition.LoadImage(bytes, rows, cols, cols * elems, Mode.Rgb))
+                                using (var rgbSmallFrame = Image.Load(bytes, rows, cols, cols * elems, Mode.Rgb))
                                 {
                                     var faceLandmarksList = fr.FaceLandmark(rgbSmallFrame).ToArray();
 

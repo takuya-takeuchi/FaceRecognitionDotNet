@@ -62,7 +62,7 @@ namespace FaceEncodingPerformance
                 }
 
                 using (var fr = FaceRecognition.Create(directory))
-                using (var image = FaceRecognition.LoadImageFile(path))
+                using (var image = Image.Load(path))
                 {
                     var sw = new Stopwatch();
                     sw.Start();

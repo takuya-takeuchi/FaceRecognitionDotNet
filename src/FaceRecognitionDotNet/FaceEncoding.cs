@@ -15,15 +15,34 @@ namespace FaceRecognitionDotNet
         #region Fields
 
         [NonSerialized]
-        private readonly Matrix<double> _Encoding;
+        private readonly Matrix<double> _Matrix;
 
         #endregion
 
         #region Constructors
 
-        internal FaceEncoding(Matrix<double> encoding)
+        /// <summary>
+        /// Creates an <see cref="FaceEncoding"/> from the <see cref="double"/> array.
+        /// </summary>
+        /// <param name="encoding">The <see cref="double"/> array contains face encoding data.</param>
+        /// <returns>The <see cref="FaceEncoding"/> this method creates.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="encoding"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="encoding"/> must be 128.</exception>
+        public FaceEncoding(double[] encoding)
         {
-            this._Encoding = encoding;
+            if (encoding == null)
+                throw new ArgumentNullException(nameof(encoding));
+            if (encoding.Length != 128)
+                throw new ArgumentOutOfRangeException($"{nameof(encoding)}.{nameof(encoding.Length)} must be 128.");
+
+            _Matrix = Matrix<double>.CreateTemplateParameterizeMatrix(0, 1);
+            _Matrix.SetSize(128);
+            _Matrix.Assign(encoding);
+        }
+
+        public FaceEncoding(Matrix<double> matrix)
+        {
+            this._Matrix = matrix;
         }
 
         private FaceEncoding(SerializationInfo info, StreamingContext context)
@@ -31,17 +50,19 @@ namespace FaceRecognitionDotNet
             if (info == null)
                 throw new ArgumentNullException(nameof(info));
 
-            var array = (double[])info.GetValue(nameof(this._Encoding), typeof(double[]));
-            var row = (int)info.GetValue(nameof(this._Encoding.Rows), typeof(int));
-            var column = (int)info.GetValue(nameof(this._Encoding.Columns), typeof(int));
-            this._Encoding = new Matrix<double>(array, row, column);
+            var array = (double[])info.GetValue(nameof(this._Matrix), typeof(double[]));
+            var row = (int)info.GetValue(nameof(this._Matrix.Rows), typeof(int));
+            var column = (int)info.GetValue(nameof(this._Matrix.Columns), typeof(int));
+            this._Matrix = new Matrix<double>(array, row, column);
         }
 
         #endregion
 
         #region Properties
 
-        internal Matrix<double> Encoding => this._Encoding;
+        public Matrix<double> Matrix => this._Matrix;
+
+        public double[] Torray => _Matrix.ToArray();
 
         /// <summary>
         /// Gets the size of feature data.
@@ -51,7 +72,7 @@ namespace FaceRecognitionDotNet
             get
             {
                 this.ThrowIfDisposed();
-                return this._Encoding.Size;
+                return this._Matrix.Size;
             }
         }
 
@@ -67,7 +88,7 @@ namespace FaceRecognitionDotNet
         protected override void DisposeUnmanaged()
         {
             base.DisposeUnmanaged();
-            this._Encoding?.Dispose();
+            this._Matrix?.Dispose();
         }
 
         #endregion
@@ -83,13 +104,12 @@ namespace FaceRecognitionDotNet
         /// <param name="context">The destination (see <see cref="StreamingContext"/>) for this serialization.</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue(nameof(this._Encoding), this._Encoding.ToArray());
-            info.AddValue(nameof(this._Encoding.Rows), this._Encoding.Rows);
-            info.AddValue(nameof(this._Encoding.Columns), this._Encoding.Columns);
+            info.AddValue(nameof(this._Matrix), this._Matrix.ToArray());
+            info.AddValue(nameof(this._Matrix.Rows), this._Matrix.Rows);
+            info.AddValue(nameof(this._Matrix.Columns), this._Matrix.Columns);
         }
 
         #endregion
-
     }
 
 }

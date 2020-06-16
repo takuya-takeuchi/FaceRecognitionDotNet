@@ -65,9 +65,9 @@ namespace RgbBgr
 
                     using (var fr = FaceRecognition.Create("models"))
                     {
-                        using (var fileImage = FaceRecognition.LoadImageFile(File))
-                        using (var rgbImage = FaceRecognition.LoadImage(rgb, height, width, width * 3, Mode.Rgb))
-                        using (var bgrImage = FaceRecognition.LoadImage(bgr, height, width, width * 3, Mode.Rgb))
+                        using (var fileImage = Image.Load(File))
+                        using (var rgbImage = Image.Load(rgb, height, width, width * 3, Mode.Rgb))
+                        using (var bgrImage = Image.Load(bgr, height, width, width * 3, Mode.Rgb))
                         {
                             var fileDetect = fr.FaceLocations(fileImage, 1, Model.Hog).ToArray().FirstOrDefault();
                             var rgbDetect = fr.FaceLocations(rgbImage, 1, Model.Hog).ToArray().FirstOrDefault();
