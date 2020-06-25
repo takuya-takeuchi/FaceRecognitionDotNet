@@ -26,6 +26,8 @@ namespace FaceRecognitionDotNet.Tests
 
         private const string ImageDirectory = "Images";
 
+        private const string TestImageDirectory = "TestImages";
+
         private readonly string ModelDirectory = "Models";
 
         private const string ModelTempDirectory = "TempModels";
@@ -122,30 +124,11 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void CompareFacesFalse()
         {
-            var bidenUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Biden_2013.jpg";
             var bidenFile = "480px-Biden_2013.jpg";
-            var obamaUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg";
             var obamaFile = "480px-President_Barack_Obama.jpg";
 
-            var path1 = Path.Combine(ImageDirectory, bidenFile);
-            if (!File.Exists(path1))
-            {
-                var url = $"{bidenUrl}/{bidenFile}";
-                var binary = new HttpClient().GetByteArrayAsync(url).Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path1, binary);
-            }
-
-            var path2 = Path.Combine(ImageDirectory, obamaFile);
-            if (!File.Exists(path2))
-            {
-                var url = $"{obamaUrl}/{obamaFile}";
-                var binary = new HttpClient().GetByteArrayAsync(url).Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path2, binary);
-            }
+            var path1 = Path.Combine(TestImageDirectory, bidenFile);
+            var path2 = Path.Combine(TestImageDirectory, obamaFile);
 
             bool atLeast1Time = false;
 
@@ -369,30 +352,11 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void FaceDistance()
         {
-            var bidenUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Biden_2013.jpg";
             var bidenFile = "480px-Biden_2013.jpg";
-            var obamaUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg";
             var obamaFile = "480px-President_Barack_Obama.jpg";
 
-            var path1 = Path.Combine(ImageDirectory, bidenFile);
-            if (!File.Exists(path1))
-            {
-                var url = $"{bidenUrl}/{bidenFile}";
-                var binary = new HttpClient().GetByteArrayAsync(url).Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path1, binary);
-            }
-
-            var path2 = Path.Combine(ImageDirectory, obamaFile);
-            if (!File.Exists(path2))
-            {
-                var url = $"{obamaUrl}/{obamaFile}";
-                var binary = new HttpClient().GetByteArrayAsync(url).Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path2, binary);
-            }
+            var path1 = Path.Combine(TestImageDirectory, bidenFile);
+            var path2 = Path.Combine(TestImageDirectory, obamaFile);
 
             bool atLeast1Time = false;
 
@@ -428,30 +392,11 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void FaceDistanceDeserialized()
         {
-            var bidenUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Biden_2013.jpg";
             var bidenFile = "480px-Biden_2013.jpg";
-            var obamaUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg";
             var obamaFile = "480px-President_Barack_Obama.jpg";
 
-            var path1 = Path.Combine(ImageDirectory, bidenFile);
-            if (!File.Exists(path1))
-            {
-                var url = $"{bidenUrl}/{bidenFile}";
-                var binary = new HttpClient().GetByteArrayAsync(url).Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path1, binary);
-            }
-
-            var path2 = Path.Combine(ImageDirectory, obamaFile);
-            if (!File.Exists(path2))
-            {
-                var url = $"{obamaUrl}/{obamaFile}";
-                var binary = new HttpClient().GetByteArrayAsync(url).Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path2, binary);
-            }
+            var path1 = Path.Combine(TestImageDirectory, bidenFile);
+            var path2 = Path.Combine(TestImageDirectory, obamaFile);
 
             bool atLeast1Time = false;
 
@@ -648,19 +593,8 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void LoadFaceEncoding()
         {
-            var bidenUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Biden_2013.jpg";
             var bidenFile = "480px-Biden_2013.jpg";
-
-            var path1 = Path.Combine(ImageDirectory, bidenFile);
-            if (!File.Exists(path1))
-            {
-                var url = $"{bidenUrl}/{bidenFile}";
-                var binary = new HttpClient().GetByteArrayAsync(url).Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path1, binary);
-            }
-
+            var path1 = Path.Combine(TestImageDirectory, bidenFile);
             bool atLeast1Time = false;
 
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
@@ -1105,10 +1039,10 @@ namespace FaceRecognitionDotNet.Tests
                     // 7: (60, 100)
                     var groundTruth = new[]
                     {
-                        new { Path = Path.Combine("TestImages", "Age", "NelsonMandela_2008_90.jpg"),        Age = new uint[]{ 7 } },
-                        new { Path = Path.Combine("TestImages", "Age", "MacaulayCulkin_1991_11.jpg"),       Age = new uint[]{ 2, 3 } },
-                        new { Path = Path.Combine("TestImages", "Age", "DianaPrincessOfWales_1997_36.jpg"), Age = new uint[]{ 4, 5 } },
-                        new { Path = Path.Combine("TestImages", "Age", "MaoAsada_2014_24.jpg"),             Age = new uint[]{ 3, 4 } }
+                        new { Path = Path.Combine(TestImageDirectory, "Age", "NelsonMandela_2008_90.jpg"),        Age = new uint[]{ 7 } },
+                        new { Path = Path.Combine(TestImageDirectory, "Age", "MacaulayCulkin_1991_11.jpg"),       Age = new uint[]{ 2, 3 } },
+                        new { Path = Path.Combine(TestImageDirectory, "Age", "DianaPrincessOfWales_1997_36.jpg"), Age = new uint[]{ 4, 5 } },
+                        new { Path = Path.Combine(TestImageDirectory, "Age", "MaoAsada_2014_24.jpg"),             Age = new uint[]{ 3, 4 } }
                     };
 
                     foreach (var gt in groundTruth)
@@ -1140,11 +1074,11 @@ namespace FaceRecognitionDotNet.Tests
 
                     var groundTruth = new[]
                     {
-                        new { Path = Path.Combine("TestImages", "Gender", "BarackObama_male.jpg"),            Gender = Gender.Male },
-                        new { Path = Path.Combine("TestImages", "Gender", "DianaPrincessOfWales_female.jpg"), Gender = Gender.Female },
-                        new { Path = Path.Combine("TestImages", "Gender", "MaoAsada_female.jpg"),             Gender = Gender.Female },
-                        new { Path = Path.Combine("TestImages", "Gender", "ShinzoAbe_male.jpg"),              Gender = Gender.Male },
-                        new { Path = Path.Combine("TestImages", "Gender", "WhitneyHouston_female.jpg"),       Gender = Gender.Female },
+                        new { Path = Path.Combine(TestImageDirectory, "Gender", "BarackObama_male.jpg"),            Gender = Gender.Male },
+                        new { Path = Path.Combine(TestImageDirectory, "Gender", "DianaPrincessOfWales_female.jpg"), Gender = Gender.Female },
+                        new { Path = Path.Combine(TestImageDirectory, "Gender", "MaoAsada_female.jpg"),             Gender = Gender.Female },
+                        new { Path = Path.Combine(TestImageDirectory, "Gender", "ShinzoAbe_male.jpg"),              Gender = Gender.Male },
+                        new { Path = Path.Combine(TestImageDirectory, "Gender", "WhitneyHouston_female.jpg"),       Gender = Gender.Female },
                     };
 
                     foreach (var gt in groundTruth)
@@ -1184,10 +1118,10 @@ namespace FaceRecognitionDotNet.Tests
                     // 7: (60, 100)
                     var groundTruth = new[]
                     {
-                        new {Path = Path.Combine("TestImages", "Age", "NelsonMandela_2008_90.jpg"),        Age = new uint[] {7}},
-                        new {Path = Path.Combine("TestImages", "Age", "MacaulayCulkin_1991_11.jpg"),       Age = new uint[] {2, 3}},
-                        new {Path = Path.Combine("TestImages", "Age", "DianaPrincessOfWales_1997_36.jpg"), Age = new uint[] {4, 5}},
-                        new {Path = Path.Combine("TestImages", "Age", "MaoAsada_2014_24.jpg"),             Age = new uint[] {3, 4}}
+                        new {Path = Path.Combine(TestImageDirectory, "Age", "NelsonMandela_2008_90.jpg"),        Age = new uint[] {7}},
+                        new {Path = Path.Combine(TestImageDirectory, "Age", "MacaulayCulkin_1991_11.jpg"),       Age = new uint[] {2, 3}},
+                        new {Path = Path.Combine(TestImageDirectory, "Age", "DianaPrincessOfWales_1997_36.jpg"), Age = new uint[] {4, 5}},
+                        new {Path = Path.Combine(TestImageDirectory, "Age", "MaoAsada_2014_24.jpg"),             Age = new uint[] {3, 4}}
                     };
 
                     foreach (var gt in groundTruth)
@@ -1223,11 +1157,11 @@ namespace FaceRecognitionDotNet.Tests
 
                     var groundTruth = new[]
                     {
-                        new {Path = Path.Combine("TestImages", "Gender", "BarackObama_male.jpg"),            Gender = Gender.Male},
-                        new {Path = Path.Combine("TestImages", "Gender", "DianaPrincessOfWales_female.jpg"), Gender = Gender.Female},
-                        new {Path = Path.Combine("TestImages", "Gender", "MaoAsada_female.jpg"),             Gender = Gender.Female},
-                        new {Path = Path.Combine("TestImages", "Gender", "ShinzoAbe_male.jpg"),              Gender = Gender.Male},
-                        new {Path = Path.Combine("TestImages", "Gender", "WhitneyHouston_female.jpg"),       Gender = Gender.Female},
+                        new {Path = Path.Combine(TestImageDirectory, "Gender", "BarackObama_male.jpg"),            Gender = Gender.Male},
+                        new {Path = Path.Combine(TestImageDirectory, "Gender", "DianaPrincessOfWales_female.jpg"), Gender = Gender.Female},
+                        new {Path = Path.Combine(TestImageDirectory, "Gender", "MaoAsada_female.jpg"),             Gender = Gender.Female},
+                        new {Path = Path.Combine(TestImageDirectory, "Gender", "ShinzoAbe_male.jpg"),              Gender = Gender.Male},
+                        new {Path = Path.Combine(TestImageDirectory, "Gender", "WhitneyHouston_female.jpg"),       Gender = Gender.Female},
                     };
 
                     foreach (var gt in groundTruth)
@@ -1272,7 +1206,7 @@ namespace FaceRecognitionDotNet.Tests
                     const double diff = 20.00;
                     var groundTruth = new[]
                     {
-                        new { Path = Path.Combine("TestImages", "HeadPose", "AFW_134212_1_4.jpg"), Pose = new HeadPose(-12.5080101676021,-24.7073657941586, 46.8672622731993) },
+                        new { Path = Path.Combine(TestImageDirectory, "HeadPose", "AFW_134212_1_4.jpg"), Pose = new HeadPose(-12.5080101676021,-24.7073657941586, 46.8672622731993) },
                     };
 
                     foreach (var gt in groundTruth)
@@ -1318,7 +1252,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestBatchedFaceLocations()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
             {
                 var images = new[] { img, img, img };
                 var batchedDetectedFaces = this._FaceRecognition.BatchFaceLocations(images, 0).ToArray();
@@ -1336,7 +1270,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestBatchedFaceLocationsException()
         {
-            using (var _ = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var _ = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
             {
                 var images = new Image[] { };
 
@@ -1363,7 +1297,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestCnnFaceLocations()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
             {
                 var detectedFaces = this._FaceRecognition.FaceLocations(img, 1, Model.Cnn).ToArray();
                 Assert.True(detectedFaces.Length == 1);
@@ -1377,7 +1311,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestCnnRawFaceLocations()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
             {
                 var detectedFaces = this.RawFaceLocations(img, 1, Model.Cnn).ToArray();
                 Assert.True(detectedFaces.Length == 1);
@@ -1392,7 +1326,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestCnnRawFaceLocations32BitImage()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "32bit.png")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "32bit.png")))
             {
                 var detectedFaces = this.RawFaceLocations(img, 1, Model.Cnn).ToArray();
                 Assert.True(detectedFaces.Length == 1);
@@ -1407,10 +1341,10 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestCompareFaces()
         {
-            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
-            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama2.jpg")))
-            using (var imgA3 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama3.jpg")))
-            using (var imgB1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "biden.jpg")))
+            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
+            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama2.jpg")))
+            using (var imgA3 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama3.jpg")))
+            using (var imgB1 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "biden.jpg")))
             {
                 using (var faceEncodingA1 = this._FaceRecognition.FaceEncodings(imgA1).ToArray()[0])
                 using (var faceEncodingA2 = this._FaceRecognition.FaceEncodings(imgA2).ToArray()[0])
@@ -1436,8 +1370,8 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestCompareFaceException()
         {
-            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
-            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama2.jpg")))
+            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
+            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama2.jpg")))
             {
                 using (var faceEncodingA1 = this._FaceRecognition.FaceEncodings(imgA1).ToArray()[0])
                 using (var faceEncodingA2 = this._FaceRecognition.FaceEncodings(imgA2).ToArray()[0])
@@ -1466,10 +1400,10 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestCompareFacesException()
         {
-            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
-            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama2.jpg")))
-            using (var imgA3 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama3.jpg")))
-            using (var imgB1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "biden.jpg")))
+            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
+            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama2.jpg")))
+            using (var imgA3 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama3.jpg")))
+            using (var imgB1 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "biden.jpg")))
             {
                 using (var faceEncodingA1 = this._FaceRecognition.FaceEncodings(imgA1).ToArray()[0])
                 using (var faceEncodingA2 = this._FaceRecognition.FaceEncodings(imgA2).ToArray()[0])
@@ -1518,7 +1452,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestCompareFacesEmptyLists()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "biden.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "biden.jpg")))
             {
                 var encoding = this._FaceRecognition.FaceEncodings(img).ToArray()[0];
 
@@ -1535,10 +1469,10 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestFaceDistance()
         {
-            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
-            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama2.jpg")))
-            using (var imgA3 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama3.jpg")))
-            using (var imgB1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "biden.jpg")))
+            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
+            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama2.jpg")))
+            using (var imgA3 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama3.jpg")))
+            using (var imgB1 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "biden.jpg")))
             {
                 using (var faceEncodingA1 = this._FaceRecognition.FaceEncodings(imgA1).ToArray()[0])
                 using (var faceEncodingA2 = this._FaceRecognition.FaceEncodings(imgA2).ToArray()[0])
@@ -1564,10 +1498,10 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestFaceDistances()
         {
-            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
-            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama2.jpg")))
-            using (var imgA3 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama3.jpg")))
-            using (var imgB1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "biden.jpg")))
+            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
+            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama2.jpg")))
+            using (var imgA3 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama3.jpg")))
+            using (var imgB1 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "biden.jpg")))
             {
                 using (var faceEncodingA1 = this._FaceRecognition.FaceEncodings(imgA1).ToArray()[0])
                 using (var faceEncodingA2 = this._FaceRecognition.FaceEncodings(imgA2).ToArray()[0])
@@ -1599,8 +1533,8 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void FaceDistanceException()
         {
-            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
-            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama2.jpg")))
+            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
+            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama2.jpg")))
             {
                 using (var faceEncodingA1 = this._FaceRecognition.FaceEncodings(imgA1).ToArray()[0])
                 using (var faceEncodingA2 = this._FaceRecognition.FaceEncodings(imgA2).ToArray()[0])
@@ -1629,10 +1563,10 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void FaceDistancesException()
         {
-            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
-            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama2.jpg")))
-            using (var imgA3 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama3.jpg")))
-            using (var imgB1 = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "biden.jpg")))
+            using (var imgA1 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
+            using (var imgA2 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama2.jpg")))
+            using (var imgA3 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama3.jpg")))
+            using (var imgB1 = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "biden.jpg")))
             {
                 using (var faceEncodingA1 = this._FaceRecognition.FaceEncodings(imgA1).ToArray()[0])
                 using (var faceEncodingA2 = this._FaceRecognition.FaceEncodings(imgA2).ToArray()[0])
@@ -1681,7 +1615,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestFaceDistanceEmptyLists()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "biden.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "biden.jpg")))
             {
                 var encoding = this._FaceRecognition.FaceEncodings(img).ToArray()[0];
 
@@ -1698,7 +1632,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestFaceEncodings()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
             {
                 var encodings = this._FaceRecognition.FaceEncodings(img).ToArray();
                 Assert.True(encodings.Length == 1);
@@ -1712,7 +1646,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestFaceLandmarks()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
             {
                 var faceLandmarks = this._FaceRecognition.FaceLandmark(img).ToArray();
 
@@ -1763,7 +1697,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestFaceLandmarksSmallModel()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
             {
                 var faceLandmarks = this._FaceRecognition.FaceLandmark(img, null, PredictorModel.Small).ToArray();
 
@@ -1792,7 +1726,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestFaceLocations()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
             {
                 var detectedFaces = this._FaceRecognition.FaceLocations(img).ToArray();
                 Assert.True(detectedFaces.Length == 1);
@@ -1806,7 +1740,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestLoadImageFile()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
             {
                 Assert.True(img.Height == 1137);
                 Assert.True(img.Width == 910);
@@ -1818,19 +1752,19 @@ namespace FaceRecognitionDotNet.Tests
         {
             Location mono = null;
             Location color = null;
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama_8bppIndexed.bmp"), Mode.Greyscale))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama_8bppIndexed.bmp"), Mode.Greyscale))
                 mono = this._FaceRecognition.FaceLocations(img).ToArray().FirstOrDefault();
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama_24bppRgb.bmp")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama_24bppRgb.bmp")))
                 color = this._FaceRecognition.FaceLocations(img).ToArray().FirstOrDefault();
 
             var targets = new[]
             {
-                new { Action = new Func<Bitmap>(() => (Bitmap)System.Drawing.Image.FromFile(Path.Combine("TestImages", "obama_8bppIndexed.bmp"))), Format = PixelFormat.Format8bppIndexed, Expect = mono },
-                new { Action = new Func<Bitmap>(() => (Bitmap)System.Drawing.Image.FromFile(Path.Combine("TestImages", "obama_24bppRgb.bmp"))),    Format = PixelFormat.Format24bppRgb,    Expect = color },
-                new { Action = new Func<Bitmap>(() => (Bitmap)System.Drawing.Image.FromFile(Path.Combine("TestImages", "obama_32bppArgb.bmp"))),   Format = PixelFormat.Format32bppArgb,   Expect = color },
+                new { Action = new Func<Bitmap>(() => (Bitmap)System.Drawing.Image.FromFile(Path.Combine(TestImageDirectory, "obama_8bppIndexed.bmp"))), Format = PixelFormat.Format8bppIndexed, Expect = mono },
+                new { Action = new Func<Bitmap>(() => (Bitmap)System.Drawing.Image.FromFile(Path.Combine(TestImageDirectory, "obama_24bppRgb.bmp"))),    Format = PixelFormat.Format24bppRgb,    Expect = color },
+                new { Action = new Func<Bitmap>(() => (Bitmap)System.Drawing.Image.FromFile(Path.Combine(TestImageDirectory, "obama_32bppArgb.bmp"))),   Format = PixelFormat.Format32bppArgb,   Expect = color },
                 new { Action = new Func<Bitmap>(() =>
                 {
-                    using(var tmp = (Bitmap)System.Drawing.Image.FromFile(Path.Combine("TestImages", "obama_32bppArgb.bmp")))
+                    using(var tmp = (Bitmap)System.Drawing.Image.FromFile(Path.Combine(TestImageDirectory, "obama_32bppArgb.bmp")))
                     {
                         var bitmap = new Bitmap(tmp.Width,tmp.Height,PixelFormat.Format32bppRgb );
                         var rect = new System.Drawing.Rectangle(System.Drawing.Point.Empty, tmp.Size);
@@ -1863,7 +1797,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestLoadImageFile32Bit()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "32bit.png")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "32bit.png")))
             {
                 Assert.True(img.Height == 1200);
                 Assert.True(img.Width == 626);
@@ -1873,7 +1807,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestPartialFaceLocations()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama_partial_face.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama_partial_face.jpg")))
             {
                 var detectedFaces = this._FaceRecognition.FaceLocations(img).ToArray();
                 Assert.True(detectedFaces.Length == 1);
@@ -1883,7 +1817,7 @@ namespace FaceRecognitionDotNet.Tests
                 Assert.True(detectedFaces[0].Left == 0);
             }
 
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama_partial_face2.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama_partial_face2.jpg")))
             {
                 var detectedFaces = this._FaceRecognition.FaceLocations(img).ToArray();
                 Assert.True(detectedFaces.Length == 1);
@@ -1897,7 +1831,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestRawFaceLandmarks()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
             {
                 var faceLandmarks = this.RawFaceLandmarks(img).ToArray();
                 var exampleLandmark = faceLandmarks[0].GetPart(10);
@@ -1915,7 +1849,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestRawFaceLocations()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
             {
                 var detectedFaces = this.RawFaceLocations(img).ToArray();
                 Assert.True(detectedFaces.Length == 1);
@@ -1930,7 +1864,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestRawFaceLocations32BitImage()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "32bit.png")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "32bit.png")))
             {
                 var detectedFaces = this.RawFaceLocations(img).ToArray();
                 Assert.True(detectedFaces.Length == 1);
@@ -1945,7 +1879,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestRawFaceLocationsBatched()
         {
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
             {
                 var images = new[] { img, img, img };
                 var batchedDetectedFaces = this.RawFaceLocationsBatched(images, 0).ToArray();
@@ -2011,8 +1945,8 @@ namespace FaceRecognitionDotNet.Tests
 
                 var groundTruth = new[]
                 {
-                    new { Path = Path.Combine("TestImages", "EyeBlink", "Adele_Haenel_Cannes_2016.jpg"),        Left = true,  Right = false },
-                    new { Path = Path.Combine("TestImages", "EyeBlink", "Adele_Haenel_Cannes_2016_mirror.jpg"), Left = false, Right = true },
+                    new { Path = Path.Combine(TestImageDirectory, "EyeBlink", "Adele_Haenel_Cannes_2016.jpg"),        Left = true,  Right = false },
+                    new { Path = Path.Combine(TestImageDirectory, "EyeBlink", "Adele_Haenel_Cannes_2016_mirror.jpg"), Left = false, Right = true },
                 };
 
                 foreach (var gt in groundTruth)
