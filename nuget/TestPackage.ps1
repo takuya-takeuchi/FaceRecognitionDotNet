@@ -60,7 +60,18 @@ function RunTest($BuildTargets, $DependencyHash)
          Remove-Item -Path "$TargetDir" -Recurse -Force
       }
 
-      Copy-Item "$NativeTestDir" "$WorkDir" -Recurse
+      $TargetDirTestImages = Join-Path $TargetDir TestImages
+      if (Test-Path "$TargetDirTestImages") {
+         Remove-Item -Path "$TargetDirTestImages" -Recurse -Force
+      }
+
+      $NativeTestDirTestImages = Join-Path $NativeTestDir TestImages
+      $NativeTestDirSources = Join-Path $NativeTestDir "*.cs"
+      $NativeTestDirProject = Join-Path $NativeTestDir "FaceRecognitionDotNet.Tests.csproj"
+      Copy-Item "$NativeTestDirTestImages" "$TargetDirTestImages" -Recurse
+      Copy-Item "$NativeTestDirSources" "$TargetDir" -Recurse
+      Copy-Item "$NativeTestDirProject" "$TargetDir" -Recurse
+      
 
       Set-Location -Path "$TargetDir"
 
