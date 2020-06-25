@@ -375,6 +375,13 @@
             特徴データのサイズを取得します。
             </summary>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceEncoding.GetRawEncoding">
+            <summary>
+            生のフォーマットで顔の特徴データを取得します。
+            </summary>
+            <returns>顔の特徴データを表現する <see cref="T:System.Double"/> の配列。</returns>
+            <remarks><see cref="T:FaceRecognitionDotNet.FaceEncoding"/> クラスはシリアル化をサポートしています。このメソッドは FaceRecognitionDotNet と dlib の間の相互運用性のためです。</remarks>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceEncoding.DisposeUnmanaged">
             <summary>
             アンマネージ リソースを解放します。

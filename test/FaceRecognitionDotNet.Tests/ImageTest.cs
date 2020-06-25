@@ -11,6 +11,8 @@ namespace FaceRecognitionDotNet.Tests
 
         private const string ResultDirectory = "Result";
 
+        private const string TestImageDirectory = "TestImages";
+
         #endregion
 
         [Fact]
@@ -25,7 +27,7 @@ namespace FaceRecognitionDotNet.Tests
                 new { Name = "saved.png", Format = ImageFormat.Png },
             };
 
-            using (var img = FaceRecognition.LoadImageFile(Path.Combine("TestImages", "obama.jpg")))
+            using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama.jpg")))
             {
                 var directory = Path.Combine(ResultDirectory, testName);
                 Directory.CreateDirectory(directory);
