@@ -20,11 +20,11 @@ This library is ported from https://github.com/ageitgey/face_recognition by C#.<
 
     <dependencies>
       <group targetFramework="net461">
-        <dependency id="DlibDotNet" version="19.18.0.20200525" />
+        <dependency id="DlibDotNet.CUDA92" version="19.18.0.20200525" />
       </group>
       <group targetFramework="netstandard2.0">
         <dependency id="System.Drawing.Common" version="4.7.0" />
-        <dependency id="DlibDotNet" version="19.18.0.20200525" />
+        <dependency id="DlibDotNet.CUDA92" version="19.18.0.20200525" />
       </group>
     </dependencies>
     <frameworkAssemblies>
