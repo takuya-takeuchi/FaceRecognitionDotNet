@@ -642,6 +642,7 @@
             <param name="model">The model of face detector to detect in image. If <paramref name="knownFaceLocation"/> is not null, this value is ignored.</param>
             <returns>An enumerable collection of face feature data corresponds to all faces in specified image.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> is null.</exception>
+            <exception cref="T:System.InvalidOperationException"><paramref name="knownFaceLocation"/> contains no elements.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object or custom face landmark detector is disposed.</exception>
             <exception cref="T:System.NotSupportedException"><see cref="F:FaceRecognitionDotNet.PredictorModel.Custom"/> is not supported.</exception>
         </member>
@@ -655,6 +656,7 @@
             <param name="model">The model of face detector to detect in image. If <paramref name="faceLocations"/> is not null, this value is ignored.</param>
             <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
+            <exception cref="T:System.InvalidOperationException"><paramref name="faceLocations"/> contains no elements.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceImage"/> or this object or custom face landmark detector is disposed.</exception>
             <exception cref="T:System.NotSupportedException">The custom face landmark detector is not ready.</exception>
         </member>
