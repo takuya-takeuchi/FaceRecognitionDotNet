@@ -366,11 +366,16 @@ namespace FaceRecognitionDotNet
         /// <param name="knownFaceLocation">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
         /// <param name="numJitters">The number of times to re-sample the face when calculating encoding.</param>
         /// <param name="predictorModel">The model of face detector.</param>
+        /// <param name="model">The model of face detector to detect in image. If <paramref name="knownFaceLocation"/> is not null, this value is ignored.</param>
         /// <returns>An enumerable collection of face feature data corresponds to all faces in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> is null.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object or custom face landmark detector is disposed.</exception>
         /// <exception cref="NotSupportedException"><see cref="PredictorModel.Custom"/> is not supported.</exception>
-        public IEnumerable<FaceEncoding> FaceEncodings(Image image, IEnumerable<Location> knownFaceLocation = null, int numJitters = 1, PredictorModel predictorModel = PredictorModel.Small)
+        public IEnumerable<FaceEncoding> FaceEncodings(Image image,
+                                                       IEnumerable<Location> knownFaceLocation = null,
+                                                       int numJitters = 1,
+                                                       PredictorModel predictorModel = PredictorModel.Small,
+                                                       Model model = Model.Hog)
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
@@ -380,7 +385,7 @@ namespace FaceRecognitionDotNet
             image.ThrowIfDisposed();
             this.ThrowIfDisposed();
 
-            var rawLandmarks = this.RawFaceLandmarks(image, knownFaceLocation, predictorModel);
+            var rawLandmarks = this.RawFaceLandmarks(image, knownFaceLocation, predictorModel, model);
             foreach (var landmark in rawLandmarks)
             {
                 var ret = new FaceEncoding(FaceRecognitionModelV1.ComputeFaceDescriptor(this._FaceEncoder, image, landmark, numJitters));
@@ -395,11 +400,15 @@ namespace FaceRecognitionDotNet
         /// <param name="faceImage">The image contains faces. The image can contain multiple faces.</param>
         /// <param name="faceLocations">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
         /// <param name="predictorModel">The model of face detector.</param>
+        /// <param name="model">The model of face detector to detect in image. If <paramref name="faceLocations"/> is not null, this value is ignored.</param>
         /// <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
         /// <exception cref="ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="faceImage"/> or this object or custom face landmark detector is disposed.</exception>
         /// <exception cref="NotSupportedException">The custom face landmark detector is not ready.</exception>
-        public IEnumerable<IDictionary<FacePart, IEnumerable<FacePoint>>> FaceLandmark(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel predictorModel = PredictorModel.Large)
+        public IEnumerable<IDictionary<FacePart, IEnumerable<FacePoint>>> FaceLandmark(Image faceImage,
+                                                                                       IEnumerable<Location> faceLocations = null,
+                                                                                       PredictorModel predictorModel = PredictorModel.Large,
+                                                                                       Model model = Model.Hog)
         {
             if (faceImage == null)
                 throw new ArgumentNullException(nameof(faceImage));
@@ -416,7 +425,7 @@ namespace FaceRecognitionDotNet
                     throw new ObjectDisposedException($"{nameof(CustomFaceLandmarkDetector)}", "The custom face landmark detector is disposed.");
             }
 
-            var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, predictorModel).ToArray();
+            var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, predictorModel, model).ToArray();
             var landmarkTuples = landmarks.Select(landmark => Enumerable.Range(0, (int)landmark.Parts)
                                           .Select(index => new FacePoint(new Point(landmark.GetPart((uint)index)), index)).ToArray());
 
@@ -879,16 +888,19 @@ namespace FaceRecognitionDotNet
 
         #region Helpers
 
-        private IEnumerable<FullObjectDetection> RawFaceLandmarks(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
+        private IEnumerable<FullObjectDetection> RawFaceLandmarks(Image faceImage,
+                                                                  IEnumerable<Location> faceLocations = null,
+                                                                  PredictorModel predictorModel = PredictorModel.Large,
+                                                                  Model model = Model.Hog)
         {
             IEnumerable<MModRect> tmp;
 
             if (faceLocations == null)
-                tmp = this.RawFaceLocations(faceImage);
+                tmp = this.RawFaceLocations(faceImage, 1, model);
             else
                 tmp = faceLocations.Select(l => new MModRect { Rect = new Rectangle { Bottom = l.Bottom, Left = l.Left, Top = l.Top, Right = l.Right } });
 
-            if (model == PredictorModel.Custom)
+            if (predictorModel == PredictorModel.Custom)
             {
                 foreach (var rect in tmp)
                 {
@@ -902,7 +914,7 @@ namespace FaceRecognitionDotNet
             else
             {
                 var posePredictor = this._PosePredictor68Point;
-                switch (model)
+                switch (predictorModel)
                 {
                     case PredictorModel.Small:
                         posePredictor = this._PosePredictor5Point;
