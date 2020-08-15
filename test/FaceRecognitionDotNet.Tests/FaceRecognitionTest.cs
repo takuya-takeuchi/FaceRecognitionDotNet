@@ -461,7 +461,7 @@ namespace FaceRecognitionDotNet.Tests
                 {
                     using (var image = FaceRecognition.LoadImageFile(path, mode))
                     {
-                        var encodings = this._FaceRecognition.FaceEncodings(image, model: model).ToArray();
+                        var encodings = this._FaceRecognition.FaceEncodings(image, predictorModel: model).ToArray();
                         Assert.True(encodings.Length > 1, "");
 
                         foreach (var encoding in encodings)

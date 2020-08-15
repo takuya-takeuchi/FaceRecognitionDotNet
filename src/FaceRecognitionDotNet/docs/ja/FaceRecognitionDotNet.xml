@@ -631,26 +631,28 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="faceEncodings"/> または <paramref name="faceToCompare"/> が null です。</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceToCompare"/> は破棄されています。または <paramref name="faceEncodings"/> に破棄済みのオブジェクトが含まれています。</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},System.Int32)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},System.Int32,FaceRecognitionDotNet.PredictorModel,FaceRecognitionDotNet.Model)">
             <summary>
             指定した画像内の全ての顔に対応する顔特徴データの列挙可能なコレクションを返します。
             </summary>
             <param name="image">顔を含む画像。画像には複数の顔を含めることができます。</param>
             <param name="knownFaceLocation">顔に対する矩形位置の列挙可能なコレクション。null を指定した場合、メソッドが顔の位置を探索します。</param>
             <param name="numJitters">エンコーディングを計算する際の顔のリサンプリング回数。</param>
+            <param name="predictorModel">検出器から返されるベクトルの次元数。</param>
+            <param name="model">画像内で顔の検出を行う顔検出器のモデル。<paramref name="knownFaceLocation"/> が非 null の場合、この値は無視されます。</param>
             <returns>指定した画像内の全ての顔に対応する顔特徴データの列挙可能なコレクション。</returns>
-            <param name="model">画像内で顔の検出を行う顔検出器のモデル。</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> が null です。</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/>、このオブジェクトまたはカスタム顔ランドマーク検出器は破棄されています。</exception>
             <exception cref="T:System.NotSupportedException"><see cref="F:FaceRecognitionDotNet.PredictorModel.Custom"/> はサポートされていません。</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModel)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModel,FaceRecognitionDotNet.Model)">
             <summary>
             画像内の各顔に対する、眼、鼻等の顔の構成要素の辞書の列挙可能なコレクションを返します。
             </summary>
             <param name="faceImage">顔を含む画像。画像には複数の顔を含めることができます。</param>
             <param name="faceLocations">顔に対する矩形位置の列挙可能なコレクション。null を指定した場合、メソッドが顔の位置を探索します。</param>
-            <param name="model">検出器から返されるベクトルの次元数。</param>
+            <param name="predictorModel">検出器から返されるベクトルの次元数。</param>
+            <param name="model">画像内で顔の検出を行う顔検出器のモデル。<paramref name="faceLocations"/> が非 null の場合、この値は無視されます。</param>
             <returns>眼、鼻等の顔の構成要素の辞書の列挙可能なコレクション。</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="faceImage"/> が null です。</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceImage"/>、このオブジェクトまたはカスタム顔ランドマーク検出器は破棄されています。</exception>
