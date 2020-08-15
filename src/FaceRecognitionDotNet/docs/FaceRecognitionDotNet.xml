@@ -631,26 +631,28 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="faceEncodings"/> or <paramref name="faceToCompare"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceToCompare"/> is disposed. Or <paramref name="faceEncodings"/> contains disposed object.</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},System.Int32,FaceRecognitionDotNet.PredictorModel)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},System.Int32,FaceRecognitionDotNet.PredictorModel,FaceRecognitionDotNet.Model)">
             <summary>
             Returns an enumerable collection of face feature data corresponds to all faces in specified image.
             </summary>
             <param name="image">The image contains faces. The image can contain multiple faces.</param>
             <param name="knownFaceLocation">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
             <param name="numJitters">The number of times to re-sample the face when calculating encoding.</param>
-            <param name="model">The model of face detector.</param>
+            <param name="predictorModel">The dimension of vector which be returned from detector.</param>
+            <param name="model">The model of face detector to detect in image. If <paramref name="knownFaceLocation"/> is not null, this value is ignored.</param>
             <returns>An enumerable collection of face feature data corresponds to all faces in specified image.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object or custom face landmark detector is disposed.</exception>
             <exception cref="T:System.NotSupportedException"><see cref="F:FaceRecognitionDotNet.PredictorModel.Custom"/> is not supported.</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModel)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModel,FaceRecognitionDotNet.Model)">
             <summary>
             Returns an enumerable collection of dictionary of face parts locations (eyes, nose, etc) for each face in the image.
             </summary>
             <param name="faceImage">The image contains faces. The image can contain multiple faces.</param>
             <param name="faceLocations">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
-            <param name="model">The model of face detector.</param>
+            <param name="predictorModel">The dimension of vector which be returned from detector.</param>
+            <param name="model">The model of face detector to detect in image. If <paramref name="faceLocations"/> is not null, this value is ignored.</param>
             <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceImage"/> or this object or custom face landmark detector is disposed.</exception>

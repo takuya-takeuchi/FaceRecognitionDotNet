@@ -365,7 +365,7 @@ namespace FaceRecognitionDotNet
         /// <param name="image">The image contains faces. The image can contain multiple faces.</param>
         /// <param name="knownFaceLocation">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
         /// <param name="numJitters">The number of times to re-sample the face when calculating encoding.</param>
-        /// <param name="predictorModel">The model of face detector.</param>
+        /// <param name="predictorModel">The dimension of vector which be returned from detector.</param>
         /// <param name="model">The model of face detector to detect in image. If <paramref name="knownFaceLocation"/> is not null, this value is ignored.</param>
         /// <returns>An enumerable collection of face feature data corresponds to all faces in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> is null.</exception>
@@ -399,7 +399,7 @@ namespace FaceRecognitionDotNet
         /// </summary>
         /// <param name="faceImage">The image contains faces. The image can contain multiple faces.</param>
         /// <param name="faceLocations">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
-        /// <param name="predictorModel">The model of face detector.</param>
+        /// <param name="predictorModel">The dimension of vector which be returned from detector.</param>
         /// <param name="model">The model of face detector to detect in image. If <paramref name="faceLocations"/> is not null, this value is ignored.</param>
         /// <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
         /// <exception cref="ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
