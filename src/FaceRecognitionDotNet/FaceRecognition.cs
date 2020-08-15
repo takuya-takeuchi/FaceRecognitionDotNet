@@ -369,6 +369,7 @@ namespace FaceRecognitionDotNet
         /// <param name="model">The model of face detector to detect in image. If <paramref name="knownFaceLocation"/> is not null, this value is ignored.</param>
         /// <returns>An enumerable collection of face feature data corresponds to all faces in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> is null.</exception>
+        /// <exception cref="InvalidOperationException"><paramref name="knownFaceLocation"/> contains no elements.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object or custom face landmark detector is disposed.</exception>
         /// <exception cref="NotSupportedException"><see cref="PredictorModel.Custom"/> is not supported.</exception>
         public IEnumerable<FaceEncoding> FaceEncodings(Image image,
@@ -381,6 +382,9 @@ namespace FaceRecognitionDotNet
                 throw new ArgumentNullException(nameof(image));
             if (predictorModel == PredictorModel.Custom)
                 throw new NotSupportedException("FaceRecognitionDotNet.PredictorModel.Custom is not supported.");
+
+            if (knownFaceLocation != null && !knownFaceLocation.Any())
+                throw new InvalidOperationException($"{nameof(knownFaceLocation)} contains no elements.");
 
             image.ThrowIfDisposed();
             this.ThrowIfDisposed();
@@ -403,6 +407,7 @@ namespace FaceRecognitionDotNet
         /// <param name="model">The model of face detector to detect in image. If <paramref name="faceLocations"/> is not null, this value is ignored.</param>
         /// <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
         /// <exception cref="ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
+        /// <exception cref="InvalidOperationException"><paramref name="faceLocations"/> contains no elements.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="faceImage"/> or this object or custom face landmark detector is disposed.</exception>
         /// <exception cref="NotSupportedException">The custom face landmark detector is not ready.</exception>
         public IEnumerable<IDictionary<FacePart, IEnumerable<FacePoint>>> FaceLandmark(Image faceImage,
@@ -412,6 +417,9 @@ namespace FaceRecognitionDotNet
         {
             if (faceImage == null)
                 throw new ArgumentNullException(nameof(faceImage));
+
+            if (faceLocations != null && !faceLocations.Any())
+                throw new InvalidOperationException($"{nameof(faceLocations)} contains no elements.");
 
             faceImage.ThrowIfDisposed();
             this.ThrowIfDisposed();
