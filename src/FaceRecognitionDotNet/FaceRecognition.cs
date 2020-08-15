@@ -365,22 +365,22 @@ namespace FaceRecognitionDotNet
         /// <param name="image">The image contains faces. The image can contain multiple faces.</param>
         /// <param name="knownFaceLocation">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
         /// <param name="numJitters">The number of times to re-sample the face when calculating encoding.</param>
-        /// <param name="model">The model of face detector.</param>
+        /// <param name="predictorModel">The model of face detector.</param>
         /// <returns>An enumerable collection of face feature data corresponds to all faces in specified image.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="image"/> is null.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object or custom face landmark detector is disposed.</exception>
         /// <exception cref="NotSupportedException"><see cref="PredictorModel.Custom"/> is not supported.</exception>
-        public IEnumerable<FaceEncoding> FaceEncodings(Image image, IEnumerable<Location> knownFaceLocation = null, int numJitters = 1, PredictorModel model = PredictorModel.Small)
+        public IEnumerable<FaceEncoding> FaceEncodings(Image image, IEnumerable<Location> knownFaceLocation = null, int numJitters = 1, PredictorModel predictorModel = PredictorModel.Small)
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
-            if (model == PredictorModel.Custom)
+            if (predictorModel == PredictorModel.Custom)
                 throw new NotSupportedException("FaceRecognitionDotNet.PredictorModel.Custom is not supported.");
 
             image.ThrowIfDisposed();
             this.ThrowIfDisposed();
 
-            var rawLandmarks = this.RawFaceLandmarks(image, knownFaceLocation, model);
+            var rawLandmarks = this.RawFaceLandmarks(image, knownFaceLocation, predictorModel);
             foreach (var landmark in rawLandmarks)
             {
                 var ret = new FaceEncoding(FaceRecognitionModelV1.ComputeFaceDescriptor(this._FaceEncoder, image, landmark, numJitters));
@@ -394,12 +394,12 @@ namespace FaceRecognitionDotNet
         /// </summary>
         /// <param name="faceImage">The image contains faces. The image can contain multiple faces.</param>
         /// <param name="faceLocations">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
-        /// <param name="model">The model of face detector.</param>
+        /// <param name="predictorModel">The model of face detector.</param>
         /// <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
         /// <exception cref="ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
         /// <exception cref="ObjectDisposedException"><paramref name="faceImage"/> or this object or custom face landmark detector is disposed.</exception>
         /// <exception cref="NotSupportedException">The custom face landmark detector is not ready.</exception>
-        public IEnumerable<IDictionary<FacePart, IEnumerable<FacePoint>>> FaceLandmark(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
+        public IEnumerable<IDictionary<FacePart, IEnumerable<FacePoint>>> FaceLandmark(Image faceImage, IEnumerable<Location> faceLocations = null, PredictorModel predictorModel = PredictorModel.Large)
         {
             if (faceImage == null)
                 throw new ArgumentNullException(nameof(faceImage));
@@ -407,7 +407,7 @@ namespace FaceRecognitionDotNet
             faceImage.ThrowIfDisposed();
             this.ThrowIfDisposed();
 
-            if (model == PredictorModel.Custom)
+            if (predictorModel == PredictorModel.Custom)
             {
                 if (this._CustomFaceLandmarkDetector == null)
                     throw new NotSupportedException("The custom face landmark detector is not ready.");
@@ -416,7 +416,7 @@ namespace FaceRecognitionDotNet
                     throw new ObjectDisposedException($"{nameof(CustomFaceLandmarkDetector)}", "The custom face landmark detector is disposed.");
             }
 
-            var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, model).ToArray();
+            var landmarks = this.RawFaceLandmarks(faceImage, faceLocations, predictorModel).ToArray();
             var landmarkTuples = landmarks.Select(landmark => Enumerable.Range(0, (int)landmark.Parts)
                                           .Select(index => new FacePoint(new Point(landmark.GetPart((uint)index)), index)).ToArray());
 
@@ -426,7 +426,7 @@ namespace FaceRecognitionDotNet
             {
 
                 // For a definition of each point index, see https://cdn-images-1.medium.com/max/1600/1*AbEg31EgkbXSQehuNJBlWg.png
-                switch (model)
+                switch (predictorModel)
                 {
                     case PredictorModel.Large:
                         results.AddRange(landmarkTuples.Select(landmarkTuple => new Dictionary<FacePart, IEnumerable<FacePoint>>
@@ -465,7 +465,7 @@ namespace FaceRecognitionDotNet
                         results.AddRange(this._CustomFaceLandmarkDetector.GetLandmarks(landmarkTuples));
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(model), model, null);
+                        throw new ArgumentOutOfRangeException(nameof(predictorModel), predictorModel, null);
                 }
             }
             finally
