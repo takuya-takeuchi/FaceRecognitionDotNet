@@ -33,7 +33,7 @@ namespace Benchmark
             app.HelpOption("-h|--help");
 
             var modelsOption = app.Option("-m|--model", "model files directory path", CommandOptionType.SingleValue);
-            var cnnOption = app.Option("-c|--cnn", "use cnn for face location", CommandOptionType.NoValue);
+            var cnnOption = app.Option("-c|--cnn", "use cnn", CommandOptionType.NoValue);
 
             app.OnExecute(() =>
             {
