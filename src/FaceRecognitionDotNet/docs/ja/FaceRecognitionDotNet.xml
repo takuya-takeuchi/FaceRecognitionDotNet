@@ -642,6 +642,7 @@
             <param name="model">画像内で顔の検出を行う顔検出器のモデル。<paramref name="knownFaceLocation"/> が非 null の場合、この値は無視されます。</param>
             <returns>指定した画像内の全ての顔に対応する顔特徴データの列挙可能なコレクション。</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> が null です。</exception>
+            <exception cref="T:System.InvalidOperationException"><paramref name="knownFaceLocation"/> が空です。</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/>、このオブジェクトまたはカスタム顔ランドマーク検出器は破棄されています。</exception>
             <exception cref="T:System.NotSupportedException"><see cref="F:FaceRecognitionDotNet.PredictorModel.Custom"/> はサポートされていません。</exception>
         </member>
@@ -655,6 +656,7 @@
             <param name="model">画像内で顔の検出を行う顔検出器のモデル。<paramref name="faceLocations"/> が非 null の場合、この値は無視されます。</param>
             <returns>眼、鼻等の顔の構成要素の辞書の列挙可能なコレクション。</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="faceImage"/> が null です。</exception>
+            <exception cref="T:System.InvalidOperationException"><paramref name="faceLocations"/> が空です。</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceImage"/>、このオブジェクトまたはカスタム顔ランドマーク検出器は破棄されています。</exception>
             <exception cref="T:System.NotSupportedException">カスタム顔ランドマーク検出器の準備ができていません。</exception>
         </member>

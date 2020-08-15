@@ -504,6 +504,27 @@ namespace FaceRecognitionDotNet.Tests
             catch (ArgumentNullException)
             {
             }
+
+            try
+            {
+                var path = Path.Combine(ImageDirectory, TwoPersonFile);
+                if (!File.Exists(path))
+                {
+                    var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
+
+                    Directory.CreateDirectory(ImageDirectory);
+                    File.WriteAllBytes(path, binary);
+                }
+
+                using (var image = FaceRecognition.LoadImageFile(path))
+                {
+                    var _ = this._FaceRecognition.FaceEncodings(image, new Location[0]).ToArray();
+                    Assert.True(false, $"{nameof(FaceRecognition.FaceEncodings)} must throw {typeof(InvalidOperationException)}.");
+                }
+            }
+            catch (InvalidOperationException)
+            {
+            }
         }
 
         [Fact]
@@ -532,6 +553,48 @@ namespace FaceRecognitionDotNet.Tests
             }
             catch (ArgumentNullException)
             {
+            }
+
+            try
+            {
+                var path = Path.Combine(ImageDirectory, TwoPersonFile);
+                if (!File.Exists(path))
+                {
+                    var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
+
+                    Directory.CreateDirectory(ImageDirectory);
+                    File.WriteAllBytes(path, binary);
+                }
+
+                using (var image = FaceRecognition.LoadImageFile(path))
+                {
+                    var _ = this._FaceRecognition.FaceLandmark(image, new Location[0]).ToArray();
+                    Assert.True(false, $"{nameof(FaceRecognition.FaceLandmark)} must throw {typeof(InvalidOperationException)}.");
+                }
+            }
+            catch (InvalidOperationException)
+            {
+            }
+        }
+
+        [Fact]
+        public void FaceLandmarkEmpty()
+        {
+            var path = Path.Combine(ImageDirectory, TwoPersonFile);
+            if (!File.Exists(path))
+            {
+                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path, binary);
+            }
+
+            // empty image should return empty result
+            using(var bitmap = new Bitmap(640, 480, PixelFormat.Format24bppRgb))
+            using (var image = FaceRecognition.LoadImage(bitmap))
+            {
+                var landmarks = this._FaceRecognition.FaceLandmark(image).ToArray();
+                Assert.True(!landmarks.Any(), $"{nameof(FaceRecognition.FaceLandmark)} should return empty elements.");
             }
         }
 
@@ -2065,10 +2128,10 @@ namespace FaceRecognitionDotNet.Tests
             }
         }
 
-        private IEnumerable<FullObjectDetection> RawFaceLandmarks(Image img, IEnumerable<Location> faceLocations = null, PredictorModel model = PredictorModel.Large)
+        private IEnumerable<FullObjectDetection> RawFaceLandmarks(Image img, IEnumerable<Location> faceLocations = null, PredictorModel predictorModel = PredictorModel.Large)
         {
             var method = this._FaceRecognition.GetType().GetMethod("RawFaceLandmarks", BindingFlags.Instance | BindingFlags.NonPublic);
-            return method.Invoke(this._FaceRecognition, new object[] { img, faceLocations, model }) as IEnumerable<FullObjectDetection>;
+            return method.Invoke(this._FaceRecognition, new object[] { img, faceLocations, predictorModel, Model.Hog }) as IEnumerable<FullObjectDetection>;
         }
 
         private IEnumerable<MModRect> RawFaceLocations(Image img, int numberOfTimesToUpsample = 1, Model model = Model.Hog)
