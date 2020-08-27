@@ -51,7 +51,7 @@ And extract them and copy extracted files to directory where you want to.
 
 Create your dataset from 300W-LP directory by using ***tools/CreateDataset.ps1***.
 The following command divides images to train and test randomly according to ***TrainRate***.
-***TrainRate 8*** means that training data is 80% and test data is 20%.
+***TrainRate 8*** means that training data is 80% and test data is 20%. ***Max 0***  means all training data, 5000 is used below.
 
 ````cmd
 pwsh tools\CreateDataset.ps1 -InputDirectory <300W-LP-Dataset_dir> ^
@@ -167,7 +167,7 @@ You can evaluate dataset by visualize image.
 cd <HeadPoseTraining_dir>
 dotnet run -c Release -- eval --image <300W-LP>\AFW\AFW_134212_1_4.jpg ^
                               --mat <300W-LP>\AFW\AFW_134212_1_4.mat ^
-                              --landmark <300W-LP>\landmarks\IBUG\IBUG_image_003_1_5_pts.mat ^
+                              --landmark <300W-LP>\landmarks\AFW\AFW_134212_1_4_pts.mat ^
                               --roll <300W-LP-YourDataset_dir>\result\300w-lp-roll-krls_0.001_0.1.dat ^
                               --pitch <300W-LP-YourDataset_dir>\result\300w-lp-pitch-krls_0.001_0.1.dat ^
                               --yaw <300W-LP-YourDataset_dir>\result\300w-lp-yaw-krls_0.001_0.1.dat ^
