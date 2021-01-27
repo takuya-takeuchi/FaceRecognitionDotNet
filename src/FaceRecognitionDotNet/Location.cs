@@ -20,12 +20,26 @@ namespace FaceRecognitionDotNet
         /// <param name="top">The y-axis value of the top of the rectangle of face.</param>
         /// <param name="right">The x-axis value of the right side of the rectangle of face.</param>
         /// <param name="bottom">The y-axis value of the bottom of the rectangle of face.</param>
-        public Location(int left, int top, int right, int bottom)
+        public Location(int left, int top, int right, int bottom) :
+            this(left, top, right, bottom, -1.0d)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Location"/> structure with the specified left, top, right and bottom.
+        /// </summary>
+        /// <param name="left">The x-axis value of the left side of the rectangle of face.</param>
+        /// <param name="top">The y-axis value of the top of the rectangle of face.</param>
+        /// <param name="right">The x-axis value of the right side of the rectangle of face.</param>
+        /// <param name="bottom">The y-axis value of the bottom of the rectangle of face.</param>
+        /// <param name="confidence">The confidence of detected face.</param>
+        public Location(int left, int top, int right, int bottom, double confidence)
         {
             this.Left = left;
             this.Top = top;
             this.Right = right;
             this.Bottom = bottom;
+            this.Confidence = confidence;
         }
 
         #endregion
@@ -36,6 +50,14 @@ namespace FaceRecognitionDotNet
         /// Gets the y-axis value of the bottom of the rectangle of face.
         /// </summary>
         public int Bottom
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Gets the confidence of detected face.
+        /// </summary>
+        public double Confidence
         {
             get;
         }
