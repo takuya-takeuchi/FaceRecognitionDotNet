@@ -19,4 +19,4 @@ NUGETDIR=${FRDNROOT}/nuget
 
 cd ${NUGETDIR}
 
-exec /usr/local/bin/gosu NON_ROOT_USER pwsh ./TestPackage.ps1 $PACKAGE $VERSION $OS $OSVERSION
+exec /usr/local/bin/gosu $NON_ROOT_USER pwsh ./TestPackage.ps1 $PACKAGE $VERSION $OS $OSVERSION

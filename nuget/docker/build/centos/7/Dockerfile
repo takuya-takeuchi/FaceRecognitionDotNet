@@ -14,7 +14,7 @@ RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364
     # Verify that the binary works
     && gosu nobody true
 
-RUN yum update -y && yum install -y \
+RUN yum update -y --disablerepo=cuda,nvidia-ml && yum install -y \
     git \
  && yum clean all
 

@@ -24,6 +24,8 @@ $BuildTargets = ( "FaceRecognitionDotNet",
                   "FaceRecognitionDotNet.CUDA100",
                   "FaceRecognitionDotNet.CUDA101",
                   "FaceRecognitionDotNet.CUDA102",
+                  "FaceRecognitionDotNet.CUDA110",
+                  "FaceRecognitionDotNet.CUDA111",
                   "FaceRecognitionDotNet.MKL"
                 )
 
