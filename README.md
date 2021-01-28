@@ -46,7 +46,7 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |face_distance|FaceDistance||
 |face_encodings|FaceEncodings||
 |face_landmarks|FaceLandmarks|And support **Helen dataset** :warning:|
-|face_locations|FaceLocations||
+|face_locations|FaceLocations|And support to get confidence and use custom face detector|
 |load_image_file|LoadImageFile||
 |-|CropFaces|Crop image with specified locations|
 |-|EyeBlinkDetect|Detect person is blinking or not<br>Support Large model and **Helen dataset** :warning:|
