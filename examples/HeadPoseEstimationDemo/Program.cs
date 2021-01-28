@@ -7,7 +7,6 @@ using FaceRecognitionDotNet;
 using FaceRecognitionDotNet.Extensions;
 using Microsoft.Extensions.CommandLineUtils;
 using OpenCvSharp;
-using Size = OpenCvSharp.Size;
 
 namespace HeadPoseEstimationDemo
 {

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using FaceRecognitionDotNet;
-using Image = FaceRecognitionDotNet.Image;
 
 namespace RgbBgr
 {

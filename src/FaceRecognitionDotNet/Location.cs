@@ -1,6 +1,6 @@
-﻿using DlibDotNet;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using DlibDotNet;
 
 namespace FaceRecognitionDotNet
 {
@@ -26,7 +26,7 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Location"/> structure with the specified left, top, right and bottom.
+        /// Initializes a new instance of the <see cref="Location"/> structure with the specified left, top, right, bottom and confidence.
         /// </summary>
         /// <param name="left">The x-axis value of the left side of the rectangle of face.</param>
         /// <param name="top">The y-axis value of the top of the rectangle of face.</param>
@@ -40,6 +40,26 @@ namespace FaceRecognitionDotNet
             this.Right = right;
             this.Bottom = bottom;
             this.Confidence = confidence;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Location"/> structure with the specified rectangle and confidence.
+        /// </summary>
+        /// <param name="rectangle">The rectangle of face.</param>
+        /// <param name="confidence">The confidence of detected face.</param>
+        internal Location(Rectangle rectangle, double confidence) :
+            this(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom, confidence)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Location"/> structure with the specified location and confidence.
+        /// </summary>
+        /// <param name="location">The location of face.</param>
+        /// <param name="confidence">The confidence of detected face.</param>
+        internal Location(Location location, double confidence) :
+            this(location.Left, location.Top, location.Right, location.Bottom, confidence)
+        {
         }
 
         #endregion

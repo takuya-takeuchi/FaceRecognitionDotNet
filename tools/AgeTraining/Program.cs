@@ -9,7 +9,6 @@ using System.Threading;
 using DlibDotNet;
 using DlibDotNet.Dnn;
 using Microsoft.Extensions.CommandLineUtils;
-using Dlib = DlibDotNet.Dlib;
 
 namespace AgeTraining
 {

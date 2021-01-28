@@ -185,8 +185,11 @@ namespace FaceRecognitionDotNet
             var image = imagesArray[0];
             for (var index = 0; index < rawDetectionsBatched.Length; index++)
             {
-                var faces = rawDetectionsBatched[index];
-                yield return faces.Select(rect => TrimBound(rect.Rect, image.Width, image.Height)).ToArray();
+                var faces = rawDetectionsBatched[index].ToArray();
+                var locations = faces.Select(rect => new Location(TrimBound(rect.Rect, image.Width, image.Height), rect.DetectionConfidence)).ToArray();
+                foreach (var face in faces)
+                    face.Dispose();
+                yield return locations;
             }
         }
 
@@ -527,7 +530,7 @@ namespace FaceRecognitionDotNet
                 var ret = TrimBound(face.Rect, image.Width, image.Height);
                 var confidence = face.DetectionConfidence;
                 face.Dispose();
-                yield return new Location(ret.Left, ret.Top, ret.Right, ret.Bottom, confidence);
+                yield return new Location(ret, confidence);
             }
         }
 
@@ -908,8 +911,7 @@ namespace FaceRecognitionDotNet
                 var tmp = this.RawFaceLocations(faceImage, 1, model);
                 foreach (var rect in tmp)
                 {
-                    var r = rect.Rect;
-                    list.Add(new Location(r.Left, r.Top, r.Right, r.Bottom, rect.DetectionConfidence));
+                    list.Add(new Location(rect.Rect, rect.DetectionConfidence));
                     rect.Dispose();
                 }
 
@@ -924,8 +926,7 @@ namespace FaceRecognitionDotNet
             {
                 foreach (var rect in rects)
                 {
-                    var location = new Location(rect.Left, rect.Top, rect.Right, rect.Bottom, rect.Confidence);
-                    var ret = this._CustomFaceLandmarkDetector.Detect(faceImage, location);
+                    var ret = this._CustomFaceLandmarkDetector.Detect(faceImage, rect);
                     yield return ret;
                 }
             }
@@ -956,7 +957,7 @@ namespace FaceRecognitionDotNet
                         throw new NotSupportedException("The custom face detector is not ready.");
                     return this._CustomFaceDetector.Detect(faceImage, numberOfTimesToUpsample).Select(rect => new MModRect
                     {
-                        Rect = new Rectangle(rect.Left, rect.Top, rect.Right, rect.Bottom), 
+                        Rect = new Rectangle(rect.Left, rect.Top, rect.Right, rect.Bottom),
                         DetectionConfidence = rect.Confidence
                     });
                 case Model.Cnn:

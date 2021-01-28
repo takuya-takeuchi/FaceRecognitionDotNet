@@ -55,7 +55,7 @@ namespace FaceRecognitionDotNet.Extensions
             this._ObjectDetector.Operator(mat, out IEnumerable<Tuple<double, Rectangle>> tuples);
 
             foreach (var (confidence, rect) in tuples)
-                yield return new Location(rect.Left, rect.Top, rect.Right, rect.Bottom, confidence);
+                yield return new Location(rect, confidence);
         }
 
         /// <summary>
