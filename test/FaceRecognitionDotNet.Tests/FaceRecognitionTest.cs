@@ -277,6 +277,7 @@ namespace FaceRecognitionDotNet.Tests
 
                     var groundTruth = new[]
                     {
+                        new { Path = Path.Combine(TestImageDirectory, "obama.jpg"), Model = Model.Cnn,    Confidence = 1.1056d, Bottom = 379, Left = 354, Right = 598, Top = 134 },
                         new { Path = Path.Combine(TestImageDirectory, "obama.jpg"), Model = Model.Hog,    Confidence = 1.9854d, Bottom = 409, Left = 349, Right = 617, Top = 142 },
                         new { Path = Path.Combine(TestImageDirectory, "obama.jpg"), Model = Model.Custom, Confidence = 1.4475d, Bottom = 394, Left = 366, Right = 624, Top = 136 }
                     };
