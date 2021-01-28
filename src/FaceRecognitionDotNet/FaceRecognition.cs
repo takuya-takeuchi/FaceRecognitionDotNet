@@ -522,26 +522,12 @@ namespace FaceRecognitionDotNet
             image.ThrowIfDisposed();
             this.ThrowIfDisposed();
 
-            switch (model)
+            foreach (var face in this.RawFaceLocations(image, numberOfTimesToUpsample, model))
             {
-                case Model.Cnn:
-                    foreach (var face in this.RawFaceLocations(image, numberOfTimesToUpsample, Model.Cnn))
-                    {
-                        var ret = TrimBound(face.Rect, image.Width, image.Height);
-                        var confidence = face.DetectionConfidence;
-                        face.Dispose();
-                        yield return new Location(ret.Left, ret.Top, ret.Right, ret.Bottom, confidence);
-                    }
-                    break;
-                default:
-                    foreach (var face in this.RawFaceLocations(image, numberOfTimesToUpsample, model))
-                    {
-                        var ret = TrimBound(face.Rect, image.Width, image.Height);
-                        var confidence = face.DetectionConfidence;
-                        face.Dispose();
-                        yield return new Location(ret.Left, ret.Top, ret.Right, ret.Bottom, confidence);
-                    }
-                    break;
+                var ret = TrimBound(face.Rect, image.Width, image.Height);
+                var confidence = face.DetectionConfidence;
+                face.Dispose();
+                yield return new Location(ret.Left, ret.Top, ret.Right, ret.Bottom, confidence);
             }
         }
 
