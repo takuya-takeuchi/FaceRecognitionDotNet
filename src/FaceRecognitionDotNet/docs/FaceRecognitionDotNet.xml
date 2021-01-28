@@ -180,6 +180,19 @@
             <param name="leftBlink">When this method returns, contains <value>true</value>, if the left eye blinks; otherwise, <value>false</value>.</param>
             <param name="rightBlink">When this method returns, contains <value>true</value>, if the right eye blinks; otherwise, <value>false</value>.</param>
         </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.FaceDetector">
+            <summary>
+            An abstract base class that provides functionality to detect face locations from image.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.FaceDetector.RawDetect(DlibDotNet.MatrixBase,System.Int32)">
+            <summary>
+            Returns an enumerable collection of face location correspond to all faces in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="numberOfTimesToUpsample">The number of times to up-sample the image when finding faces.</param>
+            <returns>An enumerable collection of face location correspond to all faces.</returns>
+        </member>
         <member name="T:FaceRecognitionDotNet.Extensions.FaceLandmarkDetector">
             <summary>
             An abstract base class that provides functionality to detect face parts locations from face image.
@@ -304,6 +317,36 @@
             <param name="location">The location rectangle for a face.</param>
             <returns>Probabilities of age group of face image correspond to specified location in specified image.</returns>
         </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.DisposeUnmanaged">
+            <summary>
+            Releases all unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.SimpleFaceDetector">
+            <summary>
+            The face detector which was trained by custom dataset. This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleFaceDetector.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Extensions.SimpleFaceDetector"/> class with the model file path that this detector uses.
+            </summary>
+            <param name="modelPath">The model file path that this detector uses.</param>
+            <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleFaceDetector.RawDetect(DlibDotNet.MatrixBase,System.Int32)">
+            <summary>
+            Returns an enumerable collection of face location correspond to all faces in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="numberOfTimesToUpsample">The number of times to up-sample the image when finding faces.</param>
+            <returns>An enumerable collection of face location correspond to all faces.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleFaceDetector.DisposeUnmanaged">
+            <summary>
+            Releases all unmanaged resources.
+            </summary>
+        </member>
         <member name="T:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator">
             <summary>
             The age estimator which was trained by UTKFace dataset. This class cannot be inherited.
@@ -336,6 +379,11 @@
             <param name="matrix">The matrix contains a face.</param>
             <param name="location">The location rectangle for a face.</param>
             <returns>Probabilities of gender of face image correspond to specified location in specified image.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.DisposeUnmanaged">
+            <summary>
+            Releases all unmanaged resources.
+            </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator">
             <summary>
@@ -533,6 +581,11 @@
         <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomGenderEstimator">
             <summary>
             Gets or sets the custom gender estimator that user defined.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomFaceDetector">
+            <summary>
+            Gets or sets the custom face detector that user defined.
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomFaceLandmarkDetector">
@@ -930,9 +983,38 @@
             <param name="right">The x-axis value of the right side of the rectangle of face.</param>
             <param name="bottom">The y-axis value of the bottom of the rectangle of face.</param>
         </member>
+        <member name="M:FaceRecognitionDotNet.Location.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Location"/> structure with the specified left, top, right, bottom and confidence.
+            </summary>
+            <param name="left">The x-axis value of the left side of the rectangle of face.</param>
+            <param name="top">The y-axis value of the top of the rectangle of face.</param>
+            <param name="right">The x-axis value of the right side of the rectangle of face.</param>
+            <param name="bottom">The y-axis value of the bottom of the rectangle of face.</param>
+            <param name="confidence">The confidence of detected face.</param>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Location.#ctor(DlibDotNet.Rectangle,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Location"/> structure with the specified rectangle and confidence.
+            </summary>
+            <param name="rectangle">The rectangle of face.</param>
+            <param name="confidence">The confidence of detected face.</param>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Location.#ctor(FaceRecognitionDotNet.Location,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Location"/> structure with the specified location and confidence.
+            </summary>
+            <param name="location">The location of face.</param>
+            <param name="confidence">The confidence of detected face.</param>
+        </member>
         <member name="P:FaceRecognitionDotNet.Location.Bottom">
             <summary>
             Gets the y-axis value of the bottom of the rectangle of face.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Location.Confidence">
+            <summary>
+            Gets the confidence of detected face.
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.Location.Left">
@@ -1014,6 +1096,11 @@
         <member name="F:FaceRecognitionDotNet.Model.Cnn">
             <summary>
             Specifies that the model is CNN (Convolutional Neural Network) based face detector.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.Model.Custom">
+            <summary>
+            Specifies that the custom face detector.
             </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.Point">

@@ -180,6 +180,19 @@
             <param name="leftBlink">このメソッドから制御が戻るときに、左目がまばたきをしているなら、<value>true</value> を格納します。それ以外の場合は <value>false</value>。</param>
             <param name="rightBlink">このメソッドから制御が戻るときに、右目がまばたきをしているなら、<value>true</value> を格納します。それ以外の場合は <value>false</value>。</param>
         </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.FaceDetector">
+            <summary>
+            顔画像から、顔の位置を検出する機能を提供する抽象基本クラス。
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.FaceDetector.RawDetect(DlibDotNet.MatrixBase,System.Int32)">
+            <summary>
+            指定した画像内の全ての顔に対応する顔の位置の列挙可能なコレクションを返します。
+            </summary>
+            <param name="matrix">顔を含む行列。</param>
+            <param name="numberOfTimesToUpsample">顔を探索する際の顔のアップサンプリング回数。</param>
+            <returns>指定した画像内の全ての顔に対応する顔の位置の列挙可能なコレクション。</returns>
+        </member>
         <member name="T:FaceRecognitionDotNet.Extensions.FaceLandmarkDetector">
             <summary>
             顔画像から人間の顔パーツの位置を検出する機能を提供する抽象基本クラス。
@@ -304,6 +317,36 @@
             <param name="location">顔の位置の矩形。</param>
             <returns>指定した画像内における、指定した位置に対応する顔画像の年齢グループの確率。</returns>
         </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.DisposeUnmanaged">
+            <summary>
+            アンマネージ リソースを解放します。
+            </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.SimpleFaceDetector">
+            <summary>
+            カスタム データセットによって訓練された顔検出器。このクラスは継承できません。
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleFaceDetector.#ctor(System.String)">
+            <summary>
+            この検出器が利用するモデルファイルのパスを指定して、<see cref="T:FaceRecognitionDotNet.Extensions.SimpleFaceDetector"/> クラスの新しいインスタンスを初期化します。
+            </summary>
+            <param name="modelPath">この検出器が利用するモデルファイルのパス。</param>
+            <exception cref="T:System.IO.FileNotFoundException">モデルファイルが見つかりません。</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleFaceDetector.RawDetect(DlibDotNet.MatrixBase,System.Int32)">
+            <summary>
+            指定した画像内の全ての顔に対応する顔の位置の列挙可能なコレクションを返します。
+            </summary>
+            <param name="matrix">顔を含む行列。</param>
+            <param name="numberOfTimesToUpsample">顔を探索する際の顔のアップサンプリング回数。</param>
+            <returns>指定した画像内の全ての顔に対応する顔の位置の列挙可能なコレクション。</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleFaceDetector.DisposeUnmanaged">
+            <summary>
+            アンマネージ リソースを解放します。
+            </summary>
+        </member>
         <member name="T:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator">
             <summary>
             UTKFace データセットによって訓練された性別推定器。このクラスは継承できません。
@@ -336,6 +379,11 @@
             <param name="matrix">顔を含む行列。</param>
             <param name="location">顔の位置の矩形。</param>
             <returns>指定した画像内における、指定した位置に対応する顔画像の性別の確率。</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.DisposeUnmanaged">
+            <summary>
+            アンマネージ リソースを解放します。
+            </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator">
             <summary>
@@ -533,6 +581,11 @@
         <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomGenderEstimator">
             <summary>
             ユーザーが定義したカスタム性別推定器を取得または設定します。
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomFaceDetector">
+            <summary>
+            ユーザーが定義したカスタム顔検出器を取得または設定します。
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomFaceLandmarkDetector">
@@ -930,9 +983,38 @@
             <param name="right">顔の矩形の右側の X 軸の値。</param>
             <param name="bottom">顔の矩形の下側の Y 軸の値。</param>
         </member>
+        <member name="M:FaceRecognitionDotNet.Location.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Double)">
+            <summary>
+            左端、上端、右端、下端、信頼度を指定して、<see cref="T:FaceRecognitionDotNet.Location"/> 構造体の新しいインスタンスを初期化します。
+            </summary>
+            <param name="left">顔の矩形の左側の X 軸の値。</param>
+            <param name="top">顔の矩形の上側の Y 軸の値。</param>
+            <param name="right">顔の矩形の右側の X 軸の値。</param>
+            <param name="bottom">顔の矩形の下側の Y 軸の値。</param>
+            <param name="confidence">検出した顔の信頼度。</param>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Location.#ctor(DlibDotNet.Rectangle,System.Double)">
+            <summary>
+            矩形、信頼度を指定して、<see cref="T:FaceRecognitionDotNet.Location"/> 構造体の新しいインスタンスを初期化します。
+            </summary>
+            <param name="rectangle">顔の矩形。</param>
+            <param name="confidence">検出した顔の信頼度。</param>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Location.#ctor(FaceRecognitionDotNet.Location,System.Double)">
+            <summary>
+            位置、信頼度を指定して、<see cref="T:FaceRecognitionDotNet.Location"/> 構造体の新しいインスタンスを初期化します。
+            </summary>
+            <param name="location">顔の位置。</param>
+            <param name="confidence">検出した顔の信頼度。</param>
+        </member>
         <member name="P:FaceRecognitionDotNet.Location.Bottom">
             <summary>
             顔の矩形の下側の Y 軸の値を取得します。
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Location.Confidence">
+            <summary>
+            検出した顔の信頼度を取得します。
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.Location.Left">
@@ -1014,6 +1096,11 @@
         <member name="F:FaceRecognitionDotNet.Model.Cnn">
             <summary>
             CNN (畳み込みニューラルネットワーク) に基づいた顔検出器のモデルを示します。
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.Model.Custom">
+            <summary>
+            カスタムの顔検出器のモデルを示します。
             </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.Point">
