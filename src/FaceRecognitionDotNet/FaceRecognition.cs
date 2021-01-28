@@ -966,7 +966,11 @@ namespace FaceRecognitionDotNet
                 case Model.Custom:
                     if (this._CustomFaceDetector == null)
                         throw new NotSupportedException("The custom face detector is not ready.");
-                    return this._CustomFaceDetector.Detect(faceImage, numberOfTimesToUpsample);
+                    return this._CustomFaceDetector.Detect(faceImage, numberOfTimesToUpsample).Select(rect => new MModRect
+                    {
+                        Rect = new Rectangle(rect.Left, rect.Top, rect.Right, rect.Bottom), 
+                        DetectionConfidence = rect.Confidence
+                    });
                 case Model.Cnn:
                     return CnnFaceDetectionModelV1.Detect(this._CnnFaceDetector, faceImage, numberOfTimesToUpsample);
                 default:

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using DlibDotNet;
-using DlibDotNet.Dnn;
 
 namespace FaceRecognitionDotNet.Extensions
 {
@@ -16,7 +14,9 @@ namespace FaceRecognitionDotNet.Extensions
 
         #region Fields
 
-        private readonly LossMulticlassLog _Network;
+        private readonly ScanFHogPyramid<PyramidDown, DefaultFHogFeatureExtractor> _Scanner;
+
+        private readonly ObjectDetector<ScanFHogPyramid<PyramidDown, DefaultFHogFeatureExtractor>> _ObjectDetector;
 
         #endregion
 
@@ -31,15 +31,10 @@ namespace FaceRecognitionDotNet.Extensions
         {
             if (!File.Exists(modelPath))
                 throw new FileNotFoundException(modelPath);
-
-            var ret = NativeMethods.LossMulticlassLog_age_train_type_create();
-            var networkId = LossMulticlassLogRegistry.GetId(ret);
-            if (LossMulticlassLogRegistry.Contains(networkId))
-                NativeMethods.LossMulticlassLog_age_train_type_delete(ret);
-            else
-                LossMulticlassLogRegistry.Add(ret);
-
-            this._Network = LossMulticlassLog.Deserialize(modelPath, networkId);
+            
+            this._Scanner = new ScanFHogPyramid<PyramidDown, DefaultFHogFeatureExtractor>(6);
+            this._ObjectDetector = new ObjectDetector<ScanFHogPyramid<PyramidDown, DefaultFHogFeatureExtractor>>(this._Scanner);
+            this._ObjectDetector.Deserialize(modelPath);
         }
 
         #endregion
@@ -52,9 +47,26 @@ namespace FaceRecognitionDotNet.Extensions
         /// <param name="matrix">The matrix contains a face.</param>
         /// <param name="numberOfTimesToUpsample">The number of times to up-sample the image when finding faces.</param>
         /// <returns>An enumerable collection of face location correspond to all faces.</returns>
-        protected override IEnumerable<Location> RawDetect(MatrixBase matrix, uint upsamplingAmount))
+        protected override IEnumerable<Location> RawDetect(MatrixBase matrix, int numberOfTimesToUpsample)
         {
+            if (!(matrix is Matrix<RgbPixel> mat))
+                throw new ArgumentException();
 
+            this._ObjectDetector.Operator(mat, out IEnumerable<Tuple<double, Rectangle>> tuples);
+
+            foreach (var (confidence, rect) in tuples)
+                yield return new Location(rect.Left, rect.Top, rect.Right, rect.Bottom, confidence);
+        }
+
+        /// <summary>
+        /// Releases all unmanaged resources.
+        /// </summary>
+        protected override void DisposeUnmanaged()
+        {
+            base.DisposeUnmanaged();
+
+            this._Scanner?.Dispose();
+            this._ObjectDetector?.Dispose();
         }
 
         #endregion

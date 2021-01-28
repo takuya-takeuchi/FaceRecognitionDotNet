@@ -12,9 +12,9 @@ namespace FaceRecognitionDotNet.Extensions
 
         #region Methods
 
-        internal IEnumerable<Location> Detect(Image image, uint upsamplingAmount)
+        internal IEnumerable<Location> Detect(Image image, int numberOfTimesToUpsample)
         {
-            return this.RawDetect(image.Matrix, location);
+            return this.RawDetect(image.Matrix, numberOfTimesToUpsample);
         }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace FaceRecognitionDotNet.Extensions
         /// <param name="matrix">The matrix contains a face.</param>
         /// <param name="numberOfTimesToUpsample">The number of times to up-sample the image when finding faces.</param>
         /// <returns>An enumerable collection of face location correspond to all faces.</returns>
-        protected abstract IEnumerable<Location> RawDetect(MatrixBase matrix, uint upsamplingAmount));
+        protected abstract IEnumerable<Location> RawDetect(MatrixBase matrix, int numberOfTimesToUpsample);
 
         #endregion
 

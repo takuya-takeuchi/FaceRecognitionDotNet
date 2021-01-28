@@ -118,9 +118,19 @@ namespace FaceRecognitionDotNet.Extensions
                 };
             }
 
-            #endregion
-
         }
+
+        /// <summary>
+        /// Releases all unmanaged resources.
+        /// </summary>
+        protected override void DisposeUnmanaged()
+        {
+            base.DisposeUnmanaged();
+
+            this._Network?.Dispose();
+        }
+
+        #endregion
 
     }
 
