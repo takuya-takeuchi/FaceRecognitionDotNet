@@ -277,13 +277,14 @@ namespace FaceRecognitionDotNet.Tests
 
                     var groundTruth = new[]
                     {
-                        new { Path = Path.Combine(TestImageDirectory, "obama.jpg"), Confidence = 1.9854d, Bottom = 409, Left = 349, Right = 617, Top = 142 }
+                        new { Path = Path.Combine(TestImageDirectory, "obama.jpg"), Model = Model.Hog,    Confidence = 1.9854d, Bottom = 409, Left = 349, Right = 617, Top = 142 },
+                        new { Path = Path.Combine(TestImageDirectory, "obama.jpg"), Model = Model.Custom, Confidence = 1.4475d, Bottom = 394, Left = 366, Right = 624, Top = 136 }
                     };
 
                     foreach (var gt in groundTruth)
                         using (var image = FaceRecognition.LoadImageFile(gt.Path))
                         {
-                            var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                            var location = this._FaceRecognition.FaceLocations(image, 1, gt.Model).ToArray()[0];
                             Assert.True(Math.Abs(gt.Confidence - location.Confidence) < 0.0001d, $"Failed to calc confidence '{gt.Path}'");
                             Assert.True(gt.Bottom == location.Bottom, $"Failed to get Bottom '{gt.Path}'");
                             Assert.True(gt.Left == location.Left, $"Failed to get Left '{gt.Path}'");
