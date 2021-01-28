@@ -54,6 +54,8 @@ namespace FaceRecognitionDotNet.Tests
 
         private readonly string _YawEstimateorModelFile;
 
+        private readonly string _SimpleFaceDetectorrModelFile;
+
         #endregion
 
         #region Constructors
@@ -71,6 +73,7 @@ namespace FaceRecognitionDotNet.Tests
             this._RollEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-roll-krls_0.001_0.1.dat");
             this._PitchEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-pitch-krls_0.001_0.1.dat");
             this._YawEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-yaw-krls_0.001_0.1.dat");
+            this._SimpleFaceDetectorrModelFile = Path.Combine(ModelDirectory, "face_detector.svm");
 
             var faceRecognition = typeof(FaceRecognition);
             var type = faceRecognition.Assembly.GetTypes().FirstOrDefault(t => t.Name == "FaceRecognitionModels");
@@ -257,6 +260,37 @@ namespace FaceRecognitionDotNet.Tests
                         croppedImage.Dispose();
                     }
                 }
+            }
+        }
+
+        [Fact]
+        public void CustomFaceCrop()
+        {
+            if (!File.Exists(this._SimpleFaceDetectorrModelFile))
+                return;
+
+            try
+            {
+                using (var detector = new SimpleFaceDetector(this._SimpleFaceDetectorrModelFile))
+                {
+                    this._FaceRecognition.CustomFaceDetector = detector;
+
+                    var groundTruth = new[]
+                    {
+                        new { Path = Path.Combine(TestImageDirectory, "obama.jpg"),        Confidence = 1.9854d }
+                    };
+
+                    foreach (var gt in groundTruth)
+                        using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                        {
+                            var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                            Assert.True(Math.Abs(gt.Confidence - location.Confidence) < 0.0001d, $"Failed to calc confidence '{gt.Path}'");
+                        }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomAgeEstimator = null;
             }
         }
 
@@ -590,7 +624,7 @@ namespace FaceRecognitionDotNet.Tests
             }
 
             // empty image should return empty result
-            using(var bitmap = new Bitmap(640, 480, PixelFormat.Format24bppRgb))
+            using (var bitmap = new Bitmap(640, 480, PixelFormat.Format24bppRgb))
             using (var image = FaceRecognition.LoadImage(bitmap))
             {
                 var landmarks = this._FaceRecognition.FaceLandmark(image).ToArray();
