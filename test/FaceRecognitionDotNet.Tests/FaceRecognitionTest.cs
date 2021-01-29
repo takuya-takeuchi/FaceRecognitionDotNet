@@ -54,6 +54,8 @@ namespace FaceRecognitionDotNet.Tests
 
         private readonly string _YawEstimateorModelFile;
 
+        private readonly string _SimpleFaceDetectorModelFile;
+
         #endregion
 
         #region Constructors
@@ -71,6 +73,7 @@ namespace FaceRecognitionDotNet.Tests
             this._RollEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-roll-krls_0.001_0.1.dat");
             this._PitchEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-pitch-krls_0.001_0.1.dat");
             this._YawEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-yaw-krls_0.001_0.1.dat");
+            this._SimpleFaceDetectorModelFile = Path.Combine(ModelDirectory, "face_detector.svm");
 
             var faceRecognition = typeof(FaceRecognition);
             var type = faceRecognition.Assembly.GetTypes().FirstOrDefault(t => t.Name == "FaceRecognitionModels");
@@ -257,6 +260,43 @@ namespace FaceRecognitionDotNet.Tests
                         croppedImage.Dispose();
                     }
                 }
+            }
+        }
+
+        [Fact]
+        public void CustomFaceDetector()
+        {
+            if (!File.Exists(this._SimpleFaceDetectorModelFile))
+                return;
+
+            try
+            {
+                using (var detector = new SimpleFaceDetector(this._SimpleFaceDetectorModelFile))
+                {
+                    this._FaceRecognition.CustomFaceDetector = detector;
+
+                    var groundTruth = new[]
+                    {
+                        new { Path = Path.Combine(TestImageDirectory, "obama.jpg"), Model = Model.Cnn,    Confidence = 1.1056d, Bottom = 379, Left = 354, Right = 598, Top = 134 },
+                        new { Path = Path.Combine(TestImageDirectory, "obama.jpg"), Model = Model.Hog,    Confidence = 1.9854d, Bottom = 409, Left = 349, Right = 617, Top = 142 },
+                        new { Path = Path.Combine(TestImageDirectory, "obama.jpg"), Model = Model.Custom, Confidence = 1.4475d, Bottom = 394, Left = 366, Right = 624, Top = 136 }
+                    };
+
+                    foreach (var gt in groundTruth)
+                        using (var image = FaceRecognition.LoadImageFile(gt.Path))
+                        {
+                            var location = this._FaceRecognition.FaceLocations(image, 1, gt.Model).ToArray()[0];
+                            Assert.True(Math.Abs(gt.Confidence - location.Confidence) < 0.0001d, $"Failed to calc confidence '{gt.Path}'");
+                            Assert.True(gt.Bottom == location.Bottom, $"Failed to get Bottom '{gt.Path}'");
+                            Assert.True(gt.Left == location.Left, $"Failed to get Left '{gt.Path}'");
+                            Assert.True(gt.Right == location.Right, $"Failed to get Right '{gt.Path}'");
+                            Assert.True(gt.Top == location.Top, $"Failed to get Top '{gt.Path}'");
+                        }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomAgeEstimator = null;
             }
         }
 
@@ -590,7 +630,7 @@ namespace FaceRecognitionDotNet.Tests
             }
 
             // empty image should return empty result
-            using(var bitmap = new Bitmap(640, 480, PixelFormat.Format24bppRgb))
+            using (var bitmap = new Bitmap(640, 480, PixelFormat.Format24bppRgb))
             using (var image = FaceRecognition.LoadImage(bitmap))
             {
                 var landmarks = this._FaceRecognition.FaceLandmark(image).ToArray();

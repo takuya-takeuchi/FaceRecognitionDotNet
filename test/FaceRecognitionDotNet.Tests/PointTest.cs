@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Drawing;
 using Xunit;
 
 namespace FaceRecognitionDotNet.Tests

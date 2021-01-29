@@ -122,9 +122,9 @@ namespace FaceRecognitionDotNet.Dlib.Python
             }
         }
 
-        public static IEnumerable<Rectangle> RunDetectorWithUpscale2(FrontalFaceDetector detector,
-                                                                     Image image,
-                                                                     uint upsamplingAmount)
+        public static IEnumerable<Tuple<Rectangle, double>> RunDetectorWithUpscale2(FrontalFaceDetector detector,
+                                                                                    Image image,
+                                                                                    uint upsamplingAmount)
         {
             if (detector == null)
                 throw new ArgumentNullException(nameof(detector));
@@ -138,12 +138,17 @@ namespace FaceRecognitionDotNet.Dlib.Python
             var weightIndices = new List<ulong>();
             const double adjustThreshold = 0.0;
 
-            return RunDetectorWithUpscale1(detector,
-                                           image,
-                                           upsamplingAmount,
-                                           adjustThreshold,
-                                           detectionConfidences,
-                                           weightIndices);
+            var rects = RunDetectorWithUpscale1(detector,
+                                                image,
+                                                upsamplingAmount,
+                                                adjustThreshold,
+                                                detectionConfidences,
+                                                weightIndices).ToArray();
+
+            
+            var index = 0;
+            foreach(var rect in rects)
+                yield return new Tuple<Rectangle, double>(rect, detectionConfidences[index++]);
         }
 
         #region Helpers

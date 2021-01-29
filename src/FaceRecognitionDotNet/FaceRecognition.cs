@@ -35,6 +35,8 @@ namespace FaceRecognitionDotNet
 
         private FaceLandmarkDetector _CustomFaceLandmarkDetector;
 
+        private FaceDetector _CustomFaceDetector;
+
         private AgeEstimator _CustomAgeEstimator;
 
         private GenderEstimator _CustomGenderEstimator;
@@ -122,6 +124,15 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
+        /// Gets or sets the custom face detector that user defined.
+        /// </summary>
+        public FaceDetector CustomFaceDetector
+        {
+            get => this._CustomFaceDetector;
+            set => this._CustomFaceDetector = value;
+        }
+
+        /// <summary>
         /// Gets or sets the custom face landmark detector that user defined.
         /// </summary>
         public FaceLandmarkDetector CustomFaceLandmarkDetector
@@ -174,8 +185,11 @@ namespace FaceRecognitionDotNet
             var image = imagesArray[0];
             for (var index = 0; index < rawDetectionsBatched.Length; index++)
             {
-                var faces = rawDetectionsBatched[index];
-                yield return faces.Select(rect => TrimBound(rect.Rect, image.Width, image.Height)).ToArray();
+                var faces = rawDetectionsBatched[index].ToArray();
+                var locations = faces.Select(rect => new Location(TrimBound(rect.Rect, image.Width, image.Height), rect.DetectionConfidence)).ToArray();
+                foreach (var face in faces)
+                    face.Dispose();
+                yield return locations;
             }
         }
 
@@ -511,24 +525,12 @@ namespace FaceRecognitionDotNet
             image.ThrowIfDisposed();
             this.ThrowIfDisposed();
 
-            switch (model)
+            foreach (var face in this.RawFaceLocations(image, numberOfTimesToUpsample, model))
             {
-                case Model.Cnn:
-                    foreach (var face in this.RawFaceLocations(image, numberOfTimesToUpsample, Model.Cnn))
-                    {
-                        var ret = TrimBound(face.Rect, image.Width, image.Height);
-                        face.Dispose();
-                        yield return ret;
-                    }
-                    break;
-                default:
-                    foreach (var face in this.RawFaceLocations(image, numberOfTimesToUpsample, model))
-                    {
-                        var ret = TrimBound(face.Rect, image.Width, image.Height);
-                        face.Dispose();
-                        yield return ret;
-                    }
-                    break;
+                var ret = TrimBound(face.Rect, image.Width, image.Height);
+                var confidence = face.DetectionConfidence;
+                face.Dispose();
+                yield return new Location(ret, confidence);
             }
         }
 
@@ -901,21 +903,30 @@ namespace FaceRecognitionDotNet
                                                                   PredictorModel predictorModel = PredictorModel.Large,
                                                                   Model model = Model.Hog)
         {
-            IEnumerable<MModRect> tmp;
+            IEnumerable<Location> rects;
 
             if (faceLocations == null)
-                tmp = this.RawFaceLocations(faceImage, 1, model);
+            {
+                var list = new List<Location>();
+                var tmp = this.RawFaceLocations(faceImage, 1, model);
+                foreach (var rect in tmp)
+                {
+                    list.Add(new Location(rect.Rect, rect.DetectionConfidence));
+                    rect.Dispose();
+                }
+
+                rects = list;
+            }
             else
-                tmp = faceLocations.Select(l => new MModRect { Rect = new Rectangle { Bottom = l.Bottom, Left = l.Left, Top = l.Top, Right = l.Right } });
+            {
+                rects = faceLocations;
+            }
 
             if (predictorModel == PredictorModel.Custom)
             {
-                foreach (var rect in tmp)
+                foreach (var rect in rects)
                 {
-                    var r = rect.Rect;
-                    var location = new Location(r.Left, r.Top, r.Right, r.Bottom);
-                    var ret = this._CustomFaceLandmarkDetector.Detect(faceImage, location);
-                    rect.Dispose();
+                    var ret = this._CustomFaceLandmarkDetector.Detect(faceImage, rect);
                     yield return ret;
                 }
             }
@@ -929,10 +940,9 @@ namespace FaceRecognitionDotNet
                         break;
                 }
 
-                foreach (var rect in tmp)
+                foreach (var rect in rects)
                 {
-                    var ret = posePredictor.Detect(faceImage.Matrix, rect);
-                    rect.Dispose();
+                    var ret = posePredictor.Detect(faceImage.Matrix, new Rectangle(rect.Left, rect.Top, rect.Right, rect.Bottom));
                     yield return ret;
                 }
             }
@@ -942,11 +952,19 @@ namespace FaceRecognitionDotNet
         {
             switch (model)
             {
+                case Model.Custom:
+                    if (this._CustomFaceDetector == null)
+                        throw new NotSupportedException("The custom face detector is not ready.");
+                    return this._CustomFaceDetector.Detect(faceImage, numberOfTimesToUpsample).Select(rect => new MModRect
+                    {
+                        Rect = new Rectangle(rect.Left, rect.Top, rect.Right, rect.Bottom),
+                        DetectionConfidence = rect.Confidence
+                    });
                 case Model.Cnn:
                     return CnnFaceDetectionModelV1.Detect(this._CnnFaceDetector, faceImage, numberOfTimesToUpsample);
                 default:
                     var locations = SimpleObjectDetector.RunDetectorWithUpscale2(this._FaceDetector, faceImage, (uint)numberOfTimesToUpsample);
-                    return locations.Select(rectangle => new MModRect { Rect = rectangle });
+                    return locations.Select(tuple => new MModRect { Rect = tuple.Item1, DetectionConfidence = tuple.Item2 });
             }
         }
 

@@ -15,7 +15,12 @@
         /// <summary>
         /// Specifies that the model is CNN (Convolutional Neural Network) based face detector.
         /// </summary>
-        Cnn
+        Cnn,
+        
+        /// <summary>
+        /// Specifies that the custom face detector.
+        /// </summary>
+        Custom
 
     }
 
