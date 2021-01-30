@@ -334,6 +334,19 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
+        public void CustomFaceDetectorException()
+        {
+            try
+            {
+                new SimpleFaceDetector("not_found");
+                Assert.True(false, $"{nameof(SimpleFaceDetector)} method should throw exception.");
+            }
+            catch (FileNotFoundException)
+            {
+            }
+        }
+
+        [Fact]
         public void CreateFail1()
         {
             Directory.CreateDirectory(ModelTempDirectory);
@@ -401,7 +414,7 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
-        public void EyeBlinkLargeDetectFail()
+        public void EyeBlinkLargeDetectException()
         {
             try
             {
@@ -1371,6 +1384,19 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
+        public void PredictAgeException()
+        {
+            try
+            {
+                new SimpleAgeEstimator("not_found");
+                Assert.True(false, $"{nameof(SimpleAgeEstimator)} method should throw exception.");
+            }
+            catch (FileNotFoundException)
+            {
+            }
+        }
+
+        [Fact]
         public void PredictGender()
         {
             if (!File.Exists(this._GenderEstimatorModelFile))
@@ -1404,6 +1430,19 @@ namespace FaceRecognitionDotNet.Tests
             finally
             {
                 this._FaceRecognition.CustomGenderEstimator = null;
+            }
+        }
+
+        [Fact]
+        public void PredictGenderException()
+        {
+            try
+            {
+                new SimpleGenderEstimator("not_found");
+                Assert.True(false, $"{nameof(SimpleGenderEstimator)} method should throw exception.");
+            }
+            catch (FileNotFoundException)
+            {
             }
         }
 
@@ -1560,6 +1599,44 @@ namespace FaceRecognitionDotNet.Tests
             finally
             {
                 this._FaceRecognition.CustomHeadPoseEstimator = null;
+            }
+        }
+
+        [Fact]
+        public void PredictHeadPoseException()
+        {
+            if (!File.Exists(this._RollEstimateorModelFile))
+                return;
+            if (!File.Exists(this._PitchEstimateorModelFile))
+                return;
+            if (!File.Exists(this._YawEstimateorModelFile))
+                return;
+
+            try
+            {
+                new SimpleHeadPoseEstimator("not_found", this._PitchEstimateorModelFile, this._YawEstimateorModelFile);
+                Assert.True(false, $"{nameof(SimpleHeadPoseEstimator)} method should throw exception.");
+            }
+            catch (FileNotFoundException)
+            {
+            }
+
+            try
+            {
+                new SimpleHeadPoseEstimator(this._RollEstimateorModelFile, null, this._YawEstimateorModelFile);
+                Assert.True(false, $"{nameof(SimpleHeadPoseEstimator)} method should throw exception.");
+            }
+            catch (FileNotFoundException)
+            {
+            }
+
+            try
+            {
+                new SimpleHeadPoseEstimator(this._RollEstimateorModelFile, this._PitchEstimateorModelFile, null);
+                Assert.True(false, $"{nameof(SimpleHeadPoseEstimator)} method should throw exception.");
+            }
+            catch (FileNotFoundException)
+            {
             }
         }
 
