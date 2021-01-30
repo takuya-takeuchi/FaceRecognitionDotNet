@@ -407,6 +407,23 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
+        public void Encoding()
+        {
+            try
+            {
+                FaceRecognition.InternalEncoding = System.Text.Encoding.ASCII;
+                Assert.Equal(FaceRecognition.InternalEncoding , System.Text.Encoding.ASCII);
+
+                FaceRecognition.InternalEncoding = System.Text.Encoding.UTF8;
+                Assert.Equal(FaceRecognition.InternalEncoding, System.Text.Encoding.UTF8);
+            }
+            finally
+            {
+                FaceRecognition.InternalEncoding = null;
+            }
+        }
+
+        [Fact]
         public void EyeBlinkLargeDetect()
         {
             using (var detector = new EyeAspectRatioLargeEyeBlinkDetector(0.2, 0.2))
@@ -426,6 +443,30 @@ namespace FaceRecognitionDotNet.Tests
                 Assert.True(false, $"{nameof(FaceRecognition.EyeBlinkDetect)} method should throw exception.");
             }
             catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                this._FaceRecognition.CustomEyeBlinkDetector = null;
+                this._FaceRecognition.EyeBlinkDetect(null, out _, out _);
+                Assert.True(false, $"{nameof(FaceRecognition.EyeBlinkDetect)} method should throw exception.");
+            }
+            catch (NotSupportedException)
+            {
+            }
+
+            try
+            {
+                using (var detector = new EyeAspectRatioLargeEyeBlinkDetector(0.2, 0.2))
+                {
+                    this._FaceRecognition.CustomEyeBlinkDetector = detector;
+                    detector.Dispose();
+                    this._FaceRecognition.EyeBlinkDetect(null, out _, out _);
+                }
+                Assert.True(false, $"{nameof(FaceRecognition.EyeBlinkDetect)} method should throw exception.");
+            }
+            catch (ObjectDisposedException)
             {
             }
         }

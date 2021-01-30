@@ -311,10 +311,16 @@ namespace FaceRecognitionDotNet
         /// <exception cref="ArgumentNullException"><paramref name="landmark"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="landmark"/> does not contain <see cref="FacePart.LeftEye"/> or <see cref="FacePart.RightEye"/>.</exception>
         /// <exception cref="NotSupportedException">The custom eye blink detector is not ready.</exception>
+        /// <exception cref="ObjectDisposedException">This object or custom eye blink detector is disposed.</exception>
         public void EyeBlinkDetect(IDictionary<FacePart, IEnumerable<FacePoint>> landmark, out bool leftBlink, out bool rightBlink)
         {
+            this.ThrowIfDisposed();
+
             if (this._CustomEyeBlinkDetector == null)
                 throw new NotSupportedException("The custom eye blink detector is not ready.");
+
+            if (this._CustomEyeBlinkDetector.IsDisposed)
+                throw new ObjectDisposedException($"{nameof(CustomEyeBlinkDetector)}", "The custom eye blink detector is disposed.");
 
             this._CustomEyeBlinkDetector.Detect(landmark, out leftBlink, out rightBlink);
         }
