@@ -1412,6 +1412,56 @@ namespace FaceRecognitionDotNet.Tests
             catch (FileNotFoundException)
             {
             }
+
+            try
+            {
+                this._FaceRecognition.PredictAge(null, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictAge)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictAge(image, null);
+                Assert.True(false, $"{nameof(PredictAge)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictAge(image, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictAge)} method should throw {nameof(NotSupportedException)}.");
+            }
+            catch (NotSupportedException)
+            {
+            }
+
+            if (!File.Exists(this._AgeEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                using (var estimator = new SimpleAgeEstimator(this._AgeEstimatorModelFile))
+                {
+                    this._FaceRecognition.CustomAgeEstimator = estimator;
+                    estimator.Dispose();
+                    this._FaceRecognition.PredictAge(image, new Location(0, 0, 0, 0));
+                }
+                Assert.True(false, $"{nameof(PredictAge)} method should throw {nameof(ObjectDisposedException)}.");
+            }
+            catch (ObjectDisposedException)
+            {
+            }
         }
 
         [Fact]
@@ -1471,6 +1521,56 @@ namespace FaceRecognitionDotNet.Tests
             catch (FileNotFoundException)
             {
             }
+
+            try
+            {
+                this._FaceRecognition.PredictGender(null, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictGender)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictGender(image, null);
+                Assert.True(false, $"{nameof(PredictGender)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictGender(image, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictGender)} method should throw {nameof(NotSupportedException)}.");
+            }
+            catch (NotSupportedException)
+            {
+            }
+
+            if (!File.Exists(this._GenderEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                using (var estimator = new SimpleGenderEstimator(this._GenderEstimatorModelFile))
+                {
+                    this._FaceRecognition.CustomGenderEstimator = estimator;
+                    estimator.Dispose();
+                    this._FaceRecognition.PredictGender(image, new Location(0, 0, 0, 0));
+                }
+                Assert.True(false, $"{nameof(PredictGender)} method should throw {nameof(ObjectDisposedException)}.");
+            }
+            catch (ObjectDisposedException)
+            {
+            }
         }
 
         [Fact]
@@ -1522,6 +1622,61 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
+        public void PredictProbabilityAgeException()
+        {
+
+            try
+            {
+                this._FaceRecognition.PredictProbabilityAge(null, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictProbabilityAge)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictProbabilityAge(image, null);
+                Assert.True(false, $"{nameof(PredictProbabilityAge)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictProbabilityAge(image, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictProbabilityAge)} method should throw {nameof(NotSupportedException)}.");
+            }
+            catch (NotSupportedException)
+            {
+            }
+
+            if (!File.Exists(this._AgeEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                using (var estimator = new SimpleAgeEstimator(this._AgeEstimatorModelFile))
+                {
+                    this._FaceRecognition.CustomAgeEstimator = estimator;
+                    estimator.Dispose();
+                    this._FaceRecognition.PredictProbabilityAge(image, new Location(0, 0, 0, 0));
+                }
+                Assert.True(false, $"{nameof(PredictProbabilityAge)} method should throw {nameof(ObjectDisposedException)}.");
+            }
+            catch (ObjectDisposedException)
+            {
+            }
+        }
+
+        [Fact]
         public void PredictProbabilityGender()
         {
             if (!File.Exists(this._GenderEstimatorModelFile))
@@ -1558,6 +1713,60 @@ namespace FaceRecognitionDotNet.Tests
             finally
             {
                 this._FaceRecognition.CustomGenderEstimator = null;
+            }
+        }
+
+        [Fact]
+        public void PredictProbabilityGenderException()
+        {
+            try
+            {
+                this._FaceRecognition.PredictProbabilityGender(null, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictProbabilityGender)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictProbabilityGender(image, null);
+                Assert.True(false, $"{nameof(PredictProbabilityGender)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictProbabilityGender(image, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictProbabilityGender)} method should throw {nameof(NotSupportedException)}.");
+            }
+            catch (NotSupportedException)
+            {
+            }
+
+            if (!File.Exists(this._GenderEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                using (var estimator = new SimpleGenderEstimator(this._GenderEstimatorModelFile))
+                {
+                    this._FaceRecognition.CustomGenderEstimator = estimator;
+                    estimator.Dispose();
+                    this._FaceRecognition.PredictProbabilityGender(image, new Location(0, 0, 0, 0));
+                }
+                Assert.True(false, $"{nameof(PredictProbabilityGender)} method should throw {nameof(ObjectDisposedException)}.");
+            }
+            catch (ObjectDisposedException)
+            {
             }
         }
 
@@ -1663,6 +1872,44 @@ namespace FaceRecognitionDotNet.Tests
                 Assert.True(false, $"{nameof(SimpleHeadPoseEstimator)} method should throw exception.");
             }
             catch (FileNotFoundException)
+            {
+            }
+
+            try
+            {
+                this._FaceRecognition.PredictHeadPose(null);
+                Assert.True(false, $"{nameof(PredictHeadPose)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            var parts = new Dictionary<FacePart, IEnumerable<FacePoint>>();
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictHeadPose(parts);
+                Assert.True(false, $"{nameof(PredictHeadPose)} method should throw {nameof(NotSupportedException)}.");
+            }
+            catch (NotSupportedException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                using (var estimator = new SimpleHeadPoseEstimator(this._RollEstimateorModelFile, this._PitchEstimateorModelFile, this._YawEstimateorModelFile))
+                {
+                    this._FaceRecognition.CustomHeadPoseEstimator = estimator;
+                    estimator.Dispose();
+                    this._FaceRecognition.PredictHeadPose(parts);
+                }
+                Assert.True(false, $"{nameof(PredictHeadPose)} method should throw {nameof(ObjectDisposedException)}.");
+            }
+            catch (ObjectDisposedException)
             {
             }
         }

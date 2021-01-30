@@ -887,11 +887,20 @@ namespace FaceRecognitionDotNet
         /// <param name="landmark">The dictionary of face parts locations (eyes, nose, etc).</param>
         /// <returns>A head pose estimated from face parts locations.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="landmark"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException">This object or custom head pose estimator is disposed.</exception>
         /// <exception cref="NotSupportedException">The custom head pose estimator is not ready.</exception>
         public HeadPose PredictHeadPose(IDictionary<FacePart, IEnumerable<FacePoint>> landmark)
         {
+            if (landmark == null)
+                throw new ArgumentNullException(nameof(landmark));
+
+            this.ThrowIfDisposed();
+
             if (this._CustomHeadPoseEstimator == null)
                 throw new NotSupportedException("The custom head pose estimator is not ready.");
+
+            if (this._CustomHeadPoseEstimator.IsDisposed)
+                throw new ObjectDisposedException($"{nameof(CustomHeadPoseEstimator)}", "The custom head pose estimator is disposed.");
 
             return this._CustomHeadPoseEstimator.Predict(landmark);
         }
