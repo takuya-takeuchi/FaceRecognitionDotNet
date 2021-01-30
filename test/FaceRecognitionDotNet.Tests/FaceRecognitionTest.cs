@@ -616,6 +616,27 @@ namespace FaceRecognitionDotNet.Tests
             catch (InvalidOperationException)
             {
             }
+
+            try
+            {
+                var path = Path.Combine(ImageDirectory, TwoPersonFile);
+                if (!File.Exists(path))
+                {
+                    var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
+
+                    Directory.CreateDirectory(ImageDirectory);
+                    File.WriteAllBytes(path, binary);
+                }
+
+                using (var image = FaceRecognition.LoadImageFile(path))
+                {
+                    var _ = this._FaceRecognition.FaceEncodings(image, null, 1, PredictorModel.Custom).ToArray();
+                    Assert.True(false, $"{nameof(FaceRecognition.FaceEncodings)} must throw {typeof(NotSupportedException)}.");
+                }
+            }
+            catch (NotSupportedException)
+            {
+            }
         }
 
         [Fact]
@@ -646,16 +667,17 @@ namespace FaceRecognitionDotNet.Tests
             {
             }
 
+            var path = Path.Combine(ImageDirectory, TwoPersonFile);
+            if (!File.Exists(path))
+            {
+                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path, binary);
+            }
+
             try
             {
-                var path = Path.Combine(ImageDirectory, TwoPersonFile);
-                if (!File.Exists(path))
-                {
-                    var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                    Directory.CreateDirectory(ImageDirectory);
-                    File.WriteAllBytes(path, binary);
-                }
 
                 using (var image = FaceRecognition.LoadImageFile(path))
                 {
@@ -664,6 +686,36 @@ namespace FaceRecognitionDotNet.Tests
                 }
             }
             catch (InvalidOperationException)
+            {
+            }
+
+            try
+            {
+                using (var image = FaceRecognition.LoadImageFile(path))
+                {
+                    var _ = this._FaceRecognition.FaceLandmark(image, null, PredictorModel.Custom, Model.Cnn).ToArray();
+                    Assert.True(false, $"{nameof(FaceRecognition.FaceLandmark)} must throw {typeof(NotSupportedException)}.");
+                }
+            }
+            catch (NotSupportedException)
+            {
+            }
+
+            try
+            {
+                if (!File.Exists(this._HelenModelFile))
+                    return;
+
+                var faceLandmarkDetector = new HelenFaceLandmarkDetector(this._HelenModelFile);
+                this._FaceRecognition.CustomFaceLandmarkDetector = faceLandmarkDetector;
+                faceLandmarkDetector.Dispose();
+                using (var image = FaceRecognition.LoadImageFile(path))
+                {
+                    var _ = this._FaceRecognition.FaceLandmark(image, null, PredictorModel.Custom, Model.Cnn).ToArray();
+                    Assert.True(false, $"{nameof(FaceRecognition.FaceLandmark)} must throw {typeof(ObjectDisposedException)}.");
+                }
+            }
+            catch (ObjectDisposedException)
             {
             }
         }
