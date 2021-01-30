@@ -264,7 +264,7 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
-        public void CropFacesFail()
+        public void CropFacesException()
         {
             try
             {
@@ -911,7 +911,7 @@ namespace FaceRecognitionDotNet.Tests
                     var _ = image.Width;
                     Assert.True(false, $"{nameof(Image.Width)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
                 }
-                catch
+                catch (ObjectDisposedException)
                 {
                 }
 
@@ -920,7 +920,7 @@ namespace FaceRecognitionDotNet.Tests
                     var _ = image.Height;
                     Assert.True(false, $"{nameof(Image.Height)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
                 }
-                catch
+                catch (ObjectDisposedException)
                 {
                 }
             }
@@ -975,7 +975,7 @@ namespace FaceRecognitionDotNet.Tests
                         var _ = image.Width;
                         Assert.True(false, $"{nameof(Image.Width)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
                     }
-                    catch
+                    catch (ObjectDisposedException)
                     {
                     }
 
@@ -984,7 +984,7 @@ namespace FaceRecognitionDotNet.Tests
                         var _ = image.Height;
                         Assert.True(false, $"{nameof(Image.Height)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
                     }
-                    catch
+                    catch (ObjectDisposedException)
                     {
                     }
 
@@ -993,6 +993,42 @@ namespace FaceRecognitionDotNet.Tests
                 {
                     if (bitmapData != null)
                         bitmap.UnlockBits(bitmapData);
+                }
+            }
+        }
+
+        [Fact]
+        public void LoadImageRgba()
+        {
+            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
+            const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
+
+            var path = Path.Combine(ImageDirectory, file);
+            if (!File.Exists(path))
+            {
+                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path, binary);
+            }
+
+            using (var bitmap = (Bitmap)System.Drawing.Image.FromFile(path))
+            {
+                BitmapData bitmapData = null;
+
+                using (var rgba = new Bitmap(bitmap.Width, bitmap.Height, PixelFormat.Format32bppArgb))
+                using (var g = Graphics.FromImage(rgba))
+                {
+                    g.DrawImage(bitmap,
+                        new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                        new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                        GraphicsUnit.Pixel);
+
+                    var image = FaceRecognition.LoadImage(rgba);
+                    Assert.True(image.Width == 419, $"Width of {path} is wrong");
+                    Assert.True(image.Height == 600, $"Height of {path} is wrong");
+                    image.Dispose();
+                    Assert.True(image.IsDisposed, $"{typeof(Image)} should be already disposed.");
                 }
             }
         }
@@ -1040,7 +1076,7 @@ namespace FaceRecognitionDotNet.Tests
                         var _ = image.Width;
                         Assert.True(false, $"{nameof(Image.Width)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
                     }
-                    catch
+                    catch (ObjectDisposedException)
                     {
                     }
 
@@ -1049,7 +1085,7 @@ namespace FaceRecognitionDotNet.Tests
                         var _ = image.Height;
                         Assert.True(false, $"{nameof(Image.Height)} must throw {typeof(ObjectDisposedException)} after object is disposed.");
                     }
-                    catch
+                    catch (ObjectDisposedException)
                     {
                     }
                 }
@@ -1076,6 +1112,42 @@ namespace FaceRecognitionDotNet.Tests
             catch (ArgumentOutOfRangeException)
             {
             }
+
+            try
+            {
+                var _ = FaceRecognition.LoadImage(new byte[100 * 100 * 3], -1, 100, 50, Mode.Rgb);
+                Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentOutOfRangeException)}.");
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+            }
+
+            try
+            {
+                var _ = FaceRecognition.LoadImage(new byte[100 * 100 * 3], 100, -1, 50, Mode.Rgb);
+                Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentOutOfRangeException)}.");
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+            }
+
+            try
+            {
+                var _ = FaceRecognition.LoadImage(new byte[100 * 100 * 3], 100, 50, -1, Mode.Rgb);
+                Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentOutOfRangeException)}.");
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+            }
+
+            try
+            {
+                var _ = FaceRecognition.LoadImage(new byte[100 * 100 * 3], 100, 50, 20, Mode.Rgb);
+                Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentOutOfRangeException)}.");
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+            }
         }
 
         [Fact]
@@ -1094,6 +1166,36 @@ namespace FaceRecognitionDotNet.Tests
             {
                 var dummy = (IntPtr)10;
                 var _ = FaceRecognition.LoadImage(dummy, 100, 100, 50, Mode.Rgb);
+                Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentOutOfRangeException)}.");
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+            }
+
+            try
+            {
+                var dummy = (IntPtr)10;
+                var _ = FaceRecognition.LoadImage(dummy, -1, 100, 50, Mode.Rgb);
+                Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentOutOfRangeException)}.");
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+            }
+
+            try
+            {
+                var dummy = (IntPtr)10;
+                var _ = FaceRecognition.LoadImage(dummy, 100, -1, 50, Mode.Rgb);
+                Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentOutOfRangeException)}.");
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+            }
+
+            try
+            {
+                var dummy = (IntPtr)10;
+                var _ = FaceRecognition.LoadImage(dummy, 100, 50, -1, Mode.Rgb);
                 Assert.True(false, $"{nameof(FaceRecognition.LoadImage)} must throw {typeof(ArgumentOutOfRangeException)}.");
             }
             catch (ArgumentOutOfRangeException)
@@ -1962,8 +2064,8 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void TestLoadBitmap()
         {
-            Location mono = null;
-            Location color = null;
+            Location mono;
+            Location color;
             using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama_8bppIndexed.bmp"), Mode.Greyscale))
                 mono = this._FaceRecognition.FaceLocations(img).ToArray().FirstOrDefault();
             using (var img = FaceRecognition.LoadImageFile(Path.Combine(TestImageDirectory, "obama_24bppRgb.bmp")))
