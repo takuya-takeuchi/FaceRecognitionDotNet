@@ -1,4 +1,4 @@
-$CodecovVersion = "1.10.0"
+$CodecovVersion = "1.12.4"
 
 # check Codecov Token
 $token = $env:CODECOV_TOKEN
