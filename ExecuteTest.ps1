@@ -19,7 +19,7 @@ dotnet add test\FaceRecognitionDotNet.Tests\FaceRecognitionDotNet.Tests.csproj p
 
 Write-Host "Start Test and collect Coverage." -ForegroundColor Green
 # https://github.com/tonerdo/coverlet/blob/master/Documentation/MSBuildIntegration.md
-dotnet test test\FaceRecognitionDotNet.Tests\FaceRecognitionDotNet.Tests.csproj `
+dotnet test test\FaceRecognitionDotNet.Tests\FaceRecognitionDotNet.Tests.csproj -v=normal `
             /p:CollectCoverage=true `
             /p:CoverletOutputFormat=opencover `
             /p:Exclude="[DlibDotNet]*"
