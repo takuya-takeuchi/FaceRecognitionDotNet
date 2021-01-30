@@ -835,6 +835,7 @@
             <param name="landmark">眼、鼻等の顔の構成要素の辞書。</param>
             <returns>眼、鼻等の顔の構成要素から推定された頭の向き。</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="landmark"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException">このオブジェクトまたはカスタム頭の向き推定器は破棄されています。</exception>
             <exception cref="T:System.NotSupportedException">カスタム頭の向き推定器の準備ができていません。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged">

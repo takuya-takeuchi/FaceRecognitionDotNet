@@ -835,6 +835,7 @@
             <param name="landmark">The dictionary of face parts locations (eyes, nose, etc).</param>
             <returns>A head pose estimated from face parts locations.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="landmark"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException">This object or custom head pose estimator is disposed.</exception>
             <exception cref="T:System.NotSupportedException">The custom head pose estimator is not ready.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged">
