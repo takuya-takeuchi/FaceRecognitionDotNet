@@ -1408,7 +1408,7 @@ namespace FaceRecognitionDotNet.Tests
                     for (var index = 0; index < answer.Length; index++)
                     {
                         Assert.True(range[index].Start == answer[index][0], $"{nameof(AgeRange.Start)} does not equal to {answer[index][0]}");
-                        Assert.True(range[index].End == answer[index][0], $"{nameof(AgeRange.End)} does not equal to {answer[index][1]}");
+                        Assert.True(range[index].End == answer[index][1], $"{nameof(AgeRange.End)} does not equal to {answer[index][1]}");
                     }
 
                     // 0: (0, 2)
