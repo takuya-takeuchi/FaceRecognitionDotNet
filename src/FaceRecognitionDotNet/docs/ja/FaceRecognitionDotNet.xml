@@ -663,6 +663,7 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="landmark"/> が null です。</exception>
             <exception cref="T:System.ArgumentException"><paramref name="landmark"/> が <see cref="F:FaceRecognitionDotNet.FacePart.LeftEye"/> または <see cref="F:FaceRecognitionDotNet.FacePart.RightEye"/> を含んでいません。</exception>
             <exception cref="T:System.NotSupportedException">カスタムまばたき検出器の準備ができていません。</exception>
+            <exception cref="T:System.ObjectDisposedException">このオブジェクトまたはまばたき検出器は破棄されています。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistance(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding)">
             <summary>
@@ -835,6 +836,7 @@
             <param name="landmark">眼、鼻等の顔の構成要素の辞書。</param>
             <returns>眼、鼻等の顔の構成要素から推定された頭の向き。</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="landmark"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException">このオブジェクトまたはカスタム頭の向き推定器は破棄されています。</exception>
             <exception cref="T:System.NotSupportedException">カスタム頭の向き推定器の準備ができていません。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged">
