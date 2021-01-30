@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -10,55 +11,59 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void Equal()
         {
-            var point1 = new HeadPose(10, 20, 9);
-            var point2 = new HeadPose(10, 20, 9);
-            Assert.Equal(point1, point2);
-            Assert.True(point1 == point2);
-            Assert.False(point1 != point2);
+            var pose1 = new HeadPose(10, 20, 9);
+            var pose2 = new HeadPose(10, 20, 9);
+            Assert.Equal(pose1, pose2);
+            Assert.True(pose1 == pose2);
+            Assert.True(pose1.Equals(pose2));
+            Assert.False(pose1 != pose2);
         }
 
         [Fact]
         public void NotEqual1()
         {
-            var point1 = new HeadPose(10, 20, 9);
-            var point2 = new HeadPose(40, 20, 9);
-            Assert.NotEqual(point1, point2);
-            Assert.True(point1 != point2);
-            Assert.False(point1 == point2);
+            var pose1 = new HeadPose(10, 20, 9);
+            var pose2 = new HeadPose(40, 20, 9);
+            Assert.NotEqual(pose1, pose2);
+            Assert.True(pose1 != pose2);
+            Assert.True(!pose1.Equals(pose2));
+            Assert.False(pose1 == pose2);
         }
 
         [Fact]
         public void NotEqual2()
         {
-            var point1 = new HeadPose(40, 10, 9);
-            var point2 = new HeadPose(40, 20, 9);
-            Assert.NotEqual(point1, point2);
-            Assert.True(point1 != point2);
-            Assert.False(point1 == point2);
+            var pose1 = new HeadPose(40, 10, 9);
+            var pose2 = new HeadPose(40, 20, 9);
+            Assert.NotEqual(pose1, pose2);
+            Assert.True(pose1 != pose2);
+            Assert.True(!pose1.Equals(pose2));
+            Assert.False(pose1 == pose2);
         }
 
         [Fact]
         public void NotEqual3()
         {
-            var point1 = new HeadPose(40, 20, 9);
-            var point2 = new HeadPose(40, 20, 0);
-            Assert.NotEqual(point1, point2);
-            Assert.True(point1 != point2);
-            Assert.False(point1 == point2);
+            var pose1 = new HeadPose(40, 20, 9);
+            var pose2 = new HeadPose(40, 20, 0);
+            Assert.NotEqual(pose1, pose2);
+            Assert.True(pose1 != pose2);
+            Assert.True(!pose1.Equals(pose2));
+            Assert.False(pose1 == pose2);
         }
 
         [Fact]
         public void Hash()
         {
-            var point1 = new HeadPose(40, 20, 9);
-            var point2 = new HeadPose(40, 20, 0);
+            var pose1 = new HeadPose(40, 20, 9);
+            var pose2 = new HeadPose(40, 20, 0);
 
             var dictionary = new Dictionary<HeadPose, int>();
-            dictionary.Add(point1, dictionary.Count);
+            dictionary.Add(pose1, dictionary.Count);
 
             try
             {
-                dictionary.Add(point2, dictionary.Count);
+                dictionary.Add(pose2, dictionary.Count);
             }
             catch
             {
@@ -67,10 +72,10 @@ namespace FaceRecognitionDotNet.Tests
 
             try
             {
-                dictionary.Add(point2, dictionary.Count);
+                dictionary.Add(pose2, dictionary.Count);
                 Assert.True(false, $"{typeof(HeadPose)} must throw exception because key is duplicate.");
             }
-            catch
+            catch (ArgumentException)
             {
             }
         }
