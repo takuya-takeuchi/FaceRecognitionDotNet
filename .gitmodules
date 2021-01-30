@@ -1,3 +1,4 @@
 [submodule "src/DlibDotNet"]
 	path = src/DlibDotNet
 	url = https://github.com/takuya-takeuchi/DlibDotNet
+        ignore = dirty
