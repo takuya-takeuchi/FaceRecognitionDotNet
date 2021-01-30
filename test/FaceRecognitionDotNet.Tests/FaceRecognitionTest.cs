@@ -1352,6 +1352,24 @@ namespace FaceRecognitionDotNet.Tests
                     this._FaceRecognition.CustomAgeEstimator = estimator;
                     Assert.Equal(this._FaceRecognition.CustomAgeEstimator, estimator);
 
+                    var range = estimator.Groups.ToArray();
+                    var answer = new[]
+                    {
+                        new []{0,2 },
+                        new []{4,6 },
+                        new []{8,13},
+                        new []{15,20},
+                        new []{25,32},
+                        new []{38,43},
+                        new []{48,53},
+                        new []{60,100}
+                    };
+                    for (var index = 0; index < answer.Length; index++)
+                    {
+                        Assert.True(range[index].Start == answer[index][0], $"{nameof(AgeRange.Start)} does not equal to {answer[index][0]}");
+                        Assert.True(range[index].End == answer[index][0], $"{nameof(AgeRange.End)} does not equal to {answer[index][1]}");
+                    }
+
                     // 0: (0, 2)
                     // 1: (4, 6)
                     // 2: (8, 13)
@@ -1408,6 +1426,15 @@ namespace FaceRecognitionDotNet.Tests
                 {
                     this._FaceRecognition.CustomGenderEstimator = estimator;
                     Assert.Equal(this._FaceRecognition.CustomGenderEstimator, estimator);
+
+                    var range = estimator.Labels.ToArray();
+                    var answer = new[]
+                    {
+                        Gender.Male,
+                        Gender.Female
+                    };
+                    for (var index = 0; index < answer.Length; index++)
+                        Assert.True(range[index] == answer[index], $"{nameof(Gender)} does not equal to {answer[index]}");
 
                     var groundTruth = new[]
                     {
