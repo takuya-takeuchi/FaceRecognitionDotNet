@@ -274,6 +274,7 @@ namespace FaceRecognitionDotNet.Tests
                 using (var detector = new SimpleFaceDetector(this._SimpleFaceDetectorModelFile))
                 {
                     this._FaceRecognition.CustomFaceDetector = detector;
+                    Assert.Equal(this._FaceRecognition.CustomFaceDetector, detector);
 
                     var groundTruth = new[]
                     {
@@ -378,6 +379,7 @@ namespace FaceRecognitionDotNet.Tests
                 using (var faceLandmarkDetector = new HelenFaceLandmarkDetector(this._HelenModelFile))
                 {
                     this._FaceRecognition.CustomFaceLandmarkDetector = faceLandmarkDetector;
+                    Assert.Equal(this._FaceRecognition.CustomFaceLandmarkDetector, faceLandmarkDetector);
 
                     using (var detector = new EyeAspectRatioHelenEyeBlinkDetector(0.05, 0.05))
                         this.EyeBlinkDetect(detector, PredictorModel.Custom);
@@ -651,6 +653,7 @@ namespace FaceRecognitionDotNet.Tests
                 using (var detector = new HelenFaceLandmarkDetector(this._HelenModelFile))
                 {
                     this._FaceRecognition.CustomFaceLandmarkDetector = detector;
+                    Assert.Equal(this._FaceRecognition.CustomFaceLandmarkDetector, detector);
 
                     this.FaceLandmark(testName, PredictorModel.Custom, true);
                     this.FaceLandmark(testName, PredictorModel.Custom, false);
@@ -1131,6 +1134,7 @@ namespace FaceRecognitionDotNet.Tests
                 using (var estimator = new SimpleAgeEstimator(this._AgeEstimatorModelFile))
                 {
                     this._FaceRecognition.CustomAgeEstimator = estimator;
+                    Assert.Equal(this._FaceRecognition.CustomAgeEstimator, estimator);
 
                     // 0: (0, 2)
                     // 1: (4, 6)
@@ -1174,6 +1178,7 @@ namespace FaceRecognitionDotNet.Tests
                 using (var estimator = new SimpleGenderEstimator(this._GenderEstimatorModelFile))
                 {
                     this._FaceRecognition.CustomGenderEstimator = estimator;
+                    Assert.Equal(this._FaceRecognition.CustomGenderEstimator, estimator);
 
                     var groundTruth = new[]
                     {
@@ -1210,6 +1215,7 @@ namespace FaceRecognitionDotNet.Tests
                 using (var estimator = new SimpleAgeEstimator(this._AgeEstimatorModelFile))
                 {
                     this._FaceRecognition.CustomAgeEstimator = estimator;
+                    Assert.Equal(this._FaceRecognition.CustomAgeEstimator, estimator);
 
                     // 0: (0, 2)
                     // 1: (4, 6)
@@ -1257,6 +1263,7 @@ namespace FaceRecognitionDotNet.Tests
                 using (var estimator = new SimpleGenderEstimator(this._GenderEstimatorModelFile))
                 {
                     this._FaceRecognition.CustomGenderEstimator = estimator;
+                    Assert.Equal(this._FaceRecognition.CustomGenderEstimator, estimator);
 
                     var groundTruth = new[]
                     {
@@ -1304,6 +1311,7 @@ namespace FaceRecognitionDotNet.Tests
                                                                    this._YawEstimateorModelFile))
                 {
                     this._FaceRecognition.CustomHeadPoseEstimator = estimator;
+                    Assert.Equal(this._FaceRecognition.CustomHeadPoseEstimator, estimator);
 
                     const int pointSize = 2;
                     const double diff = 20.00;
@@ -2046,6 +2054,7 @@ namespace FaceRecognitionDotNet.Tests
             try
             {
                 this._FaceRecognition.CustomEyeBlinkDetector = eyeBlinkDetector;
+                Assert.Equal(this._FaceRecognition.CustomEyeBlinkDetector, eyeBlinkDetector);
 
                 var groundTruth = new[]
                 {
