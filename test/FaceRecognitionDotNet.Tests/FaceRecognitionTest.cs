@@ -264,6 +264,38 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
+        public void CropFacesFail()
+        {
+            try
+            {
+                _ = FaceRecognition.CropFaces(null, new Location[0]).ToArray();
+                Assert.True(false, $"{nameof(FaceRecognition.CropFaces)} method should throw exception.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            var path = Path.Combine(ImageDirectory, TwoPersonFile);
+            if (!File.Exists(path))
+            {
+                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
+
+                Directory.CreateDirectory(ImageDirectory);
+                File.WriteAllBytes(path, binary);
+            }
+
+            try
+            {
+                using (var image = FaceRecognition.LoadImageFile(path))
+                    _ = FaceRecognition.CropFaces(image, null).ToArray();
+                Assert.True(false, $"{nameof(FaceRecognition.CropFaces)} method should throw exception.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+        }
+
+        [Fact]
         public void CustomFaceDetector()
         {
             if (!File.Exists(this._SimpleFaceDetectorModelFile))
@@ -366,6 +398,23 @@ namespace FaceRecognitionDotNet.Tests
         {
             using (var detector = new EyeAspectRatioLargeEyeBlinkDetector(0.2, 0.2))
                 this.EyeBlinkDetect(detector, PredictorModel.Large);
+        }
+
+        [Fact]
+        public void EyeBlinkLargeDetectFail()
+        {
+            try
+            {
+                using (var detector = new EyeAspectRatioLargeEyeBlinkDetector(0.2, 0.2))
+                {
+                    this._FaceRecognition.CustomEyeBlinkDetector = detector;
+                    this._FaceRecognition.EyeBlinkDetect(null, out _, out _);
+                }
+                Assert.True(false, $"{nameof(FaceRecognition.EyeBlinkDetect)} method should throw exception.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
         }
 
         [Fact]
