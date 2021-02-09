@@ -347,6 +347,40 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
+        public void Create()
+        {
+            var type = typeof(FaceRecognition).Assembly.GetTypes().FirstOrDefault(t => t.Name == "FaceRecognitionModels");
+            var methods = type.GetMethods(BindingFlags.Static | BindingFlags.Public);
+
+            var modelParameter = new ModelParameter();
+            foreach (var method in methods)
+            {
+                var result = method.Invoke(null, BindingFlags.Public | BindingFlags.Static, null, null, null) as string;
+                if (string.IsNullOrWhiteSpace(result))
+                    Assert.True(false, $"{method.Name} does not return {typeof(string).FullName} value or return null or whitespace value.");
+
+                switch (method.Name)
+                {
+                    case "GetPosePredictorModelLocation":
+                        modelParameter.PosePredictor68FaceLandmarksModel = File.ReadAllBytes(Path.Combine(ModelDirectory, result));
+                        break;
+                    case "GetPosePredictorFivePointModelLocation":
+                        modelParameter.PosePredictor5FaceLandmarksModel = File.ReadAllBytes(Path.Combine(ModelDirectory, result));
+                        break;
+                    case "GetFaceRecognitionModelLocation":
+                        modelParameter.FaceRecognitionModel = File.ReadAllBytes(Path.Combine(ModelDirectory, result));
+                        break;
+                    case "GetCnnFaceDetectorModelLocation":
+                        modelParameter.CnnFaceDetectorModel = File.ReadAllBytes(Path.Combine(ModelDirectory, result));
+                        break;
+                }
+            }
+
+            var fr = FaceRecognition.Create(modelParameter);
+            fr.Dispose();
+        }
+
+        [Fact]
         public void CreateFail1()
         {
             Directory.CreateDirectory(ModelTempDirectory);
@@ -403,6 +437,107 @@ namespace FaceRecognitionDotNet.Tests
             finally
             {
                 faceRecognition?.Dispose();
+            }
+        }
+
+        [Fact]
+        public void CreateFail3()
+        {
+            var type = typeof(FaceRecognition).Assembly.GetTypes().FirstOrDefault(t => t.Name == "FaceRecognitionModels");
+            var methods = type.GetMethods(BindingFlags.Static | BindingFlags.Public);
+
+            var modelParameter = new ModelParameter();
+            foreach (var method in methods)
+            {
+                var result = method.Invoke(null, BindingFlags.Public | BindingFlags.Static, null, null, null) as string;
+                if (string.IsNullOrWhiteSpace(result))
+                    Assert.True(false, $"{method.Name} does not return {typeof(string).FullName} value or return null or whitespace value.");
+
+                switch (method.Name)
+                {
+                    case "GetPosePredictorModelLocation":
+                        modelParameter.PosePredictor68FaceLandmarksModel = File.ReadAllBytes(Path.Combine(ModelDirectory, result));
+                        break;
+                    case "GetPosePredictorFivePointModelLocation":
+                        modelParameter.PosePredictor5FaceLandmarksModel = File.ReadAllBytes(Path.Combine(ModelDirectory, result));
+                        break;
+                    case "GetFaceRecognitionModelLocation":
+                        modelParameter.FaceRecognitionModel = File.ReadAllBytes(Path.Combine(ModelDirectory, result));
+                        break;
+                    case "GetCnnFaceDetectorModelLocation":
+                        modelParameter.CnnFaceDetectorModel = File.ReadAllBytes(Path.Combine(ModelDirectory, result));
+                        break;
+                }
+            }
+
+            try
+            {
+                ModelParameter tmp = null;
+                FaceRecognition.Create(tmp);
+                Assert.True(false, $"{nameof(FaceRecognition.Create)} should throw {nameof(ArgumentNullException)}");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                FaceRecognition.Create(new ModelParameter
+                {
+                    PosePredictor5FaceLandmarksModel = null,
+                    PosePredictor68FaceLandmarksModel = modelParameter.PosePredictor68FaceLandmarksModel,
+                    FaceRecognitionModel = modelParameter.FaceRecognitionModel,
+                    CnnFaceDetectorModel = modelParameter.CnnFaceDetectorModel,
+                });
+                Assert.True(false, $"{nameof(modelParameter.PosePredictor5FaceLandmarksModel)} should throw {nameof(NullReferenceException)}");
+            }
+            catch (NullReferenceException)
+            {
+            }
+
+            try
+            {
+                FaceRecognition.Create(new ModelParameter
+                {
+                    PosePredictor5FaceLandmarksModel = modelParameter.PosePredictor5FaceLandmarksModel,
+                    PosePredictor68FaceLandmarksModel = null,
+                    FaceRecognitionModel = modelParameter.FaceRecognitionModel,
+                    CnnFaceDetectorModel = modelParameter.CnnFaceDetectorModel,
+                });
+                Assert.True(false, $"{nameof(modelParameter.PosePredictor68FaceLandmarksModel)} should throw {nameof(NullReferenceException)}");
+            }
+            catch (NullReferenceException)
+            {
+            }
+
+            try
+            {
+                FaceRecognition.Create(new ModelParameter
+                {
+                    PosePredictor5FaceLandmarksModel = modelParameter.PosePredictor5FaceLandmarksModel,
+                    PosePredictor68FaceLandmarksModel = modelParameter.PosePredictor68FaceLandmarksModel,
+                    FaceRecognitionModel = null,
+                    CnnFaceDetectorModel = modelParameter.CnnFaceDetectorModel,
+                });
+                Assert.True(false, $"{nameof(modelParameter.FaceRecognitionModel)} should throw {nameof(NullReferenceException)}");
+            }
+            catch (NullReferenceException)
+            {
+            }
+
+            try
+            {
+                FaceRecognition.Create(new ModelParameter
+                {
+                    PosePredictor5FaceLandmarksModel = modelParameter.PosePredictor5FaceLandmarksModel,
+                    PosePredictor68FaceLandmarksModel = modelParameter.PosePredictor68FaceLandmarksModel,
+                    FaceRecognitionModel = modelParameter.FaceRecognitionModel,
+                    CnnFaceDetectorModel = null,
+                });
+                Assert.True(false, $"{nameof(modelParameter.CnnFaceDetectorModel)} should throw {nameof(NullReferenceException)}");
+            }
+            catch (NullReferenceException)
+            {
             }
         }
 

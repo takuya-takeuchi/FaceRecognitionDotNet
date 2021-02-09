@@ -92,6 +92,45 @@ namespace FaceRecognitionDotNet
             this._FaceEncoder = LossMetric.Deserialize(faceRecognitionModel);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FaceRecognition"/> class with the instance that contains model binary datum.
+        /// </summary>
+        /// <param name="parameter">The instance that contains model binary datum.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="parameter"/> is null.</exception>
+        /// <exception cref="NullReferenceException">The model data is null.</exception>
+        private FaceRecognition(ModelParameter parameter)
+        {
+            if (parameter == null)
+                throw new ArgumentNullException(nameof(parameter));
+
+            if (parameter.PosePredictor5FaceLandmarksModel == null)
+                throw new NullReferenceException(nameof(parameter.PosePredictor5FaceLandmarksModel));
+
+            if (parameter.PosePredictor68FaceLandmarksModel == null)
+                throw new NullReferenceException(nameof(parameter.PosePredictor68FaceLandmarksModel));
+
+            if (parameter.CnnFaceDetectorModel == null)
+                throw new NullReferenceException(nameof(parameter.CnnFaceDetectorModel));
+
+            if (parameter.FaceRecognitionModel == null)
+                throw new NullReferenceException(nameof(parameter.FaceRecognitionModel));
+
+            this._FaceDetector?.Dispose();
+            this._FaceDetector = DlibDotNet.Dlib.GetFrontalFaceDetector();
+
+            this._PosePredictor68Point?.Dispose();
+            this._PosePredictor68Point = ShapePredictor.Deserialize(parameter.PosePredictor68FaceLandmarksModel);
+
+            this._PosePredictor5Point?.Dispose();
+            this._PosePredictor5Point = ShapePredictor.Deserialize(parameter.PosePredictor5FaceLandmarksModel);
+
+            this._CnnFaceDetector?.Dispose();
+            this._CnnFaceDetector = LossMmod.Deserialize(parameter.CnnFaceDetectorModel);
+
+            this._FaceEncoder?.Dispose();
+            this._FaceEncoder = LossMetric.Deserialize(parameter.FaceRecognitionModel);
+        }
+
         #endregion
 
         #region Properties
@@ -253,6 +292,17 @@ namespace FaceRecognitionDotNet
         public static FaceRecognition Create(string directory)
         {
             return new FaceRecognition(directory);
+        }
+
+        /// <summary>
+        /// Create a new instance of the <see cref="FaceRecognition"/> class.
+        /// </summary>
+        /// <param name="parameter">The instance that contains model binary datum.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="parameter"/> is null.</exception>
+        /// <exception cref="NullReferenceException">The model data is null.</exception>
+        public static FaceRecognition Create(ModelParameter parameter)
+        {
+            return new FaceRecognition(parameter);
         }
 
         /// <summary>
