@@ -20,11 +20,11 @@ This library is ported from https://github.com/ageitgey/face_recognition by C#.<
 
     <dependencies>
       <group targetFramework="net461">
-        <dependency id="DlibDotNet" version="19.21.0.20210129" />
+        <dependency id="DlibDotNet" version="19.21.0.20210227" />
       </group>
       <group targetFramework="netstandard2.0">
         <dependency id="System.Drawing.Common" version="4.7.0" />
-        <dependency id="DlibDotNet" version="19.21.0.20210129" />
+        <dependency id="DlibDotNet" version="19.21.0.20210227" />
       </group>
     </dependencies>
     <frameworkAssemblies>
