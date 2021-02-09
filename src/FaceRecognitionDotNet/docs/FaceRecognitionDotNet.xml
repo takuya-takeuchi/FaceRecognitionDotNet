@@ -568,6 +568,14 @@
             <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
             <exception cref="T:System.IO.DirectoryNotFoundException">The specified directory path is not found.</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.#ctor(FaceRecognitionDotNet.ModelParameter)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> class with the instance that contains model binary datum.
+            </summary>
+            <param name="parameter">The instance that contains model binary datum.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="parameter"/> is null.</exception>
+            <exception cref="T:System.NullReferenceException">The model data is null.</exception>
+        </member>
         <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomAgeEstimator">
             <summary>
             Gets or sets the custom age estimator that user defined.
@@ -642,6 +650,14 @@
             <param name="directory">The directory path that stores model files.</param>
             <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
             <exception cref="T:System.IO.DirectoryNotFoundException">The specified directory path is not found.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.Create(FaceRecognitionDotNet.ModelParameter)">
+            <summary>
+            Create a new instance of the <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> class.
+            </summary>
+            <param name="parameter">The instance that contains model binary datum.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="parameter"/> is null.</exception>
+            <exception cref="T:System.NullReferenceException">The model data is null.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.CropFaces(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location})">
             <summary>
@@ -1103,6 +1119,31 @@
         <member name="F:FaceRecognitionDotNet.Model.Custom">
             <summary>
             Specifies that the custom face detector.
+            </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.ModelParameter">
+            <summary>
+            Describes the model binary datum. This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.ModelParameter.PosePredictor68FaceLandmarksModel">
+            <summary>
+            Gets or sets the binary data of model for 68 points face landmarks.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.ModelParameter.PosePredictor5FaceLandmarksModel">
+            <summary>
+            Gets or sets the binary data of model for 5 points face landmarks.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.ModelParameter.FaceRecognitionModel">
+            <summary>
+            Gets or sets the binary data of model for face encoding.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.ModelParameter.CnnFaceDetectorModel">
+            <summary>
+            Gets or sets the binary data of model for face detector by using CNN.
             </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.Point">
