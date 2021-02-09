@@ -69,12 +69,12 @@ foreach($BuildTarget in $BuildTargets)
 
    if ($BuildTarget.CUDA -ne 0)
    {   
-      Write-Host "Start docker run --runtime=nvidia --rm -v ""$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet"" -e LOCAL_UID=$(id -u $env:USER) -e LOCAL_GID=$(id -g $env:USER) -t ""$dockername"" $Version $package $OperatingSystem $OperatingSystemVersion" -ForegroundColor Green
-      docker run --runtime=nvidia --rm `
-                  -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
-                  -e "LOCAL_UID=$(id -u $env:USER)" `
-                  -e "LOCAL_GID=$(id -g $env:USER)" `
-                  -t "$dockername" $Version $package $OperatingSystem $OperatingSystemVersion
+      Write-Host "Start docker run --gpus all --rm -v ""$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet"" -e LOCAL_UID=$(id -u $env:USER) -e LOCAL_GID=$(id -g $env:USER) -t ""$dockername"" $Version $package $OperatingSystem $OperatingSystemVersion" -ForegroundColor Green
+      docker run --gpus all --rm `
+                 -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
+                 -e "LOCAL_UID=$(id -u $env:USER)" `
+                 -e "LOCAL_GID=$(id -g $env:USER)" `
+                 -t "$dockername" $Version $package $OperatingSystem $OperatingSystemVersion
    }
    else
    {   
