@@ -568,6 +568,14 @@
             <exception cref="T:System.IO.FileNotFoundException">モデルファイルが見つかりません。</exception>
             <exception cref="T:System.IO.DirectoryNotFoundException">指定したディレクトリ パスが見つかりません。</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.#ctor(FaceRecognitionDotNet.ModelParameter)">
+            <summary>
+            モデルのバイナリデータを含むインスタンスを指定して、<see cref="T:FaceRecognitionDotNet.FaceRecognition"/> クラスの新しいインスタンスを初期化します。
+            </summary>
+            <param name="parameter">モデルのバイナリデータを含むインスタンス。</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="parameter"/> が null です。</exception>
+            <exception cref="T:System.NullReferenceException">モデルデータが null です。</exception>
+        </member>
         <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomAgeEstimator">
             <summary>
             ユーザーが定義したカスタム年齢推定器を取得または設定します。
@@ -642,6 +650,14 @@
             <param name="directory">モデルファイルを格納しているディレクトリ パス。</param>
             <exception cref="T:System.IO.FileNotFoundException">モデルファイルが見つかりません。</exception>
             <exception cref="T:System.IO.DirectoryNotFoundException">指定したディレクトリ パスが見つかりません。</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.Create(FaceRecognitionDotNet.ModelParameter)">
+            <summary>
+            <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> クラスの新しいインスタンスを作成します。
+            </summary>
+            <param name="parameter">モデルのバイナリデータを含むインスタンス。</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="parameter"/> が null です。</exception>
+            <exception cref="T:System.NullReferenceException">モデルデータが null です。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.CropFaces(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location})">
             <summary>
@@ -1103,6 +1119,31 @@
         <member name="F:FaceRecognitionDotNet.Model.Custom">
             <summary>
             カスタムの顔検出器のモデルを示します。
+            </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.ModelParameter">
+            <summary>
+            モデルのバイナリデータを説明します。このクラスは継承できません。
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.ModelParameter.PosePredictor68FaceLandmarksModel">
+            <summary>
+            68 点の顔の構成要素のためのモデルのバイナリデータを取得または設定します。
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.ModelParameter.PosePredictor5FaceLandmarksModel">
+            <summary>
+            5 点の顔の構成要素のためのモデルのバイナリデータを取得または設定します。
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.ModelParameter.FaceRecognitionModel">
+            <summary>
+            顔の特徴データのためのモデルのバイナリデータを取得または設定します。
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.ModelParameter.CnnFaceDetectorModel">
+            <summary>
+            CNN (畳み込みニューラルネットワーク) を使用する顔検出器のためのモデルのバイナリデータを取得または設定します。
             </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.Point">
