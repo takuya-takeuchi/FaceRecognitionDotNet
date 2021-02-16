@@ -1,0 +1,135 @@
+stages:
+  - build
+  - package
+  - test
+
+build:win:
+  stage: build
+  before_script:
+    - chcp 65001
+    - git submodule update --init --recursive
+  script:
+    - cd nuget
+    - git clean -fxd .
+    - pwsh BuildWindows.ps1
+  tags:
+    - windows
+    - cuda
+  artifacts:
+    paths:
+      - nuget/artifacts
+
+build:cent:
+  stage: build
+  before_script:
+    - git submodule update --init --recursive
+  script:
+    - cd nuget
+    - pwsh BuildCentOS7.ps1
+  tags:
+    - linux
+    - cuda
+  artifacts:
+    paths:
+      - nuget/artifacts
+
+build:ubuntu:
+  stage: build
+  before_script:
+    - git submodule update --init --recursive
+  script:
+    - cd nuget
+    - pwsh BuildUbuntu16.ps1
+  tags:
+    - linux
+    - cuda
+  artifacts:
+    paths:
+      - nuget/artifacts
+
+build:osx:
+  stage: build
+  before_script:
+    - git submodule update --init --recursive
+  script:
+    - cd nuget
+    - pwsh BuildOSX.ps1
+  tags:
+    - osx
+  artifacts:
+    paths:
+      - nuget/artifacts
+
+package:
+  stage: package
+  before_script:
+    - chcp 65001
+  script:
+    - cd nuget
+    - pwsh CreateAllPackage.ps1
+  tags:
+    - windows
+  dependencies:
+    - build:win
+    - build:ubuntu
+    - build:cent
+    - build:osx
+  artifacts:
+    paths:
+      - nuget/*.nupkg
+
+test:win:
+  stage: test
+  before_script:
+    - chcp 65001
+  script:
+    - cd nuget
+    - pwsh TestPackageWindows.ps1
+  tags:
+    - windows
+  dependencies:
+    - package
+  artifacts:
+    paths:
+      - nuget/artifacts/test
+
+test:cent:
+  stage: test
+  script:
+    - cd nuget
+    - pwsh TestPackageCentOS7.ps1
+  tags:
+    - linux
+    - cuda
+  dependencies:
+    - package
+  artifacts:
+    paths:
+      - nuget/artifacts/test
+
+test:ubuntu:
+  stage: test
+  script:
+    - cd nuget
+    - pwsh TestPackageUbuntu16.ps1
+  tags:
+    - linux
+    - cuda
+  dependencies:
+    - package
+  artifacts:
+    paths:
+      - nuget/artifacts/test
+
+test:osx:
+  stage: test
+  script:
+    - cd nuget
+    - pwsh TestPackageOSX.ps1
+  tags:
+    - osx
+  dependencies:
+    - package
+  artifacts:
+    paths:
+      - nuget/artifacts/test
