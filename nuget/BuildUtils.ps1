@@ -354,14 +354,8 @@ class Config
    [string] GetStoreDriectory([string]$CMakefileDir)
    {
       $DirectoryName = Split-Path $CMakefileDir -leaf
-      $buildDir = [environment]::GetEnvironmentVariable("CIBuildDir", 'User')
+      $buildDir = $env:CIBuildDir
       Write-Host "CIBuildDir : ${buildDir} on User" -ForegroundColor Blue
-      if (!(Test-Path($buildDir)))
-      {
-         $buildDir = [environment]::GetEnvironmentVariable("CIBuildDir", 'Machine')
-         Write-Host "CIBuildDir : ${buildDir} on Machine" -ForegroundColor Blue
-      }
-
       if (!(Test-Path($buildDir)))
       {
          return $CMakefileDir
@@ -373,8 +367,9 @@ class Config
 
    [bool] HasStoreDriectory()
    {
-      $buildDir = [environment]::GetEnvironmentVariable("CIBuildDir", 'User')
-      Write-Host "CIBuildDir : ${buildDir}" -ForegroundColor Blue
+      $buildDir = $env:CIBuildDir
+      Write-Host "CIBuildDir : ${buildDir} on User" -ForegroundColor Blue
+
       return Test-Path($buildDir)
    }
 
