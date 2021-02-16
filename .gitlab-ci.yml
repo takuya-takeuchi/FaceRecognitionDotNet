@@ -24,7 +24,7 @@ build:cent:
   stage: build
   before_script:
     - git submodule update --init --recursive
-    - "Get-ChildItem env:"
+    - export
   script:
     - cd nuget
     - pwsh BuildCentOS7.ps1
@@ -39,7 +39,7 @@ build:ubuntu:
   stage: build
   before_script:
     - git submodule update --init --recursive
-    - "Get-ChildItem env:"
+    - export
   script:
     - cd nuget
     - pwsh BuildUbuntu16.ps1
@@ -54,7 +54,7 @@ build:osx:
   stage: build
   before_script:
     - git submodule update --init --recursive
-    - "Get-ChildItem env:"
+    - export
   script:
     - cd nuget
     - pwsh BuildOSX.ps1
