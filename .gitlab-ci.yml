@@ -8,7 +8,7 @@ build:win:
   before_script:
     - chcp 65001
     - git submodule update --init --recursive
-    - Get-ChildItem env
+    - Get-ChildItem env:
   script:
     - cd nuget
     - git clean -fxd .
