@@ -94,6 +94,7 @@ foreach($BuildTarget in $BuildTargets)
                      -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
                      -e "LOCAL_UID=$(id -u $env:USER)" `
                      -e "LOCAL_GID=$(id -g $env:USER)" `
+                     -e "CIBuildDir=$($storeDirecotry)" `
                      -t "$dockername" $key $target $architecture $platform $option
       }
       else
