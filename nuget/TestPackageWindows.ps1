@@ -5,7 +5,7 @@
 #%1: Version of Release (1.2.3.0)
 #***************************************
 Param([Parameter(
-      Mandatory=$True,
+      Mandatory=$False,
       Position = 1
       )][string]
       $Version
@@ -28,6 +28,19 @@ $BuildTargets = ( "FaceRecognitionDotNet",
                   "FaceRecognitionDotNet.CUDA111",
                   "FaceRecognitionDotNet.MKL"
                 )
+
+if ([string]::IsNullOrEmpty($Version))
+{
+   $packages = Get-ChildItem *.* -include *.nupkg | Sort-Object -Property Name -Descending
+   foreach ($file in $packages)
+   {
+      $file = Split-Path $file -leaf
+      $file = $file -replace "FaceRecognitionDotNet(\.[a-zA-Z]+[0-9]*)*\.",""
+      $file = $file -replace "\.nupkg",""
+      $Version = $file
+      break
+   }
+}
 
 foreach($BuildTarget in $BuildTargets)
 {
