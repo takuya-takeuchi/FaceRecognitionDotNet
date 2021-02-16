@@ -355,7 +355,13 @@ class Config
    {
       $DirectoryName = Split-Path $CMakefileDir -leaf
       $buildDir = [environment]::GetEnvironmentVariable("CIBuildDir", 'User')
-      Write-Host "CIBuildDir : ${buildDir}" -ForegroundColor Blue
+      Write-Host "CIBuildDir : ${buildDir} on User" -ForegroundColor Blue
+      if (!(Test-Path($buildDir)))
+      {
+         $buildDir = [environment]::GetEnvironmentVariable("CIBuildDir", 'Machine')
+         Write-Host "CIBuildDir : ${buildDir} on Machine" -ForegroundColor Blue
+      }
+
       if (!(Test-Path($buildDir)))
       {
          return $CMakefileDir
