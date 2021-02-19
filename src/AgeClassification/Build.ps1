@@ -52,5 +52,5 @@ $NugetPath = Join-Path $FaceRecognitionDotNetRoot "nuget" | `
              Join-Path -ChildPath "BuildUtils.ps1"
 import-module $NugetPath -function *
 
-$Config = [Config]::new($DlibDotNetRoot, $Configuration, $Target, $Architecture, $Platform, $Option)
+$Config = [Config]::new($FaceRecognitionDotNetRoot, $Configuration, $Target, $Architecture, $Platform, $Option)
 Build -Config $Config
