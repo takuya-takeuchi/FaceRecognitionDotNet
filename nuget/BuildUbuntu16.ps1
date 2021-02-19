@@ -14,11 +14,8 @@ $DistributionVersion="16"
 # Store current directory
 $Current = Get-Location
 $FaceRecognitionDotNetRoot = (Split-Path (Get-Location) -Parent)
-$DlibDotNetRoot = Join-Path $FaceRecognitionDotNetRoot src | `
-                  Join-Path -ChildPath DlibDotNet
 $FaceRecognitionDotNetSourceRoot = Join-Path $FaceRecognitionDotNetRoot src
-$DockerDir = Join-Path $FaceRecognitionDotNetRoot nuget | `
-             Join-Path -ChildPath docker
+$DockerDir = Join-Path $FaceRecognitionDotNetRoot docker
 
 Set-Location -Path $DockerDir
 
@@ -90,10 +87,11 @@ foreach($BuildTarget in $BuildTargets)
       {
          $storeDirecotry = $Config.GetStoreDriectory($key)
          docker run --rm `
-                     -v "$($storeDirecotry):$($storeDirecotry)" `
+                     -v "$($storeDirecotry):/opt/data/builds" `
                      -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
                      -e "LOCAL_UID=$(id -u $env:USER)" `
                      -e "LOCAL_GID=$(id -g $env:USER)" `
+                     -e "CIBuildDir=/opt/data/builds" `
                      -t "$dockername" $key $target $architecture $platform $option
       }
       else
