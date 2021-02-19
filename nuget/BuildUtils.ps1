@@ -360,6 +360,7 @@ class Config
    {
       $DirectoryName = Split-Path $CMakefileDir -leaf
       $buildDir = $this.GetRootStoreDriectory()
+      Write-Host "buildDir: ${buildDir}" -ForegroundColor Blue
       if (!(Test-Path($buildDir)))
       {
          return $CMakefileDir

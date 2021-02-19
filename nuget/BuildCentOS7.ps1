@@ -85,8 +85,6 @@ foreach($BuildTarget in $BuildTargets)
       Write-Host "Start 'docker run --rm -v ""$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet"" -e LOCAL_UID=$(id -u $env:USER) -e LOCAL_GID=$(id -g $env:USER) -t $dockername'" -ForegroundColor Green
       if ($Config.HasStoreDriectory())
       {
-         $storeDirecotry = $Config.GetRootStoreDriectory()
-         Write-Host "GetRootStoreDriectory2: ${storeDirecotry}" -ForegroundColor Blue
          docker run --rm `
                      -v "$($storeDirecotry):/opt/data/builds" `
                      -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
@@ -97,8 +95,6 @@ foreach($BuildTarget in $BuildTargets)
       }
       else
       {
-         $storeDirecotry = $Config.GetRootStoreDriectory()
-         Write-Host "GetRootStoreDriectory: ${storeDirecotry}" -ForegroundColor Red
          docker run --rm `
                      -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
                      -e "LOCAL_UID=$(id -u $env:USER)" `
