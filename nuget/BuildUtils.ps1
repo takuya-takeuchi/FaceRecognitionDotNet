@@ -212,6 +212,8 @@ class Config
    [string] GetDlibRootDir()
    {
       return   Join-Path $this.GetRootDir() src |
+               Join-Path -ChildPath DlibDotNet |
+               Join-Path -ChildPath src |
                Join-Path -ChildPath dlib
    }
 
@@ -903,7 +905,6 @@ function Build([Config]$Config)
    # current is each source directory
    $Current = Get-Location
 
-   Write-Host "Cehck CMakeLists.txt" -ForegroundColor Green
    $CMakefile = Join-Path $Current "CMakeLists.txt"
    if (!(Test-Path(${CMakefile})))
    {
@@ -911,15 +912,14 @@ function Build([Config]$Config)
       exit -1
    }
 
-   Write-Host "GetBuildDirectoryName" -ForegroundColor Green
    $Output = $Config.GetBuildDirectoryName("")
    if ((Test-Path $Output) -eq $False)
    {
       New-Item $Output -ItemType Directory
    }
 
-   Write-Host "Output: ${Output}" -ForegroundColor Green
    $BuildDirectory = $Config.GetStoreDriectory($Current)
+   Write-host "BuildDirectory: ${BuildDirectory}" -ForegroundColor Red
    $BuildDirectory = Join-Path $BuildDirectory $Output
    if ((Test-Path $BuildDirectory) -eq $False)
    {
