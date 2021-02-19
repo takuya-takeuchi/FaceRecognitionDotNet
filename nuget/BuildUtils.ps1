@@ -919,6 +919,8 @@ function Build([Config]$Config)
       New-Item $Output -ItemType Directory
    }
 
+   $buildDir = $this.GetRootStoreDriectory()
+   Write-Host "Build: ${buildDir}" -ForegroundColor Blue
    $BuildDirectory = $Config.GetStoreDriectory($Current)
    $BuildDirectory = Join-Path $BuildDirectory $Output
    if ((Test-Path $BuildDirectory) -eq $False)
