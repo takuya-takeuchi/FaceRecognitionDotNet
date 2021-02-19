@@ -86,7 +86,7 @@ foreach($BuildTarget in $BuildTargets)
       if ($Config.HasStoreDriectory())
       {
          $storeDirecotry = $Config.GetRootStoreDriectory()
-         Write-Host "GetRootStoreDriectory: ${storeDirecotry}" -ForegroundColor Blue
+         Write-Host "GetRootStoreDriectory2: ${storeDirecotry}" -ForegroundColor Blue
          docker run --rm `
                      -v "$($storeDirecotry):/opt/data/builds" `
                      -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
