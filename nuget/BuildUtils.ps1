@@ -360,6 +360,7 @@ class Config
    {
       $DirectoryName = Split-Path $CMakefileDir -leaf
       $buildDir = $this.GetRootStoreDriectory()
+      Write-host "buildDir: ${buildDir}" -ForegroundColor Red
       if (!(Test-Path($buildDir)))
       {
          return $CMakefileDir
@@ -919,7 +920,6 @@ function Build([Config]$Config)
    }
 
    $BuildDirectory = $Config.GetStoreDriectory($Current)
-   Write-host "BuildDirectory: ${BuildDirectory}" -ForegroundColor Red
    $BuildDirectory = Join-Path $BuildDirectory $Output
    if ((Test-Path $BuildDirectory) -eq $False)
    {

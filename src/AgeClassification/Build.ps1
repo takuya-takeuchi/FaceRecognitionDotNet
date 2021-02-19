@@ -47,7 +47,6 @@ Write-Host "Build "(Split-Path $ScriptPath -Leaf) -ForegroundColor Green
 
 $SrcPath = Split-Path $ScriptPath -Parent
 $FaceRecognitionDotNetRoot = Split-Path $SrcPath -Parent
-$DlibDotNetRoot = Join-Path $SrcPath DlibDotNet
 $NugetPath = Join-Path $FaceRecognitionDotNetRoot "nuget" | `
              Join-Path -ChildPath "BuildUtils.ps1"
 import-module $NugetPath -function *
