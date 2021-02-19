@@ -212,8 +212,6 @@ class Config
    [string] GetDlibRootDir()
    {
       return   Join-Path $this.GetRootDir() src |
-               Join-Path -ChildPath DlibDotNet |
-               Join-Path -ChildPath src |
                Join-Path -ChildPath dlib
    }
 
@@ -360,7 +358,6 @@ class Config
    {
       $DirectoryName = Split-Path $CMakefileDir -leaf
       $buildDir = $this.GetRootStoreDriectory()
-      Write-Host "buildDir: ${buildDir}" -ForegroundColor Blue
       if (!(Test-Path($buildDir)))
       {
          return $CMakefileDir
@@ -919,8 +916,6 @@ function Build([Config]$Config)
       New-Item $Output -ItemType Directory
    }
 
-   $buildDir = $this.GetRootStoreDriectory()
-   Write-Host "Build: ${buildDir}" -ForegroundColor Blue
    $BuildDirectory = $Config.GetStoreDriectory($Current)
    $BuildDirectory = Join-Path $BuildDirectory $Output
    if ((Test-Path $BuildDirectory) -eq $False)
