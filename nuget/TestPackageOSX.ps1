@@ -3,7 +3,7 @@
 #%1: Version of Release (1.2.3.0)
 #***************************************
 Param([Parameter(
-      Mandatory=$True,
+      Mandatory=$False,
       Position = 1
       )][string]
       $Version
