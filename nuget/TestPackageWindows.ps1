@@ -32,6 +32,7 @@ $BuildTargets = ( "FaceRecognitionDotNet",
 foreach($BuildTarget in $BuildTargets)
 {
    $versionStr = $Version
+   $package = $BuildTarget
 
    if ([string]::IsNullOrEmpty($versionStr))
    {
