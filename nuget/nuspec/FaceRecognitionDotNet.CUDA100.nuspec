@@ -33,10 +33,7 @@ This library is ported from https://github.com/ageitgey/face_recognition by C#.<
   </metadata>
   <files>
     <file src="..\face128.png" target="images\" />
-    <!-- <file src="build\FaceRecognitionDotNet.props" target="build\FaceRecognitionDotNet.props" /> -->
-    <!-- allows the 'DlibDotNet' package to read runtimes\** folder -->
-    <file src="build\FaceRecognitionDotNet.targets" target="build\FaceRecognitionDotNet.targets" />
-    <!-- cross-targetting via compile-time references -->
+    
     <file src="ref\**\*" target="ref" />
     <file src="..\artifacts\cuda-100\runtimes\**\*" target="runtimes" />
 
