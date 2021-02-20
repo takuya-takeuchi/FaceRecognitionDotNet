@@ -13,6 +13,12 @@ typedef unsigned long gender_out_type;
 typedef unsigned long gender_train_label_type;
 
 MAKE_LOSSMULTICLASSLOG_FUNC(gender_train_type,  matrix_element_type::RgbPixel, dlib::rgb_pixel, matrix_element_type::UInt32, gender_train_label_type, 100)
-MAKE_LOSSMULTICLASSLOG_FUNC(gender_test_type,   matrix_element_type::RgbPixel, dlib::rgb_pixel, matrix_element_type::UInt32, gender_train_label_type, 101)
+
+DLLEXPORT void LossMulticlassLog_gender_train_type_eval(void* obj)
+{
+    auto& net = *static_cast<gender_train_type*>(obj);
+    dlib::layer<2>(net).layer_details() = dlib::dropout_(0);
+    dlib::layer<5>(net).layer_details() = dlib::dropout_(0);
+}
 
 #endif

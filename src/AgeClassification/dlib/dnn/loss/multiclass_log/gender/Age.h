@@ -12,6 +12,13 @@
 typedef unsigned long age_out_type;
 typedef unsigned long age_train_label_type;
 
-MAKE_LOSSMULTICLASSLOG_FUNC(age_train_type,  matrix_element_type::RgbPixel, dlib::rgb_pixel, matrix_element_type::UInt32, age_train_label_type, 200)
+MAKE_LOSSMULTICLASSLOG_FUNC(age_train_type, matrix_element_type::RgbPixel, dlib::rgb_pixel, matrix_element_type::UInt32, age_train_label_type, 200)
+
+DLLEXPORT void LossMulticlassLog_age_train_type_eval(void* obj)
+{
+    auto& net = *static_cast<age_train_type*>(obj);
+    dlib::layer<2>(net).layer_details() = dlib::dropout_(0);
+    dlib::layer<5>(net).layer_details() = dlib::dropout_(0);
+}
 
 #endif

@@ -35,13 +35,6 @@ template <typename SUBNET>
 using fc7 = add_layer<fc_<512, FC_HAS_BIAS>, SUBNET>;
 template <typename SUBNET>
 using fc8 = add_layer<fc_<2, FC_HAS_BIAS>, SUBNET>;
-using gender_test_type = loss_multiclass_log<fc8<
-							                 relu<fc7<
-							                 relu<fc6<pool5<
-							                 relu<conv3<norm2<pool2<
-							                 relu<conv2<norm1<pool1<
-							                 relu<conv1<input_rgb_image_sized<227>
-                                             >>>>>>>>>>>>>>>>>;
 using gender_train_type = loss_multiclass_log<fc8<
 							                  dropout<
 							                  relu<fc7<dropout<
@@ -50,11 +43,6 @@ using gender_train_type = loss_multiclass_log<fc8<
 							                  relu<conv2<norm1<pool1<
 							                  relu<conv1<input_rgb_image_sized<227>
                                               >>>>>>>>>>>>>>>>>>>;
-
-static const std::vector<const char *>* gender_test_type_labels = new std::vector<const char *>(
-{
-    "Male", "Female"
-});
 
 static const std::vector<const char *>* gender_train_type_labels = new std::vector<const char *>(
 {
