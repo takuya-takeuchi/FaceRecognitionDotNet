@@ -40,6 +40,7 @@ namespace FaceRecognitionDotNet.Extensions
                 LossMulticlassLogRegistry.Add(ret);
 
             this._Network = LossMulticlassLog.Deserialize(modelPath, networkId);
+            NativeMethods.LossMulticlassLog_gender_train_type_eval(this._Network.NativePtr);
         }
 
         #endregion

@@ -13,7 +13,7 @@ namespace DlibDotNet
         public const string AgeClassificationNativeLibrary = "DlibDotNetNativeDnnAgeClassification";
 
         public const CallingConvention AgeClassificationCallingConvention = CallingConvention.Cdecl;
-        
+
         #endregion
 
         [DllImport(AgeClassificationNativeLibrary, CallingConvention = AgeClassificationCallingConvention)]
@@ -21,6 +21,10 @@ namespace DlibDotNet
 
         [DllImport(AgeClassificationNativeLibrary, CallingConvention = AgeClassificationCallingConvention)]
         public static extern void LossMulticlassLog_age_train_type_delete(IntPtr @base);
+
+        [DllImport(AgeClassificationNativeLibrary, CallingConvention = AgeClassificationCallingConvention)]
+        public static extern void LossMulticlassLog_age_train_type_eval(IntPtr @base);
+
 
     }
 
