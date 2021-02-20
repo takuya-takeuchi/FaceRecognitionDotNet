@@ -9,7 +9,7 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <license type="file">LICENSE.txt</license>
     <projectUrl>https://github.com/takuya-takeuchi/FaceRecognitionDotNet</projectUrl>
-    <iconUrl>https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/nuget/face128.png?raw=true</iconUrl>
+    <icon>images\face128.png</icon>
     <description>The world's simplest facial recognition api for .NET
 
 This library is ported from https://github.com/ageitgey/face_recognition by C#.</description>
@@ -32,10 +32,8 @@ This library is ported from https://github.com/ageitgey/face_recognition by C#.<
     </frameworkAssemblies>
   </metadata>
   <files>
-    <!-- <file src="build\FaceRecognitionDotNet.props" target="build\FaceRecognitionDotNet.props" /> -->
-    <!-- allows the 'DlibDotNet' package to read runtimes\** folder -->
-    <file src="build\FaceRecognitionDotNet.targets" target="build\FaceRecognitionDotNet.targets" />
-    <!-- cross-targetting via compile-time references -->
+    <file src="..\face128.png" target="images\" />
+    
     <file src="ref\**\*" target="ref" />
     <file src="..\artifacts\cuda-100\runtimes\**\*" target="runtimes" />
 

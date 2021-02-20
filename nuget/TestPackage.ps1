@@ -30,6 +30,31 @@ Param([Parameter(
 
 Set-StrictMode -Version Latest
 
+function Clear-PackageCache([string]$Package, [string]$Version)
+{
+   $ret = (dotnet nuget locals global-packages --list)
+   $index = $ret.IndexOf('info : global-packages: ')
+   if ($index -ne -1)
+   {
+      $path = $ret.Replace('info : global-packages: ', '').Trim()
+   }
+   else
+   {
+      $path = $ret.Replace('global-packages: ', '').Trim()
+   }
+   $path =  Join-Path $path $Package.ToLower() | `
+            Join-Path -ChildPath $Version.ToLower()
+   if (Test-Path $path)
+   {
+      Write-Host "[Info] Remove '$path'" -Foreground Green
+      Remove-Item -Path "$path" -Recurse -Force
+   }
+   else
+   {
+      Write-Host "[Info] Missing '$path'" -Foreground Yellow
+   }
+}
+
 function RunTest($BuildTargets, $DependencyHash)
 {
    foreach($BuildTarget in $BuildTargets)
@@ -78,6 +103,9 @@ function RunTest($BuildTargets, $DependencyHash)
       # delete local project reference
       dotnet remove reference ..\..\src\DlibDotNet\src\DlibDotNet\DlibDotNet.csproj > $null
       dotnet remove reference ..\..\src\FaceRecognitionDotNet\FaceRecognitionDotNet.csproj > $null
+
+      Write-Host "[Info] Clear-PackageCache" -Foreground Yellow
+      Clear-PackageCache -Package $package -Version $VERSION
 
       # restore package from local nuget pacakge
       # And drop stdout message

@@ -59,6 +59,8 @@ foreach($BuildTarget in $BuildTargets)
    foreach ($key in $BuildSourceHash.keys)
    {
       $srcDir = Join-Path $FaceRecognitionDotNetSourceRoot $key
+      $srcDir = $Config.GetStoreDriectory($srcDir)
+      
       $dll = $BuildSourceHash[$key]
       $dstDir = Join-Path $Current $libraryDir
 

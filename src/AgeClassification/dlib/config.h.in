@@ -1,0 +1,31 @@
+#ifndef _CPP_CONFIG_H_
+#define _CPP_CONFIG_H_
+
+#include "DlibDotNet.Native/dlib/export.h"
+#include <iostream>
+#include <string>
+#include <sstream>
+
+#define PROJECT_NAME  "@PROJ_NAME@"
+#define VERSION_MAJOR "@VERSION_MAJOR@"
+#define VERSION_MINOR "@VERSION_MINOR@"
+#define VERSION_PATCH "@VERSION_PATCH@"
+#define VERSION_DATE  "@VERSION_DATE@"
+
+DLLEXPORT std::string* get_version()
+{
+    std::stringstream ss;
+    ss << VERSION_MAJOR << "." << VERSION_MINOR << "." << VERSION_PATCH << "." << VERSION_DATE;
+    return new std::string(ss.str());
+}
+
+DLLEXPORT bool is_support_gui()
+{
+#ifdef DLIB_NO_GUI_SUPPORT
+    return false;
+#else
+    return true;
+#endif
+}
+
+#endif

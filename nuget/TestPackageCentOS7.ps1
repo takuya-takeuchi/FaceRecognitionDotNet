@@ -3,7 +3,7 @@
 #%1: Version of Release (1.2.3.0)
 #***************************************
 Param([Parameter(
-      Mandatory=$True,
+      Mandatory=$False,
       Position = 1
       )][string]
       $Version
@@ -18,14 +18,13 @@ $OperatingSystemVersion="7"
 # Store current directory
 $Current = Get-Location
 $FaceRecognitionDotNetRoot = (Split-Path (Get-Location) -Parent)
-$DockerDir = Join-Path $FaceRecognitionDotNetRoot nuget | `
-             Join-Path -ChildPath docker
-
-Set-Location -Path $DockerDir
+$DockerDir = Join-Path $FaceRecognitionDotNetRoot docker
 
 $DockerFileDir = Join-Path $DockerDir test  | `
                  Join-Path -ChildPath $OperatingSystem | `
                  Join-Path -ChildPath $OperatingSystemVersion
+
+Set-Location -Path $DockerDir
 
 $BuildTargets = @()
 $BuildTargets += New-Object PSObject -Property @{Target = "cpu";  Architecture = 64; CUDA = 0;   Package = "FaceRecognitionDotNet";         PlatformTarget="x64"; Postfix = "/x64"; RID = "$RidOperatingSystem-x64"; }
@@ -45,6 +44,33 @@ foreach($BuildTarget in $BuildTargets)
    $platformTarget = $BuildTarget.PlatformTarget
    $rid = $BuildTarget.RID
    $postfix = $BuildTarget.Postfix
+   $versionStr = $Version
+
+   if ([string]::IsNullOrEmpty($versionStr))
+   {
+      $packages = Get-ChildItem "${Current}/*" -include *.nupkg | `
+                  Where-Object -FilterScript {$_.Name -match "${package}\.([0-9\.]+).nupkg"} | `
+                  Sort-Object -Property Name -Descending
+      foreach ($file in $packages)
+      {
+         Write-Host $file -ForegroundColor Blue
+      }
+
+      foreach ($file in $packages)
+      {
+         $file = Split-Path $file -leaf
+         $file = $file -replace "${package}\.",""
+         $file = $file -replace "\.nupkg",""
+         $versionStr = $file
+         break
+      }
+
+      if ([string]::IsNullOrEmpty($versionStr))
+      {
+         Write-Host "Version is not specified" -ForegroundColor Red
+         exit -1
+      }
+   }
 
    if ($target -ne "cuda")
    {
@@ -70,21 +96,21 @@ foreach($BuildTarget in $BuildTargets)
 
    if ($BuildTarget.CUDA -ne 0)
    {   
-      Write-Host "Start docker run --runtime=nvidia --rm -v ""$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet"" -e LOCAL_UID=$(id -u $env:USER) -e LOCAL_GID=$(id -g $env:USER) -t ""$dockername"" $Version $package $OperatingSystem $OperatingSystemVersion" -ForegroundColor Green
-      docker run --runtime=nvidia --rm `
-                  -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
-                  -e "LOCAL_UID=$(id -u $env:USER)" `
-                  -e "LOCAL_GID=$(id -g $env:USER)" `
-                  -t "$dockername" $Version $package $OperatingSystem $OperatingSystemVersion
+      Write-Host "Start docker run--gpus all --rm -v ""$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet"" -e LOCAL_UID=$(id -u $env:USER) -e LOCAL_GID=$(id -g $env:USER) -t ""$dockername"" $versionStr $package $OperatingSystem $OperatingSystemVersion" -ForegroundColor Green
+      docker run --gpus all --rm `
+                 -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
+                 -e "LOCAL_UID=$(id -u $env:USER)" `
+                 -e "LOCAL_GID=$(id -g $env:USER)" `
+                 -t "$dockername" $versionStr $package $OperatingSystem $OperatingSystemVersion
    }
    else
    {   
-      Write-Host "Start docker run --rm -v ""$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet"" -e LOCAL_UID=$(id -u $env:USER) -e LOCAL_GID=$(id -g $env:USER) -t ""$dockername"" $Version $package $OperatingSystem $OperatingSystemVersion" -ForegroundColor Green
+      Write-Host "Start docker run --rm -v ""$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet"" -e LOCAL_UID=$(id -u $env:USER) -e LOCAL_GID=$(id -g $env:USER) -t ""$dockername"" $versionStr $package $OperatingSystem $OperatingSystemVersion" -ForegroundColor Green
       docker run --rm `
                   -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
                   -e "LOCAL_UID=$(id -u $env:USER)" `
                   -e "LOCAL_GID=$(id -g $env:USER)" `
-                  -t "$dockername" $Version $package $OperatingSystem $OperatingSystemVersion
+                  -t "$dockername" $versionStr $package $OperatingSystem $OperatingSystemVersion
    }
 
    if ($lastexitcode -ne 0)
