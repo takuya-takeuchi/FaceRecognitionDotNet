@@ -18,8 +18,7 @@ $OperatingSystemVersion="16"
 # Store current directory
 $Current = Get-Location
 $FaceRecognitionDotNetRoot = (Split-Path (Get-Location) -Parent)
-$DockerDir = Join-Path $FaceRecognitionDotNetRoot nuget | `
-             Join-Path -ChildPath docker
+$DockerDir = Join-Path $FaceRecognitionDotNetRoot docker
 
 $DockerFileDir = Join-Path $DockerDir test  | `
                  Join-Path -ChildPath $OperatingSystem | `
