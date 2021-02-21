@@ -20,11 +20,11 @@ This library is ported from https://github.com/ageitgey/face_recognition by C#.<
 
     <dependencies>
       <group targetFramework="net461">
-        <dependency id="DlibDotNet.MKL" version="19.21.0.20210228" />
+        <dependency id="DlibDotNet.MKL" version="19.21.0.20210230" />
       </group>
       <group targetFramework="netstandard2.0">
         <dependency id="System.Drawing.Common" version="4.7.0" />
-        <dependency id="DlibDotNet.MKL" version="19.21.0.20210228" />
+        <dependency id="DlibDotNet.MKL" version="19.21.0.20210230" />
       </group>
     </dependencies>
     <frameworkAssemblies>
@@ -33,6 +33,9 @@ This library is ported from https://github.com/ageitgey/face_recognition by C#.<
   </metadata>
   <files>
     <file src="..\face128.png" target="images\" />
+    
+    <file src="build\FaceRecognitionDotNet.Native.props" target="build\FaceRecognitionDotNet.MKL.props" />
+    <file src="build\FaceRecognitionDotNet.targets" target="build\FaceRecognitionDotNet.MKL.targets" />
     
     <file src="ref\**\*" target="ref" />
     <file src="..\artifacts\mkl\runtimes\**\*" target="runtimes" />

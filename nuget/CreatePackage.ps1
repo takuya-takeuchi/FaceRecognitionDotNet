@@ -26,7 +26,16 @@ if (!(Test-Path ${nugetPath}))
 }
 
 Write-Host "${nuspec}" -ForegroundColor Green
-Invoke-Expression "${nugetPath} pack ${nuspec}"
+
+if ($global:IsWindows)
+{
+   Invoke-Expression "${nugetPath} pack ${nuspec}"
+}
+else
+{
+   Invoke-Expression "mono ${nugetPath} pack ${nuspec}"
+}
+
 if ($lastexitcode -ne 0)
 {
    Write-Host "Failed '${nugetPath} pack ${nuspec}" -ForegroundColor Red
