@@ -112,20 +112,22 @@ function RunTest($BuildTargets, $DependencyHash)
       dotnet add package $package -v $VERSION --source "$NugetDir" > $null
 
       # Copy Dependencies
-      $OutDir = Join-Path $TargetDir bin | `
-                  Join-Path -ChildPath Release | `
-                  Join-Path -ChildPath netcoreapp2.0      
-      if (!(Test-Path "$OutDir")) {
-         New-Item "$OutDir" -ItemType Directory > $null
-      }
-
-      if ($IsWindows)
+      if ($global:IsWindows)
       {
+         $OutDir = Join-Path $TargetDir bin | `
+                   Join-Path -ChildPath x64 | `
+                   Join-Path -ChildPath Release | `
+                   Join-Path -ChildPath netcoreapp2.0      
+         if (!(Test-Path "$OutDir")) {
+            New-Item "$OutDir" -ItemType Directory > $null
+         }
+
          if ($DependencyHash.Contains($package))
          {
             foreach($Dependency in $DependencyHash[$package])
             {
-               Copy-Item "$Dependency" "$OutDir"
+               $FileName = [System.IO.Path]::GetFileName("$Dependency")
+               New-Item -Value "$Dependency" -Path "$OutDir" -Name "$FileName" -ItemType SymbolicLink > $null
             }
          }
       }
