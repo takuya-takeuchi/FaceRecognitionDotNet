@@ -1203,8 +1203,6 @@ namespace FaceRecognitionDotNet.Tests
 
             using (var bitmap = (Bitmap)System.Drawing.Image.FromFile(path))
             {
-                BitmapData bitmapData = null;
-
                 using (var rgba = new Bitmap(bitmap.Width, bitmap.Height, PixelFormat.Format32bppArgb))
                 using (var g = Graphics.FromImage(rgba))
                 {
