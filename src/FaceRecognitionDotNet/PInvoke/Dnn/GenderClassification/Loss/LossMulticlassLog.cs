@@ -12,7 +12,7 @@ namespace DlibDotNet
 
         public const string GenderClassificationNativeLibrary = "DlibDotNetNativeDnnGenderClassification";
 
-        public const CallingConvention GenderClassificationCallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl;
+        public const CallingConvention GenderClassificationCallingConvention = CallingConvention.Cdecl;
         
         #endregion
 
@@ -21,6 +21,9 @@ namespace DlibDotNet
 
         [DllImport(GenderClassificationNativeLibrary, CallingConvention = GenderClassificationCallingConvention)]
         public static extern void LossMulticlassLog_gender_train_type_delete(IntPtr @base);
+
+        [DllImport(GenderClassificationNativeLibrary, CallingConvention = GenderClassificationCallingConvention)]
+        public static extern void LossMulticlassLog_gender_train_type_eval(IntPtr @base);
 
     }
 

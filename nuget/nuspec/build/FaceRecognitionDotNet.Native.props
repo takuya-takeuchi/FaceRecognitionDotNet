@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project version="4.0">
+  <PropertyGroup>
+    <IsOSX Condition="Exists('/Library/Frameworks') and Exists ('/etc')">true</IsOSX>
+    <IsLinux Condition="Exists ('/proc') and Exists ('/etc/')">true</IsLinux>
+
+    <Platform Condition="'$(Platform)'==''">x64</Platform>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(OS)==''">
+    <OS>Windows_NT</OS>
+  </PropertyGroup>
+
+  <Target Name="TestMessage" AfterTargets="Build" >
+    <Message Text="DlibDotNet.Native Build Message" Importance="high"/>
+    <Message Text="Platform: $(Platform)" Importance="high"/>
+    <Message Text="OS: $(OS)" Importance="high"/>
+    <Message Text="IsOSX: $(IsOSX)" Importance="high"/>
+    <Message Text="IsLinux: $(IsLinux)" Importance="high"/>
+  </Target>
+
+  <ItemGroup Condition="'$(OS)' == 'Windows_NT'">
+    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-$(Platform)\native\DlibDotNetNativeDnnAgeClassification.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>DlibDotNetNativeDnnAgeClassification.dll</Link>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-$(Platform)\native\DlibDotNetNativeDnnGenderClassification.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>DlibDotNetNativeDnnGenderClassification.dll</Link>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsLinux)' == 'true'">
+    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\linux-$(Platform)\native\libDlibDotNetNativeDnnAgeClassification.so">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>libDlibDotNetNativeDnnAgeClassification.so</Link>
+      <DeploymentContent>True</DeploymentContent>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\linux-$(Platform)\native\libDlibDotNetNativeDnnGenderClassification.so">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>libDlibDotNetNativeDnnGenderClassification.so</Link>
+      <DeploymentContent>True</DeploymentContent>
+    </Content>
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\runtimes\linux-$(Platform)\native\libDlibDotNetNativeDnnAgeClassification.so" />
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\runtimes\linux-$(Platform)\native\libDlibDotNetNativeDnnGenderClassification.so" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsOSX)' == 'true'">
+    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\osx-$(Platform)\native\libDlibDotNetNativeDnnAgeClassification.dylib" Condition="'$(IsOSX)' == 'true'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>libDlibDotNetNativeDnnAgeClassification.dylib</Link>
+      <DeploymentContent>True</DeploymentContent>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\osx-$(Platform)\native\libDlibDotNetNativeDnnGenderClassification.dylib" Condition="'$(IsOSX)' == 'true'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>libDlibDotNetNativeDnnGenderClassification.dylib</Link>
+      <DeploymentContent>True</DeploymentContent>
+    </Content>
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\runtimes\osx-$(Platform)\native\libDlibDotNetNativeDnnAgeClassification.dylib" />
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\runtimes\osx-$(Platform)\native\libDlibDotNetNativeDnnGenderClassification.dylib" />
+  </ItemGroup>
+
+</Project>

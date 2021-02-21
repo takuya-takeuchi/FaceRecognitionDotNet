@@ -485,6 +485,7 @@ function ConfigCPU([Config]$Config, [string]$CMakefileDir)
             -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
             -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
             -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+            -D JPEG_FOUND=OFF `
             ${CMakefileDir}
    }
    elseif ($IsMacOS)
@@ -537,6 +538,7 @@ function ConfigCPU([Config]$Config, [string]$CMakefileDir)
             -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
             -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
             -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+            -D JPEG_FOUND=OFF `
             ${CMakefileDir}
    }
 }
@@ -568,6 +570,7 @@ function ConfigCUDA([Config]$Config, [string]$CMakefileDir)
             -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
             -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
             -D CUDA_NVCC_FLAGS="--expt-relaxed-constexpr" `
+            -D JPEG_FOUND=OFF `
             ${CMakefileDir}
    }
    else
@@ -588,6 +591,7 @@ function ConfigCUDA([Config]$Config, [string]$CMakefileDir)
             -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
             -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
             -D CUDA_NVCC_FLAGS="--expt-relaxed-constexpr" `
+            -D JPEG_FOUND=OFF `
             ${CMakefileDir}
    }
 }
@@ -653,6 +657,7 @@ function ConfigMKL([Config]$Config, [string]$CMakefileDir)
                   -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
                   -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
                   -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+                  -D JPEG_FOUND=OFF `
                   ${CMakefileDir}
          }
          64
@@ -697,6 +702,7 @@ function ConfigMKL([Config]$Config, [string]$CMakefileDir)
                   -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
                   -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
                   -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+                  -D JPEG_FOUND=OFF `
                   ${CMakefileDir}
          }
       }
@@ -720,6 +726,7 @@ function ConfigMKL([Config]$Config, [string]$CMakefileDir)
             -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
             -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
             -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+            -D JPEG_FOUND=OFF `
             ${CMakefileDir}
    }
 }
@@ -739,6 +746,7 @@ function ConfigARM([Config]$Config, [string]$CMakefileDir)
             -D PNG_LIBRARY_RELEASE="" `
             -D PNG_LIBRARY_DEBUG="" `
             -D PNG_PNG_INCLUDE_DIR="" `
+            -D JPEG_FOUND=OFF `
             ${CMakefileDir}
    }
    else
@@ -754,6 +762,7 @@ function ConfigARM([Config]$Config, [string]$CMakefileDir)
             -D PNG_LIBRARY_RELEASE="" `
             -D PNG_LIBRARY_DEBUG="" `
             -D PNG_PNG_INCLUDE_DIR="" `
+            -D JPEG_FOUND=OFF `
             ${CMakefileDir}
    }
 }
@@ -789,6 +798,7 @@ function ConfigUWP([Config]$Config, [string]$CMakefileDir)
                -D DLIB_USE_BLAS=OFF `
                -D DLIB_USE_LAPACK=OFF `
                -D DLIB_NO_GUI_SUPPORT=ON `
+               -D JPEG_FOUND=OFF `
                ${CMakefileDir}
       }
       else
@@ -810,6 +820,7 @@ function ConfigUWP([Config]$Config, [string]$CMakefileDir)
                -D USE_AVX_INSTRUCTIONS=$USE_AVX_INSTRUCTIONS `
                -D USE_SSE4_INSTRUCTIONS=$USE_SSE4_INSTRUCTIONS `
                -D USE_SSE2_INSTRUCTIONS=$USE_SSE2_INSTRUCTIONS `
+               -D JPEG_FOUND=OFF `
                ${CMakefileDir}
       }
 
@@ -856,6 +867,7 @@ function ConfigANDROID([Config]$Config, [string]$CMakefileDir)
             -D PNG_LIBRARY_DEBUG="" `
             -D PNG_PNG_INCLUDE_DIR="" `
             -D DLIB_NO_GUI_SUPPORT=ON `
+            -D JPEG_FOUND=OFF `
             ${CMakefileDir}
    }
    else
@@ -886,6 +898,7 @@ function ConfigIOS([Config]$Config, [string]$CMakefileDir)
             -D PNG_LIBRARY_DEBUG="" `
             -D PNG_PNG_INCLUDE_DIR="" `
             -D DLIB_NO_GUI_SUPPORT=ON `
+            -D JPEG_FOUND=OFF `
             ${CMakefileDir}
    }
    else
