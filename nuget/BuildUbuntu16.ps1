@@ -14,11 +14,8 @@ $DistributionVersion="16"
 # Store current directory
 $Current = Get-Location
 $FaceRecognitionDotNetRoot = (Split-Path (Get-Location) -Parent)
-$DlibDotNetRoot = Join-Path $FaceRecognitionDotNetRoot src | `
-                  Join-Path -ChildPath DlibDotNet
 $FaceRecognitionDotNetSourceRoot = Join-Path $FaceRecognitionDotNetRoot src
-$DockerDir = Join-Path $FaceRecognitionDotNetRoot nuget | `
-             Join-Path -ChildPath docker
+$DockerDir = Join-Path $FaceRecognitionDotNetRoot docker
 
 Set-Location -Path $DockerDir
 
@@ -39,6 +36,8 @@ $BuildTargets += New-Object PSObject -Property @{ Platform = "desktop"; Target =
 $BuildTargets += New-Object PSObject -Property @{ Platform = "desktop"; Target = "cuda"; Architecture = 64; Postfix = "";     RID = "$OperatingSystem-x64";   CUDA = 100 }
 $BuildTargets += New-Object PSObject -Property @{ Platform = "desktop"; Target = "cuda"; Architecture = 64; Postfix = "";     RID = "$OperatingSystem-x64";   CUDA = 101 }
 $BuildTargets += New-Object PSObject -Property @{ Platform = "desktop"; Target = "cuda"; Architecture = 64; Postfix = "";     RID = "$OperatingSystem-x64";   CUDA = 102 }
+$BuildTargets += New-Object PSObject -Property @{ Platform = "desktop"; Target = "cuda"; Architecture = 64; Postfix = "";     RID = "$OperatingSystem-x64";   CUDA = 110 }
+$BuildTargets += New-Object PSObject -Property @{ Platform = "desktop"; Target = "cuda"; Architecture = 64; Postfix = "";     RID = "$OperatingSystem-x64";   CUDA = 111 }
 #$BuildTargets += New-Object PSObject -Property @{ Platform = "desktop"; Target = "arm";  Architecture = 64; Postfix = "64";   RID = "$OperatingSystem-arm64"; CUDA = 0   }
 #$BuildTargets += New-Object PSObject -Property @{ Platform = "desktop"; Target = "arm";  Architecture = 32; Postfix = "";     RID = "$OperatingSystem-arm";   CUDA = 0   }
 
@@ -84,11 +83,25 @@ foreach($BuildTarget in $BuildTargets)
    foreach ($key in $BuildSourceHash.keys)
    {
       Write-Host "Start 'docker run --rm -v ""$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet"" -e LOCAL_UID=$(id -u $env:USER) -e LOCAL_GID=$(id -g $env:USER) -t $dockername'" -ForegroundColor Green
-      docker run --rm `
-                  -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
-                  -e "LOCAL_UID=$(id -u $env:USER)" `
-                  -e "LOCAL_GID=$(id -g $env:USER)" `
-                  -t "$dockername" $key $target $architecture $platform $option
+      if ($Config.HasStoreDriectory())
+      {
+         $storeDirecotry = $Config.GetRootStoreDriectory()
+         docker run --rm `
+                     -v "$($storeDirecotry):/opt/data/builds" `
+                     -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
+                     -e "LOCAL_UID=$(id -u $env:USER)" `
+                     -e "LOCAL_GID=$(id -g $env:USER)" `
+                     -e "CIBuildDir=/opt/data/builds" `
+                     -t "$dockername" $key $target $architecture $platform $option
+      }
+      else
+      {
+         docker run --rm `
+                     -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
+                     -e "LOCAL_UID=$(id -u $env:USER)" `
+                     -e "LOCAL_GID=$(id -g $env:USER)" `
+                     -t "$dockername" $key $target $architecture $platform $option
+      }
    
       if ($lastexitcode -ne 0)
       {
@@ -101,6 +114,8 @@ foreach($BuildTarget in $BuildTargets)
    foreach ($key in $BuildSourceHash.keys)
    {
       $srcDir = Join-Path $FaceRecognitionDotNetSourceRoot $key
+      $srcDir = $Config.GetStoreDriectory($srcDir)
+      
       $dll = $BuildSourceHash[$key]
       $dstDir = Join-Path $Current $libraryDir
 

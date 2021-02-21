@@ -63,6 +63,7 @@ This program support the following argument and option.
 |Argument|Description|
 |:---|:---|
 |-m\|--model|Directory path includes model files|
+|-c\|--cnn|Use Cnn|
 
 ## 5. Other
 

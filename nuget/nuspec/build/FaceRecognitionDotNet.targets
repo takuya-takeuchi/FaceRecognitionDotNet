@@ -1,0 +1,20 @@
+<Project>
+  <PropertyGroup>
+    <NativeDependenciesVersion>1.0.0.0</NativeDependenciesVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(NugetPackageRoot)==''">
+    <NugetPackageRoot>
+      "$([MSBuild]::GetPathOfFileAbove($(MSBuildThisFile), $(MSBuildThisFileDirectory)..\..\))"
+    </NugetPackageRoot>
+  </PropertyGroup>
+
+ <Target Name="EmitNugetPackageRootMessage">
+   <Message Importance="High" Text='$(NugetPackageRoot)' />
+ </Target>
+
+  <ImportGroup>
+    <Import Project="$(NuGetPackageRoot)dlibdotnet.native\$(NativeDependenciesVersion)\build\FaceRecognitionDotNet.Native.targets"
+            Condition="Exists('$(NuGetPackageRoot)dlibdotnet.native\$(NativeDependenciesVersion)\build\FaceRecognitionDotNet.Native.targets')" />
+  </ImportGroup>
+</Project>

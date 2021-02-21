@@ -40,6 +40,7 @@ namespace FaceRecognitionDotNet.Extensions
                 LossMulticlassLogRegistry.Add(ret);
 
             this._Network = LossMulticlassLog.Deserialize(modelPath, networkId);
+            NativeMethods.LossMulticlassLog_age_train_type_eval(this._Network.NativePtr);
         }
 
         #endregion
@@ -120,6 +121,16 @@ namespace FaceRecognitionDotNet.Extensions
                 var predict = results[0];
                 return predict.Select((n, index) => new { index, n }).ToDictionary(n => (uint)n.index, n => n.n);
             }
+        }
+
+        /// <summary>
+        /// Releases all unmanaged resources.
+        /// </summary>
+        protected override void DisposeUnmanaged()
+        {
+            base.DisposeUnmanaged();
+
+            this._Network?.Dispose();
         }
 
         #endregion

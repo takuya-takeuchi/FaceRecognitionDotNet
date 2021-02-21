@@ -17,7 +17,9 @@ namespace Benchmark
 
         #region Fields
 
-        private static FaceRecognition FaceRecognition;
+        private static FaceRecognition _FaceRecognition;
+
+        private static bool _UseCnn = false;
 
         #endregion
 
@@ -31,6 +33,7 @@ namespace Benchmark
             app.HelpOption("-h|--help");
 
             var modelsOption = app.Option("-m|--model", "model files directory path", CommandOptionType.SingleValue);
+            var cnnOption = app.Option("-c|--cnn", "use cnn", CommandOptionType.NoValue);
 
             app.OnExecute(() =>
             {
@@ -47,7 +50,9 @@ namespace Benchmark
                     return -1;
                 }
 
-                FaceRecognition = FaceRecognition.Create(directory);
+                _UseCnn = cnnOption.HasValue();
+
+                _FaceRecognition = FaceRecognition.Create(directory);
 
                 var testImages = new[]
                 {
@@ -84,7 +89,7 @@ namespace Benchmark
 
         #region Helpers
 
-        private static Tuple<double, double> RunTest<T>(string path, Func<string, T> setup, Action<T> test, int iterationsPerTest = 5, int testsToRun = 10)
+        private static Tuple<double, double> RunTest<T>(string path, Func<string, T> setup, Action<T> test, int iterationsPerTest = 5, int testsToRun = 10, bool useCnn = false)
         {
             var image = setup(path);
 
@@ -111,7 +116,8 @@ namespace Benchmark
         private static Tuple<Image, Location[]> SetupEncodeFace(string path)
         {
             var image = FaceRecognition.LoadImageFile(path);
-            var locations = FaceRecognition.FaceLocations(image).ToArray();
+            var model = _UseCnn ? Model.Cnn : Model.Hog;
+            var locations = _FaceRecognition.FaceLocations(image, model: model).ToArray();
             return new Tuple<Image, Location[]>(image, locations);
         }
 
@@ -123,7 +129,8 @@ namespace Benchmark
         private static Tuple<Image, Location[]> SetupFaceLandmarks(string path)
         {
             var image = FaceRecognition.LoadImageFile(path);
-            var locations = FaceRecognition.FaceLocations(image).ToArray();
+            var model = _UseCnn ? Model.Cnn : Model.Hog;
+            var locations = _FaceRecognition.FaceLocations(image, model: model).ToArray();
             return new Tuple<Image, Location[]>(image, locations);
         }
 
@@ -134,22 +141,30 @@ namespace Benchmark
 
         private static void TestEncodeFace(Tuple<Image, Location[]> tuple)
         {
-            var encoding = FaceRecognition.FaceEncodings(tuple.Item1, tuple.Item2).First();
+            var model = _UseCnn ? Model.Cnn : Model.Hog;
+            var encoding = _FaceRecognition.FaceEncodings(tuple.Item1, tuple.Item2, model: model);
+            foreach (var faceEncoding in encoding)
+                faceEncoding.Dispose();
         }
 
         private static void TestEndToEnd(Image image)
         {
-            var encoding = FaceRecognition.FaceEncodings(image).First();
+            var model = _UseCnn ? Model.Cnn : Model.Hog;
+            var encoding = _FaceRecognition.FaceEncodings(image, model: model);
+            foreach (var faceEncoding in encoding)
+                faceEncoding.Dispose();
         }
 
         private static void TestFaceLandmarks(Tuple<Image, Location[]> tuple)
         {
-            var landmarks = FaceRecognition.FaceLandmark(tuple.Item1, tuple.Item2).First();
+            var model = _UseCnn ? Model.Cnn : Model.Hog;
+            var landmarks = _FaceRecognition.FaceLandmark(tuple.Item1, tuple.Item2, model: model).First();
         }
 
         private static void TestLocateFaces(Image image)
         {
-            var faceLocations = FaceRecognition.FaceLocations(image).ToArray();
+            var model = _UseCnn ? Model.Cnn : Model.Hog;
+            var faceLocations = _FaceRecognition.FaceLocations(image, model: model).ToArray();
         }
 
         #endregion

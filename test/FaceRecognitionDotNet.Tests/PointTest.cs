@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Drawing;
 using Xunit;
 
 namespace FaceRecognitionDotNet.Tests
@@ -15,6 +15,7 @@ namespace FaceRecognitionDotNet.Tests
             var point2 = new Point(10, 20);
             Assert.Equal(point1, point2);
             Assert.True(point1 == point2);
+            Assert.True(point1.Equals(point2));
             Assert.False(point1 != point2);
         }
 
@@ -25,6 +26,7 @@ namespace FaceRecognitionDotNet.Tests
             var point2 = new Point(40, 10);
             Assert.NotEqual(point1, point2);
             Assert.True(point1 != point2);
+            Assert.True(!point1.Equals(point2));
             Assert.False(point1 == point2);
         }
 
@@ -51,7 +53,7 @@ namespace FaceRecognitionDotNet.Tests
                 dictionary.Add(point2, dictionary.Count);
                 Assert.True(false, $"{typeof(Point)} must throw exception because key is duplicate.");
             }
-            catch
+            catch (ArgumentException)
             {
             }
         }

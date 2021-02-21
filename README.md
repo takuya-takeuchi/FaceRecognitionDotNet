@@ -22,6 +22,12 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |FaceRecognitionDotNet for CUDA 10.2|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA102.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA102)|
 ||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA102.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA102)|
 ||OSX|-|-|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA102.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA102)|
+|FaceRecognitionDotNet for CUDA 11.0|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA110.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA110)|
+||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA110.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA110)|
+||OSX|-|-|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA110.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA110)|
+|FaceRecognitionDotNet for CUDA 11.1|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA111.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA111)|
+||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA111.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA111)|
+||OSX|-|-|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA111.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA111)|
 |FaceRecognitionDotNet for Intel MKL|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
 ||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
 ||OSX|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
@@ -40,7 +46,7 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |face_distance|FaceDistance||
 |face_encodings|FaceEncodings||
 |face_landmarks|FaceLandmarks|And support **Helen dataset** :warning:|
-|face_locations|FaceLocations||
+|face_locations|FaceLocations|And support to get confidence and use custom face detector|
 |load_image_file|LoadImageFile||
 |-|CropFaces|Crop image with specified locations|
 |-|EyeBlinkDetect|Detect person is blinking or not<br>Support Large model and **Helen dataset** :warning:|

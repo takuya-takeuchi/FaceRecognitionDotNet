@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -13,6 +14,7 @@ namespace FaceRecognitionDotNet.Tests
             var location1 = new Location(10, 20, 30, 40);
             var location2 = new Location(10, 20, 30, 40);
             Assert.Equal(location1, location2);
+            Assert.True(location1.Equals(location2));
         }
 
         [Fact]
@@ -21,6 +23,7 @@ namespace FaceRecognitionDotNet.Tests
             var location1 = new Location(10, 20, 30, 40);
             var location2 = new Location(40, 10, 20, 30);
             Assert.NotEqual(location1, location2);
+            Assert.True(!location1.Equals(location2));
         }
 
         [Fact]
@@ -46,7 +49,7 @@ namespace FaceRecognitionDotNet.Tests
                 dictionary.Add(location2, dictionary.Count);
                 Assert.True(false, $"{typeof(Location)} must throw exception because key is duplicate.");
             }
-            catch
+            catch (ArgumentException)
             {
             }
         }

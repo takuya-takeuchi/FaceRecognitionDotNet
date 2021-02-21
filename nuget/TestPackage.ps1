@@ -30,6 +30,31 @@ Param([Parameter(
 
 Set-StrictMode -Version Latest
 
+function Clear-PackageCache([string]$Package, [string]$Version)
+{
+   $ret = (dotnet nuget locals global-packages --list)
+   $index = $ret.IndexOf('info : global-packages: ')
+   if ($index -ne -1)
+   {
+      $path = $ret.Replace('info : global-packages: ', '').Trim()
+   }
+   else
+   {
+      $path = $ret.Replace('global-packages: ', '').Trim()
+   }
+   $path =  Join-Path $path $Package.ToLower() | `
+            Join-Path -ChildPath $Version.ToLower()
+   if (Test-Path $path)
+   {
+      Write-Host "[Info] Remove '$path'" -Foreground Green
+      Remove-Item -Path "$path" -Recurse -Force
+   }
+   else
+   {
+      Write-Host "[Info] Missing '$path'" -Foreground Yellow
+   }
+}
+
 function RunTest($BuildTargets, $DependencyHash)
 {
    foreach($BuildTarget in $BuildTargets)
@@ -79,25 +104,30 @@ function RunTest($BuildTargets, $DependencyHash)
       dotnet remove reference ..\..\src\DlibDotNet\src\DlibDotNet\DlibDotNet.csproj > $null
       dotnet remove reference ..\..\src\FaceRecognitionDotNet\FaceRecognitionDotNet.csproj > $null
 
+      Write-Host "[Info] Clear-PackageCache" -Foreground Yellow
+      Clear-PackageCache -Package $package -Version $VERSION
+
       # restore package from local nuget pacakge
       # And drop stdout message
       dotnet add package $package -v $VERSION --source "$NugetDir" > $null
 
       # Copy Dependencies
-      $OutDir = Join-Path $TargetDir bin | `
-                  Join-Path -ChildPath Release | `
-                  Join-Path -ChildPath netcoreapp2.0      
-      if (!(Test-Path "$OutDir")) {
-         New-Item "$OutDir" -ItemType Directory > $null
-      }
-
-      if ($IsWindows)
+      if ($global:IsWindows)
       {
+         $OutDir = Join-Path $TargetDir bin | `
+                   Join-Path -ChildPath x64 | `
+                   Join-Path -ChildPath Release | `
+                   Join-Path -ChildPath netcoreapp2.0      
+         if (!(Test-Path "$OutDir")) {
+            New-Item "$OutDir" -ItemType Directory > $null
+         }
+
          if ($DependencyHash.Contains($package))
          {
             foreach($Dependency in $DependencyHash[$package])
             {
-               Copy-Item "$Dependency" "$OutDir"
+               $FileName = [System.IO.Path]::GetFileName("$Dependency")
+               New-Item -Value "$Dependency" -Path "$OutDir" -Name "$FileName" -ItemType SymbolicLink > $null
             }
          }
       }
@@ -131,6 +161,8 @@ $BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture =
 $BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 100; Package = "FaceRecognitionDotNet.CUDA100" }
 $BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 101; Package = "FaceRecognitionDotNet.CUDA101" }
 $BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 102; Package = "FaceRecognitionDotNet.CUDA102" }
+$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 102; Package = "FaceRecognitionDotNet.CUDA110" }
+$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 102; Package = "FaceRecognitionDotNet.CUDA111" }
 $BuildTargets += New-Object PSObject -Property @{Target = "mkl";  Architecture = 64; CUDA = 0;   Package = "FaceRecognitionDotNet.MKL"     }
 
 
@@ -162,6 +194,34 @@ $tmp102.Add("$env:CUDA_PATH_V10_2\bin\cudnn64_7.dll")
 $tmp102.Add("$env:CUDA_PATH_V10_2\bin\curand64_10.dll")
 $tmp102.Add("$env:CUDA_PATH_V10_2\bin\cusolver64_10.dll")
 
+# For FaceRecognitionDotNet.CUDA110
+$tmp110 = New-Object 'System.Collections.Generic.List[string]'
+$tmp110.Add("$env:CUDA_PATH_V11_0\bin\cublas64_11.dll")
+$tmp110.Add("$env:CUDA_PATH_V11_0\bin\cublasLt64_11.dll")
+$tmp110.Add("$env:CUDA_PATH_V11_0\bin\cudnn_adv_infer64_8.dll")
+$tmp110.Add("$env:CUDA_PATH_V11_0\bin\cudnn_adv_train64_8.dll")
+$tmp110.Add("$env:CUDA_PATH_V11_0\bin\cudnn_cnn_infer64_8.dll")
+$tmp110.Add("$env:CUDA_PATH_V11_0\bin\cudnn_cnn_train64_8.dll")
+$tmp110.Add("$env:CUDA_PATH_V11_0\bin\cudnn_ops_infer64_8.dll")
+$tmp110.Add("$env:CUDA_PATH_V11_0\bin\cudnn_ops_train64_8.dll")
+$tmp110.Add("$env:CUDA_PATH_V11_0\bin\cudnn64_8.dll")
+$tmp110.Add("$env:CUDA_PATH_V11_0\bin\curand64_10.dll")
+$tmp110.Add("$env:CUDA_PATH_V11_0\bin\cusolver64_10.dll")
+
+# For FaceRecognitionDotNet.CUDA111
+$tmp111 = New-Object 'System.Collections.Generic.List[string]'
+$tmp111.Add("$env:CUDA_PATH_V11_1\bin\cublas64_11.dll")
+$tmp111.Add("$env:CUDA_PATH_V11_1\bin\cublasLt64_11.dll")
+$tmp111.Add("$env:CUDA_PATH_V11_1\bin\cudnn_adv_infer64_8.dll")
+$tmp111.Add("$env:CUDA_PATH_V11_1\bin\cudnn_adv_train64_8.dll")
+$tmp111.Add("$env:CUDA_PATH_V11_1\bin\cudnn_cnn_infer64_8.dll")
+$tmp111.Add("$env:CUDA_PATH_V11_1\bin\cudnn_cnn_train64_8.dll")
+$tmp111.Add("$env:CUDA_PATH_V11_1\bin\cudnn_ops_infer64_8.dll")
+$tmp111.Add("$env:CUDA_PATH_V11_1\bin\cudnn_ops_train64_8.dll")
+$tmp111.Add("$env:CUDA_PATH_V11_1\bin\cudnn64_8.dll")
+$tmp111.Add("$env:CUDA_PATH_V11_1\bin\curand64_10.dll")
+$tmp111.Add("$env:CUDA_PATH_V11_1\bin\cusolver64_11.dll")
+
 # For mkl
 $tmpmkl = New-Object 'System.Collections.Generic.List[string]'
 $tmpmkl.Add("$env:MKL_WIN\redist\intel64_win\mkl\mkl_core.dll")
@@ -173,6 +233,8 @@ $DependencyHash = @{"FaceRecognitionDotNet.CUDA92"  = $tmp92;
                     "FaceRecognitionDotNet.CUDA100" = $tmp100;
                     "FaceRecognitionDotNet.CUDA101" = $tmp101;
                     "FaceRecognitionDotNet.CUDA102" = $tmp102;
+                    "FaceRecognitionDotNet.CUDA110" = $tmp110;
+                    "FaceRecognitionDotNet.CUDA111" = $tmp111;
                     "FaceRecognitionDotNet.MKL"     = $tmpmkl}
 
 # Store current directory

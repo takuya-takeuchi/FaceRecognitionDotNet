@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using FaceRecognitionDotNet;
 using FaceRecognitionDotNet.Extensions;
 using Microsoft.Extensions.CommandLineUtils;
 using OpenCvSharp;
-using Point = FaceRecognitionDotNet.Point;
 
 namespace BlinkDetection
 {

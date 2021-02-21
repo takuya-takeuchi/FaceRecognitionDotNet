@@ -2,29 +2,29 @@
 <package >
   <metadata>
     <id>FaceRecognitionDotNet.CUDA92</id>
-    <version>1.3.0.2</version>
+    <version>1.3.0.3</version>
     <title>FaceRecognitionDotNet for CUDA 9.2</title>
     <authors>Takuya Takeuchi</authors>
     <owners>Takuya Takeuchi</owners>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <license type="file">LICENSE.txt</license>
     <projectUrl>https://github.com/takuya-takeuchi/FaceRecognitionDotNet</projectUrl>
-    <iconUrl>https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/nuget/face128.png?raw=true</iconUrl>
+    <icon>images\face128.png</icon>
     <description>The world's simplest facial recognition api for .NET
 
 This library is ported from https://github.com/ageitgey/face_recognition by C#.</description>
     <releaseNotes></releaseNotes>
-    <copyright>© Takuya Takeuchi 2018-2020</copyright>
+    <copyright>© Takuya Takeuchi 2018-2021</copyright>
     <tags>.net machinelearning face-recognition</tags>
     <serviceable>true</serviceable>
 
     <dependencies>
       <group targetFramework="net461">
-        <dependency id="DlibDotNet.CUDA92" version="19.18.0.20200525" />
+        <dependency id="DlibDotNet.CUDA92" version="19.21.0.20210230" />
       </group>
       <group targetFramework="netstandard2.0">
         <dependency id="System.Drawing.Common" version="4.7.0" />
-        <dependency id="DlibDotNet.CUDA92" version="19.18.0.20200525" />
+        <dependency id="DlibDotNet.CUDA92" version="19.21.0.20210230" />
       </group>
     </dependencies>
     <frameworkAssemblies>
@@ -32,10 +32,11 @@ This library is ported from https://github.com/ageitgey/face_recognition by C#.<
     </frameworkAssemblies>
   </metadata>
   <files>
-    <!-- <file src="build\FaceRecognitionDotNet.props" target="build\FaceRecognitionDotNet.props" /> -->
-    <!-- allows the 'DlibDotNet' package to read runtimes\** folder -->
-    <file src="build\FaceRecognitionDotNet.targets" target="build\FaceRecognitionDotNet.targets" />
-    <!-- cross-targetting via compile-time references -->
+    <file src="..\face128.png" target="images\" />
+    
+    <file src="build\FaceRecognitionDotNet.Native.props" target="build\FaceRecognitionDotNet.CUDA92.props" />
+    <file src="build\FaceRecognitionDotNet.targets" target="build\FaceRecognitionDotNet.CUDA92.targets" />
+    
     <file src="ref\**\*" target="ref" />
     <file src="..\artifacts\cuda-92\runtimes\**\*" target="runtimes" />
     

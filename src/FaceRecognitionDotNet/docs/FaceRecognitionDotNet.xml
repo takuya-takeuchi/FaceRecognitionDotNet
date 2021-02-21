@@ -180,6 +180,19 @@
             <param name="leftBlink">When this method returns, contains <value>true</value>, if the left eye blinks; otherwise, <value>false</value>.</param>
             <param name="rightBlink">When this method returns, contains <value>true</value>, if the right eye blinks; otherwise, <value>false</value>.</param>
         </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.FaceDetector">
+            <summary>
+            An abstract base class that provides functionality to detect face locations from image.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.FaceDetector.RawDetect(DlibDotNet.MatrixBase,System.Int32)">
+            <summary>
+            Returns an enumerable collection of face location correspond to all faces in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="numberOfTimesToUpsample">The number of times to up-sample the image when finding faces.</param>
+            <returns>An enumerable collection of face location correspond to all faces.</returns>
+        </member>
         <member name="T:FaceRecognitionDotNet.Extensions.FaceLandmarkDetector">
             <summary>
             An abstract base class that provides functionality to detect face parts locations from face image.
@@ -304,6 +317,36 @@
             <param name="location">The location rectangle for a face.</param>
             <returns>Probabilities of age group of face image correspond to specified location in specified image.</returns>
         </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.DisposeUnmanaged">
+            <summary>
+            Releases all unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.SimpleFaceDetector">
+            <summary>
+            The face detector which was trained by custom dataset. This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleFaceDetector.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Extensions.SimpleFaceDetector"/> class with the model file path that this detector uses.
+            </summary>
+            <param name="modelPath">The model file path that this detector uses.</param>
+            <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleFaceDetector.RawDetect(DlibDotNet.MatrixBase,System.Int32)">
+            <summary>
+            Returns an enumerable collection of face location correspond to all faces in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="numberOfTimesToUpsample">The number of times to up-sample the image when finding faces.</param>
+            <returns>An enumerable collection of face location correspond to all faces.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleFaceDetector.DisposeUnmanaged">
+            <summary>
+            Releases all unmanaged resources.
+            </summary>
+        </member>
         <member name="T:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator">
             <summary>
             The age estimator which was trained by UTKFace dataset. This class cannot be inherited.
@@ -336,6 +379,11 @@
             <param name="matrix">The matrix contains a face.</param>
             <param name="location">The location rectangle for a face.</param>
             <returns>Probabilities of gender of face image correspond to specified location in specified image.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.DisposeUnmanaged">
+            <summary>
+            Releases all unmanaged resources.
+            </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator">
             <summary>
@@ -520,6 +568,14 @@
             <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
             <exception cref="T:System.IO.DirectoryNotFoundException">The specified directory path is not found.</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.#ctor(FaceRecognitionDotNet.ModelParameter)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> class with the instance that contains model binary datum.
+            </summary>
+            <param name="parameter">The instance that contains model binary datum.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="parameter"/> is null.</exception>
+            <exception cref="T:System.NullReferenceException">The model data is null.</exception>
+        </member>
         <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomAgeEstimator">
             <summary>
             Gets or sets the custom age estimator that user defined.
@@ -533,6 +589,11 @@
         <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomGenderEstimator">
             <summary>
             Gets or sets the custom gender estimator that user defined.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomFaceDetector">
+            <summary>
+            Gets or sets the custom face detector that user defined.
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomFaceLandmarkDetector">
@@ -590,6 +651,14 @@
             <exception cref="T:System.IO.FileNotFoundException">The model file is not found.</exception>
             <exception cref="T:System.IO.DirectoryNotFoundException">The specified directory path is not found.</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.Create(FaceRecognitionDotNet.ModelParameter)">
+            <summary>
+            Create a new instance of the <see cref="T:FaceRecognitionDotNet.FaceRecognition"/> class.
+            </summary>
+            <param name="parameter">The instance that contains model binary datum.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="parameter"/> is null.</exception>
+            <exception cref="T:System.NullReferenceException">The model data is null.</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.CropFaces(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location})">
             <summary>
             Crop a specified image with enumerable collection of face locations.
@@ -610,6 +679,7 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="landmark"/> is null.</exception>
             <exception cref="T:System.ArgumentException"><paramref name="landmark"/> does not contain <see cref="F:FaceRecognitionDotNet.FacePart.LeftEye"/> or <see cref="F:FaceRecognitionDotNet.FacePart.RightEye"/>.</exception>
             <exception cref="T:System.NotSupportedException">The custom eye blink detector is not ready.</exception>
+            <exception cref="T:System.ObjectDisposedException">This object or custom eye blink detector is disposed.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceDistance(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding)">
             <summary>
@@ -631,28 +701,32 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="faceEncodings"/> or <paramref name="faceToCompare"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceToCompare"/> is disposed. Or <paramref name="faceEncodings"/> contains disposed object.</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},System.Int32,FaceRecognitionDotNet.PredictorModel)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},System.Int32,FaceRecognitionDotNet.PredictorModel,FaceRecognitionDotNet.Model)">
             <summary>
             Returns an enumerable collection of face feature data corresponds to all faces in specified image.
             </summary>
             <param name="image">The image contains faces. The image can contain multiple faces.</param>
             <param name="knownFaceLocation">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
             <param name="numJitters">The number of times to re-sample the face when calculating encoding.</param>
-            <param name="model">The model of face detector.</param>
+            <param name="predictorModel">The dimension of vector which be returned from detector.</param>
+            <param name="model">The model of face detector to detect in image. If <paramref name="knownFaceLocation"/> is not null, this value is ignored.</param>
             <returns>An enumerable collection of face feature data corresponds to all faces in specified image.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> is null.</exception>
+            <exception cref="T:System.InvalidOperationException"><paramref name="knownFaceLocation"/> contains no elements.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object or custom face landmark detector is disposed.</exception>
             <exception cref="T:System.NotSupportedException"><see cref="F:FaceRecognitionDotNet.PredictorModel.Custom"/> is not supported.</exception>
         </member>
-        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModel)">
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModel,FaceRecognitionDotNet.Model)">
             <summary>
             Returns an enumerable collection of dictionary of face parts locations (eyes, nose, etc) for each face in the image.
             </summary>
             <param name="faceImage">The image contains faces. The image can contain multiple faces.</param>
             <param name="faceLocations">The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</param>
-            <param name="model">The model of face detector.</param>
+            <param name="predictorModel">The dimension of vector which be returned from detector.</param>
+            <param name="model">The model of face detector to detect in image. If <paramref name="faceLocations"/> is not null, this value is ignored.</param>
             <returns>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="faceImage"/> is null.</exception>
+            <exception cref="T:System.InvalidOperationException"><paramref name="faceLocations"/> contains no elements.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="faceImage"/> or this object or custom face landmark detector is disposed.</exception>
             <exception cref="T:System.NotSupportedException">The custom face landmark detector is not ready.</exception>
         </member>
@@ -778,6 +852,7 @@
             <param name="landmark">The dictionary of face parts locations (eyes, nose, etc).</param>
             <returns>A head pose estimated from face parts locations.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="landmark"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException">This object or custom head pose estimator is disposed.</exception>
             <exception cref="T:System.NotSupportedException">The custom head pose estimator is not ready.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged">
@@ -926,9 +1001,38 @@
             <param name="right">The x-axis value of the right side of the rectangle of face.</param>
             <param name="bottom">The y-axis value of the bottom of the rectangle of face.</param>
         </member>
+        <member name="M:FaceRecognitionDotNet.Location.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Location"/> structure with the specified left, top, right, bottom and confidence.
+            </summary>
+            <param name="left">The x-axis value of the left side of the rectangle of face.</param>
+            <param name="top">The y-axis value of the top of the rectangle of face.</param>
+            <param name="right">The x-axis value of the right side of the rectangle of face.</param>
+            <param name="bottom">The y-axis value of the bottom of the rectangle of face.</param>
+            <param name="confidence">The confidence of detected face.</param>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Location.#ctor(DlibDotNet.Rectangle,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Location"/> structure with the specified rectangle and confidence.
+            </summary>
+            <param name="rectangle">The rectangle of face.</param>
+            <param name="confidence">The confidence of detected face.</param>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Location.#ctor(FaceRecognitionDotNet.Location,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Location"/> structure with the specified location and confidence.
+            </summary>
+            <param name="location">The location of face.</param>
+            <param name="confidence">The confidence of detected face.</param>
+        </member>
         <member name="P:FaceRecognitionDotNet.Location.Bottom">
             <summary>
             Gets the y-axis value of the bottom of the rectangle of face.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Location.Confidence">
+            <summary>
+            Gets the confidence of detected face.
             </summary>
         </member>
         <member name="P:FaceRecognitionDotNet.Location.Left">
@@ -1010,6 +1114,36 @@
         <member name="F:FaceRecognitionDotNet.Model.Cnn">
             <summary>
             Specifies that the model is CNN (Convolutional Neural Network) based face detector.
+            </summary>
+        </member>
+        <member name="F:FaceRecognitionDotNet.Model.Custom">
+            <summary>
+            Specifies that the custom face detector.
+            </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.ModelParameter">
+            <summary>
+            Describes the model binary datum. This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.ModelParameter.PosePredictor68FaceLandmarksModel">
+            <summary>
+            Gets or sets the binary data of model for 68 points face landmarks.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.ModelParameter.PosePredictor5FaceLandmarksModel">
+            <summary>
+            Gets or sets the binary data of model for 5 points face landmarks.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.ModelParameter.FaceRecognitionModel">
+            <summary>
+            Gets or sets the binary data of model for face encoding.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.ModelParameter.CnnFaceDetectorModel">
+            <summary>
+            Gets or sets the binary data of model for face detector by using CNN.
             </summary>
         </member>
         <member name="T:FaceRecognitionDotNet.Point">
