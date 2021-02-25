@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Authors>Takuya Takeuchi</Authors>
+    <Description>Example of FaceRecognitionDotNet</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FaceRecognitionDotNet" Version="1.3.0.3" />
+    <PackageReference Include="FaceRecognitionDotNet.CUDA111" Version="1.3.0.3" />
+    <PackageReference Include="FaceRecognitionDotNet.MKL" Version="1.3.0.3" />
+    <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
+  </ItemGroup>
+
+</Project>
