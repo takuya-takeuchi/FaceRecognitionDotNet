@@ -1,13 +1,12 @@
 $Current = $PSScriptRoot
 
 $FaceRecognitionDotNetRoot = Split-Path $Current -Parent
-$SourceRoot = Join-Path $Current src
+$SourceRoot = Join-Path $FaceRecognitionDotNetRoot src
 $FaceRecognitionDotNetProjectRoot = Join-Path $SourceRoot FaceRecognitionDotNet
-$DocumentDir = Join-Path $FaceRecognitionDotNetProjectRoot docfx
 
 $DocFx = Join-Path $Current docfx | `
          Join-Path -ChildPath docfx.exe
 
-Set-Location $FaceRecognitionDotNetProjectRoot
-& ${DocFx} init -q -o $DocumentDir
+Set-Location $FaceRecognitionDotNetRoot
+& ${DocFx} init -q -o docs
 Set-Location $Current
