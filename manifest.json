@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.DisposableObject.html",
-          "hash": "ln2a30LZUzlGHq3FVgIi+w=="
+          "hash": "+1fmmvloFEPSCQx6q1wPQw=="
         }
       },
       "is_incremental": true,
@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.AgeEstimator.html",
-          "hash": "JiQJcHkwTMvvuE+gskUTDA=="
+          "hash": "ttSSUbp9D79fpayqZdxJbA=="
         }
       },
       "is_incremental": true,
@@ -33,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.AgeRange.html",
-          "hash": "0kTAUf0okPwUpzd6Nn8Q2w=="
+          "hash": "L49og4AX6J8NuLIkANbMbw=="
         }
       },
       "is_incremental": true,
@@ -45,7 +45,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html",
-          "hash": "CMDh2PZkTNEe1frl2olF8Q=="
+          "hash": "RPn2ZiM/kFzUKRaZtOTvsA=="
         }
       },
       "is_incremental": true,
@@ -57,7 +57,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector.html",
-          "hash": "ZFzcbvHNCeq2M7jmOyKKRA=="
+          "hash": "zVP1UQHaSRGp6GRGFiCJiA=="
         }
       },
       "is_incremental": true,
@@ -69,7 +69,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector.html",
-          "hash": "PrDN2F6MuBpTFXF2pptWmw=="
+          "hash": "R38AstNLPgnCGaWgKRGPvg=="
         }
       },
       "is_incremental": true,
@@ -81,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.EyeBlinkDetector.html",
-          "hash": "++KxgqEqr7ItfI6BXOc4PA=="
+          "hash": "Hhdhv+tUWAKJeV+lX/Gp+Q=="
         }
       },
       "is_incremental": true,
@@ -93,7 +93,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.FaceDetector.html",
-          "hash": "E0GfWjpybnwjXm5bW17Now=="
+          "hash": "LL73AWX6xiPkYCQIc97vIg=="
         }
       },
       "is_incremental": true,
@@ -105,7 +105,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.html",
-          "hash": "TKP7IBi3zHz/klmv6PB2sw=="
+          "hash": "KscmxaoF8v9hJ/5QREfrlQ=="
         }
       },
       "is_incremental": true,
@@ -117,7 +117,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.GenderEstimator.html",
-          "hash": "0u/5str/IaO6sNMwI4m45w=="
+          "hash": "wf1phNkQ6U+0JXIbYMXwLQ=="
         }
       },
       "is_incremental": true,
@@ -129,7 +129,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.HeadPoseEstimator.html",
-          "hash": "yWk4KZ54oFCZYbh2Cb38CQ=="
+          "hash": "imqhfoFYQGopkx9lGiRhKw=="
         }
       },
       "is_incremental": true,
@@ -141,7 +141,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.html",
-          "hash": "Lva3Ia8rM7kUTntfOZ+Neg=="
+          "hash": "cXeZACxhY7waA2U2Zi1eFg=="
         }
       },
       "is_incremental": true,
@@ -153,7 +153,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.html",
-          "hash": "h21qrHHTeonoWadkKzRXtA=="
+          "hash": "9KltxeVpphOOVZFZJHoD6Q=="
         }
       },
       "is_incremental": true,
@@ -165,7 +165,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.SimpleFaceDetector.html",
-          "hash": "FZoud/664zdlr4dcOSdJwA=="
+          "hash": "tgHusO73QWi2I0Vl9uNzCw=="
         }
       },
       "is_incremental": true,
@@ -177,7 +177,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.html",
-          "hash": "5206WjOehqFEftZIV8unIQ=="
+          "hash": "i6NkCszWnwUqdo7SYyUUhA=="
         }
       },
       "is_incremental": true,
@@ -189,7 +189,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.html",
-          "hash": "Z7dTyPz7gj8N6UltA6R08w=="
+          "hash": "XHvSpkf7epM+Iqa8OmFeBw=="
         }
       },
       "is_incremental": true,
@@ -201,7 +201,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Extensions.html",
-          "hash": "MCiWgIQMSpza1sMJSP4ZjQ=="
+          "hash": "MOX0Q80Hep+iYmliZMEzlQ=="
         }
       },
       "is_incremental": true,
@@ -213,7 +213,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.FaceEncoding.html",
-          "hash": "bClXPJM3UkwgDT3vmxN9tg=="
+          "hash": "UmO0Dxk/RJ0LqYftW67G4Q=="
         }
       },
       "is_incremental": true,
@@ -225,7 +225,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.FacePart.html",
-          "hash": "vCMb+t0gNV+Cw6iMV6MdNw=="
+          "hash": "Vjiad6un4he0AlBCz1CBDA=="
         }
       },
       "is_incremental": true,
@@ -237,7 +237,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.FacePoint.html",
-          "hash": "qJikf2X/txsfxMijA2p3Uw=="
+          "hash": "mSGbkIKQfcXR2PAUDkAgdA=="
         }
       },
       "is_incremental": true,
@@ -249,7 +249,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.FaceRecognition.html",
-          "hash": "K77cfJjwfnIeCJ0GPLp1rA=="
+          "hash": "26t5vcPUXZx0s2Dl+o7lvw=="
         }
       },
       "is_incremental": true,
@@ -261,7 +261,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Gender.html",
-          "hash": "/57bf+I9gIbS5bZ1OR/K7A=="
+          "hash": "J/TIj6qU4uoFBWnnBo/PVA=="
         }
       },
       "is_incremental": true,
@@ -273,7 +273,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.HeadPose.html",
-          "hash": "trE26yhZOP8uYvFEXBJoxQ=="
+          "hash": "qxHnSK+hfA/Q4JL4Gw4QFg=="
         }
       },
       "is_incremental": true,
@@ -285,7 +285,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Image.html",
-          "hash": "Q573LLTp+XHEZNRQP3PJeA=="
+          "hash": "PRE0t1a+YQSbNgtrX/XqRg=="
         }
       },
       "is_incremental": true,
@@ -297,7 +297,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.ImageFormat.html",
-          "hash": "5eyTv97mYPShs7/98wXtdA=="
+          "hash": "2ihqV6xM4YmF96upSv/PGQ=="
         }
       },
       "is_incremental": true,
@@ -309,7 +309,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Location.html",
-          "hash": "4A84qQzF+1Q/owS+cgoxaQ=="
+          "hash": "GJiGNVDrw7dE1LozcCGHfw=="
         }
       },
       "is_incremental": true,
@@ -321,7 +321,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Mode.html",
-          "hash": "DGD7GdaSCjkMhMbixROOHg=="
+          "hash": "cQh9t29ZbbNz8Kk54bTllA=="
         }
       },
       "is_incremental": true,
@@ -333,7 +333,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Model.html",
-          "hash": "YonOIBG5yF8s3fpl9w9zfg=="
+          "hash": "bo/ePgsELaCCFDTtW0cDnA=="
         }
       },
       "is_incremental": true,
@@ -345,7 +345,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.ModelParameter.html",
-          "hash": "qTqSd1ZqmZXa58PgsN2Ijw=="
+          "hash": "rIKORG3YGm5XzjF1gbeLLA=="
         }
       },
       "is_incremental": true,
@@ -357,7 +357,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.Point.html",
-          "hash": "CtBlw2H1kHBU39wbFmVGqA=="
+          "hash": "63iH7wAdK0jHh3WoSxe3ug=="
         }
       },
       "is_incremental": true,
@@ -369,7 +369,7 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.PredictorModel.html",
-          "hash": "mZQXJ5CdVhPu/SkbXq60Sw=="
+          "hash": "nGl5RoWO7x+1XHsyJHIS4w=="
         }
       },
       "is_incremental": true,
@@ -381,10 +381,10 @@
       "output": {
         ".html": {
           "relative_path": "api/FaceRecognitionDotNet.html",
-          "hash": "YFNZvsHbTiVHokHw5Xep2w=="
+          "hash": "1Yk1qRun+0yzkRs0DlwkjA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -393,7 +393,7 @@
       "output": {
         ".html": {
           "relative_path": "api/index.html",
-          "hash": "oKoA4l0KsBX9vWJq8uE7LA=="
+          "hash": "fdzKAJSY+5+XHTTq0CI4TQ=="
         }
       },
       "is_incremental": true,
@@ -417,7 +417,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/intro.html",
-          "hash": "KoqnNmKJURE+OY1cWDN/eQ=="
+          "hash": "xRgI5ttPrp7VV9PR2GM6dA=="
         }
       },
       "is_incremental": true,
@@ -436,15 +436,26 @@
       "version": ""
     },
     {
+      "type": "Resource",
+      "source_relative_path": "images/logo.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "index.md",
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "QjYK2uyc/OZt8zrEGojbjg=="
+          "hash": "ze8ikOw9UkjFSb5rtXH20A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -453,7 +464,7 @@
       "output": {
         ".html": {
           "relative_path": "toc.html",
-          "hash": "+rHUkRZHZRi5gd1aTU6lJA=="
+          "hash": "piIEPs9yUM8Ol1iq6p5uiA=="
         }
       },
       "is_incremental": false,
@@ -480,6 +491,13 @@
           "incrementalPhase": "build",
           "total_file_count": 32,
           "skipped_file_count": 32
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
         },
         "TocDocumentProcessor": {
           "can_incremental": false,
