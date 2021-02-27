@@ -305,6 +305,10 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 
+### DocFx ###
+.cache
+/**/_site/
+
 # Custom
 src/DlibDotNet.Native/*.bat
 src/DlibDotNet.Native.Dnn/*.bat
