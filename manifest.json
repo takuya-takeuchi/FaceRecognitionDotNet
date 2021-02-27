@@ -1,0 +1,510 @@
+{
+  "homepages": [],
+  "source_base_path": "D:/Works/OpenSource/FaceRecognitionDotNet/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.DisposableObject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.DisposableObject.html",
+          "hash": "ln2a30LZUzlGHq3FVgIi+w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.AgeEstimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.AgeEstimator.html",
+          "hash": "JiQJcHkwTMvvuE+gskUTDA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.AgeRange.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.AgeRange.html",
+          "hash": "0kTAUf0okPwUpzd6Nn8Q2w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html",
+          "hash": "CMDh2PZkTNEe1frl2olF8Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector.html",
+          "hash": "ZFzcbvHNCeq2M7jmOyKKRA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector.html",
+          "hash": "PrDN2F6MuBpTFXF2pptWmw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.EyeBlinkDetector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.EyeBlinkDetector.html",
+          "hash": "++KxgqEqr7ItfI6BXOc4PA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.FaceDetector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.FaceDetector.html",
+          "hash": "E0GfWjpybnwjXm5bW17Now=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.html",
+          "hash": "TKP7IBi3zHz/klmv6PB2sw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.GenderEstimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.GenderEstimator.html",
+          "hash": "0u/5str/IaO6sNMwI4m45w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.HeadPoseEstimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.HeadPoseEstimator.html",
+          "hash": "yWk4KZ54oFCZYbh2Cb38CQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.html",
+          "hash": "Lva3Ia8rM7kUTntfOZ+Neg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.html",
+          "hash": "h21qrHHTeonoWadkKzRXtA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.SimpleFaceDetector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.SimpleFaceDetector.html",
+          "hash": "FZoud/664zdlr4dcOSdJwA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.html",
+          "hash": "5206WjOehqFEftZIV8unIQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.html",
+          "hash": "Z7dTyPz7gj8N6UltA6R08w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Extensions.html",
+          "hash": "MCiWgIQMSpza1sMJSP4ZjQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.FaceEncoding.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.FaceEncoding.html",
+          "hash": "bClXPJM3UkwgDT3vmxN9tg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.FacePart.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.FacePart.html",
+          "hash": "vCMb+t0gNV+Cw6iMV6MdNw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.FacePoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.FacePoint.html",
+          "hash": "qJikf2X/txsfxMijA2p3Uw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.FaceRecognition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.FaceRecognition.html",
+          "hash": "K77cfJjwfnIeCJ0GPLp1rA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Gender.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Gender.html",
+          "hash": "/57bf+I9gIbS5bZ1OR/K7A=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.HeadPose.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.HeadPose.html",
+          "hash": "trE26yhZOP8uYvFEXBJoxQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Image.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Image.html",
+          "hash": "Q573LLTp+XHEZNRQP3PJeA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.ImageFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.ImageFormat.html",
+          "hash": "5eyTv97mYPShs7/98wXtdA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Location.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Location.html",
+          "hash": "4A84qQzF+1Q/owS+cgoxaQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Mode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Mode.html",
+          "hash": "DGD7GdaSCjkMhMbixROOHg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Model.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Model.html",
+          "hash": "YonOIBG5yF8s3fpl9w9zfg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.ModelParameter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.ModelParameter.html",
+          "hash": "qTqSd1ZqmZXa58PgsN2Ijw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.Point.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.Point.html",
+          "hash": "CtBlw2H1kHBU39wbFmVGqA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.PredictorModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.PredictorModel.html",
+          "hash": "mZQXJ5CdVhPu/SkbXq60Sw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/FaceRecognitionDotNet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/FaceRecognitionDotNet.html",
+          "hash": "YFNZvsHbTiVHokHw5Xep2w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "oKoA4l0KsBX9vWJq8uE7LA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "NDr0c3CmZTjyay6l60uUSQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "KoqnNmKJURE+OY1cWDN/eQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "gB8AESyvNru97tzIZofEEg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "QjYK2uyc/OZt8zrEGojbjg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "+rHUkRZHZRi5gd1aTU6lJA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 3,
+          "skipped_file_count": 3
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 32,
+          "skipped_file_count": 32
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
