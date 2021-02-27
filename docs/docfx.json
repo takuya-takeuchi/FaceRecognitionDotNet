@@ -51,6 +51,10 @@
     ],
     "dest": "_site",
     "globalMetadataFiles": [],
+    "globalMetadata": {      
+      "_appTitle": "FaceRecognitionDotNet API Document",
+      "_appLogoPath": "images/logo.png"
+    },
     "fileMetadataFiles": [],
     "template": [
       "default"
