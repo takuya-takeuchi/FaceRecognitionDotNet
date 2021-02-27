@@ -6,6 +6,5 @@ $FaceRecognitionDotNetProjectRoot = Join-Path $SourceRoot FaceRecognitionDotNet
 $DocumentDir = Join-Path $FaceRecognitionDotNetProjectRoot docfx
 $Json = Join-Path $Current docfx.json
 
-Set-Location $FaceRecognitionDotNetRoot
 docfx "${Json}" --serve
 Set-Location $Current
