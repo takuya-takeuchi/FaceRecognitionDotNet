@@ -38,7 +38,8 @@ class Config
       101,
       102,
       110,
-      111
+      111,
+      112
    )
 
    $CudaVersionHash =
