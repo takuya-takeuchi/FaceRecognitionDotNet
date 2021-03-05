@@ -115,9 +115,8 @@ function RunTest($BuildTargets, $DependencyHash)
       if ($global:IsWindows)
       {
          $OutDir = Join-Path $TargetDir bin | `
-                   Join-Path -ChildPath x64 | `
                    Join-Path -ChildPath Release | `
-                   Join-Path -ChildPath netcoreapp2.0      
+                   Join-Path -ChildPath netcoreapp2.0
          if (!(Test-Path "$OutDir")) {
             New-Item "$OutDir" -ItemType Directory > $null
          }
