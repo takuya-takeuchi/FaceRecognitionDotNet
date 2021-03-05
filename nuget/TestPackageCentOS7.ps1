@@ -35,6 +35,7 @@ $BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture =
 $BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 102; Package = "FaceRecognitionDotNet.CUDA102"; PlatformTarget="x64"; Postfix = "";     RID = "$RidOperatingSystem-x64"; }
 $BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 110; Package = "FaceRecognitionDotNet.CUDA110"; PlatformTarget="x64"; Postfix = "";     RID = "$RidOperatingSystem-x64"; }
 $BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 111; Package = "FaceRecognitionDotNet.CUDA111"; PlatformTarget="x64"; Postfix = "";     RID = "$RidOperatingSystem-x64"; }
+$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 112; Package = "FaceRecognitionDotNet.CUDA112"; PlatformTarget="x64"; Postfix = "";     RID = "$RidOperatingSystem-x64"; }
 
 foreach($BuildTarget in $BuildTargets)
 {
