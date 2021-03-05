@@ -1,5 +1,5 @@
-﻿<?xml version="1.0"?>
-<package >
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
   <metadata>
     <id>FaceRecognitionDotNet.ARM</id>
     <version>1.3.0.0</version>
