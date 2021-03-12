@@ -74,6 +74,30 @@ namespace FaceRecognitionDotNet.Tests
             }
         }
 
+        [Fact]
+        public void ToBitmap()
+        {
+            var path = Path.Combine(TestImageDirectory, "obama.jpg");
+            using (var img = FaceRecognition.LoadImageFile(path))
+            using (var bitmap = img.ToBitmap())
+            {
+                Assert.Equal(img.Width, bitmap.Width);
+                Assert.Equal(img.Height, bitmap.Height);
+            }
+        }
+
+        [Fact]
+        public void ToBitmapGrayscale()
+        {
+            var path = Path.Combine(TestImageDirectory, "obama.jpg");
+            using (var img = FaceRecognition.LoadImageFile(path, Mode.Greyscale))
+            using (var bitmap = img.ToBitmap())
+            {
+                Assert.Equal(img.Width, bitmap.Width);
+                Assert.Equal(img.Height, bitmap.Height);
+            }
+        }
+
     }
 
 }
