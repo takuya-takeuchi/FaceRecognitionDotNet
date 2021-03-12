@@ -13,7 +13,7 @@
     <PackageReference Include="MathNet.Numerics.Data.Matlab" Version="4.0.0" />
     <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
     <PackageReference Include="ShellProgressBar" Version="5.0.0" />
-    <PackageReference Include="System.Drawing.Common" Version="4.7.0-preview1.19504.10" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>
