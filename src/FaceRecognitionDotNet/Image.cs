@@ -104,10 +104,15 @@ namespace FaceRecognitionDotNet
         /// </summary>
         /// <returns>A <see cref="Bitmap"/> that represents the converted <see cref="Image"/>.</returns>
         /// <exception cref="ObjectDisposedException">This object is disposed.</exception>
+        /// <exception cref="NotSupportedException">A Greyscale image is not supported.</exception>
         public Bitmap ToBitmap()
         {
             this.ThrowIfDisposed();
-            return this.Mode == Mode.Greyscale ? ((Matrix<byte>)this._Matrix).ToBitmap() : ((Matrix<RgbPixel>)this._Matrix).ToBitmap();
+
+            if (this.Mode == Mode.Greyscale)
+                throw new NotSupportedException();
+
+            return ((Matrix<RgbPixel>)this._Matrix).ToBitmap();
         }
 
         #region Overrides 

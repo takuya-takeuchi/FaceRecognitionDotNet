@@ -91,10 +91,20 @@ namespace FaceRecognitionDotNet.Tests
         {
             var path = Path.Combine(TestImageDirectory, "obama.jpg");
             using (var img = FaceRecognition.LoadImageFile(path, Mode.Greyscale))
-            using (var bitmap = img.ToBitmap())
             {
-                Assert.Equal(img.Width, bitmap.Width);
-                Assert.Equal(img.Height, bitmap.Height);
+                try
+                {
+                    using (var bitmap = img.ToBitmap())
+                    {
+                        Assert.Equal(img.Width, bitmap.Width);
+                        Assert.Equal(img.Height, bitmap.Height);
+                    }
+
+                    Assert.True(false, $"{nameof(img.ToBitmap)} method should throw {nameof(NotSupportedException)}.");
+                }
+                catch (NotSupportedException)
+                {
+                }
             }
         }
 
