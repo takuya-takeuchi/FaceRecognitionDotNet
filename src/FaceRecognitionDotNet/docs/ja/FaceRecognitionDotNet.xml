@@ -422,6 +422,7 @@
             <summary>
             特徴データのサイズを取得します。
             </summary>
+            <exception cref="T:System.ObjectDisposedException">このオブジェクトは破棄されています。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceEncoding.GetRawEncoding">
             <summary>
@@ -429,6 +430,7 @@
             </summary>
             <returns>顔の特徴データを表現する <see cref="T:System.Double"/> の配列。</returns>
             <remarks><see cref="T:FaceRecognitionDotNet.FaceEncoding"/> クラスはシリアル化をサポートしています。このメソッドは FaceRecognitionDotNet と dlib の間の相互運用性のためです。</remarks>
+            <exception cref="T:System.ObjectDisposedException">このオブジェクトは破棄されています。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceEncoding.DisposeUnmanaged">
             <summary>
@@ -948,11 +950,13 @@
             <summary>
             画像の高さを取得します。
             </summary>
+            <exception cref="T:System.ObjectDisposedException">このオブジェクトは破棄されています。</exception>
         </member>
         <member name="P:FaceRecognitionDotNet.Image.Width">
             <summary>
             画像の幅を取得します。
             </summary>
+            <exception cref="T:System.ObjectDisposedException">このオブジェクトは破棄されています。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.Image.Save(System.String,FaceRecognitionDotNet.ImageFormat)">
             <summary>
@@ -961,6 +965,15 @@
             <param name="filename">この <see cref="T:FaceRecognitionDotNet.Image"/> の保存先ファイルの名前を格納している文字列。</param>
             <param name="format">この <see cref="T:FaceRecognitionDotNet.Image"/> の <see cref="T:FaceRecognitionDotNet.ImageFormat"/>。</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="filename"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException">このオブジェクトは破棄されています。</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Image.ToBitmap">
+            <summary>
+            この <see cref="T:FaceRecognitionDotNet.Image"/> を GDI+ の <see cref="T:System.Drawing.Bitmap"/> に変換します。
+            </summary>
+            <returns>変換された <see cref="T:FaceRecognitionDotNet.Image"/> を表す <see cref="T:System.Drawing.Bitmap"/>。</returns>
+            <exception cref="T:System.ObjectDisposedException">このオブジェクトは破棄されています。</exception>
+            <exception cref="T:System.NotSupportedException">グレイスケール画像はサポートされていません。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.Image.DisposeUnmanaged">
             <summary>

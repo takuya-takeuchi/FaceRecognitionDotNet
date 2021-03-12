@@ -422,6 +422,7 @@
             <summary>
             Gets the size of feature data.
             </summary>
+            <exception cref="T:System.ObjectDisposedException">This object is disposed.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceEncoding.GetRawEncoding">
             <summary>
@@ -429,6 +430,7 @@
             </summary>
             <returns>A <see cref="T:System.Double"/> array that represents a feature data.</returns>
             <remarks><see cref="T:FaceRecognitionDotNet.FaceEncoding"/> class supports serialization. This method is for interoperability between FaceRecognitionDotNet and dlib.</remarks>
+            <exception cref="T:System.ObjectDisposedException">This object is disposed.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceEncoding.DisposeUnmanaged">
             <summary>
@@ -948,11 +950,13 @@
             <summary>
             Gets the height of the image.
             </summary>
+            <exception cref="T:System.ObjectDisposedException">This object is disposed.</exception>
         </member>
         <member name="P:FaceRecognitionDotNet.Image.Width">
             <summary>
             Gets the width of the image.
             </summary>
+            <exception cref="T:System.ObjectDisposedException">This object is disposed.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.Image.Save(System.String,FaceRecognitionDotNet.ImageFormat)">
             <summary>
@@ -961,6 +965,15 @@
             <param name="filename">A string that contains the name of the file to which to save this <see cref="T:FaceRecognitionDotNet.Image"/>.</param>
             <param name="format">The <see cref="T:FaceRecognitionDotNet.ImageFormat"/> for this <see cref="T:FaceRecognitionDotNet.Image"/>.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="filename"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException">This object is disposed.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Image.ToBitmap">
+            <summary>
+            Converts this <see cref="T:FaceRecognitionDotNet.Image"/> to a GDI+ <see cref="T:System.Drawing.Bitmap"/>.
+            </summary>
+            <returns>A <see cref="T:System.Drawing.Bitmap"/> that represents the converted <see cref="T:FaceRecognitionDotNet.Image"/>.</returns>
+            <exception cref="T:System.ObjectDisposedException">This object is disposed.</exception>
+            <exception cref="T:System.NotSupportedException">A Greyscale image is not supported.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.Image.DisposeUnmanaged">
             <summary>
