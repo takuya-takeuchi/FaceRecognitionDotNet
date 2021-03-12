@@ -38,7 +38,8 @@ class Config
       101,
       102,
       110,
-      111
+      111,
+      112
    )
 
    $CudaVersionHash =
@@ -51,6 +52,7 @@ class Config
       102 = "CUDA_PATH_V10_2";
       110 = "CUDA_PATH_V11_0";
       111 = "CUDA_PATH_V11_1";
+      112 = "CUDA_PATH_V11_2";
    }
 
    $VisualStudio = "Visual Studio 15 2017"
@@ -97,7 +99,7 @@ class Config
    #  %4: Architecture (32/64)
    #  %5: Platform (desktop/android/ios/uwp)
    #  %6: Optional Argument
-   #    if Target is cuda, CUDA version if Target is cuda [90/91/92/100/101/102]
+   #    if Target is cuda, CUDA version if Target is cuda [90/91/92/100/101/102/110/111/112]
    #    if Target is mkl and Windows, IntelMKL directory path
    #***************************************
    Config(  [string]$Root,
@@ -444,12 +446,15 @@ class Config
 
    [string] GetCUDAPath()
    {
-      # CUDA_PATH_V10_0=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0
-      # CUDA_PATH_V10_1=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1
-      # CUDA_PATH_V10_2=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2
       # CUDA_PATH_V9_0=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0
       # CUDA_PATH_V9_1=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.1
       # CUDA_PATH_V9_2=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.2
+      # CUDA_PATH_V10_0=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0
+      # CUDA_PATH_V10_1=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1
+      # CUDA_PATH_V10_2=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2
+      # CUDA_PATH_V11_0=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.0
+      # CUDA_PATH_V11_1=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.1
+      # CUDA_PATH_V11_2=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2
       $version = $this.CudaVersionHash[$this._CudaVersion]      
       return [environment]::GetEnvironmentVariable($version, 'Machine')
    }
