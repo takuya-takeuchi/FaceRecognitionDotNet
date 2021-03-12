@@ -83,6 +83,12 @@ You can check the following examples to train dataset.
 |---|---|---|
 |<img src="images/3.jpg" width="240"/>|<img src="examples/CustomClassificationDemo/images/result.png" width="240"/>|<img src="images/4.png" width="240"/>|
 
+## Document
+
+FaceRecognitionDotNet support full xml document for Visual Studio.
+A xml document is written English and Japanese.
+And you can check online document at [FaceRecognitionDotNet API Document](https://taktak.jp/FaceRecognitionDotNet/)
+
 ## Dependencies Libraries and Products
 
 #### [face_recognition](https://github.com/ageitgey/face_recognition/)
