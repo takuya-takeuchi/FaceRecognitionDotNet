@@ -77,12 +77,12 @@ function RunTest($BuildTargets, $DependencyHash)
          New-Item "$TestDir" -ItemType Directory > $null
       }
 
-      $NativeTestDir = Join-Path $FaceRecognitionDotNetRoot test | `
+      $UnitTestDir = Join-Path $FaceRecognitionDotNetRoot test | `
                         Join-Path -ChildPath FaceRecognitionDotNet.Tests
 
       $TargetDir = Join-Path $WorkDir FaceRecognitionDotNet.Tests
       if (Test-Path "$TargetDir") {
-         Remove-Item -Path "$TargetDir" -Recurse -Force
+         Remove-Item -Path "$TargetDir" -Recurse -Force 2> $null
       }
 
       $TargetDirTestImages = Join-Path $TargetDir TestImages
@@ -90,12 +90,12 @@ function RunTest($BuildTargets, $DependencyHash)
          Remove-Item -Path "$TargetDirTestImages" -Recurse -Force
       }
 
-      $NativeTestDirTestImages = Join-Path $NativeTestDir TestImages
-      $NativeTestDirSources = Join-Path $NativeTestDir "*.cs"
-      $NativeTestDirProject = Join-Path $NativeTestDir "FaceRecognitionDotNet.Tests.csproj"
-      Copy-Item "$NativeTestDirTestImages" "$TargetDirTestImages" -Recurse
-      Copy-Item "$NativeTestDirSources" "$TargetDir" -Recurse
-      Copy-Item "$NativeTestDirProject" "$TargetDir" -Recurse
+      $UnitTestDirTestImages = Join-Path $UnitTestDir TestImages
+      $UnitTestDirSources = Join-Path $UnitTestDir "*.cs"
+      $UnitTestDirProject = Join-Path $UnitTestDir "FaceRecognitionDotNet.Tests.csproj"
+      Copy-Item "$UnitTestDirTestImages" "$TargetDirTestImages" -Recurse
+      Copy-Item "$UnitTestDirSources" "$TargetDir" -Recurse
+      Copy-Item "$UnitTestDirProject" "$TargetDir" -Recurse
       
 
       Set-Location -Path "$TargetDir"
@@ -114,19 +114,31 @@ function RunTest($BuildTargets, $DependencyHash)
       # Copy Dependencies
       if ($global:IsWindows)
       {
-         $OutDir = Join-Path $TargetDir bin | `
-                   Join-Path -ChildPath Release | `
-                   Join-Path -ChildPath netcoreapp2.0
-         if (!(Test-Path "$OutDir")) {
-            New-Item "$OutDir" -ItemType Directory > $null
-         }
+         # Get framework version
+         $re = New-Object regex("<TargetFramework>(?<version>[^<]+)</TargetFramework>")
+         $match = $re.Matches((Get-Content "${UnitTestDirProject}"))
+         $version = $match[0].Groups["version"]
 
-         if ($DependencyHash.Contains($package))
+         # Just in case, deploy symbolic link to possbile output directory
+         $OutDirs = @((Join-Path $TargetDir bin | Join-Path -ChildPath Release | Join-Path -ChildPath $version),
+                      (Join-Path $TargetDir bin | Join-Path -ChildPath x64     | Join-Path -ChildPath Release | Join-Path -ChildPath $version),
+                      (Join-Path $TargetDir bin | Join-Path -ChildPath x86     | Join-Path -ChildPath Release | Join-Path -ChildPath $version)
+         )
+
+         foreach ($OutDir in $OutDirs)
          {
-            foreach($Dependency in $DependencyHash[$package])
+            if (!(Test-Path "$OutDir"))
             {
-               $FileName = [System.IO.Path]::GetFileName("$Dependency")
-               New-Item -Value "$Dependency" -Path "$OutDir" -Name "$FileName" -ItemType SymbolicLink > $null
+               New-Item "$OutDir" -ItemType Directory > $null
+            }
+
+            if ($DependencyHash.Contains($package))
+            {
+               foreach($Dependency in $DependencyHash[$package])
+               {
+                  $FileName = [System.IO.Path]::GetFileName("$Dependency")
+                  New-Item -Value "$Dependency" -Path "$OutDir" -Name "$FileName" -ItemType SymbolicLink > $null
+               }
             }
          }
       }
