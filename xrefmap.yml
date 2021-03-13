@@ -1,0 +1,1995 @@
+### YamlMime:XRefMap
+sorted: true
+references:
+- uid: FaceRecognitionDotNet
+  name: FaceRecognitionDotNet
+  href: api/FaceRecognitionDotNet.html
+  commentId: N:FaceRecognitionDotNet
+  fullName: FaceRecognitionDotNet
+  nameWithType: FaceRecognitionDotNet
+- uid: FaceRecognitionDotNet.DisposableObject
+  name: DisposableObject
+  href: api/FaceRecognitionDotNet.DisposableObject.html
+  commentId: T:FaceRecognitionDotNet.DisposableObject
+  fullName: FaceRecognitionDotNet.DisposableObject
+  nameWithType: DisposableObject
+- uid: FaceRecognitionDotNet.DisposableObject.Dispose
+  name: Dispose()
+  href: api/FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_Dispose
+  commentId: M:FaceRecognitionDotNet.DisposableObject.Dispose
+  fullName: FaceRecognitionDotNet.DisposableObject.Dispose()
+  nameWithType: DisposableObject.Dispose()
+- uid: FaceRecognitionDotNet.DisposableObject.Dispose*
+  name: Dispose
+  href: api/FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_Dispose_
+  commentId: Overload:FaceRecognitionDotNet.DisposableObject.Dispose
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.DisposableObject.Dispose
+  nameWithType: DisposableObject.Dispose
+- uid: FaceRecognitionDotNet.DisposableObject.DisposeManaged
+  name: DisposeManaged()
+  href: api/FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_DisposeManaged
+  commentId: M:FaceRecognitionDotNet.DisposableObject.DisposeManaged
+  fullName: FaceRecognitionDotNet.DisposableObject.DisposeManaged()
+  nameWithType: DisposableObject.DisposeManaged()
+- uid: FaceRecognitionDotNet.DisposableObject.DisposeManaged*
+  name: DisposeManaged
+  href: api/FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_DisposeManaged_
+  commentId: Overload:FaceRecognitionDotNet.DisposableObject.DisposeManaged
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.DisposableObject.DisposeManaged
+  nameWithType: DisposableObject.DisposeManaged
+- uid: FaceRecognitionDotNet.DisposableObject.DisposeUnmanaged
+  name: DisposeUnmanaged()
+  href: api/FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_DisposeUnmanaged
+  commentId: M:FaceRecognitionDotNet.DisposableObject.DisposeUnmanaged
+  fullName: FaceRecognitionDotNet.DisposableObject.DisposeUnmanaged()
+  nameWithType: DisposableObject.DisposeUnmanaged()
+- uid: FaceRecognitionDotNet.DisposableObject.DisposeUnmanaged*
+  name: DisposeUnmanaged
+  href: api/FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_DisposeUnmanaged_
+  commentId: Overload:FaceRecognitionDotNet.DisposableObject.DisposeUnmanaged
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.DisposableObject.DisposeUnmanaged
+  nameWithType: DisposableObject.DisposeUnmanaged
+- uid: FaceRecognitionDotNet.DisposableObject.IsDisposed
+  name: IsDisposed
+  href: api/FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_IsDisposed
+  commentId: P:FaceRecognitionDotNet.DisposableObject.IsDisposed
+  fullName: FaceRecognitionDotNet.DisposableObject.IsDisposed
+  nameWithType: DisposableObject.IsDisposed
+- uid: FaceRecognitionDotNet.DisposableObject.IsDisposed*
+  name: IsDisposed
+  href: api/FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_IsDisposed_
+  commentId: Overload:FaceRecognitionDotNet.DisposableObject.IsDisposed
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.DisposableObject.IsDisposed
+  nameWithType: DisposableObject.IsDisposed
+- uid: FaceRecognitionDotNet.DisposableObject.ThrowIfDisposed
+  name: ThrowIfDisposed()
+  href: api/FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_ThrowIfDisposed
+  commentId: M:FaceRecognitionDotNet.DisposableObject.ThrowIfDisposed
+  fullName: FaceRecognitionDotNet.DisposableObject.ThrowIfDisposed()
+  nameWithType: DisposableObject.ThrowIfDisposed()
+- uid: FaceRecognitionDotNet.DisposableObject.ThrowIfDisposed*
+  name: ThrowIfDisposed
+  href: api/FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_ThrowIfDisposed_
+  commentId: Overload:FaceRecognitionDotNet.DisposableObject.ThrowIfDisposed
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.DisposableObject.ThrowIfDisposed
+  nameWithType: DisposableObject.ThrowIfDisposed
+- uid: FaceRecognitionDotNet.Extensions
+  name: FaceRecognitionDotNet.Extensions
+  href: api/FaceRecognitionDotNet.Extensions.html
+  commentId: N:FaceRecognitionDotNet.Extensions
+  fullName: FaceRecognitionDotNet.Extensions
+  nameWithType: FaceRecognitionDotNet.Extensions
+- uid: FaceRecognitionDotNet.Extensions.AgeEstimator
+  name: AgeEstimator
+  href: api/FaceRecognitionDotNet.Extensions.AgeEstimator.html
+  commentId: T:FaceRecognitionDotNet.Extensions.AgeEstimator
+  fullName: FaceRecognitionDotNet.Extensions.AgeEstimator
+  nameWithType: AgeEstimator
+- uid: FaceRecognitionDotNet.Extensions.AgeEstimator.Groups
+  name: Groups
+  href: api/FaceRecognitionDotNet.Extensions.AgeEstimator.html#FaceRecognitionDotNet_Extensions_AgeEstimator_Groups
+  commentId: P:FaceRecognitionDotNet.Extensions.AgeEstimator.Groups
+  fullName: FaceRecognitionDotNet.Extensions.AgeEstimator.Groups
+  nameWithType: AgeEstimator.Groups
+- uid: FaceRecognitionDotNet.Extensions.AgeEstimator.Groups*
+  name: Groups
+  href: api/FaceRecognitionDotNet.Extensions.AgeEstimator.html#FaceRecognitionDotNet_Extensions_AgeEstimator_Groups_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.AgeEstimator.Groups
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.AgeEstimator.Groups
+  nameWithType: AgeEstimator.Groups
+- uid: FaceRecognitionDotNet.Extensions.AgeEstimator.RawPredict(MatrixBase,FaceRecognitionDotNet.Location)
+  name: RawPredict(MatrixBase, Location)
+  href: api/FaceRecognitionDotNet.Extensions.AgeEstimator.html#FaceRecognitionDotNet_Extensions_AgeEstimator_RawPredict_MatrixBase_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Extensions.AgeEstimator.RawPredict(MatrixBase,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Extensions.AgeEstimator.RawPredict(MatrixBase, FaceRecognitionDotNet.Location)
+  nameWithType: AgeEstimator.RawPredict(MatrixBase, Location)
+- uid: FaceRecognitionDotNet.Extensions.AgeEstimator.RawPredict*
+  name: RawPredict
+  href: api/FaceRecognitionDotNet.Extensions.AgeEstimator.html#FaceRecognitionDotNet_Extensions_AgeEstimator_RawPredict_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.AgeEstimator.RawPredict
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.AgeEstimator.RawPredict
+  nameWithType: AgeEstimator.RawPredict
+- uid: FaceRecognitionDotNet.Extensions.AgeEstimator.RawPredictProbability(MatrixBase,FaceRecognitionDotNet.Location)
+  name: RawPredictProbability(MatrixBase, Location)
+  href: api/FaceRecognitionDotNet.Extensions.AgeEstimator.html#FaceRecognitionDotNet_Extensions_AgeEstimator_RawPredictProbability_MatrixBase_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Extensions.AgeEstimator.RawPredictProbability(MatrixBase,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Extensions.AgeEstimator.RawPredictProbability(MatrixBase, FaceRecognitionDotNet.Location)
+  nameWithType: AgeEstimator.RawPredictProbability(MatrixBase, Location)
+- uid: FaceRecognitionDotNet.Extensions.AgeEstimator.RawPredictProbability*
+  name: RawPredictProbability
+  href: api/FaceRecognitionDotNet.Extensions.AgeEstimator.html#FaceRecognitionDotNet_Extensions_AgeEstimator_RawPredictProbability_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.AgeEstimator.RawPredictProbability
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.AgeEstimator.RawPredictProbability
+  nameWithType: AgeEstimator.RawPredictProbability
+- uid: FaceRecognitionDotNet.Extensions.AgeRange
+  name: AgeRange
+  href: api/FaceRecognitionDotNet.Extensions.AgeRange.html
+  commentId: T:FaceRecognitionDotNet.Extensions.AgeRange
+  fullName: FaceRecognitionDotNet.Extensions.AgeRange
+  nameWithType: AgeRange
+- uid: FaceRecognitionDotNet.Extensions.AgeRange.#ctor(System.Int32,System.Int32)
+  name: AgeRange(Int32, Int32)
+  href: api/FaceRecognitionDotNet.Extensions.AgeRange.html#FaceRecognitionDotNet_Extensions_AgeRange__ctor_System_Int32_System_Int32_
+  commentId: M:FaceRecognitionDotNet.Extensions.AgeRange.#ctor(System.Int32,System.Int32)
+  fullName: FaceRecognitionDotNet.Extensions.AgeRange.AgeRange(System.Int32, System.Int32)
+  nameWithType: AgeRange.AgeRange(Int32, Int32)
+- uid: FaceRecognitionDotNet.Extensions.AgeRange.#ctor*
+  name: AgeRange
+  href: api/FaceRecognitionDotNet.Extensions.AgeRange.html#FaceRecognitionDotNet_Extensions_AgeRange__ctor_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.AgeRange.#ctor
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.AgeRange.AgeRange
+  nameWithType: AgeRange.AgeRange
+- uid: FaceRecognitionDotNet.Extensions.AgeRange.End
+  name: End
+  href: api/FaceRecognitionDotNet.Extensions.AgeRange.html#FaceRecognitionDotNet_Extensions_AgeRange_End
+  commentId: P:FaceRecognitionDotNet.Extensions.AgeRange.End
+  fullName: FaceRecognitionDotNet.Extensions.AgeRange.End
+  nameWithType: AgeRange.End
+- uid: FaceRecognitionDotNet.Extensions.AgeRange.End*
+  name: End
+  href: api/FaceRecognitionDotNet.Extensions.AgeRange.html#FaceRecognitionDotNet_Extensions_AgeRange_End_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.AgeRange.End
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.AgeRange.End
+  nameWithType: AgeRange.End
+- uid: FaceRecognitionDotNet.Extensions.AgeRange.Start
+  name: Start
+  href: api/FaceRecognitionDotNet.Extensions.AgeRange.html#FaceRecognitionDotNet_Extensions_AgeRange_Start
+  commentId: P:FaceRecognitionDotNet.Extensions.AgeRange.Start
+  fullName: FaceRecognitionDotNet.Extensions.AgeRange.Start
+  nameWithType: AgeRange.Start
+- uid: FaceRecognitionDotNet.Extensions.AgeRange.Start*
+  name: Start
+  href: api/FaceRecognitionDotNet.Extensions.AgeRange.html#FaceRecognitionDotNet_Extensions_AgeRange_Start_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.AgeRange.Start
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.AgeRange.Start
+  nameWithType: AgeRange.Start
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector
+  name: EyeAspectRatioBaseEyeBlinkDetector
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html
+  commentId: T:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector
+  nameWithType: EyeAspectRatioBaseEyeBlinkDetector
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.#ctor(System.Double,System.Double,System.Int32[],System.Int32[])
+  name: EyeAspectRatioBaseEyeBlinkDetector(Double, Double, Int32[], Int32[])
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector__ctor_System_Double_System_Double_System_Int32___System_Int32___
+  commentId: M:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.#ctor(System.Double,System.Double,System.Int32[],System.Int32[])
+  name.vb: EyeAspectRatioBaseEyeBlinkDetector(Double, Double, Int32(), Int32())
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.EyeAspectRatioBaseEyeBlinkDetector(System.Double, System.Double, System.Int32[], System.Int32[])
+  fullName.vb: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.EyeAspectRatioBaseEyeBlinkDetector(System.Double, System.Double, System.Int32(), System.Int32())
+  nameWithType: EyeAspectRatioBaseEyeBlinkDetector.EyeAspectRatioBaseEyeBlinkDetector(Double, Double, Int32[], Int32[])
+  nameWithType.vb: EyeAspectRatioBaseEyeBlinkDetector.EyeAspectRatioBaseEyeBlinkDetector(Double, Double, Int32(), Int32())
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.#ctor*
+  name: EyeAspectRatioBaseEyeBlinkDetector
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector__ctor_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.#ctor
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.EyeAspectRatioBaseEyeBlinkDetector
+  nameWithType: EyeAspectRatioBaseEyeBlinkDetector.EyeAspectRatioBaseEyeBlinkDetector
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.GetEar(System.Collections.Generic.IList{FaceRecognitionDotNet.FacePoint},System.Collections.Generic.IList{System.Int32})
+  name: GetEar(IList<FacePoint>, IList<Int32>)
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_GetEar_System_Collections_Generic_IList_FaceRecognitionDotNet_FacePoint__System_Collections_Generic_IList_System_Int32__
+  commentId: M:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.GetEar(System.Collections.Generic.IList{FaceRecognitionDotNet.FacePoint},System.Collections.Generic.IList{System.Int32})
+  name.vb: GetEar(IList(Of FacePoint), IList(Of Int32))
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.GetEar(System.Collections.Generic.IList<FaceRecognitionDotNet.FacePoint>, System.Collections.Generic.IList<System.Int32>)
+  fullName.vb: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.GetEar(System.Collections.Generic.IList(Of FaceRecognitionDotNet.FacePoint), System.Collections.Generic.IList(Of System.Int32))
+  nameWithType: EyeAspectRatioBaseEyeBlinkDetector.GetEar(IList<FacePoint>, IList<Int32>)
+  nameWithType.vb: EyeAspectRatioBaseEyeBlinkDetector.GetEar(IList(Of FacePoint), IList(Of Int32))
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.GetEar*
+  name: GetEar
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_GetEar_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.GetEar
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.GetEar
+  nameWithType: EyeAspectRatioBaseEyeBlinkDetector.GetEar
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftEyePointIndices
+  name: LeftEyePointIndices
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_LeftEyePointIndices
+  commentId: P:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftEyePointIndices
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftEyePointIndices
+  nameWithType: EyeAspectRatioBaseEyeBlinkDetector.LeftEyePointIndices
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftEyePointIndices*
+  name: LeftEyePointIndices
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_LeftEyePointIndices_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftEyePointIndices
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftEyePointIndices
+  nameWithType: EyeAspectRatioBaseEyeBlinkDetector.LeftEyePointIndices
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftRatioThreshold
+  name: LeftRatioThreshold
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_LeftRatioThreshold
+  commentId: P:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftRatioThreshold
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftRatioThreshold
+  nameWithType: EyeAspectRatioBaseEyeBlinkDetector.LeftRatioThreshold
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftRatioThreshold*
+  name: LeftRatioThreshold
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_LeftRatioThreshold_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftRatioThreshold
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftRatioThreshold
+  nameWithType: EyeAspectRatioBaseEyeBlinkDetector.LeftRatioThreshold
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}},System.Boolean@,System.Boolean@)
+  name: RawDetect(IDictionary<FacePart, IEnumerable<FacePoint>>, out Boolean, out Boolean)
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_RawDetect_System_Collections_Generic_IDictionary_FaceRecognitionDotNet_FacePart_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FacePoint___System_Boolean__System_Boolean__
+  commentId: M:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}},System.Boolean@,System.Boolean@)
+  name.vb: RawDetect(IDictionary(Of FacePart, IEnumerable(Of FacePoint)), ByRef Boolean, ByRef Boolean)
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary<FaceRecognitionDotNet.FacePart, System.Collections.Generic.IEnumerable<FaceRecognitionDotNet.FacePoint>>, out System.Boolean, out System.Boolean)
+  fullName.vb: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary(Of FaceRecognitionDotNet.FacePart, System.Collections.Generic.IEnumerable(Of FaceRecognitionDotNet.FacePoint)), ByRef System.Boolean, ByRef System.Boolean)
+  nameWithType: EyeAspectRatioBaseEyeBlinkDetector.RawDetect(IDictionary<FacePart, IEnumerable<FacePoint>>, out Boolean, out Boolean)
+  nameWithType.vb: EyeAspectRatioBaseEyeBlinkDetector.RawDetect(IDictionary(Of FacePart, IEnumerable(Of FacePoint)), ByRef Boolean, ByRef Boolean)
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RawDetect*
+  name: RawDetect
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_RawDetect_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RawDetect
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RawDetect
+  nameWithType: EyeAspectRatioBaseEyeBlinkDetector.RawDetect
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightEyePointIndices
+  name: RightEyePointIndices
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_RightEyePointIndices
+  commentId: P:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightEyePointIndices
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightEyePointIndices
+  nameWithType: EyeAspectRatioBaseEyeBlinkDetector.RightEyePointIndices
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightEyePointIndices*
+  name: RightEyePointIndices
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_RightEyePointIndices_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightEyePointIndices
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightEyePointIndices
+  nameWithType: EyeAspectRatioBaseEyeBlinkDetector.RightEyePointIndices
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightRatioThreshold
+  name: RightRatioThreshold
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_RightRatioThreshold
+  commentId: P:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightRatioThreshold
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightRatioThreshold
+  nameWithType: EyeAspectRatioBaseEyeBlinkDetector.RightRatioThreshold
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightRatioThreshold*
+  name: RightRatioThreshold
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_RightRatioThreshold_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightRatioThreshold
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightRatioThreshold
+  nameWithType: EyeAspectRatioBaseEyeBlinkDetector.RightRatioThreshold
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector
+  name: EyeAspectRatioHelenEyeBlinkDetector
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector.html
+  commentId: T:FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector
+  nameWithType: EyeAspectRatioHelenEyeBlinkDetector
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector.#ctor(System.Double,System.Double)
+  name: EyeAspectRatioHelenEyeBlinkDetector(Double, Double)
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioHelenEyeBlinkDetector__ctor_System_Double_System_Double_
+  commentId: M:FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector.#ctor(System.Double,System.Double)
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector.EyeAspectRatioHelenEyeBlinkDetector(System.Double, System.Double)
+  nameWithType: EyeAspectRatioHelenEyeBlinkDetector.EyeAspectRatioHelenEyeBlinkDetector(Double, Double)
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector.#ctor*
+  name: EyeAspectRatioHelenEyeBlinkDetector
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioHelenEyeBlinkDetector__ctor_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector.#ctor
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector.EyeAspectRatioHelenEyeBlinkDetector
+  nameWithType: EyeAspectRatioHelenEyeBlinkDetector.EyeAspectRatioHelenEyeBlinkDetector
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector
+  name: EyeAspectRatioLargeEyeBlinkDetector
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector.html
+  commentId: T:FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector
+  nameWithType: EyeAspectRatioLargeEyeBlinkDetector
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector.#ctor(System.Double,System.Double)
+  name: EyeAspectRatioLargeEyeBlinkDetector(Double, Double)
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioLargeEyeBlinkDetector__ctor_System_Double_System_Double_
+  commentId: M:FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector.#ctor(System.Double,System.Double)
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector.EyeAspectRatioLargeEyeBlinkDetector(System.Double, System.Double)
+  nameWithType: EyeAspectRatioLargeEyeBlinkDetector.EyeAspectRatioLargeEyeBlinkDetector(Double, Double)
+- uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector.#ctor*
+  name: EyeAspectRatioLargeEyeBlinkDetector
+  href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeAspectRatioLargeEyeBlinkDetector__ctor_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector.#ctor
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector.EyeAspectRatioLargeEyeBlinkDetector
+  nameWithType: EyeAspectRatioLargeEyeBlinkDetector.EyeAspectRatioLargeEyeBlinkDetector
+- uid: FaceRecognitionDotNet.Extensions.EyeBlinkDetector
+  name: EyeBlinkDetector
+  href: api/FaceRecognitionDotNet.Extensions.EyeBlinkDetector.html
+  commentId: T:FaceRecognitionDotNet.Extensions.EyeBlinkDetector
+  fullName: FaceRecognitionDotNet.Extensions.EyeBlinkDetector
+  nameWithType: EyeBlinkDetector
+- uid: FaceRecognitionDotNet.Extensions.EyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}},System.Boolean@,System.Boolean@)
+  name: RawDetect(IDictionary<FacePart, IEnumerable<FacePoint>>, out Boolean, out Boolean)
+  href: api/FaceRecognitionDotNet.Extensions.EyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeBlinkDetector_RawDetect_System_Collections_Generic_IDictionary_FaceRecognitionDotNet_FacePart_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FacePoint___System_Boolean__System_Boolean__
+  commentId: M:FaceRecognitionDotNet.Extensions.EyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}},System.Boolean@,System.Boolean@)
+  name.vb: RawDetect(IDictionary(Of FacePart, IEnumerable(Of FacePoint)), ByRef Boolean, ByRef Boolean)
+  fullName: FaceRecognitionDotNet.Extensions.EyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary<FaceRecognitionDotNet.FacePart, System.Collections.Generic.IEnumerable<FaceRecognitionDotNet.FacePoint>>, out System.Boolean, out System.Boolean)
+  fullName.vb: FaceRecognitionDotNet.Extensions.EyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary(Of FaceRecognitionDotNet.FacePart, System.Collections.Generic.IEnumerable(Of FaceRecognitionDotNet.FacePoint)), ByRef System.Boolean, ByRef System.Boolean)
+  nameWithType: EyeBlinkDetector.RawDetect(IDictionary<FacePart, IEnumerable<FacePoint>>, out Boolean, out Boolean)
+  nameWithType.vb: EyeBlinkDetector.RawDetect(IDictionary(Of FacePart, IEnumerable(Of FacePoint)), ByRef Boolean, ByRef Boolean)
+- uid: FaceRecognitionDotNet.Extensions.EyeBlinkDetector.RawDetect*
+  name: RawDetect
+  href: api/FaceRecognitionDotNet.Extensions.EyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeBlinkDetector_RawDetect_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.EyeBlinkDetector.RawDetect
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.EyeBlinkDetector.RawDetect
+  nameWithType: EyeBlinkDetector.RawDetect
+- uid: FaceRecognitionDotNet.Extensions.FaceDetector
+  name: FaceDetector
+  href: api/FaceRecognitionDotNet.Extensions.FaceDetector.html
+  commentId: T:FaceRecognitionDotNet.Extensions.FaceDetector
+  fullName: FaceRecognitionDotNet.Extensions.FaceDetector
+  nameWithType: FaceDetector
+- uid: FaceRecognitionDotNet.Extensions.FaceDetector.RawDetect(MatrixBase,System.Int32)
+  name: RawDetect(MatrixBase, Int32)
+  href: api/FaceRecognitionDotNet.Extensions.FaceDetector.html#FaceRecognitionDotNet_Extensions_FaceDetector_RawDetect_MatrixBase_System_Int32_
+  commentId: M:FaceRecognitionDotNet.Extensions.FaceDetector.RawDetect(MatrixBase,System.Int32)
+  fullName: FaceRecognitionDotNet.Extensions.FaceDetector.RawDetect(MatrixBase, System.Int32)
+  nameWithType: FaceDetector.RawDetect(MatrixBase, Int32)
+- uid: FaceRecognitionDotNet.Extensions.FaceDetector.RawDetect*
+  name: RawDetect
+  href: api/FaceRecognitionDotNet.Extensions.FaceDetector.html#FaceRecognitionDotNet_Extensions_FaceDetector_RawDetect_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.FaceDetector.RawDetect
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.FaceDetector.RawDetect
+  nameWithType: FaceDetector.RawDetect
+- uid: FaceRecognitionDotNet.Extensions.FaceLandmarkDetector
+  name: FaceLandmarkDetector
+  href: api/FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.html
+  commentId: T:FaceRecognitionDotNet.Extensions.FaceLandmarkDetector
+  fullName: FaceRecognitionDotNet.Extensions.FaceLandmarkDetector
+  nameWithType: FaceLandmarkDetector
+- uid: FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawDetect(MatrixBase,FaceRecognitionDotNet.Location)
+  name: RawDetect(MatrixBase, Location)
+  href: api/FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.html#FaceRecognitionDotNet_Extensions_FaceLandmarkDetector_RawDetect_MatrixBase_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawDetect(MatrixBase,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawDetect(MatrixBase, FaceRecognitionDotNet.Location)
+  nameWithType: FaceLandmarkDetector.RawDetect(MatrixBase, Location)
+- uid: FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawDetect*
+  name: RawDetect
+  href: api/FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.html#FaceRecognitionDotNet_Extensions_FaceLandmarkDetector_RawDetect_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawDetect
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawDetect
+  nameWithType: FaceLandmarkDetector.RawDetect
+- uid: FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawGetLandmarks(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint[]})
+  name: RawGetLandmarks(IEnumerable<FacePoint[]>)
+  href: api/FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.html#FaceRecognitionDotNet_Extensions_FaceLandmarkDetector_RawGetLandmarks_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FacePoint____
+  commentId: M:FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawGetLandmarks(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint[]})
+  name.vb: RawGetLandmarks(IEnumerable(Of FacePoint()))
+  fullName: FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawGetLandmarks(System.Collections.Generic.IEnumerable<FaceRecognitionDotNet.FacePoint[]>)
+  fullName.vb: FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawGetLandmarks(System.Collections.Generic.IEnumerable(Of FaceRecognitionDotNet.FacePoint()))
+  nameWithType: FaceLandmarkDetector.RawGetLandmarks(IEnumerable<FacePoint[]>)
+  nameWithType.vb: FaceLandmarkDetector.RawGetLandmarks(IEnumerable(Of FacePoint()))
+- uid: FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawGetLandmarks*
+  name: RawGetLandmarks
+  href: api/FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.html#FaceRecognitionDotNet_Extensions_FaceLandmarkDetector_RawGetLandmarks_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawGetLandmarks
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.RawGetLandmarks
+  nameWithType: FaceLandmarkDetector.RawGetLandmarks
+- uid: FaceRecognitionDotNet.Extensions.GenderEstimator
+  name: GenderEstimator
+  href: api/FaceRecognitionDotNet.Extensions.GenderEstimator.html
+  commentId: T:FaceRecognitionDotNet.Extensions.GenderEstimator
+  fullName: FaceRecognitionDotNet.Extensions.GenderEstimator
+  nameWithType: GenderEstimator
+- uid: FaceRecognitionDotNet.Extensions.GenderEstimator.Labels
+  name: Labels
+  href: api/FaceRecognitionDotNet.Extensions.GenderEstimator.html#FaceRecognitionDotNet_Extensions_GenderEstimator_Labels
+  commentId: P:FaceRecognitionDotNet.Extensions.GenderEstimator.Labels
+  fullName: FaceRecognitionDotNet.Extensions.GenderEstimator.Labels
+  nameWithType: GenderEstimator.Labels
+- uid: FaceRecognitionDotNet.Extensions.GenderEstimator.Labels*
+  name: Labels
+  href: api/FaceRecognitionDotNet.Extensions.GenderEstimator.html#FaceRecognitionDotNet_Extensions_GenderEstimator_Labels_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.GenderEstimator.Labels
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.GenderEstimator.Labels
+  nameWithType: GenderEstimator.Labels
+- uid: FaceRecognitionDotNet.Extensions.GenderEstimator.RawPredict(MatrixBase,FaceRecognitionDotNet.Location)
+  name: RawPredict(MatrixBase, Location)
+  href: api/FaceRecognitionDotNet.Extensions.GenderEstimator.html#FaceRecognitionDotNet_Extensions_GenderEstimator_RawPredict_MatrixBase_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Extensions.GenderEstimator.RawPredict(MatrixBase,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Extensions.GenderEstimator.RawPredict(MatrixBase, FaceRecognitionDotNet.Location)
+  nameWithType: GenderEstimator.RawPredict(MatrixBase, Location)
+- uid: FaceRecognitionDotNet.Extensions.GenderEstimator.RawPredict*
+  name: RawPredict
+  href: api/FaceRecognitionDotNet.Extensions.GenderEstimator.html#FaceRecognitionDotNet_Extensions_GenderEstimator_RawPredict_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.GenderEstimator.RawPredict
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.GenderEstimator.RawPredict
+  nameWithType: GenderEstimator.RawPredict
+- uid: FaceRecognitionDotNet.Extensions.GenderEstimator.RawPredictProbability(MatrixBase,FaceRecognitionDotNet.Location)
+  name: RawPredictProbability(MatrixBase, Location)
+  href: api/FaceRecognitionDotNet.Extensions.GenderEstimator.html#FaceRecognitionDotNet_Extensions_GenderEstimator_RawPredictProbability_MatrixBase_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Extensions.GenderEstimator.RawPredictProbability(MatrixBase,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Extensions.GenderEstimator.RawPredictProbability(MatrixBase, FaceRecognitionDotNet.Location)
+  nameWithType: GenderEstimator.RawPredictProbability(MatrixBase, Location)
+- uid: FaceRecognitionDotNet.Extensions.GenderEstimator.RawPredictProbability*
+  name: RawPredictProbability
+  href: api/FaceRecognitionDotNet.Extensions.GenderEstimator.html#FaceRecognitionDotNet_Extensions_GenderEstimator_RawPredictProbability_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.GenderEstimator.RawPredictProbability
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.GenderEstimator.RawPredictProbability
+  nameWithType: GenderEstimator.RawPredictProbability
+- uid: FaceRecognitionDotNet.Extensions.HeadPoseEstimator
+  name: HeadPoseEstimator
+  href: api/FaceRecognitionDotNet.Extensions.HeadPoseEstimator.html
+  commentId: T:FaceRecognitionDotNet.Extensions.HeadPoseEstimator
+  fullName: FaceRecognitionDotNet.Extensions.HeadPoseEstimator
+  nameWithType: HeadPoseEstimator
+- uid: FaceRecognitionDotNet.Extensions.HeadPoseEstimator.RawPredict(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}})
+  name: RawPredict(IDictionary<FacePart, IEnumerable<FacePoint>>)
+  href: api/FaceRecognitionDotNet.Extensions.HeadPoseEstimator.html#FaceRecognitionDotNet_Extensions_HeadPoseEstimator_RawPredict_System_Collections_Generic_IDictionary_FaceRecognitionDotNet_FacePart_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FacePoint___
+  commentId: M:FaceRecognitionDotNet.Extensions.HeadPoseEstimator.RawPredict(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}})
+  name.vb: RawPredict(IDictionary(Of FacePart, IEnumerable(Of FacePoint)))
+  fullName: FaceRecognitionDotNet.Extensions.HeadPoseEstimator.RawPredict(System.Collections.Generic.IDictionary<FaceRecognitionDotNet.FacePart, System.Collections.Generic.IEnumerable<FaceRecognitionDotNet.FacePoint>>)
+  fullName.vb: FaceRecognitionDotNet.Extensions.HeadPoseEstimator.RawPredict(System.Collections.Generic.IDictionary(Of FaceRecognitionDotNet.FacePart, System.Collections.Generic.IEnumerable(Of FaceRecognitionDotNet.FacePoint)))
+  nameWithType: HeadPoseEstimator.RawPredict(IDictionary<FacePart, IEnumerable<FacePoint>>)
+  nameWithType.vb: HeadPoseEstimator.RawPredict(IDictionary(Of FacePart, IEnumerable(Of FacePoint)))
+- uid: FaceRecognitionDotNet.Extensions.HeadPoseEstimator.RawPredict*
+  name: RawPredict
+  href: api/FaceRecognitionDotNet.Extensions.HeadPoseEstimator.html#FaceRecognitionDotNet_Extensions_HeadPoseEstimator_RawPredict_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.HeadPoseEstimator.RawPredict
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.HeadPoseEstimator.RawPredict
+  nameWithType: HeadPoseEstimator.RawPredict
+- uid: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector
+  name: HelenFaceLandmarkDetector
+  href: api/FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.html
+  commentId: T:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector
+  fullName: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector
+  nameWithType: HelenFaceLandmarkDetector
+- uid: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.#ctor(System.String)
+  name: HelenFaceLandmarkDetector(String)
+  href: api/FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.html#FaceRecognitionDotNet_Extensions_HelenFaceLandmarkDetector__ctor_System_String_
+  commentId: M:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.#ctor(System.String)
+  fullName: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.HelenFaceLandmarkDetector(System.String)
+  nameWithType: HelenFaceLandmarkDetector.HelenFaceLandmarkDetector(String)
+- uid: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.#ctor*
+  name: HelenFaceLandmarkDetector
+  href: api/FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.html#FaceRecognitionDotNet_Extensions_HelenFaceLandmarkDetector__ctor_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.#ctor
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.HelenFaceLandmarkDetector
+  nameWithType: HelenFaceLandmarkDetector.HelenFaceLandmarkDetector
+- uid: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.DisposeUnmanaged
+  name: DisposeUnmanaged()
+  href: api/FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.html#FaceRecognitionDotNet_Extensions_HelenFaceLandmarkDetector_DisposeUnmanaged
+  commentId: M:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.DisposeUnmanaged
+  fullName: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.DisposeUnmanaged()
+  nameWithType: HelenFaceLandmarkDetector.DisposeUnmanaged()
+- uid: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.DisposeUnmanaged*
+  name: DisposeUnmanaged
+  href: api/FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.html#FaceRecognitionDotNet_Extensions_HelenFaceLandmarkDetector_DisposeUnmanaged_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.DisposeUnmanaged
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.DisposeUnmanaged
+  nameWithType: HelenFaceLandmarkDetector.DisposeUnmanaged
+- uid: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawDetect(MatrixBase,FaceRecognitionDotNet.Location)
+  name: RawDetect(MatrixBase, Location)
+  href: api/FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.html#FaceRecognitionDotNet_Extensions_HelenFaceLandmarkDetector_RawDetect_MatrixBase_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawDetect(MatrixBase,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawDetect(MatrixBase, FaceRecognitionDotNet.Location)
+  nameWithType: HelenFaceLandmarkDetector.RawDetect(MatrixBase, Location)
+- uid: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawDetect*
+  name: RawDetect
+  href: api/FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.html#FaceRecognitionDotNet_Extensions_HelenFaceLandmarkDetector_RawDetect_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawDetect
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawDetect
+  nameWithType: HelenFaceLandmarkDetector.RawDetect
+- uid: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawGetLandmarks(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint[]})
+  name: RawGetLandmarks(IEnumerable<FacePoint[]>)
+  href: api/FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.html#FaceRecognitionDotNet_Extensions_HelenFaceLandmarkDetector_RawGetLandmarks_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FacePoint____
+  commentId: M:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawGetLandmarks(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint[]})
+  name.vb: RawGetLandmarks(IEnumerable(Of FacePoint()))
+  fullName: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawGetLandmarks(System.Collections.Generic.IEnumerable<FaceRecognitionDotNet.FacePoint[]>)
+  fullName.vb: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawGetLandmarks(System.Collections.Generic.IEnumerable(Of FaceRecognitionDotNet.FacePoint()))
+  nameWithType: HelenFaceLandmarkDetector.RawGetLandmarks(IEnumerable<FacePoint[]>)
+  nameWithType.vb: HelenFaceLandmarkDetector.RawGetLandmarks(IEnumerable(Of FacePoint()))
+- uid: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawGetLandmarks*
+  name: RawGetLandmarks
+  href: api/FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.html#FaceRecognitionDotNet_Extensions_HelenFaceLandmarkDetector_RawGetLandmarks_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawGetLandmarks
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.HelenFaceLandmarkDetector.RawGetLandmarks
+  nameWithType: HelenFaceLandmarkDetector.RawGetLandmarks
+- uid: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator
+  name: SimpleAgeEstimator
+  href: api/FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.html
+  commentId: T:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator
+  fullName: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator
+  nameWithType: SimpleAgeEstimator
+- uid: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.#ctor(System.String)
+  name: SimpleAgeEstimator(String)
+  href: api/FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.html#FaceRecognitionDotNet_Extensions_SimpleAgeEstimator__ctor_System_String_
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.#ctor(System.String)
+  fullName: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.SimpleAgeEstimator(System.String)
+  nameWithType: SimpleAgeEstimator.SimpleAgeEstimator(String)
+- uid: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.#ctor*
+  name: SimpleAgeEstimator
+  href: api/FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.html#FaceRecognitionDotNet_Extensions_SimpleAgeEstimator__ctor_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.#ctor
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.SimpleAgeEstimator
+  nameWithType: SimpleAgeEstimator.SimpleAgeEstimator
+- uid: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.DisposeUnmanaged
+  name: DisposeUnmanaged()
+  href: api/FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.html#FaceRecognitionDotNet_Extensions_SimpleAgeEstimator_DisposeUnmanaged
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.DisposeUnmanaged
+  fullName: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.DisposeUnmanaged()
+  nameWithType: SimpleAgeEstimator.DisposeUnmanaged()
+- uid: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.DisposeUnmanaged*
+  name: DisposeUnmanaged
+  href: api/FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.html#FaceRecognitionDotNet_Extensions_SimpleAgeEstimator_DisposeUnmanaged_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.DisposeUnmanaged
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.DisposeUnmanaged
+  nameWithType: SimpleAgeEstimator.DisposeUnmanaged
+- uid: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.Groups
+  name: Groups
+  href: api/FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.html#FaceRecognitionDotNet_Extensions_SimpleAgeEstimator_Groups
+  commentId: P:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.Groups
+  fullName: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.Groups
+  nameWithType: SimpleAgeEstimator.Groups
+- uid: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.Groups*
+  name: Groups
+  href: api/FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.html#FaceRecognitionDotNet_Extensions_SimpleAgeEstimator_Groups_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.Groups
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.Groups
+  nameWithType: SimpleAgeEstimator.Groups
+- uid: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.RawPredict(MatrixBase,FaceRecognitionDotNet.Location)
+  name: RawPredict(MatrixBase, Location)
+  href: api/FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.html#FaceRecognitionDotNet_Extensions_SimpleAgeEstimator_RawPredict_MatrixBase_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.RawPredict(MatrixBase,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.RawPredict(MatrixBase, FaceRecognitionDotNet.Location)
+  nameWithType: SimpleAgeEstimator.RawPredict(MatrixBase, Location)
+- uid: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.RawPredict*
+  name: RawPredict
+  href: api/FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.html#FaceRecognitionDotNet_Extensions_SimpleAgeEstimator_RawPredict_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.RawPredict
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.RawPredict
+  nameWithType: SimpleAgeEstimator.RawPredict
+- uid: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.RawPredictProbability(MatrixBase,FaceRecognitionDotNet.Location)
+  name: RawPredictProbability(MatrixBase, Location)
+  href: api/FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.html#FaceRecognitionDotNet_Extensions_SimpleAgeEstimator_RawPredictProbability_MatrixBase_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.RawPredictProbability(MatrixBase,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.RawPredictProbability(MatrixBase, FaceRecognitionDotNet.Location)
+  nameWithType: SimpleAgeEstimator.RawPredictProbability(MatrixBase, Location)
+- uid: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.RawPredictProbability*
+  name: RawPredictProbability
+  href: api/FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.html#FaceRecognitionDotNet_Extensions_SimpleAgeEstimator_RawPredictProbability_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.RawPredictProbability
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.RawPredictProbability
+  nameWithType: SimpleAgeEstimator.RawPredictProbability
+- uid: FaceRecognitionDotNet.Extensions.SimpleFaceDetector
+  name: SimpleFaceDetector
+  href: api/FaceRecognitionDotNet.Extensions.SimpleFaceDetector.html
+  commentId: T:FaceRecognitionDotNet.Extensions.SimpleFaceDetector
+  fullName: FaceRecognitionDotNet.Extensions.SimpleFaceDetector
+  nameWithType: SimpleFaceDetector
+- uid: FaceRecognitionDotNet.Extensions.SimpleFaceDetector.#ctor(System.String)
+  name: SimpleFaceDetector(String)
+  href: api/FaceRecognitionDotNet.Extensions.SimpleFaceDetector.html#FaceRecognitionDotNet_Extensions_SimpleFaceDetector__ctor_System_String_
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleFaceDetector.#ctor(System.String)
+  fullName: FaceRecognitionDotNet.Extensions.SimpleFaceDetector.SimpleFaceDetector(System.String)
+  nameWithType: SimpleFaceDetector.SimpleFaceDetector(String)
+- uid: FaceRecognitionDotNet.Extensions.SimpleFaceDetector.#ctor*
+  name: SimpleFaceDetector
+  href: api/FaceRecognitionDotNet.Extensions.SimpleFaceDetector.html#FaceRecognitionDotNet_Extensions_SimpleFaceDetector__ctor_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleFaceDetector.#ctor
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleFaceDetector.SimpleFaceDetector
+  nameWithType: SimpleFaceDetector.SimpleFaceDetector
+- uid: FaceRecognitionDotNet.Extensions.SimpleFaceDetector.DisposeUnmanaged
+  name: DisposeUnmanaged()
+  href: api/FaceRecognitionDotNet.Extensions.SimpleFaceDetector.html#FaceRecognitionDotNet_Extensions_SimpleFaceDetector_DisposeUnmanaged
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleFaceDetector.DisposeUnmanaged
+  fullName: FaceRecognitionDotNet.Extensions.SimpleFaceDetector.DisposeUnmanaged()
+  nameWithType: SimpleFaceDetector.DisposeUnmanaged()
+- uid: FaceRecognitionDotNet.Extensions.SimpleFaceDetector.DisposeUnmanaged*
+  name: DisposeUnmanaged
+  href: api/FaceRecognitionDotNet.Extensions.SimpleFaceDetector.html#FaceRecognitionDotNet_Extensions_SimpleFaceDetector_DisposeUnmanaged_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleFaceDetector.DisposeUnmanaged
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleFaceDetector.DisposeUnmanaged
+  nameWithType: SimpleFaceDetector.DisposeUnmanaged
+- uid: FaceRecognitionDotNet.Extensions.SimpleFaceDetector.RawDetect(MatrixBase,System.Int32)
+  name: RawDetect(MatrixBase, Int32)
+  href: api/FaceRecognitionDotNet.Extensions.SimpleFaceDetector.html#FaceRecognitionDotNet_Extensions_SimpleFaceDetector_RawDetect_MatrixBase_System_Int32_
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleFaceDetector.RawDetect(MatrixBase,System.Int32)
+  fullName: FaceRecognitionDotNet.Extensions.SimpleFaceDetector.RawDetect(MatrixBase, System.Int32)
+  nameWithType: SimpleFaceDetector.RawDetect(MatrixBase, Int32)
+- uid: FaceRecognitionDotNet.Extensions.SimpleFaceDetector.RawDetect*
+  name: RawDetect
+  href: api/FaceRecognitionDotNet.Extensions.SimpleFaceDetector.html#FaceRecognitionDotNet_Extensions_SimpleFaceDetector_RawDetect_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleFaceDetector.RawDetect
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleFaceDetector.RawDetect
+  nameWithType: SimpleFaceDetector.RawDetect
+- uid: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator
+  name: SimpleGenderEstimator
+  href: api/FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.html
+  commentId: T:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator
+  fullName: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator
+  nameWithType: SimpleGenderEstimator
+- uid: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.#ctor(System.String)
+  name: SimpleGenderEstimator(String)
+  href: api/FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.html#FaceRecognitionDotNet_Extensions_SimpleGenderEstimator__ctor_System_String_
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.#ctor(System.String)
+  fullName: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.SimpleGenderEstimator(System.String)
+  nameWithType: SimpleGenderEstimator.SimpleGenderEstimator(String)
+- uid: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.#ctor*
+  name: SimpleGenderEstimator
+  href: api/FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.html#FaceRecognitionDotNet_Extensions_SimpleGenderEstimator__ctor_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.#ctor
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.SimpleGenderEstimator
+  nameWithType: SimpleGenderEstimator.SimpleGenderEstimator
+- uid: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.DisposeUnmanaged
+  name: DisposeUnmanaged()
+  href: api/FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.html#FaceRecognitionDotNet_Extensions_SimpleGenderEstimator_DisposeUnmanaged
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.DisposeUnmanaged
+  fullName: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.DisposeUnmanaged()
+  nameWithType: SimpleGenderEstimator.DisposeUnmanaged()
+- uid: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.DisposeUnmanaged*
+  name: DisposeUnmanaged
+  href: api/FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.html#FaceRecognitionDotNet_Extensions_SimpleGenderEstimator_DisposeUnmanaged_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.DisposeUnmanaged
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.DisposeUnmanaged
+  nameWithType: SimpleGenderEstimator.DisposeUnmanaged
+- uid: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.Labels
+  name: Labels
+  href: api/FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.html#FaceRecognitionDotNet_Extensions_SimpleGenderEstimator_Labels
+  commentId: P:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.Labels
+  fullName: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.Labels
+  nameWithType: SimpleGenderEstimator.Labels
+- uid: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.Labels*
+  name: Labels
+  href: api/FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.html#FaceRecognitionDotNet_Extensions_SimpleGenderEstimator_Labels_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.Labels
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.Labels
+  nameWithType: SimpleGenderEstimator.Labels
+- uid: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.RawPredict(MatrixBase,FaceRecognitionDotNet.Location)
+  name: RawPredict(MatrixBase, Location)
+  href: api/FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.html#FaceRecognitionDotNet_Extensions_SimpleGenderEstimator_RawPredict_MatrixBase_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.RawPredict(MatrixBase,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.RawPredict(MatrixBase, FaceRecognitionDotNet.Location)
+  nameWithType: SimpleGenderEstimator.RawPredict(MatrixBase, Location)
+- uid: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.RawPredict*
+  name: RawPredict
+  href: api/FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.html#FaceRecognitionDotNet_Extensions_SimpleGenderEstimator_RawPredict_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.RawPredict
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.RawPredict
+  nameWithType: SimpleGenderEstimator.RawPredict
+- uid: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.RawPredictProbability(MatrixBase,FaceRecognitionDotNet.Location)
+  name: RawPredictProbability(MatrixBase, Location)
+  href: api/FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.html#FaceRecognitionDotNet_Extensions_SimpleGenderEstimator_RawPredictProbability_MatrixBase_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.RawPredictProbability(MatrixBase,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.RawPredictProbability(MatrixBase, FaceRecognitionDotNet.Location)
+  nameWithType: SimpleGenderEstimator.RawPredictProbability(MatrixBase, Location)
+- uid: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.RawPredictProbability*
+  name: RawPredictProbability
+  href: api/FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.html#FaceRecognitionDotNet_Extensions_SimpleGenderEstimator_RawPredictProbability_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.RawPredictProbability
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleGenderEstimator.RawPredictProbability
+  nameWithType: SimpleGenderEstimator.RawPredictProbability
+- uid: FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator
+  name: SimpleHeadPoseEstimator
+  href: api/FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.html
+  commentId: T:FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator
+  fullName: FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator
+  nameWithType: SimpleHeadPoseEstimator
+- uid: FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.#ctor(System.String,System.String,System.String)
+  name: SimpleHeadPoseEstimator(String, String, String)
+  href: api/FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.html#FaceRecognitionDotNet_Extensions_SimpleHeadPoseEstimator__ctor_System_String_System_String_System_String_
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.#ctor(System.String,System.String,System.String)
+  fullName: FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.SimpleHeadPoseEstimator(System.String, System.String, System.String)
+  nameWithType: SimpleHeadPoseEstimator.SimpleHeadPoseEstimator(String, String, String)
+- uid: FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.#ctor*
+  name: SimpleHeadPoseEstimator
+  href: api/FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.html#FaceRecognitionDotNet_Extensions_SimpleHeadPoseEstimator__ctor_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.#ctor
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.SimpleHeadPoseEstimator
+  nameWithType: SimpleHeadPoseEstimator.SimpleHeadPoseEstimator
+- uid: FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.DisposeUnmanaged
+  name: DisposeUnmanaged()
+  href: api/FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.html#FaceRecognitionDotNet_Extensions_SimpleHeadPoseEstimator_DisposeUnmanaged
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.DisposeUnmanaged
+  fullName: FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.DisposeUnmanaged()
+  nameWithType: SimpleHeadPoseEstimator.DisposeUnmanaged()
+- uid: FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.DisposeUnmanaged*
+  name: DisposeUnmanaged
+  href: api/FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.html#FaceRecognitionDotNet_Extensions_SimpleHeadPoseEstimator_DisposeUnmanaged_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.DisposeUnmanaged
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.DisposeUnmanaged
+  nameWithType: SimpleHeadPoseEstimator.DisposeUnmanaged
+- uid: FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.RawPredict(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}})
+  name: RawPredict(IDictionary<FacePart, IEnumerable<FacePoint>>)
+  href: api/FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.html#FaceRecognitionDotNet_Extensions_SimpleHeadPoseEstimator_RawPredict_System_Collections_Generic_IDictionary_FaceRecognitionDotNet_FacePart_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FacePoint___
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.RawPredict(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}})
+  name.vb: RawPredict(IDictionary(Of FacePart, IEnumerable(Of FacePoint)))
+  fullName: FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.RawPredict(System.Collections.Generic.IDictionary<FaceRecognitionDotNet.FacePart, System.Collections.Generic.IEnumerable<FaceRecognitionDotNet.FacePoint>>)
+  fullName.vb: FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.RawPredict(System.Collections.Generic.IDictionary(Of FaceRecognitionDotNet.FacePart, System.Collections.Generic.IEnumerable(Of FaceRecognitionDotNet.FacePoint)))
+  nameWithType: SimpleHeadPoseEstimator.RawPredict(IDictionary<FacePart, IEnumerable<FacePoint>>)
+  nameWithType.vb: SimpleHeadPoseEstimator.RawPredict(IDictionary(Of FacePart, IEnumerable(Of FacePoint)))
+- uid: FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.RawPredict*
+  name: RawPredict
+  href: api/FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.html#FaceRecognitionDotNet_Extensions_SimpleHeadPoseEstimator_RawPredict_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.RawPredict
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleHeadPoseEstimator.RawPredict
+  nameWithType: SimpleHeadPoseEstimator.RawPredict
+- uid: FaceRecognitionDotNet.FaceEncoding
+  name: FaceEncoding
+  href: api/FaceRecognitionDotNet.FaceEncoding.html
+  commentId: T:FaceRecognitionDotNet.FaceEncoding
+  fullName: FaceRecognitionDotNet.FaceEncoding
+  nameWithType: FaceEncoding
+- uid: FaceRecognitionDotNet.FaceEncoding.DisposeUnmanaged
+  name: DisposeUnmanaged()
+  href: api/FaceRecognitionDotNet.FaceEncoding.html#FaceRecognitionDotNet_FaceEncoding_DisposeUnmanaged
+  commentId: M:FaceRecognitionDotNet.FaceEncoding.DisposeUnmanaged
+  fullName: FaceRecognitionDotNet.FaceEncoding.DisposeUnmanaged()
+  nameWithType: FaceEncoding.DisposeUnmanaged()
+- uid: FaceRecognitionDotNet.FaceEncoding.DisposeUnmanaged*
+  name: DisposeUnmanaged
+  href: api/FaceRecognitionDotNet.FaceEncoding.html#FaceRecognitionDotNet_FaceEncoding_DisposeUnmanaged_
+  commentId: Overload:FaceRecognitionDotNet.FaceEncoding.DisposeUnmanaged
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceEncoding.DisposeUnmanaged
+  nameWithType: FaceEncoding.DisposeUnmanaged
+- uid: FaceRecognitionDotNet.FaceEncoding.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  name: GetObjectData(SerializationInfo, StreamingContext)
+  href: api/FaceRecognitionDotNet.FaceEncoding.html#FaceRecognitionDotNet_FaceEncoding_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_
+  commentId: M:FaceRecognitionDotNet.FaceEncoding.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  fullName: FaceRecognitionDotNet.FaceEncoding.GetObjectData(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)
+  nameWithType: FaceEncoding.GetObjectData(SerializationInfo, StreamingContext)
+- uid: FaceRecognitionDotNet.FaceEncoding.GetObjectData*
+  name: GetObjectData
+  href: api/FaceRecognitionDotNet.FaceEncoding.html#FaceRecognitionDotNet_FaceEncoding_GetObjectData_
+  commentId: Overload:FaceRecognitionDotNet.FaceEncoding.GetObjectData
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceEncoding.GetObjectData
+  nameWithType: FaceEncoding.GetObjectData
+- uid: FaceRecognitionDotNet.FaceEncoding.GetRawEncoding
+  name: GetRawEncoding()
+  href: api/FaceRecognitionDotNet.FaceEncoding.html#FaceRecognitionDotNet_FaceEncoding_GetRawEncoding
+  commentId: M:FaceRecognitionDotNet.FaceEncoding.GetRawEncoding
+  fullName: FaceRecognitionDotNet.FaceEncoding.GetRawEncoding()
+  nameWithType: FaceEncoding.GetRawEncoding()
+- uid: FaceRecognitionDotNet.FaceEncoding.GetRawEncoding*
+  name: GetRawEncoding
+  href: api/FaceRecognitionDotNet.FaceEncoding.html#FaceRecognitionDotNet_FaceEncoding_GetRawEncoding_
+  commentId: Overload:FaceRecognitionDotNet.FaceEncoding.GetRawEncoding
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceEncoding.GetRawEncoding
+  nameWithType: FaceEncoding.GetRawEncoding
+- uid: FaceRecognitionDotNet.FaceEncoding.Size
+  name: Size
+  href: api/FaceRecognitionDotNet.FaceEncoding.html#FaceRecognitionDotNet_FaceEncoding_Size
+  commentId: P:FaceRecognitionDotNet.FaceEncoding.Size
+  fullName: FaceRecognitionDotNet.FaceEncoding.Size
+  nameWithType: FaceEncoding.Size
+- uid: FaceRecognitionDotNet.FaceEncoding.Size*
+  name: Size
+  href: api/FaceRecognitionDotNet.FaceEncoding.html#FaceRecognitionDotNet_FaceEncoding_Size_
+  commentId: Overload:FaceRecognitionDotNet.FaceEncoding.Size
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceEncoding.Size
+  nameWithType: FaceEncoding.Size
+- uid: FaceRecognitionDotNet.FacePart
+  name: FacePart
+  href: api/FaceRecognitionDotNet.FacePart.html
+  commentId: T:FaceRecognitionDotNet.FacePart
+  fullName: FaceRecognitionDotNet.FacePart
+  nameWithType: FacePart
+- uid: FaceRecognitionDotNet.FacePart.BottomLip
+  name: BottomLip
+  href: api/FaceRecognitionDotNet.FacePart.html#FaceRecognitionDotNet_FacePart_BottomLip
+  commentId: F:FaceRecognitionDotNet.FacePart.BottomLip
+  fullName: FaceRecognitionDotNet.FacePart.BottomLip
+  nameWithType: FacePart.BottomLip
+- uid: FaceRecognitionDotNet.FacePart.Chin
+  name: Chin
+  href: api/FaceRecognitionDotNet.FacePart.html#FaceRecognitionDotNet_FacePart_Chin
+  commentId: F:FaceRecognitionDotNet.FacePart.Chin
+  fullName: FaceRecognitionDotNet.FacePart.Chin
+  nameWithType: FacePart.Chin
+- uid: FaceRecognitionDotNet.FacePart.LeftEye
+  name: LeftEye
+  href: api/FaceRecognitionDotNet.FacePart.html#FaceRecognitionDotNet_FacePart_LeftEye
+  commentId: F:FaceRecognitionDotNet.FacePart.LeftEye
+  fullName: FaceRecognitionDotNet.FacePart.LeftEye
+  nameWithType: FacePart.LeftEye
+- uid: FaceRecognitionDotNet.FacePart.LeftEyebrow
+  name: LeftEyebrow
+  href: api/FaceRecognitionDotNet.FacePart.html#FaceRecognitionDotNet_FacePart_LeftEyebrow
+  commentId: F:FaceRecognitionDotNet.FacePart.LeftEyebrow
+  fullName: FaceRecognitionDotNet.FacePart.LeftEyebrow
+  nameWithType: FacePart.LeftEyebrow
+- uid: FaceRecognitionDotNet.FacePart.Nose
+  name: Nose
+  href: api/FaceRecognitionDotNet.FacePart.html#FaceRecognitionDotNet_FacePart_Nose
+  commentId: F:FaceRecognitionDotNet.FacePart.Nose
+  fullName: FaceRecognitionDotNet.FacePart.Nose
+  nameWithType: FacePart.Nose
+- uid: FaceRecognitionDotNet.FacePart.NoseBridge
+  name: NoseBridge
+  href: api/FaceRecognitionDotNet.FacePart.html#FaceRecognitionDotNet_FacePart_NoseBridge
+  commentId: F:FaceRecognitionDotNet.FacePart.NoseBridge
+  fullName: FaceRecognitionDotNet.FacePart.NoseBridge
+  nameWithType: FacePart.NoseBridge
+- uid: FaceRecognitionDotNet.FacePart.NoseTip
+  name: NoseTip
+  href: api/FaceRecognitionDotNet.FacePart.html#FaceRecognitionDotNet_FacePart_NoseTip
+  commentId: F:FaceRecognitionDotNet.FacePart.NoseTip
+  fullName: FaceRecognitionDotNet.FacePart.NoseTip
+  nameWithType: FacePart.NoseTip
+- uid: FaceRecognitionDotNet.FacePart.RightEye
+  name: RightEye
+  href: api/FaceRecognitionDotNet.FacePart.html#FaceRecognitionDotNet_FacePart_RightEye
+  commentId: F:FaceRecognitionDotNet.FacePart.RightEye
+  fullName: FaceRecognitionDotNet.FacePart.RightEye
+  nameWithType: FacePart.RightEye
+- uid: FaceRecognitionDotNet.FacePart.RightEyebrow
+  name: RightEyebrow
+  href: api/FaceRecognitionDotNet.FacePart.html#FaceRecognitionDotNet_FacePart_RightEyebrow
+  commentId: F:FaceRecognitionDotNet.FacePart.RightEyebrow
+  fullName: FaceRecognitionDotNet.FacePart.RightEyebrow
+  nameWithType: FacePart.RightEyebrow
+- uid: FaceRecognitionDotNet.FacePart.TopLip
+  name: TopLip
+  href: api/FaceRecognitionDotNet.FacePart.html#FaceRecognitionDotNet_FacePart_TopLip
+  commentId: F:FaceRecognitionDotNet.FacePart.TopLip
+  fullName: FaceRecognitionDotNet.FacePart.TopLip
+  nameWithType: FacePart.TopLip
+- uid: FaceRecognitionDotNet.FacePoint
+  name: FacePoint
+  href: api/FaceRecognitionDotNet.FacePoint.html
+  commentId: T:FaceRecognitionDotNet.FacePoint
+  fullName: FaceRecognitionDotNet.FacePoint
+  nameWithType: FacePoint
+- uid: FaceRecognitionDotNet.FacePoint.#ctor(FaceRecognitionDotNet.Point,System.Int32)
+  name: FacePoint(Point, Int32)
+  href: api/FaceRecognitionDotNet.FacePoint.html#FaceRecognitionDotNet_FacePoint__ctor_FaceRecognitionDotNet_Point_System_Int32_
+  commentId: M:FaceRecognitionDotNet.FacePoint.#ctor(FaceRecognitionDotNet.Point,System.Int32)
+  fullName: FaceRecognitionDotNet.FacePoint.FacePoint(FaceRecognitionDotNet.Point, System.Int32)
+  nameWithType: FacePoint.FacePoint(Point, Int32)
+- uid: FaceRecognitionDotNet.FacePoint.#ctor*
+  name: FacePoint
+  href: api/FaceRecognitionDotNet.FacePoint.html#FaceRecognitionDotNet_FacePoint__ctor_
+  commentId: Overload:FaceRecognitionDotNet.FacePoint.#ctor
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FacePoint.FacePoint
+  nameWithType: FacePoint.FacePoint
+- uid: FaceRecognitionDotNet.FacePoint.Equals(FaceRecognitionDotNet.FacePoint)
+  name: Equals(FacePoint)
+  href: api/FaceRecognitionDotNet.FacePoint.html#FaceRecognitionDotNet_FacePoint_Equals_FaceRecognitionDotNet_FacePoint_
+  commentId: M:FaceRecognitionDotNet.FacePoint.Equals(FaceRecognitionDotNet.FacePoint)
+  fullName: FaceRecognitionDotNet.FacePoint.Equals(FaceRecognitionDotNet.FacePoint)
+  nameWithType: FacePoint.Equals(FacePoint)
+- uid: FaceRecognitionDotNet.FacePoint.Equals(System.Object)
+  name: Equals(Object)
+  href: api/FaceRecognitionDotNet.FacePoint.html#FaceRecognitionDotNet_FacePoint_Equals_System_Object_
+  commentId: M:FaceRecognitionDotNet.FacePoint.Equals(System.Object)
+  fullName: FaceRecognitionDotNet.FacePoint.Equals(System.Object)
+  nameWithType: FacePoint.Equals(Object)
+- uid: FaceRecognitionDotNet.FacePoint.Equals*
+  name: Equals
+  href: api/FaceRecognitionDotNet.FacePoint.html#FaceRecognitionDotNet_FacePoint_Equals_
+  commentId: Overload:FaceRecognitionDotNet.FacePoint.Equals
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FacePoint.Equals
+  nameWithType: FacePoint.Equals
+- uid: FaceRecognitionDotNet.FacePoint.GetHashCode
+  name: GetHashCode()
+  href: api/FaceRecognitionDotNet.FacePoint.html#FaceRecognitionDotNet_FacePoint_GetHashCode
+  commentId: M:FaceRecognitionDotNet.FacePoint.GetHashCode
+  fullName: FaceRecognitionDotNet.FacePoint.GetHashCode()
+  nameWithType: FacePoint.GetHashCode()
+- uid: FaceRecognitionDotNet.FacePoint.GetHashCode*
+  name: GetHashCode
+  href: api/FaceRecognitionDotNet.FacePoint.html#FaceRecognitionDotNet_FacePoint_GetHashCode_
+  commentId: Overload:FaceRecognitionDotNet.FacePoint.GetHashCode
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FacePoint.GetHashCode
+  nameWithType: FacePoint.GetHashCode
+- uid: FaceRecognitionDotNet.FacePoint.Index
+  name: Index
+  href: api/FaceRecognitionDotNet.FacePoint.html#FaceRecognitionDotNet_FacePoint_Index
+  commentId: P:FaceRecognitionDotNet.FacePoint.Index
+  fullName: FaceRecognitionDotNet.FacePoint.Index
+  nameWithType: FacePoint.Index
+- uid: FaceRecognitionDotNet.FacePoint.Index*
+  name: Index
+  href: api/FaceRecognitionDotNet.FacePoint.html#FaceRecognitionDotNet_FacePoint_Index_
+  commentId: Overload:FaceRecognitionDotNet.FacePoint.Index
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FacePoint.Index
+  nameWithType: FacePoint.Index
+- uid: FaceRecognitionDotNet.FacePoint.op_Equality(FaceRecognitionDotNet.FacePoint,FaceRecognitionDotNet.FacePoint)
+  name: Equality(FacePoint, FacePoint)
+  href: api/FaceRecognitionDotNet.FacePoint.html#FaceRecognitionDotNet_FacePoint_op_Equality_FaceRecognitionDotNet_FacePoint_FaceRecognitionDotNet_FacePoint_
+  commentId: M:FaceRecognitionDotNet.FacePoint.op_Equality(FaceRecognitionDotNet.FacePoint,FaceRecognitionDotNet.FacePoint)
+  fullName: FaceRecognitionDotNet.FacePoint.Equality(FaceRecognitionDotNet.FacePoint, FaceRecognitionDotNet.FacePoint)
+  nameWithType: FacePoint.Equality(FacePoint, FacePoint)
+- uid: FaceRecognitionDotNet.FacePoint.op_Equality*
+  name: Equality
+  href: api/FaceRecognitionDotNet.FacePoint.html#FaceRecognitionDotNet_FacePoint_op_Equality_
+  commentId: Overload:FaceRecognitionDotNet.FacePoint.op_Equality
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FacePoint.Equality
+  nameWithType: FacePoint.Equality
+- uid: FaceRecognitionDotNet.FacePoint.op_Inequality(FaceRecognitionDotNet.FacePoint,FaceRecognitionDotNet.FacePoint)
+  name: Inequality(FacePoint, FacePoint)
+  href: api/FaceRecognitionDotNet.FacePoint.html#FaceRecognitionDotNet_FacePoint_op_Inequality_FaceRecognitionDotNet_FacePoint_FaceRecognitionDotNet_FacePoint_
+  commentId: M:FaceRecognitionDotNet.FacePoint.op_Inequality(FaceRecognitionDotNet.FacePoint,FaceRecognitionDotNet.FacePoint)
+  fullName: FaceRecognitionDotNet.FacePoint.Inequality(FaceRecognitionDotNet.FacePoint, FaceRecognitionDotNet.FacePoint)
+  nameWithType: FacePoint.Inequality(FacePoint, FacePoint)
+- uid: FaceRecognitionDotNet.FacePoint.op_Inequality*
+  name: Inequality
+  href: api/FaceRecognitionDotNet.FacePoint.html#FaceRecognitionDotNet_FacePoint_op_Inequality_
+  commentId: Overload:FaceRecognitionDotNet.FacePoint.op_Inequality
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FacePoint.Inequality
+  nameWithType: FacePoint.Inequality
+- uid: FaceRecognitionDotNet.FacePoint.Point
+  name: Point
+  href: api/FaceRecognitionDotNet.FacePoint.html#FaceRecognitionDotNet_FacePoint_Point
+  commentId: P:FaceRecognitionDotNet.FacePoint.Point
+  fullName: FaceRecognitionDotNet.FacePoint.Point
+  nameWithType: FacePoint.Point
+- uid: FaceRecognitionDotNet.FacePoint.Point*
+  name: Point
+  href: api/FaceRecognitionDotNet.FacePoint.html#FaceRecognitionDotNet_FacePoint_Point_
+  commentId: Overload:FaceRecognitionDotNet.FacePoint.Point
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FacePoint.Point
+  nameWithType: FacePoint.Point
+- uid: FaceRecognitionDotNet.FaceRecognition
+  name: FaceRecognition
+  href: api/FaceRecognitionDotNet.FaceRecognition.html
+  commentId: T:FaceRecognitionDotNet.FaceRecognition
+  fullName: FaceRecognitionDotNet.FaceRecognition
+  nameWithType: FaceRecognition
+- uid: FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Image},System.Int32,System.Int32)
+  name: BatchFaceLocations(IEnumerable<Image>, Int32, Int32)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_BatchFaceLocations_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_Image__System_Int32_System_Int32_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Image},System.Int32,System.Int32)
+  name.vb: BatchFaceLocations(IEnumerable(Of Image), Int32, Int32)
+  fullName: FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations(System.Collections.Generic.IEnumerable<FaceRecognitionDotNet.Image>, System.Int32, System.Int32)
+  fullName.vb: FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations(System.Collections.Generic.IEnumerable(Of FaceRecognitionDotNet.Image), System.Int32, System.Int32)
+  nameWithType: FaceRecognition.BatchFaceLocations(IEnumerable<Image>, Int32, Int32)
+  nameWithType.vb: FaceRecognition.BatchFaceLocations(IEnumerable(Of Image), Int32, Int32)
+- uid: FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations*
+  name: BatchFaceLocations
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_BatchFaceLocations_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations
+  nameWithType: FaceRecognition.BatchFaceLocations
+- uid: FaceRecognitionDotNet.FaceRecognition.CompareFace(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding,System.Double)
+  name: CompareFace(FaceEncoding, FaceEncoding, Double)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CompareFace_FaceRecognitionDotNet_FaceEncoding_FaceRecognitionDotNet_FaceEncoding_System_Double_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.CompareFace(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding,System.Double)
+  fullName: FaceRecognitionDotNet.FaceRecognition.CompareFace(FaceRecognitionDotNet.FaceEncoding, FaceRecognitionDotNet.FaceEncoding, System.Double)
+  nameWithType: FaceRecognition.CompareFace(FaceEncoding, FaceEncoding, Double)
+- uid: FaceRecognitionDotNet.FaceRecognition.CompareFace*
+  name: CompareFace
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CompareFace_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.CompareFace
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.CompareFace
+  nameWithType: FaceRecognition.CompareFace
+- uid: FaceRecognitionDotNet.FaceRecognition.CompareFaces(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding,System.Double)
+  name: CompareFaces(IEnumerable<FaceEncoding>, FaceEncoding, Double)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CompareFaces_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FaceEncoding__FaceRecognitionDotNet_FaceEncoding_System_Double_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.CompareFaces(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding,System.Double)
+  name.vb: CompareFaces(IEnumerable(Of FaceEncoding), FaceEncoding, Double)
+  fullName: FaceRecognitionDotNet.FaceRecognition.CompareFaces(System.Collections.Generic.IEnumerable<FaceRecognitionDotNet.FaceEncoding>, FaceRecognitionDotNet.FaceEncoding, System.Double)
+  fullName.vb: FaceRecognitionDotNet.FaceRecognition.CompareFaces(System.Collections.Generic.IEnumerable(Of FaceRecognitionDotNet.FaceEncoding), FaceRecognitionDotNet.FaceEncoding, System.Double)
+  nameWithType: FaceRecognition.CompareFaces(IEnumerable<FaceEncoding>, FaceEncoding, Double)
+  nameWithType.vb: FaceRecognition.CompareFaces(IEnumerable(Of FaceEncoding), FaceEncoding, Double)
+- uid: FaceRecognitionDotNet.FaceRecognition.CompareFaces*
+  name: CompareFaces
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CompareFaces_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.CompareFaces
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.CompareFaces
+  nameWithType: FaceRecognition.CompareFaces
+- uid: FaceRecognitionDotNet.FaceRecognition.Create(FaceRecognitionDotNet.ModelParameter)
+  name: Create(ModelParameter)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_Create_FaceRecognitionDotNet_ModelParameter_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.Create(FaceRecognitionDotNet.ModelParameter)
+  fullName: FaceRecognitionDotNet.FaceRecognition.Create(FaceRecognitionDotNet.ModelParameter)
+  nameWithType: FaceRecognition.Create(ModelParameter)
+- uid: FaceRecognitionDotNet.FaceRecognition.Create(System.String)
+  name: Create(String)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_Create_System_String_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.Create(System.String)
+  fullName: FaceRecognitionDotNet.FaceRecognition.Create(System.String)
+  nameWithType: FaceRecognition.Create(String)
+- uid: FaceRecognitionDotNet.FaceRecognition.Create*
+  name: Create
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_Create_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.Create
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.Create
+  nameWithType: FaceRecognition.Create
+- uid: FaceRecognitionDotNet.FaceRecognition.CropFaces(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location})
+  name: CropFaces(Image, IEnumerable<Location>)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CropFaces_FaceRecognitionDotNet_Image_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_Location__
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.CropFaces(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location})
+  name.vb: CropFaces(Image, IEnumerable(Of Location))
+  fullName: FaceRecognitionDotNet.FaceRecognition.CropFaces(FaceRecognitionDotNet.Image, System.Collections.Generic.IEnumerable<FaceRecognitionDotNet.Location>)
+  fullName.vb: FaceRecognitionDotNet.FaceRecognition.CropFaces(FaceRecognitionDotNet.Image, System.Collections.Generic.IEnumerable(Of FaceRecognitionDotNet.Location))
+  nameWithType: FaceRecognition.CropFaces(Image, IEnumerable<Location>)
+  nameWithType.vb: FaceRecognition.CropFaces(Image, IEnumerable(Of Location))
+- uid: FaceRecognitionDotNet.FaceRecognition.CropFaces*
+  name: CropFaces
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CropFaces_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.CropFaces
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.CropFaces
+  nameWithType: FaceRecognition.CropFaces
+- uid: FaceRecognitionDotNet.FaceRecognition.CustomAgeEstimator
+  name: CustomAgeEstimator
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CustomAgeEstimator
+  commentId: P:FaceRecognitionDotNet.FaceRecognition.CustomAgeEstimator
+  fullName: FaceRecognitionDotNet.FaceRecognition.CustomAgeEstimator
+  nameWithType: FaceRecognition.CustomAgeEstimator
+- uid: FaceRecognitionDotNet.FaceRecognition.CustomAgeEstimator*
+  name: CustomAgeEstimator
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CustomAgeEstimator_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.CustomAgeEstimator
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.CustomAgeEstimator
+  nameWithType: FaceRecognition.CustomAgeEstimator
+- uid: FaceRecognitionDotNet.FaceRecognition.CustomEyeBlinkDetector
+  name: CustomEyeBlinkDetector
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CustomEyeBlinkDetector
+  commentId: P:FaceRecognitionDotNet.FaceRecognition.CustomEyeBlinkDetector
+  fullName: FaceRecognitionDotNet.FaceRecognition.CustomEyeBlinkDetector
+  nameWithType: FaceRecognition.CustomEyeBlinkDetector
+- uid: FaceRecognitionDotNet.FaceRecognition.CustomEyeBlinkDetector*
+  name: CustomEyeBlinkDetector
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CustomEyeBlinkDetector_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.CustomEyeBlinkDetector
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.CustomEyeBlinkDetector
+  nameWithType: FaceRecognition.CustomEyeBlinkDetector
+- uid: FaceRecognitionDotNet.FaceRecognition.CustomFaceDetector
+  name: CustomFaceDetector
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CustomFaceDetector
+  commentId: P:FaceRecognitionDotNet.FaceRecognition.CustomFaceDetector
+  fullName: FaceRecognitionDotNet.FaceRecognition.CustomFaceDetector
+  nameWithType: FaceRecognition.CustomFaceDetector
+- uid: FaceRecognitionDotNet.FaceRecognition.CustomFaceDetector*
+  name: CustomFaceDetector
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CustomFaceDetector_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.CustomFaceDetector
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.CustomFaceDetector
+  nameWithType: FaceRecognition.CustomFaceDetector
+- uid: FaceRecognitionDotNet.FaceRecognition.CustomFaceLandmarkDetector
+  name: CustomFaceLandmarkDetector
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CustomFaceLandmarkDetector
+  commentId: P:FaceRecognitionDotNet.FaceRecognition.CustomFaceLandmarkDetector
+  fullName: FaceRecognitionDotNet.FaceRecognition.CustomFaceLandmarkDetector
+  nameWithType: FaceRecognition.CustomFaceLandmarkDetector
+- uid: FaceRecognitionDotNet.FaceRecognition.CustomFaceLandmarkDetector*
+  name: CustomFaceLandmarkDetector
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CustomFaceLandmarkDetector_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.CustomFaceLandmarkDetector
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.CustomFaceLandmarkDetector
+  nameWithType: FaceRecognition.CustomFaceLandmarkDetector
+- uid: FaceRecognitionDotNet.FaceRecognition.CustomGenderEstimator
+  name: CustomGenderEstimator
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CustomGenderEstimator
+  commentId: P:FaceRecognitionDotNet.FaceRecognition.CustomGenderEstimator
+  fullName: FaceRecognitionDotNet.FaceRecognition.CustomGenderEstimator
+  nameWithType: FaceRecognition.CustomGenderEstimator
+- uid: FaceRecognitionDotNet.FaceRecognition.CustomGenderEstimator*
+  name: CustomGenderEstimator
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CustomGenderEstimator_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.CustomGenderEstimator
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.CustomGenderEstimator
+  nameWithType: FaceRecognition.CustomGenderEstimator
+- uid: FaceRecognitionDotNet.FaceRecognition.CustomHeadPoseEstimator
+  name: CustomHeadPoseEstimator
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CustomHeadPoseEstimator
+  commentId: P:FaceRecognitionDotNet.FaceRecognition.CustomHeadPoseEstimator
+  fullName: FaceRecognitionDotNet.FaceRecognition.CustomHeadPoseEstimator
+  nameWithType: FaceRecognition.CustomHeadPoseEstimator
+- uid: FaceRecognitionDotNet.FaceRecognition.CustomHeadPoseEstimator*
+  name: CustomHeadPoseEstimator
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CustomHeadPoseEstimator_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.CustomHeadPoseEstimator
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.CustomHeadPoseEstimator
+  nameWithType: FaceRecognition.CustomHeadPoseEstimator
+- uid: FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged
+  name: DisposeUnmanaged()
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_DisposeUnmanaged
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged
+  fullName: FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged()
+  nameWithType: FaceRecognition.DisposeUnmanaged()
+- uid: FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged*
+  name: DisposeUnmanaged
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_DisposeUnmanaged_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged
+  nameWithType: FaceRecognition.DisposeUnmanaged
+- uid: FaceRecognitionDotNet.FaceRecognition.EyeBlinkDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}},System.Boolean@,System.Boolean@)
+  name: EyeBlinkDetect(IDictionary<FacePart, IEnumerable<FacePoint>>, out Boolean, out Boolean)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_EyeBlinkDetect_System_Collections_Generic_IDictionary_FaceRecognitionDotNet_FacePart_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FacePoint___System_Boolean__System_Boolean__
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.EyeBlinkDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}},System.Boolean@,System.Boolean@)
+  name.vb: EyeBlinkDetect(IDictionary(Of FacePart, IEnumerable(Of FacePoint)), ByRef Boolean, ByRef Boolean)
+  fullName: FaceRecognitionDotNet.FaceRecognition.EyeBlinkDetect(System.Collections.Generic.IDictionary<FaceRecognitionDotNet.FacePart, System.Collections.Generic.IEnumerable<FaceRecognitionDotNet.FacePoint>>, out System.Boolean, out System.Boolean)
+  fullName.vb: FaceRecognitionDotNet.FaceRecognition.EyeBlinkDetect(System.Collections.Generic.IDictionary(Of FaceRecognitionDotNet.FacePart, System.Collections.Generic.IEnumerable(Of FaceRecognitionDotNet.FacePoint)), ByRef System.Boolean, ByRef System.Boolean)
+  nameWithType: FaceRecognition.EyeBlinkDetect(IDictionary<FacePart, IEnumerable<FacePoint>>, out Boolean, out Boolean)
+  nameWithType.vb: FaceRecognition.EyeBlinkDetect(IDictionary(Of FacePart, IEnumerable(Of FacePoint)), ByRef Boolean, ByRef Boolean)
+- uid: FaceRecognitionDotNet.FaceRecognition.EyeBlinkDetect*
+  name: EyeBlinkDetect
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_EyeBlinkDetect_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.EyeBlinkDetect
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.EyeBlinkDetect
+  nameWithType: FaceRecognition.EyeBlinkDetect
+- uid: FaceRecognitionDotNet.FaceRecognition.FaceDistance(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding)
+  name: FaceDistance(FaceEncoding, FaceEncoding)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_FaceDistance_FaceRecognitionDotNet_FaceEncoding_FaceRecognitionDotNet_FaceEncoding_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.FaceDistance(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding)
+  fullName: FaceRecognitionDotNet.FaceRecognition.FaceDistance(FaceRecognitionDotNet.FaceEncoding, FaceRecognitionDotNet.FaceEncoding)
+  nameWithType: FaceRecognition.FaceDistance(FaceEncoding, FaceEncoding)
+- uid: FaceRecognitionDotNet.FaceRecognition.FaceDistance*
+  name: FaceDistance
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_FaceDistance_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.FaceDistance
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.FaceDistance
+  nameWithType: FaceRecognition.FaceDistance
+- uid: FaceRecognitionDotNet.FaceRecognition.FaceDistances(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding)
+  name: FaceDistances(IEnumerable<FaceEncoding>, FaceEncoding)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_FaceDistances_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FaceEncoding__FaceRecognitionDotNet_FaceEncoding_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.FaceDistances(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding)
+  name.vb: FaceDistances(IEnumerable(Of FaceEncoding), FaceEncoding)
+  fullName: FaceRecognitionDotNet.FaceRecognition.FaceDistances(System.Collections.Generic.IEnumerable<FaceRecognitionDotNet.FaceEncoding>, FaceRecognitionDotNet.FaceEncoding)
+  fullName.vb: FaceRecognitionDotNet.FaceRecognition.FaceDistances(System.Collections.Generic.IEnumerable(Of FaceRecognitionDotNet.FaceEncoding), FaceRecognitionDotNet.FaceEncoding)
+  nameWithType: FaceRecognition.FaceDistances(IEnumerable<FaceEncoding>, FaceEncoding)
+  nameWithType.vb: FaceRecognition.FaceDistances(IEnumerable(Of FaceEncoding), FaceEncoding)
+- uid: FaceRecognitionDotNet.FaceRecognition.FaceDistances*
+  name: FaceDistances
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_FaceDistances_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.FaceDistances
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.FaceDistances
+  nameWithType: FaceRecognition.FaceDistances
+- uid: FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},System.Int32,FaceRecognitionDotNet.PredictorModel,FaceRecognitionDotNet.Model)
+  name: FaceEncodings(Image, IEnumerable<Location>, Int32, PredictorModel, Model)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_FaceEncodings_FaceRecognitionDotNet_Image_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_Location__System_Int32_FaceRecognitionDotNet_PredictorModel_FaceRecognitionDotNet_Model_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},System.Int32,FaceRecognitionDotNet.PredictorModel,FaceRecognitionDotNet.Model)
+  name.vb: FaceEncodings(Image, IEnumerable(Of Location), Int32, PredictorModel, Model)
+  fullName: FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image, System.Collections.Generic.IEnumerable<FaceRecognitionDotNet.Location>, System.Int32, FaceRecognitionDotNet.PredictorModel, FaceRecognitionDotNet.Model)
+  fullName.vb: FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image, System.Collections.Generic.IEnumerable(Of FaceRecognitionDotNet.Location), System.Int32, FaceRecognitionDotNet.PredictorModel, FaceRecognitionDotNet.Model)
+  nameWithType: FaceRecognition.FaceEncodings(Image, IEnumerable<Location>, Int32, PredictorModel, Model)
+  nameWithType.vb: FaceRecognition.FaceEncodings(Image, IEnumerable(Of Location), Int32, PredictorModel, Model)
+- uid: FaceRecognitionDotNet.FaceRecognition.FaceEncodings*
+  name: FaceEncodings
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_FaceEncodings_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.FaceEncodings
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.FaceEncodings
+  nameWithType: FaceRecognition.FaceEncodings
+- uid: FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModel,FaceRecognitionDotNet.Model)
+  name: FaceLandmark(Image, IEnumerable<Location>, PredictorModel, Model)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_FaceLandmark_FaceRecognitionDotNet_Image_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_Location__FaceRecognitionDotNet_PredictorModel_FaceRecognitionDotNet_Model_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModel,FaceRecognitionDotNet.Model)
+  name.vb: FaceLandmark(Image, IEnumerable(Of Location), PredictorModel, Model)
+  fullName: FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image, System.Collections.Generic.IEnumerable<FaceRecognitionDotNet.Location>, FaceRecognitionDotNet.PredictorModel, FaceRecognitionDotNet.Model)
+  fullName.vb: FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image, System.Collections.Generic.IEnumerable(Of FaceRecognitionDotNet.Location), FaceRecognitionDotNet.PredictorModel, FaceRecognitionDotNet.Model)
+  nameWithType: FaceRecognition.FaceLandmark(Image, IEnumerable<Location>, PredictorModel, Model)
+  nameWithType.vb: FaceRecognition.FaceLandmark(Image, IEnumerable(Of Location), PredictorModel, Model)
+- uid: FaceRecognitionDotNet.FaceRecognition.FaceLandmark*
+  name: FaceLandmark
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_FaceLandmark_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.FaceLandmark
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.FaceLandmark
+  nameWithType: FaceRecognition.FaceLandmark
+- uid: FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image,System.Int32,FaceRecognitionDotNet.Model)
+  name: FaceLocations(Image, Int32, Model)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_FaceLocations_FaceRecognitionDotNet_Image_System_Int32_FaceRecognitionDotNet_Model_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image,System.Int32,FaceRecognitionDotNet.Model)
+  fullName: FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image, System.Int32, FaceRecognitionDotNet.Model)
+  nameWithType: FaceRecognition.FaceLocations(Image, Int32, Model)
+- uid: FaceRecognitionDotNet.FaceRecognition.FaceLocations*
+  name: FaceLocations
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_FaceLocations_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.FaceLocations
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.FaceLocations
+  nameWithType: FaceRecognition.FaceLocations
+- uid: FaceRecognitionDotNet.FaceRecognition.InternalEncoding
+  name: InternalEncoding
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_InternalEncoding
+  commentId: P:FaceRecognitionDotNet.FaceRecognition.InternalEncoding
+  fullName: FaceRecognitionDotNet.FaceRecognition.InternalEncoding
+  nameWithType: FaceRecognition.InternalEncoding
+- uid: FaceRecognitionDotNet.FaceRecognition.InternalEncoding*
+  name: InternalEncoding
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_InternalEncoding_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.InternalEncoding
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.InternalEncoding
+  nameWithType: FaceRecognition.InternalEncoding
+- uid: FaceRecognitionDotNet.FaceRecognition.LoadFaceEncoding(System.Double[])
+  name: LoadFaceEncoding(Double[])
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_LoadFaceEncoding_System_Double___
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.LoadFaceEncoding(System.Double[])
+  name.vb: LoadFaceEncoding(Double())
+  fullName: FaceRecognitionDotNet.FaceRecognition.LoadFaceEncoding(System.Double[])
+  fullName.vb: FaceRecognitionDotNet.FaceRecognition.LoadFaceEncoding(System.Double())
+  nameWithType: FaceRecognition.LoadFaceEncoding(Double[])
+  nameWithType.vb: FaceRecognition.LoadFaceEncoding(Double())
+- uid: FaceRecognitionDotNet.FaceRecognition.LoadFaceEncoding*
+  name: LoadFaceEncoding
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_LoadFaceEncoding_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.LoadFaceEncoding
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.LoadFaceEncoding
+  nameWithType: FaceRecognition.LoadFaceEncoding
+- uid: FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Byte[],System.Int32,System.Int32,System.Int32,FaceRecognitionDotNet.Mode)
+  name: LoadImage(Byte[], Int32, Int32, Int32, Mode)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_LoadImage_System_Byte___System_Int32_System_Int32_System_Int32_FaceRecognitionDotNet_Mode_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Byte[],System.Int32,System.Int32,System.Int32,FaceRecognitionDotNet.Mode)
+  name.vb: LoadImage(Byte(), Int32, Int32, Int32, Mode)
+  fullName: FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Byte[], System.Int32, System.Int32, System.Int32, FaceRecognitionDotNet.Mode)
+  fullName.vb: FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Byte(), System.Int32, System.Int32, System.Int32, FaceRecognitionDotNet.Mode)
+  nameWithType: FaceRecognition.LoadImage(Byte[], Int32, Int32, Int32, Mode)
+  nameWithType.vb: FaceRecognition.LoadImage(Byte(), Int32, Int32, Int32, Mode)
+- uid: FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Drawing.Bitmap)
+  name: LoadImage(Bitmap)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_LoadImage_System_Drawing_Bitmap_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Drawing.Bitmap)
+  fullName: FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Drawing.Bitmap)
+  nameWithType: FaceRecognition.LoadImage(Bitmap)
+- uid: FaceRecognitionDotNet.FaceRecognition.LoadImage(System.IntPtr,System.Int32,System.Int32,System.Int32,FaceRecognitionDotNet.Mode)
+  name: LoadImage(IntPtr, Int32, Int32, Int32, Mode)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_LoadImage_System_IntPtr_System_Int32_System_Int32_System_Int32_FaceRecognitionDotNet_Mode_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.LoadImage(System.IntPtr,System.Int32,System.Int32,System.Int32,FaceRecognitionDotNet.Mode)
+  fullName: FaceRecognitionDotNet.FaceRecognition.LoadImage(System.IntPtr, System.Int32, System.Int32, System.Int32, FaceRecognitionDotNet.Mode)
+  nameWithType: FaceRecognition.LoadImage(IntPtr, Int32, Int32, Int32, Mode)
+- uid: FaceRecognitionDotNet.FaceRecognition.LoadImage*
+  name: LoadImage
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_LoadImage_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.LoadImage
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.LoadImage
+  nameWithType: FaceRecognition.LoadImage
+- uid: FaceRecognitionDotNet.FaceRecognition.LoadImageFile(System.String,FaceRecognitionDotNet.Mode)
+  name: LoadImageFile(String, Mode)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_LoadImageFile_System_String_FaceRecognitionDotNet_Mode_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.LoadImageFile(System.String,FaceRecognitionDotNet.Mode)
+  fullName: FaceRecognitionDotNet.FaceRecognition.LoadImageFile(System.String, FaceRecognitionDotNet.Mode)
+  nameWithType: FaceRecognition.LoadImageFile(String, Mode)
+- uid: FaceRecognitionDotNet.FaceRecognition.LoadImageFile*
+  name: LoadImageFile
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_LoadImageFile_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.LoadImageFile
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.LoadImageFile
+  nameWithType: FaceRecognition.LoadImageFile
+- uid: FaceRecognitionDotNet.FaceRecognition.PredictAge(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)
+  name: PredictAge(Image, Location)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictAge_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.PredictAge(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.FaceRecognition.PredictAge(FaceRecognitionDotNet.Image, FaceRecognitionDotNet.Location)
+  nameWithType: FaceRecognition.PredictAge(Image, Location)
+- uid: FaceRecognitionDotNet.FaceRecognition.PredictAge*
+  name: PredictAge
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictAge_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.PredictAge
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.PredictAge
+  nameWithType: FaceRecognition.PredictAge
+- uid: FaceRecognitionDotNet.FaceRecognition.PredictGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)
+  name: PredictGender(Image, Location)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictGender_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.PredictGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.FaceRecognition.PredictGender(FaceRecognitionDotNet.Image, FaceRecognitionDotNet.Location)
+  nameWithType: FaceRecognition.PredictGender(Image, Location)
+- uid: FaceRecognitionDotNet.FaceRecognition.PredictGender*
+  name: PredictGender
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictGender_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.PredictGender
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.PredictGender
+  nameWithType: FaceRecognition.PredictGender
+- uid: FaceRecognitionDotNet.FaceRecognition.PredictHeadPose(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}})
+  name: PredictHeadPose(IDictionary<FacePart, IEnumerable<FacePoint>>)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictHeadPose_System_Collections_Generic_IDictionary_FaceRecognitionDotNet_FacePart_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FacePoint___
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.PredictHeadPose(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}})
+  name.vb: PredictHeadPose(IDictionary(Of FacePart, IEnumerable(Of FacePoint)))
+  fullName: FaceRecognitionDotNet.FaceRecognition.PredictHeadPose(System.Collections.Generic.IDictionary<FaceRecognitionDotNet.FacePart, System.Collections.Generic.IEnumerable<FaceRecognitionDotNet.FacePoint>>)
+  fullName.vb: FaceRecognitionDotNet.FaceRecognition.PredictHeadPose(System.Collections.Generic.IDictionary(Of FaceRecognitionDotNet.FacePart, System.Collections.Generic.IEnumerable(Of FaceRecognitionDotNet.FacePoint)))
+  nameWithType: FaceRecognition.PredictHeadPose(IDictionary<FacePart, IEnumerable<FacePoint>>)
+  nameWithType.vb: FaceRecognition.PredictHeadPose(IDictionary(Of FacePart, IEnumerable(Of FacePoint)))
+- uid: FaceRecognitionDotNet.FaceRecognition.PredictHeadPose*
+  name: PredictHeadPose
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictHeadPose_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.PredictHeadPose
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.PredictHeadPose
+  nameWithType: FaceRecognition.PredictHeadPose
+- uid: FaceRecognitionDotNet.FaceRecognition.PredictProbabilityAge(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)
+  name: PredictProbabilityAge(Image, Location)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictProbabilityAge_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityAge(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.FaceRecognition.PredictProbabilityAge(FaceRecognitionDotNet.Image, FaceRecognitionDotNet.Location)
+  nameWithType: FaceRecognition.PredictProbabilityAge(Image, Location)
+- uid: FaceRecognitionDotNet.FaceRecognition.PredictProbabilityAge*
+  name: PredictProbabilityAge
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictProbabilityAge_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityAge
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.PredictProbabilityAge
+  nameWithType: FaceRecognition.PredictProbabilityAge
+- uid: FaceRecognitionDotNet.FaceRecognition.PredictProbabilityGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)
+  name: PredictProbabilityGender(Image, Location)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictProbabilityGender_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.FaceRecognition.PredictProbabilityGender(FaceRecognitionDotNet.Image, FaceRecognitionDotNet.Location)
+  nameWithType: FaceRecognition.PredictProbabilityGender(Image, Location)
+- uid: FaceRecognitionDotNet.FaceRecognition.PredictProbabilityGender*
+  name: PredictProbabilityGender
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictProbabilityGender_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityGender
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.PredictProbabilityGender
+  nameWithType: FaceRecognition.PredictProbabilityGender
+- uid: FaceRecognitionDotNet.Gender
+  name: Gender
+  href: api/FaceRecognitionDotNet.Gender.html
+  commentId: T:FaceRecognitionDotNet.Gender
+  fullName: FaceRecognitionDotNet.Gender
+  nameWithType: Gender
+- uid: FaceRecognitionDotNet.Gender.Female
+  name: Female
+  href: api/FaceRecognitionDotNet.Gender.html#FaceRecognitionDotNet_Gender_Female
+  commentId: F:FaceRecognitionDotNet.Gender.Female
+  fullName: FaceRecognitionDotNet.Gender.Female
+  nameWithType: Gender.Female
+- uid: FaceRecognitionDotNet.Gender.Male
+  name: Male
+  href: api/FaceRecognitionDotNet.Gender.html#FaceRecognitionDotNet_Gender_Male
+  commentId: F:FaceRecognitionDotNet.Gender.Male
+  fullName: FaceRecognitionDotNet.Gender.Male
+  nameWithType: Gender.Male
+- uid: FaceRecognitionDotNet.HeadPose
+  name: HeadPose
+  href: api/FaceRecognitionDotNet.HeadPose.html
+  commentId: T:FaceRecognitionDotNet.HeadPose
+  fullName: FaceRecognitionDotNet.HeadPose
+  nameWithType: HeadPose
+- uid: FaceRecognitionDotNet.HeadPose.#ctor(System.Double,System.Double,System.Double)
+  name: HeadPose(Double, Double, Double)
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose__ctor_System_Double_System_Double_System_Double_
+  commentId: M:FaceRecognitionDotNet.HeadPose.#ctor(System.Double,System.Double,System.Double)
+  fullName: FaceRecognitionDotNet.HeadPose.HeadPose(System.Double, System.Double, System.Double)
+  nameWithType: HeadPose.HeadPose(Double, Double, Double)
+- uid: FaceRecognitionDotNet.HeadPose.#ctor*
+  name: HeadPose
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose__ctor_
+  commentId: Overload:FaceRecognitionDotNet.HeadPose.#ctor
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.HeadPose.HeadPose
+  nameWithType: HeadPose.HeadPose
+- uid: FaceRecognitionDotNet.HeadPose.Equals(FaceRecognitionDotNet.HeadPose)
+  name: Equals(HeadPose)
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose_Equals_FaceRecognitionDotNet_HeadPose_
+  commentId: M:FaceRecognitionDotNet.HeadPose.Equals(FaceRecognitionDotNet.HeadPose)
+  fullName: FaceRecognitionDotNet.HeadPose.Equals(FaceRecognitionDotNet.HeadPose)
+  nameWithType: HeadPose.Equals(HeadPose)
+- uid: FaceRecognitionDotNet.HeadPose.Equals(System.Object)
+  name: Equals(Object)
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose_Equals_System_Object_
+  commentId: M:FaceRecognitionDotNet.HeadPose.Equals(System.Object)
+  fullName: FaceRecognitionDotNet.HeadPose.Equals(System.Object)
+  nameWithType: HeadPose.Equals(Object)
+- uid: FaceRecognitionDotNet.HeadPose.Equals*
+  name: Equals
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose_Equals_
+  commentId: Overload:FaceRecognitionDotNet.HeadPose.Equals
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.HeadPose.Equals
+  nameWithType: HeadPose.Equals
+- uid: FaceRecognitionDotNet.HeadPose.GetHashCode
+  name: GetHashCode()
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose_GetHashCode
+  commentId: M:FaceRecognitionDotNet.HeadPose.GetHashCode
+  fullName: FaceRecognitionDotNet.HeadPose.GetHashCode()
+  nameWithType: HeadPose.GetHashCode()
+- uid: FaceRecognitionDotNet.HeadPose.GetHashCode*
+  name: GetHashCode
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose_GetHashCode_
+  commentId: Overload:FaceRecognitionDotNet.HeadPose.GetHashCode
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.HeadPose.GetHashCode
+  nameWithType: HeadPose.GetHashCode
+- uid: FaceRecognitionDotNet.HeadPose.op_Equality(FaceRecognitionDotNet.HeadPose,FaceRecognitionDotNet.HeadPose)
+  name: Equality(HeadPose, HeadPose)
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose_op_Equality_FaceRecognitionDotNet_HeadPose_FaceRecognitionDotNet_HeadPose_
+  commentId: M:FaceRecognitionDotNet.HeadPose.op_Equality(FaceRecognitionDotNet.HeadPose,FaceRecognitionDotNet.HeadPose)
+  fullName: FaceRecognitionDotNet.HeadPose.Equality(FaceRecognitionDotNet.HeadPose, FaceRecognitionDotNet.HeadPose)
+  nameWithType: HeadPose.Equality(HeadPose, HeadPose)
+- uid: FaceRecognitionDotNet.HeadPose.op_Equality*
+  name: Equality
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose_op_Equality_
+  commentId: Overload:FaceRecognitionDotNet.HeadPose.op_Equality
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.HeadPose.Equality
+  nameWithType: HeadPose.Equality
+- uid: FaceRecognitionDotNet.HeadPose.op_Inequality(FaceRecognitionDotNet.HeadPose,FaceRecognitionDotNet.HeadPose)
+  name: Inequality(HeadPose, HeadPose)
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose_op_Inequality_FaceRecognitionDotNet_HeadPose_FaceRecognitionDotNet_HeadPose_
+  commentId: M:FaceRecognitionDotNet.HeadPose.op_Inequality(FaceRecognitionDotNet.HeadPose,FaceRecognitionDotNet.HeadPose)
+  fullName: FaceRecognitionDotNet.HeadPose.Inequality(FaceRecognitionDotNet.HeadPose, FaceRecognitionDotNet.HeadPose)
+  nameWithType: HeadPose.Inequality(HeadPose, HeadPose)
+- uid: FaceRecognitionDotNet.HeadPose.op_Inequality*
+  name: Inequality
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose_op_Inequality_
+  commentId: Overload:FaceRecognitionDotNet.HeadPose.op_Inequality
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.HeadPose.Inequality
+  nameWithType: HeadPose.Inequality
+- uid: FaceRecognitionDotNet.HeadPose.Pitch
+  name: Pitch
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose_Pitch
+  commentId: P:FaceRecognitionDotNet.HeadPose.Pitch
+  fullName: FaceRecognitionDotNet.HeadPose.Pitch
+  nameWithType: HeadPose.Pitch
+- uid: FaceRecognitionDotNet.HeadPose.Pitch*
+  name: Pitch
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose_Pitch_
+  commentId: Overload:FaceRecognitionDotNet.HeadPose.Pitch
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.HeadPose.Pitch
+  nameWithType: HeadPose.Pitch
+- uid: FaceRecognitionDotNet.HeadPose.Roll
+  name: Roll
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose_Roll
+  commentId: P:FaceRecognitionDotNet.HeadPose.Roll
+  fullName: FaceRecognitionDotNet.HeadPose.Roll
+  nameWithType: HeadPose.Roll
+- uid: FaceRecognitionDotNet.HeadPose.Roll*
+  name: Roll
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose_Roll_
+  commentId: Overload:FaceRecognitionDotNet.HeadPose.Roll
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.HeadPose.Roll
+  nameWithType: HeadPose.Roll
+- uid: FaceRecognitionDotNet.HeadPose.Yaw
+  name: Yaw
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose_Yaw
+  commentId: P:FaceRecognitionDotNet.HeadPose.Yaw
+  fullName: FaceRecognitionDotNet.HeadPose.Yaw
+  nameWithType: HeadPose.Yaw
+- uid: FaceRecognitionDotNet.HeadPose.Yaw*
+  name: Yaw
+  href: api/FaceRecognitionDotNet.HeadPose.html#FaceRecognitionDotNet_HeadPose_Yaw_
+  commentId: Overload:FaceRecognitionDotNet.HeadPose.Yaw
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.HeadPose.Yaw
+  nameWithType: HeadPose.Yaw
+- uid: FaceRecognitionDotNet.Image
+  name: Image
+  href: api/FaceRecognitionDotNet.Image.html
+  commentId: T:FaceRecognitionDotNet.Image
+  fullName: FaceRecognitionDotNet.Image
+  nameWithType: Image
+- uid: FaceRecognitionDotNet.Image.DisposeUnmanaged
+  name: DisposeUnmanaged()
+  href: api/FaceRecognitionDotNet.Image.html#FaceRecognitionDotNet_Image_DisposeUnmanaged
+  commentId: M:FaceRecognitionDotNet.Image.DisposeUnmanaged
+  fullName: FaceRecognitionDotNet.Image.DisposeUnmanaged()
+  nameWithType: Image.DisposeUnmanaged()
+- uid: FaceRecognitionDotNet.Image.DisposeUnmanaged*
+  name: DisposeUnmanaged
+  href: api/FaceRecognitionDotNet.Image.html#FaceRecognitionDotNet_Image_DisposeUnmanaged_
+  commentId: Overload:FaceRecognitionDotNet.Image.DisposeUnmanaged
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Image.DisposeUnmanaged
+  nameWithType: Image.DisposeUnmanaged
+- uid: FaceRecognitionDotNet.Image.Height
+  name: Height
+  href: api/FaceRecognitionDotNet.Image.html#FaceRecognitionDotNet_Image_Height
+  commentId: P:FaceRecognitionDotNet.Image.Height
+  fullName: FaceRecognitionDotNet.Image.Height
+  nameWithType: Image.Height
+- uid: FaceRecognitionDotNet.Image.Height*
+  name: Height
+  href: api/FaceRecognitionDotNet.Image.html#FaceRecognitionDotNet_Image_Height_
+  commentId: Overload:FaceRecognitionDotNet.Image.Height
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Image.Height
+  nameWithType: Image.Height
+- uid: FaceRecognitionDotNet.Image.Save(System.String,FaceRecognitionDotNet.ImageFormat)
+  name: Save(String, ImageFormat)
+  href: api/FaceRecognitionDotNet.Image.html#FaceRecognitionDotNet_Image_Save_System_String_FaceRecognitionDotNet_ImageFormat_
+  commentId: M:FaceRecognitionDotNet.Image.Save(System.String,FaceRecognitionDotNet.ImageFormat)
+  fullName: FaceRecognitionDotNet.Image.Save(System.String, FaceRecognitionDotNet.ImageFormat)
+  nameWithType: Image.Save(String, ImageFormat)
+- uid: FaceRecognitionDotNet.Image.Save*
+  name: Save
+  href: api/FaceRecognitionDotNet.Image.html#FaceRecognitionDotNet_Image_Save_
+  commentId: Overload:FaceRecognitionDotNet.Image.Save
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Image.Save
+  nameWithType: Image.Save
+- uid: FaceRecognitionDotNet.Image.ToBitmap
+  name: ToBitmap()
+  href: api/FaceRecognitionDotNet.Image.html#FaceRecognitionDotNet_Image_ToBitmap
+  commentId: M:FaceRecognitionDotNet.Image.ToBitmap
+  fullName: FaceRecognitionDotNet.Image.ToBitmap()
+  nameWithType: Image.ToBitmap()
+- uid: FaceRecognitionDotNet.Image.ToBitmap*
+  name: ToBitmap
+  href: api/FaceRecognitionDotNet.Image.html#FaceRecognitionDotNet_Image_ToBitmap_
+  commentId: Overload:FaceRecognitionDotNet.Image.ToBitmap
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Image.ToBitmap
+  nameWithType: Image.ToBitmap
+- uid: FaceRecognitionDotNet.Image.Width
+  name: Width
+  href: api/FaceRecognitionDotNet.Image.html#FaceRecognitionDotNet_Image_Width
+  commentId: P:FaceRecognitionDotNet.Image.Width
+  fullName: FaceRecognitionDotNet.Image.Width
+  nameWithType: Image.Width
+- uid: FaceRecognitionDotNet.Image.Width*
+  name: Width
+  href: api/FaceRecognitionDotNet.Image.html#FaceRecognitionDotNet_Image_Width_
+  commentId: Overload:FaceRecognitionDotNet.Image.Width
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Image.Width
+  nameWithType: Image.Width
+- uid: FaceRecognitionDotNet.ImageFormat
+  name: ImageFormat
+  href: api/FaceRecognitionDotNet.ImageFormat.html
+  commentId: T:FaceRecognitionDotNet.ImageFormat
+  fullName: FaceRecognitionDotNet.ImageFormat
+  nameWithType: ImageFormat
+- uid: FaceRecognitionDotNet.ImageFormat.Bmp
+  name: Bmp
+  href: api/FaceRecognitionDotNet.ImageFormat.html#FaceRecognitionDotNet_ImageFormat_Bmp
+  commentId: F:FaceRecognitionDotNet.ImageFormat.Bmp
+  fullName: FaceRecognitionDotNet.ImageFormat.Bmp
+  nameWithType: ImageFormat.Bmp
+- uid: FaceRecognitionDotNet.ImageFormat.Jpeg
+  name: Jpeg
+  href: api/FaceRecognitionDotNet.ImageFormat.html#FaceRecognitionDotNet_ImageFormat_Jpeg
+  commentId: F:FaceRecognitionDotNet.ImageFormat.Jpeg
+  fullName: FaceRecognitionDotNet.ImageFormat.Jpeg
+  nameWithType: ImageFormat.Jpeg
+- uid: FaceRecognitionDotNet.ImageFormat.Png
+  name: Png
+  href: api/FaceRecognitionDotNet.ImageFormat.html#FaceRecognitionDotNet_ImageFormat_Png
+  commentId: F:FaceRecognitionDotNet.ImageFormat.Png
+  fullName: FaceRecognitionDotNet.ImageFormat.Png
+  nameWithType: ImageFormat.Png
+- uid: FaceRecognitionDotNet.Location
+  name: Location
+  href: api/FaceRecognitionDotNet.Location.html
+  commentId: T:FaceRecognitionDotNet.Location
+  fullName: FaceRecognitionDotNet.Location
+  nameWithType: Location
+- uid: FaceRecognitionDotNet.Location.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)
+  name: Location(Int32, Int32, Int32, Int32)
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location__ctor_System_Int32_System_Int32_System_Int32_System_Int32_
+  commentId: M:FaceRecognitionDotNet.Location.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)
+  fullName: FaceRecognitionDotNet.Location.Location(System.Int32, System.Int32, System.Int32, System.Int32)
+  nameWithType: Location.Location(Int32, Int32, Int32, Int32)
+- uid: FaceRecognitionDotNet.Location.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Double)
+  name: Location(Int32, Int32, Int32, Int32, Double)
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location__ctor_System_Int32_System_Int32_System_Int32_System_Int32_System_Double_
+  commentId: M:FaceRecognitionDotNet.Location.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Double)
+  fullName: FaceRecognitionDotNet.Location.Location(System.Int32, System.Int32, System.Int32, System.Int32, System.Double)
+  nameWithType: Location.Location(Int32, Int32, Int32, Int32, Double)
+- uid: FaceRecognitionDotNet.Location.#ctor*
+  name: Location
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location__ctor_
+  commentId: Overload:FaceRecognitionDotNet.Location.#ctor
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Location.Location
+  nameWithType: Location.Location
+- uid: FaceRecognitionDotNet.Location.Bottom
+  name: Bottom
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_Bottom
+  commentId: P:FaceRecognitionDotNet.Location.Bottom
+  fullName: FaceRecognitionDotNet.Location.Bottom
+  nameWithType: Location.Bottom
+- uid: FaceRecognitionDotNet.Location.Bottom*
+  name: Bottom
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_Bottom_
+  commentId: Overload:FaceRecognitionDotNet.Location.Bottom
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Location.Bottom
+  nameWithType: Location.Bottom
+- uid: FaceRecognitionDotNet.Location.Confidence
+  name: Confidence
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_Confidence
+  commentId: P:FaceRecognitionDotNet.Location.Confidence
+  fullName: FaceRecognitionDotNet.Location.Confidence
+  nameWithType: Location.Confidence
+- uid: FaceRecognitionDotNet.Location.Confidence*
+  name: Confidence
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_Confidence_
+  commentId: Overload:FaceRecognitionDotNet.Location.Confidence
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Location.Confidence
+  nameWithType: Location.Confidence
+- uid: FaceRecognitionDotNet.Location.Equals(FaceRecognitionDotNet.Location)
+  name: Equals(Location)
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_Equals_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Location.Equals(FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Location.Equals(FaceRecognitionDotNet.Location)
+  nameWithType: Location.Equals(Location)
+- uid: FaceRecognitionDotNet.Location.Equals(System.Object)
+  name: Equals(Object)
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_Equals_System_Object_
+  commentId: M:FaceRecognitionDotNet.Location.Equals(System.Object)
+  fullName: FaceRecognitionDotNet.Location.Equals(System.Object)
+  nameWithType: Location.Equals(Object)
+- uid: FaceRecognitionDotNet.Location.Equals*
+  name: Equals
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_Equals_
+  commentId: Overload:FaceRecognitionDotNet.Location.Equals
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Location.Equals
+  nameWithType: Location.Equals
+- uid: FaceRecognitionDotNet.Location.GetHashCode
+  name: GetHashCode()
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_GetHashCode
+  commentId: M:FaceRecognitionDotNet.Location.GetHashCode
+  fullName: FaceRecognitionDotNet.Location.GetHashCode()
+  nameWithType: Location.GetHashCode()
+- uid: FaceRecognitionDotNet.Location.GetHashCode*
+  name: GetHashCode
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_GetHashCode_
+  commentId: Overload:FaceRecognitionDotNet.Location.GetHashCode
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Location.GetHashCode
+  nameWithType: Location.GetHashCode
+- uid: FaceRecognitionDotNet.Location.Left
+  name: Left
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_Left
+  commentId: P:FaceRecognitionDotNet.Location.Left
+  fullName: FaceRecognitionDotNet.Location.Left
+  nameWithType: Location.Left
+- uid: FaceRecognitionDotNet.Location.Left*
+  name: Left
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_Left_
+  commentId: Overload:FaceRecognitionDotNet.Location.Left
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Location.Left
+  nameWithType: Location.Left
+- uid: FaceRecognitionDotNet.Location.op_Equality(FaceRecognitionDotNet.Location,FaceRecognitionDotNet.Location)
+  name: Equality(Location, Location)
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_op_Equality_FaceRecognitionDotNet_Location_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Location.op_Equality(FaceRecognitionDotNet.Location,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Location.Equality(FaceRecognitionDotNet.Location, FaceRecognitionDotNet.Location)
+  nameWithType: Location.Equality(Location, Location)
+- uid: FaceRecognitionDotNet.Location.op_Equality*
+  name: Equality
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_op_Equality_
+  commentId: Overload:FaceRecognitionDotNet.Location.op_Equality
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Location.Equality
+  nameWithType: Location.Equality
+- uid: FaceRecognitionDotNet.Location.op_Inequality(FaceRecognitionDotNet.Location,FaceRecognitionDotNet.Location)
+  name: Inequality(Location, Location)
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_op_Inequality_FaceRecognitionDotNet_Location_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Location.op_Inequality(FaceRecognitionDotNet.Location,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Location.Inequality(FaceRecognitionDotNet.Location, FaceRecognitionDotNet.Location)
+  nameWithType: Location.Inequality(Location, Location)
+- uid: FaceRecognitionDotNet.Location.op_Inequality*
+  name: Inequality
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_op_Inequality_
+  commentId: Overload:FaceRecognitionDotNet.Location.op_Inequality
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Location.Inequality
+  nameWithType: Location.Inequality
+- uid: FaceRecognitionDotNet.Location.Right
+  name: Right
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_Right
+  commentId: P:FaceRecognitionDotNet.Location.Right
+  fullName: FaceRecognitionDotNet.Location.Right
+  nameWithType: Location.Right
+- uid: FaceRecognitionDotNet.Location.Right*
+  name: Right
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_Right_
+  commentId: Overload:FaceRecognitionDotNet.Location.Right
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Location.Right
+  nameWithType: Location.Right
+- uid: FaceRecognitionDotNet.Location.Top
+  name: Top
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_Top
+  commentId: P:FaceRecognitionDotNet.Location.Top
+  fullName: FaceRecognitionDotNet.Location.Top
+  nameWithType: Location.Top
+- uid: FaceRecognitionDotNet.Location.Top*
+  name: Top
+  href: api/FaceRecognitionDotNet.Location.html#FaceRecognitionDotNet_Location_Top_
+  commentId: Overload:FaceRecognitionDotNet.Location.Top
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Location.Top
+  nameWithType: Location.Top
+- uid: FaceRecognitionDotNet.Mode
+  name: Mode
+  href: api/FaceRecognitionDotNet.Mode.html
+  commentId: T:FaceRecognitionDotNet.Mode
+  fullName: FaceRecognitionDotNet.Mode
+  nameWithType: Mode
+- uid: FaceRecognitionDotNet.Mode.Greyscale
+  name: Greyscale
+  href: api/FaceRecognitionDotNet.Mode.html#FaceRecognitionDotNet_Mode_Greyscale
+  commentId: F:FaceRecognitionDotNet.Mode.Greyscale
+  fullName: FaceRecognitionDotNet.Mode.Greyscale
+  nameWithType: Mode.Greyscale
+- uid: FaceRecognitionDotNet.Mode.Rgb
+  name: Rgb
+  href: api/FaceRecognitionDotNet.Mode.html#FaceRecognitionDotNet_Mode_Rgb
+  commentId: F:FaceRecognitionDotNet.Mode.Rgb
+  fullName: FaceRecognitionDotNet.Mode.Rgb
+  nameWithType: Mode.Rgb
+- uid: FaceRecognitionDotNet.Model
+  name: Model
+  href: api/FaceRecognitionDotNet.Model.html
+  commentId: T:FaceRecognitionDotNet.Model
+  fullName: FaceRecognitionDotNet.Model
+  nameWithType: Model
+- uid: FaceRecognitionDotNet.Model.Cnn
+  name: Cnn
+  href: api/FaceRecognitionDotNet.Model.html#FaceRecognitionDotNet_Model_Cnn
+  commentId: F:FaceRecognitionDotNet.Model.Cnn
+  fullName: FaceRecognitionDotNet.Model.Cnn
+  nameWithType: Model.Cnn
+- uid: FaceRecognitionDotNet.Model.Custom
+  name: Custom
+  href: api/FaceRecognitionDotNet.Model.html#FaceRecognitionDotNet_Model_Custom
+  commentId: F:FaceRecognitionDotNet.Model.Custom
+  fullName: FaceRecognitionDotNet.Model.Custom
+  nameWithType: Model.Custom
+- uid: FaceRecognitionDotNet.Model.Hog
+  name: Hog
+  href: api/FaceRecognitionDotNet.Model.html#FaceRecognitionDotNet_Model_Hog
+  commentId: F:FaceRecognitionDotNet.Model.Hog
+  fullName: FaceRecognitionDotNet.Model.Hog
+  nameWithType: Model.Hog
+- uid: FaceRecognitionDotNet.ModelParameter
+  name: ModelParameter
+  href: api/FaceRecognitionDotNet.ModelParameter.html
+  commentId: T:FaceRecognitionDotNet.ModelParameter
+  fullName: FaceRecognitionDotNet.ModelParameter
+  nameWithType: ModelParameter
+- uid: FaceRecognitionDotNet.ModelParameter.CnnFaceDetectorModel
+  name: CnnFaceDetectorModel
+  href: api/FaceRecognitionDotNet.ModelParameter.html#FaceRecognitionDotNet_ModelParameter_CnnFaceDetectorModel
+  commentId: P:FaceRecognitionDotNet.ModelParameter.CnnFaceDetectorModel
+  fullName: FaceRecognitionDotNet.ModelParameter.CnnFaceDetectorModel
+  nameWithType: ModelParameter.CnnFaceDetectorModel
+- uid: FaceRecognitionDotNet.ModelParameter.CnnFaceDetectorModel*
+  name: CnnFaceDetectorModel
+  href: api/FaceRecognitionDotNet.ModelParameter.html#FaceRecognitionDotNet_ModelParameter_CnnFaceDetectorModel_
+  commentId: Overload:FaceRecognitionDotNet.ModelParameter.CnnFaceDetectorModel
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.ModelParameter.CnnFaceDetectorModel
+  nameWithType: ModelParameter.CnnFaceDetectorModel
+- uid: FaceRecognitionDotNet.ModelParameter.FaceRecognitionModel
+  name: FaceRecognitionModel
+  href: api/FaceRecognitionDotNet.ModelParameter.html#FaceRecognitionDotNet_ModelParameter_FaceRecognitionModel
+  commentId: P:FaceRecognitionDotNet.ModelParameter.FaceRecognitionModel
+  fullName: FaceRecognitionDotNet.ModelParameter.FaceRecognitionModel
+  nameWithType: ModelParameter.FaceRecognitionModel
+- uid: FaceRecognitionDotNet.ModelParameter.FaceRecognitionModel*
+  name: FaceRecognitionModel
+  href: api/FaceRecognitionDotNet.ModelParameter.html#FaceRecognitionDotNet_ModelParameter_FaceRecognitionModel_
+  commentId: Overload:FaceRecognitionDotNet.ModelParameter.FaceRecognitionModel
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.ModelParameter.FaceRecognitionModel
+  nameWithType: ModelParameter.FaceRecognitionModel
+- uid: FaceRecognitionDotNet.ModelParameter.PosePredictor5FaceLandmarksModel
+  name: PosePredictor5FaceLandmarksModel
+  href: api/FaceRecognitionDotNet.ModelParameter.html#FaceRecognitionDotNet_ModelParameter_PosePredictor5FaceLandmarksModel
+  commentId: P:FaceRecognitionDotNet.ModelParameter.PosePredictor5FaceLandmarksModel
+  fullName: FaceRecognitionDotNet.ModelParameter.PosePredictor5FaceLandmarksModel
+  nameWithType: ModelParameter.PosePredictor5FaceLandmarksModel
+- uid: FaceRecognitionDotNet.ModelParameter.PosePredictor5FaceLandmarksModel*
+  name: PosePredictor5FaceLandmarksModel
+  href: api/FaceRecognitionDotNet.ModelParameter.html#FaceRecognitionDotNet_ModelParameter_PosePredictor5FaceLandmarksModel_
+  commentId: Overload:FaceRecognitionDotNet.ModelParameter.PosePredictor5FaceLandmarksModel
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.ModelParameter.PosePredictor5FaceLandmarksModel
+  nameWithType: ModelParameter.PosePredictor5FaceLandmarksModel
+- uid: FaceRecognitionDotNet.ModelParameter.PosePredictor68FaceLandmarksModel
+  name: PosePredictor68FaceLandmarksModel
+  href: api/FaceRecognitionDotNet.ModelParameter.html#FaceRecognitionDotNet_ModelParameter_PosePredictor68FaceLandmarksModel
+  commentId: P:FaceRecognitionDotNet.ModelParameter.PosePredictor68FaceLandmarksModel
+  fullName: FaceRecognitionDotNet.ModelParameter.PosePredictor68FaceLandmarksModel
+  nameWithType: ModelParameter.PosePredictor68FaceLandmarksModel
+- uid: FaceRecognitionDotNet.ModelParameter.PosePredictor68FaceLandmarksModel*
+  name: PosePredictor68FaceLandmarksModel
+  href: api/FaceRecognitionDotNet.ModelParameter.html#FaceRecognitionDotNet_ModelParameter_PosePredictor68FaceLandmarksModel_
+  commentId: Overload:FaceRecognitionDotNet.ModelParameter.PosePredictor68FaceLandmarksModel
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.ModelParameter.PosePredictor68FaceLandmarksModel
+  nameWithType: ModelParameter.PosePredictor68FaceLandmarksModel
+- uid: FaceRecognitionDotNet.Point
+  name: Point
+  href: api/FaceRecognitionDotNet.Point.html
+  commentId: T:FaceRecognitionDotNet.Point
+  fullName: FaceRecognitionDotNet.Point
+  nameWithType: Point
+- uid: FaceRecognitionDotNet.Point.#ctor(System.Int32,System.Int32)
+  name: Point(Int32, Int32)
+  href: api/FaceRecognitionDotNet.Point.html#FaceRecognitionDotNet_Point__ctor_System_Int32_System_Int32_
+  commentId: M:FaceRecognitionDotNet.Point.#ctor(System.Int32,System.Int32)
+  fullName: FaceRecognitionDotNet.Point.Point(System.Int32, System.Int32)
+  nameWithType: Point.Point(Int32, Int32)
+- uid: FaceRecognitionDotNet.Point.#ctor*
+  name: Point
+  href: api/FaceRecognitionDotNet.Point.html#FaceRecognitionDotNet_Point__ctor_
+  commentId: Overload:FaceRecognitionDotNet.Point.#ctor
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Point.Point
+  nameWithType: Point.Point
+- uid: FaceRecognitionDotNet.Point.Equals(FaceRecognitionDotNet.Point)
+  name: Equals(Point)
+  href: api/FaceRecognitionDotNet.Point.html#FaceRecognitionDotNet_Point_Equals_FaceRecognitionDotNet_Point_
+  commentId: M:FaceRecognitionDotNet.Point.Equals(FaceRecognitionDotNet.Point)
+  fullName: FaceRecognitionDotNet.Point.Equals(FaceRecognitionDotNet.Point)
+  nameWithType: Point.Equals(Point)
+- uid: FaceRecognitionDotNet.Point.Equals(System.Object)
+  name: Equals(Object)
+  href: api/FaceRecognitionDotNet.Point.html#FaceRecognitionDotNet_Point_Equals_System_Object_
+  commentId: M:FaceRecognitionDotNet.Point.Equals(System.Object)
+  fullName: FaceRecognitionDotNet.Point.Equals(System.Object)
+  nameWithType: Point.Equals(Object)
+- uid: FaceRecognitionDotNet.Point.Equals*
+  name: Equals
+  href: api/FaceRecognitionDotNet.Point.html#FaceRecognitionDotNet_Point_Equals_
+  commentId: Overload:FaceRecognitionDotNet.Point.Equals
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Point.Equals
+  nameWithType: Point.Equals
+- uid: FaceRecognitionDotNet.Point.GetHashCode
+  name: GetHashCode()
+  href: api/FaceRecognitionDotNet.Point.html#FaceRecognitionDotNet_Point_GetHashCode
+  commentId: M:FaceRecognitionDotNet.Point.GetHashCode
+  fullName: FaceRecognitionDotNet.Point.GetHashCode()
+  nameWithType: Point.GetHashCode()
+- uid: FaceRecognitionDotNet.Point.GetHashCode*
+  name: GetHashCode
+  href: api/FaceRecognitionDotNet.Point.html#FaceRecognitionDotNet_Point_GetHashCode_
+  commentId: Overload:FaceRecognitionDotNet.Point.GetHashCode
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Point.GetHashCode
+  nameWithType: Point.GetHashCode
+- uid: FaceRecognitionDotNet.Point.op_Equality(FaceRecognitionDotNet.Point,FaceRecognitionDotNet.Point)
+  name: Equality(Point, Point)
+  href: api/FaceRecognitionDotNet.Point.html#FaceRecognitionDotNet_Point_op_Equality_FaceRecognitionDotNet_Point_FaceRecognitionDotNet_Point_
+  commentId: M:FaceRecognitionDotNet.Point.op_Equality(FaceRecognitionDotNet.Point,FaceRecognitionDotNet.Point)
+  fullName: FaceRecognitionDotNet.Point.Equality(FaceRecognitionDotNet.Point, FaceRecognitionDotNet.Point)
+  nameWithType: Point.Equality(Point, Point)
+- uid: FaceRecognitionDotNet.Point.op_Equality*
+  name: Equality
+  href: api/FaceRecognitionDotNet.Point.html#FaceRecognitionDotNet_Point_op_Equality_
+  commentId: Overload:FaceRecognitionDotNet.Point.op_Equality
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Point.Equality
+  nameWithType: Point.Equality
+- uid: FaceRecognitionDotNet.Point.op_Inequality(FaceRecognitionDotNet.Point,FaceRecognitionDotNet.Point)
+  name: Inequality(Point, Point)
+  href: api/FaceRecognitionDotNet.Point.html#FaceRecognitionDotNet_Point_op_Inequality_FaceRecognitionDotNet_Point_FaceRecognitionDotNet_Point_
+  commentId: M:FaceRecognitionDotNet.Point.op_Inequality(FaceRecognitionDotNet.Point,FaceRecognitionDotNet.Point)
+  fullName: FaceRecognitionDotNet.Point.Inequality(FaceRecognitionDotNet.Point, FaceRecognitionDotNet.Point)
+  nameWithType: Point.Inequality(Point, Point)
+- uid: FaceRecognitionDotNet.Point.op_Inequality*
+  name: Inequality
+  href: api/FaceRecognitionDotNet.Point.html#FaceRecognitionDotNet_Point_op_Inequality_
+  commentId: Overload:FaceRecognitionDotNet.Point.op_Inequality
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Point.Inequality
+  nameWithType: Point.Inequality
+- uid: FaceRecognitionDotNet.Point.X
+  name: X
+  href: api/FaceRecognitionDotNet.Point.html#FaceRecognitionDotNet_Point_X
+  commentId: P:FaceRecognitionDotNet.Point.X
+  fullName: FaceRecognitionDotNet.Point.X
+  nameWithType: Point.X
+- uid: FaceRecognitionDotNet.Point.X*
+  name: X
+  href: api/FaceRecognitionDotNet.Point.html#FaceRecognitionDotNet_Point_X_
+  commentId: Overload:FaceRecognitionDotNet.Point.X
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Point.X
+  nameWithType: Point.X
+- uid: FaceRecognitionDotNet.Point.Y
+  name: Y
+  href: api/FaceRecognitionDotNet.Point.html#FaceRecognitionDotNet_Point_Y
+  commentId: P:FaceRecognitionDotNet.Point.Y
+  fullName: FaceRecognitionDotNet.Point.Y
+  nameWithType: Point.Y
+- uid: FaceRecognitionDotNet.Point.Y*
+  name: Y
+  href: api/FaceRecognitionDotNet.Point.html#FaceRecognitionDotNet_Point_Y_
+  commentId: Overload:FaceRecognitionDotNet.Point.Y
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Point.Y
+  nameWithType: Point.Y
+- uid: FaceRecognitionDotNet.PredictorModel
+  name: PredictorModel
+  href: api/FaceRecognitionDotNet.PredictorModel.html
+  commentId: T:FaceRecognitionDotNet.PredictorModel
+  fullName: FaceRecognitionDotNet.PredictorModel
+  nameWithType: PredictorModel
+- uid: FaceRecognitionDotNet.PredictorModel.Custom
+  name: Custom
+  href: api/FaceRecognitionDotNet.PredictorModel.html#FaceRecognitionDotNet_PredictorModel_Custom
+  commentId: F:FaceRecognitionDotNet.PredictorModel.Custom
+  fullName: FaceRecognitionDotNet.PredictorModel.Custom
+  nameWithType: PredictorModel.Custom
+- uid: FaceRecognitionDotNet.PredictorModel.Large
+  name: Large
+  href: api/FaceRecognitionDotNet.PredictorModel.html#FaceRecognitionDotNet_PredictorModel_Large
+  commentId: F:FaceRecognitionDotNet.PredictorModel.Large
+  fullName: FaceRecognitionDotNet.PredictorModel.Large
+  nameWithType: PredictorModel.Large
+- uid: FaceRecognitionDotNet.PredictorModel.Small
+  name: Small
+  href: api/FaceRecognitionDotNet.PredictorModel.html#FaceRecognitionDotNet_PredictorModel_Small
+  commentId: F:FaceRecognitionDotNet.PredictorModel.Small
+  fullName: FaceRecognitionDotNet.PredictorModel.Small
+  nameWithType: PredictorModel.Small

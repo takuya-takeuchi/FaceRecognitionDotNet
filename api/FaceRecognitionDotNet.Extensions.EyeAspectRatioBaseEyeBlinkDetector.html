@@ -1,0 +1,511 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class EyeAspectRatioBaseEyeBlinkDetector
+   | FaceRecognitionDotNet API Document </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class EyeAspectRatioBaseEyeBlinkDetector
+   | FaceRecognitionDotNet API Document ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector">
+  
+  
+  <h1 id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector" class="text-break">Class EyeAspectRatioBaseEyeBlinkDetector
+  </h1>
+  <div class="markdown level0 summary"><p>An abstract base class that provides functionality to detect human eye's blink base on eye aspect ratio (EAR).</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="FaceRecognitionDotNet.DisposableObject.html">DisposableObject</a></div>
+    <div class="level2"><a class="xref" href="FaceRecognitionDotNet.Extensions.EyeBlinkDetector.html">EyeBlinkDetector</a></div>
+    <div class="level3"><span class="xref">EyeAspectRatioBaseEyeBlinkDetector</span></div>
+      <div class="level4"><a class="xref" href="FaceRecognitionDotNet.Extensions.EyeAspectRatioHelenEyeBlinkDetector.html">EyeAspectRatioHelenEyeBlinkDetector</a></div>
+      <div class="level4"><a class="xref" href="FaceRecognitionDotNet.Extensions.EyeAspectRatioLargeEyeBlinkDetector.html">EyeAspectRatioLargeEyeBlinkDetector</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">System.IDisposable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_IsDisposed">DisposableObject.IsDisposed</a>
+    </div>
+    <div>
+      <a class="xref" href="FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_ThrowIfDisposed">DisposableObject.ThrowIfDisposed()</a>
+    </div>
+    <div>
+      <a class="xref" href="FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_DisposeManaged">DisposableObject.DisposeManaged()</a>
+    </div>
+    <div>
+      <a class="xref" href="FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_DisposeUnmanaged">DisposableObject.DisposeUnmanaged()</a>
+    </div>
+    <div>
+      <a class="xref" href="FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_Dispose">DisposableObject.Dispose()</a>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="FaceRecognitionDotNet.Extensions.html">FaceRecognitionDotNet.Extensions</a></h6>
+  <h6><strong>Assembly</strong>: FaceRecognitionDotNet.dll</h6>
+  <h5 id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class EyeAspectRatioBaseEyeBlinkDetector : EyeBlinkDetector, IDisposable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector__ctor_System_Double_System_Double_System_Int32___System_Int32___.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.%23ctor(System.Double%2CSystem.Double%2CSystem.Int32%5B%5D%2CSystem.Int32%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/Extensions/EyeAspectRatioBaseEyeBlinkDetector.cs/#L25">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector__ctor_" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.#ctor*"></a>
+  <h4 id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector__ctor_System_Double_System_Double_System_Int32___System_Int32___" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.#ctor(System.Double,System.Double,System.Int32[],System.Int32[])">EyeAspectRatioBaseEyeBlinkDetector(Double, Double, Int32[], Int32[])</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html">EyeAspectRatioBaseEyeBlinkDetector</a> class with the threshold and eye point indices for left and right eyes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected EyeAspectRatioBaseEyeBlinkDetector(double leftRatioThreshold, double rightRatioThreshold, int[] leftEyePointIndices, int[] rightEyePointIndices)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">leftRatioThreshold</span></td>
+        <td><p>The threshold to decide that left eye blinks or not.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">rightRatioThreshold</span></td>
+        <td><p>The threshold to decide that right eye blinks or not.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span>[]</td>
+        <td><span class="parametername">leftEyePointIndices</span></td>
+        <td><p>The indices of left eye location to calculate eye aspect ratio.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span>[]</td>
+        <td><span class="parametername">rightEyePointIndices</span></td>
+        <td><p>The indices of right eye location to calculate eye aspect ratio.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">leftEyePointIndices</code> or <code data-dev-comment-type="paramref" class="paramref">rightEyePointIndices</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">leftEyePointIndices</code> or <code data-dev-comment-type="paramref" class="paramref">rightEyePointIndices</code> does not contain 6 elements.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_LeftEyePointIndices.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftEyePointIndices%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/Extensions/EyeAspectRatioBaseEyeBlinkDetector.cs/#L53">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_LeftEyePointIndices_" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftEyePointIndices*"></a>
+  <h4 id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_LeftEyePointIndices" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftEyePointIndices">LeftEyePointIndices</h4>
+  <div class="markdown level1 summary"><p>Gets the array of the indices of left eye location to be used calculating eye aspect ratio.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected int[] LeftEyePointIndices { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_LeftRatioThreshold.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftRatioThreshold%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/Extensions/EyeAspectRatioBaseEyeBlinkDetector.cs/#L61">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_LeftRatioThreshold_" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftRatioThreshold*"></a>
+  <h4 id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_LeftRatioThreshold" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.LeftRatioThreshold">LeftRatioThreshold</h4>
+  <div class="markdown level1 summary"><p>Gets the threshold to decide that left eye blinks or not.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double LeftRatioThreshold { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_RightEyePointIndices.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightEyePointIndices%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/Extensions/EyeAspectRatioBaseEyeBlinkDetector.cs/#L69">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_RightEyePointIndices_" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightEyePointIndices*"></a>
+  <h4 id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_RightEyePointIndices" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightEyePointIndices">RightEyePointIndices</h4>
+  <div class="markdown level1 summary"><p>Gets the array of the indices of right eye location to be used calculating eye aspect ratio.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected int[] RightEyePointIndices { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_RightRatioThreshold.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightRatioThreshold%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/Extensions/EyeAspectRatioBaseEyeBlinkDetector.cs/#L77">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_RightRatioThreshold_" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightRatioThreshold*"></a>
+  <h4 id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_RightRatioThreshold" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RightRatioThreshold">RightRatioThreshold</h4>
+  <div class="markdown level1 summary"><p>Gets the threshold to decide that right eye blinks or not.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double RightRatioThreshold { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_GetEar_System_Collections_Generic_IList_FaceRecognitionDotNet_FacePoint__System_Collections_Generic_IList_System_Int32__.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.GetEar(System.Collections.Generic.IList%7BFaceRecognitionDotNet.FacePoint%7D%2CSystem.Collections.Generic.IList%7BSystem.Int32%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/Extensions/EyeAspectRatioBaseEyeBlinkDetector.cs/#L116">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_GetEar_" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.GetEar*"></a>
+  <h4 id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_GetEar_System_Collections_Generic_IList_FaceRecognitionDotNet_FacePoint__System_Collections_Generic_IList_System_Int32__" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.GetEar(System.Collections.Generic.IList{FaceRecognitionDotNet.FacePoint},System.Collections.Generic.IList{System.Int32})">GetEar(IList&lt;FacePoint&gt;, IList&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Return an eye aspect ratio.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected double GetEar(IList&lt;FacePoint&gt; eye, IList&lt;int&gt; eyePointIndices)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IList</span>&lt;<a class="xref" href="FaceRecognitionDotNet.FacePoint.html">FacePoint</a>&gt;</td>
+        <td><span class="parametername">eye</span></td>
+        <td><p>The collection of location corresponding to human eye.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IList</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">eyePointIndices</span></td>
+        <td><p>The collection of the indices of eye location to be used calculating eye aspect ratio.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><p>Eye aspect ratio.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_RawDetect_System_Collections_Generic_IDictionary_FaceRecognitionDotNet_FacePart_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FacePoint___System_Boolean__System_Boolean__.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary%7BFaceRecognitionDotNet.FacePart%2CSystem.Collections.Generic.IEnumerable%7BFaceRecognitionDotNet.FacePoint%7D%7D%2CSystem.Boolean%40%2CSystem.Boolean%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/Extensions/EyeAspectRatioBaseEyeBlinkDetector.cs/#L94">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_RawDetect_" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RawDetect*"></a>
+  <h4 id="FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector_RawDetect_System_Collections_Generic_IDictionary_FaceRecognitionDotNet_FacePart_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FacePoint___System_Boolean__System_Boolean__" data-uid="FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.RawDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}},System.Boolean@,System.Boolean@)">RawDetect(IDictionary&lt;FacePart, IEnumerable&lt;FacePoint&gt;&gt;, out Boolean, out Boolean)</h4>
+  <div class="markdown level1 summary"><p>Detects the values whether human eye's blink or not from face landmark.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void RawDetect(IDictionary&lt;FacePart, IEnumerable&lt;FacePoint&gt;&gt; landmark, out bool leftBlink, out bool rightBlink)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IDictionary</span>&lt;<a class="xref" href="FaceRecognitionDotNet.FacePart.html">FacePart</a>, <span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="FaceRecognitionDotNet.FacePoint.html">FacePoint</a>&gt;&gt;</td>
+        <td><span class="parametername">landmark</span></td>
+        <td><p>The dictionary of face parts locations (eyes, nose, etc).</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">leftBlink</span></td>
+        <td><p>When this method returns, contains <returns>true</returns>, if the left eye blinks; otherwise, <returns>false</returns>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">rightBlink</span></td>
+        <td><p>When this method returns, contains <returns>true</returns>, if the right eye blinks; otherwise, <returns>false</returns>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="FaceRecognitionDotNet.Extensions.EyeBlinkDetector.html#FaceRecognitionDotNet_Extensions_EyeBlinkDetector_RawDetect_System_Collections_Generic_IDictionary_FaceRecognitionDotNet_FacePart_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FacePoint___System_Boolean__System_Boolean__">EyeBlinkDetector.RawDetect(IDictionary&lt;FacePart, IEnumerable&lt;FacePoint&gt;&gt;, out Boolean, out Boolean)</a></div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">landmark</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">landmark</code> does not contain <a class="xref" href="FaceRecognitionDotNet.FacePart.html#FaceRecognitionDotNet_FacePart_LeftEye">LeftEye</a> or <a class="xref" href="FaceRecognitionDotNet.FacePart.html#FaceRecognitionDotNet_FacePart_RightEye">RightEye</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">System.IDisposable</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_Extensions_EyeAspectRatioBaseEyeBlinkDetector.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/Extensions/EyeAspectRatioBaseEyeBlinkDetector.cs/#L11" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

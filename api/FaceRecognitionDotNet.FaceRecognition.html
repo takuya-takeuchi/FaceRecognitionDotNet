@@ -1,0 +1,2237 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class FaceRecognition
+   | FaceRecognitionDotNet API Document </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class FaceRecognition
+   | FaceRecognitionDotNet API Document ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="FaceRecognitionDotNet.FaceRecognition">
+  
+  
+  <h1 id="FaceRecognitionDotNet_FaceRecognition" data-uid="FaceRecognitionDotNet.FaceRecognition" class="text-break">Class FaceRecognition
+  </h1>
+  <div class="markdown level0 summary"><p>Provides the method to find and recognize face methods. This class cannot be inherited.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="FaceRecognitionDotNet.DisposableObject.html">DisposableObject</a></div>
+    <div class="level2"><span class="xref">FaceRecognition</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">System.IDisposable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_IsDisposed">DisposableObject.IsDisposed</a>
+    </div>
+    <div>
+      <a class="xref" href="FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_ThrowIfDisposed">DisposableObject.ThrowIfDisposed()</a>
+    </div>
+    <div>
+      <a class="xref" href="FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_DisposeManaged">DisposableObject.DisposeManaged()</a>
+    </div>
+    <div>
+      <a class="xref" href="FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_Dispose">DisposableObject.Dispose()</a>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="FaceRecognitionDotNet.html">FaceRecognitionDotNet</a></h6>
+  <h6><strong>Assembly</strong>: FaceRecognitionDotNet.dll</h6>
+  <h5 id="FaceRecognitionDotNet_FaceRecognition_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class FaceRecognition : DisposableObject, IDisposable</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_CustomAgeEstimator.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.CustomAgeEstimator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L141">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_CustomAgeEstimator_" data-uid="FaceRecognitionDotNet.FaceRecognition.CustomAgeEstimator*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_CustomAgeEstimator" data-uid="FaceRecognitionDotNet.FaceRecognition.CustomAgeEstimator">CustomAgeEstimator</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the custom age estimator that user defined.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AgeEstimator CustomAgeEstimator { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Extensions.AgeEstimator.html">AgeEstimator</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_CustomEyeBlinkDetector.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.CustomEyeBlinkDetector%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L150">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_CustomEyeBlinkDetector_" data-uid="FaceRecognitionDotNet.FaceRecognition.CustomEyeBlinkDetector*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_CustomEyeBlinkDetector" data-uid="FaceRecognitionDotNet.FaceRecognition.CustomEyeBlinkDetector">CustomEyeBlinkDetector</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the custom eye blink detector that user defined.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EyeBlinkDetector CustomEyeBlinkDetector { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Extensions.EyeBlinkDetector.html">EyeBlinkDetector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_CustomFaceDetector.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.CustomFaceDetector%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L168">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_CustomFaceDetector_" data-uid="FaceRecognitionDotNet.FaceRecognition.CustomFaceDetector*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_CustomFaceDetector" data-uid="FaceRecognitionDotNet.FaceRecognition.CustomFaceDetector">CustomFaceDetector</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the custom face detector that user defined.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FaceDetector CustomFaceDetector { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Extensions.FaceDetector.html">FaceDetector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_CustomFaceLandmarkDetector.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.CustomFaceLandmarkDetector%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L177">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_CustomFaceLandmarkDetector_" data-uid="FaceRecognitionDotNet.FaceRecognition.CustomFaceLandmarkDetector*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_CustomFaceLandmarkDetector" data-uid="FaceRecognitionDotNet.FaceRecognition.CustomFaceLandmarkDetector">CustomFaceLandmarkDetector</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the custom face landmark detector that user defined.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FaceLandmarkDetector CustomFaceLandmarkDetector { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Extensions.FaceLandmarkDetector.html">FaceLandmarkDetector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_CustomGenderEstimator.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.CustomGenderEstimator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L159">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_CustomGenderEstimator_" data-uid="FaceRecognitionDotNet.FaceRecognition.CustomGenderEstimator*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_CustomGenderEstimator" data-uid="FaceRecognitionDotNet.FaceRecognition.CustomGenderEstimator">CustomGenderEstimator</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the custom gender estimator that user defined.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GenderEstimator CustomGenderEstimator { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Extensions.GenderEstimator.html">GenderEstimator</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_CustomHeadPoseEstimator.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.CustomHeadPoseEstimator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L186">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_CustomHeadPoseEstimator_" data-uid="FaceRecognitionDotNet.FaceRecognition.CustomHeadPoseEstimator*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_CustomHeadPoseEstimator" data-uid="FaceRecognitionDotNet.FaceRecognition.CustomHeadPoseEstimator">CustomHeadPoseEstimator</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the custom head pose estimator that user defined.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HeadPoseEstimator CustomHeadPoseEstimator { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Extensions.HeadPoseEstimator.html">HeadPoseEstimator</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_InternalEncoding.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.InternalEncoding%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L195">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_InternalEncoding_" data-uid="FaceRecognitionDotNet.FaceRecognition.InternalEncoding*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_InternalEncoding" data-uid="FaceRecognitionDotNet.FaceRecognition.InternalEncoding">InternalEncoding</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the character encoding to convert <span class="xref">System.String</span> to array of <span class="xref">System.Byte</span> for internal library.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Encoding InternalEncoding { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Text.Encoding</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_BatchFaceLocations_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_Image__System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations(System.Collections.Generic.IEnumerable%7BFaceRecognitionDotNet.Image%7D%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L213">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_BatchFaceLocations_" data-uid="FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_BatchFaceLocations_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_Image__System_Int32_System_Int32_" data-uid="FaceRecognitionDotNet.FaceRecognition.BatchFaceLocations(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Image},System.Int32,System.Int32)">BatchFaceLocations(IEnumerable&lt;Image&gt;, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Returns an enumerable collection of array of bounding boxes of human faces in a image using the cnn face detector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Location[]&gt; BatchFaceLocations(IEnumerable&lt;Image&gt; images, int numberOfTimesToUpsample = 1, int batchSize = 128)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a>&gt;</td>
+        <td><span class="parametername">images</span></td>
+        <td><p>An enumerable collection of images.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">numberOfTimesToUpsample</span></td>
+        <td><p>The number of image looking for faces. Higher numbers find smaller faces.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">batchSize</span></td>
+        <td><p>The number of images to include in each GPU processing batch.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="FaceRecognitionDotNet.Location.html">Location</a>[]&gt;</td>
+        <td><p>An enumerable collection of array of found face locations.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">images</code> is null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_CompareFace_FaceRecognitionDotNet_FaceEncoding_FaceRecognitionDotNet_FaceEncoding_System_Double_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.CompareFace(FaceRecognitionDotNet.FaceEncoding%2CFaceRecognitionDotNet.FaceEncoding%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L244">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_CompareFace_" data-uid="FaceRecognitionDotNet.FaceRecognition.CompareFace*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_CompareFace_FaceRecognitionDotNet_FaceEncoding_FaceRecognitionDotNet_FaceEncoding_System_Double_" data-uid="FaceRecognitionDotNet.FaceRecognition.CompareFace(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding,System.Double)">CompareFace(FaceEncoding, FaceEncoding, Double)</h4>
+  <div class="markdown level1 summary"><p>Compare a known face encoding against a candidate encoding to see if they match.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool CompareFace(FaceEncoding knownFaceEncoding, FaceEncoding faceEncodingToCheck, double tolerance = 0.6)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.FaceEncoding.html">FaceEncoding</a></td>
+        <td><span class="parametername">knownFaceEncoding</span></td>
+        <td><p>A known face encodings.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.FaceEncoding.html">FaceEncoding</a></td>
+        <td><span class="parametername">faceEncodingToCheck</span></td>
+        <td><p>A single face encoding to compare against a known face encoding.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">tolerance</span></td>
+        <td><p>The distance between faces to consider it a match. Lower is more strict. The default value is 0.6.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>A True/False value indicating which known a face encoding matches the face encoding to check.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">knownFaceEncoding</code> or <code data-dev-comment-type="paramref" class="paramref">faceEncodingToCheck</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">knownFaceEncoding</code> or <code data-dev-comment-type="paramref" class="paramref">faceEncodingToCheck</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_CompareFaces_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FaceEncoding__FaceRecognitionDotNet_FaceEncoding_System_Double_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.CompareFaces(System.Collections.Generic.IEnumerable%7BFaceRecognitionDotNet.FaceEncoding%7D%2CFaceRecognitionDotNet.FaceEncoding%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L266">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_CompareFaces_" data-uid="FaceRecognitionDotNet.FaceRecognition.CompareFaces*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_CompareFaces_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FaceEncoding__FaceRecognitionDotNet_FaceEncoding_System_Double_" data-uid="FaceRecognitionDotNet.FaceRecognition.CompareFaces(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding,System.Double)">CompareFaces(IEnumerable&lt;FaceEncoding&gt;, FaceEncoding, Double)</h4>
+  <div class="markdown level1 summary"><p>Compare an enumerable collection of face encodings against a candidate encoding to see if they match.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;bool&gt; CompareFaces(IEnumerable&lt;FaceEncoding&gt; knownFaceEncodings, FaceEncoding faceEncodingToCheck, double tolerance = 0.6)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="FaceRecognitionDotNet.FaceEncoding.html">FaceEncoding</a>&gt;</td>
+        <td><span class="parametername">knownFaceEncodings</span></td>
+        <td><p>An enumerable collection of known face encodings.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.FaceEncoding.html">FaceEncoding</a></td>
+        <td><span class="parametername">faceEncodingToCheck</span></td>
+        <td><p>A single face encoding to compare against the enumerable collection.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">tolerance</span></td>
+        <td><p>The distance between faces to consider it a match. Lower is more strict. The default value is 0.6.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><p>An enumerable collection of True/False values indicating which known face encodings match the face encoding to check.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">knownFaceEncodings</code> or <code data-dev-comment-type="paramref" class="paramref">faceEncodingToCheck</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">faceEncodingToCheck</code> is disposed. Or <code data-dev-comment-type="paramref" class="paramref">knownFaceEncodings</code> contains disposed object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_Create_FaceRecognitionDotNet_ModelParameter_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.Create(FaceRecognitionDotNet.ModelParameter)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L303">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_Create_" data-uid="FaceRecognitionDotNet.FaceRecognition.Create*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_Create_FaceRecognitionDotNet_ModelParameter_" data-uid="FaceRecognitionDotNet.FaceRecognition.Create(FaceRecognitionDotNet.ModelParameter)">Create(ModelParameter)</h4>
+  <div class="markdown level1 summary"><p>Create a new instance of the <a class="xref" href="FaceRecognitionDotNet.FaceRecognition.html">FaceRecognition</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FaceRecognition Create(ModelParameter parameter)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.ModelParameter.html">ModelParameter</a></td>
+        <td><span class="parametername">parameter</span></td>
+        <td><p>The instance that contains model binary datum.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.FaceRecognition.html">FaceRecognition</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">parameter</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.NullReferenceException</span></td>
+        <td><p>The model data is null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_Create_System_String_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.Create(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L292">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_Create_" data-uid="FaceRecognitionDotNet.FaceRecognition.Create*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_Create_System_String_" data-uid="FaceRecognitionDotNet.FaceRecognition.Create(System.String)">Create(String)</h4>
+  <div class="markdown level1 summary"><p>Create a new instance of the <a class="xref" href="FaceRecognitionDotNet.FaceRecognition.html">FaceRecognition</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FaceRecognition Create(string directory)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">directory</span></td>
+        <td><p>The directory path that stores model files.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.FaceRecognition.html">FaceRecognition</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IO.FileNotFoundException</span></td>
+        <td><p>The model file is not found.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.IO.DirectoryNotFoundException</span></td>
+        <td><p>The specified directory path is not found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_CropFaces_FaceRecognitionDotNet_Image_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_Location__.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.CropFaces(FaceRecognitionDotNet.Image%2CSystem.Collections.Generic.IEnumerable%7BFaceRecognitionDotNet.Location%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L316">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_CropFaces_" data-uid="FaceRecognitionDotNet.FaceRecognition.CropFaces*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_CropFaces_FaceRecognitionDotNet_Image_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_Location__" data-uid="FaceRecognitionDotNet.FaceRecognition.CropFaces(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location})">CropFaces(Image, IEnumerable&lt;Location&gt;)</h4>
+  <div class="markdown level1 summary"><p>Crop a specified image with enumerable collection of face locations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;Image&gt; CropFaces(Image image, IEnumerable&lt;Location&gt; locations)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a></td>
+        <td><span class="parametername">image</span></td>
+        <td><p>The image contains a face.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="FaceRecognitionDotNet.Location.html">Location</a>&gt;</td>
+        <td><span class="parametername">locations</span></td>
+        <td><p>The enumerable collection of location rectangle for faces.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">image</code> or <code data-dev-comment-type="paramref" class="paramref">locations</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">image</code> is disposed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_DisposeUnmanaged.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L1057">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_DisposeUnmanaged_" data-uid="FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_DisposeUnmanaged" data-uid="FaceRecognitionDotNet.FaceRecognition.DisposeUnmanaged">DisposeUnmanaged()</h4>
+  <div class="markdown level1 summary"><p>Releases all unmanaged resources.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void DisposeUnmanaged()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="FaceRecognitionDotNet.DisposableObject.html#FaceRecognitionDotNet_DisposableObject_DisposeUnmanaged">DisposableObject.DisposeUnmanaged()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_EyeBlinkDetect_System_Collections_Generic_IDictionary_FaceRecognitionDotNet_FacePart_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FacePoint___System_Boolean__System_Boolean__.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.EyeBlinkDetect(System.Collections.Generic.IDictionary%7BFaceRecognitionDotNet.FacePart%2CSystem.Collections.Generic.IEnumerable%7BFaceRecognitionDotNet.FacePoint%7D%7D%2CSystem.Boolean%40%2CSystem.Boolean%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L365">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_EyeBlinkDetect_" data-uid="FaceRecognitionDotNet.FaceRecognition.EyeBlinkDetect*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_EyeBlinkDetect_System_Collections_Generic_IDictionary_FaceRecognitionDotNet_FacePart_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FacePoint___System_Boolean__System_Boolean__" data-uid="FaceRecognitionDotNet.FaceRecognition.EyeBlinkDetect(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}},System.Boolean@,System.Boolean@)">EyeBlinkDetect(IDictionary&lt;FacePart, IEnumerable&lt;FacePoint&gt;&gt;, out Boolean, out Boolean)</h4>
+  <div class="markdown level1 summary"><p>Detects the values whether human eye's blink or not from face landmark.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void EyeBlinkDetect(IDictionary&lt;FacePart, IEnumerable&lt;FacePoint&gt;&gt; landmark, out bool leftBlink, out bool rightBlink)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IDictionary</span>&lt;<a class="xref" href="FaceRecognitionDotNet.FacePart.html">FacePart</a>, <span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="FaceRecognitionDotNet.FacePoint.html">FacePoint</a>&gt;&gt;</td>
+        <td><span class="parametername">landmark</span></td>
+        <td><p>The dictionary of face parts locations (eyes, nose, etc).</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">leftBlink</span></td>
+        <td><p>When this method returns, contains <returns>true</returns>, if the left eye blinks; otherwise, <returns>false</returns>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">rightBlink</span></td>
+        <td><p>When this method returns, contains <returns>true</returns>, if the right eye blinks; otherwise, <returns>false</returns>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">landmark</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">landmark</code> does not contain <a class="xref" href="FaceRecognitionDotNet.FacePart.html#FaceRecognitionDotNet_FacePart_LeftEye">LeftEye</a> or <a class="xref" href="FaceRecognitionDotNet.FacePart.html#FaceRecognitionDotNet_FacePart_RightEye">RightEye</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.NotSupportedException</span></td>
+        <td><p>The custom eye blink detector is not ready.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p>This object or custom eye blink detector is disposed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_FaceDistance_FaceRecognitionDotNet_FaceEncoding_FaceRecognitionDotNet_FaceEncoding_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.FaceDistance(FaceRecognitionDotNet.FaceEncoding%2CFaceRecognitionDotNet.FaceEncoding)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L386">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_FaceDistance_" data-uid="FaceRecognitionDotNet.FaceRecognition.FaceDistance*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_FaceDistance_FaceRecognitionDotNet_FaceEncoding_FaceRecognitionDotNet_FaceEncoding_" data-uid="FaceRecognitionDotNet.FaceRecognition.FaceDistance(FaceRecognitionDotNet.FaceEncoding,FaceRecognitionDotNet.FaceEncoding)">FaceDistance(FaceEncoding, FaceEncoding)</h4>
+  <div class="markdown level1 summary"><p>Compare a face encoding to a known face encoding and get a euclidean distance for comparison face.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double FaceDistance(FaceEncoding faceEncoding, FaceEncoding faceToCompare)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.FaceEncoding.html">FaceEncoding</a></td>
+        <td><span class="parametername">faceEncoding</span></td>
+        <td><p>The face encoding to compare.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.FaceEncoding.html">FaceEncoding</a></td>
+        <td><span class="parametername">faceToCompare</span></td>
+        <td><p>The face encoding to compare against.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><p>The euclidean distance for comparison face. If 0, faces are completely equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">faceEncoding</code> or <code data-dev-comment-type="paramref" class="paramref">faceToCompare</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">faceEncoding</code> or <code data-dev-comment-type="paramref" class="paramref">faceToCompare</code> is disposed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_FaceDistances_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FaceEncoding__FaceRecognitionDotNet_FaceEncoding_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.FaceDistances(System.Collections.Generic.IEnumerable%7BFaceRecognitionDotNet.FaceEncoding%7D%2CFaceRecognitionDotNet.FaceEncoding)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L411">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_FaceDistances_" data-uid="FaceRecognitionDotNet.FaceRecognition.FaceDistances*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_FaceDistances_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FaceEncoding__FaceRecognitionDotNet_FaceEncoding_" data-uid="FaceRecognitionDotNet.FaceRecognition.FaceDistances(System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FaceEncoding},FaceRecognitionDotNet.FaceEncoding)">FaceDistances(IEnumerable&lt;FaceEncoding&gt;, FaceEncoding)</h4>
+  <div class="markdown level1 summary"><p>Compare an enumerable collection of face encoding to a known face encoding and get an enumerable collection of euclidean distance for comparison face.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;double&gt; FaceDistances(IEnumerable&lt;FaceEncoding&gt; faceEncodings, FaceEncoding faceToCompare)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="FaceRecognitionDotNet.FaceEncoding.html">FaceEncoding</a>&gt;</td>
+        <td><span class="parametername">faceEncodings</span></td>
+        <td><p>The enumerable collection of face encoding to compare.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.FaceEncoding.html">FaceEncoding</a></td>
+        <td><span class="parametername">faceToCompare</span></td>
+        <td><p>The face encoding to compare against.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Double</span>&gt;</td>
+        <td><p>The enumerable collection of euclidean distance for comparison face. If 0, faces are completely equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">faceEncodings</code> or <code data-dev-comment-type="paramref" class="paramref">faceToCompare</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">faceToCompare</code> is disposed. Or <code data-dev-comment-type="paramref" class="paramref">faceEncodings</code> contains disposed object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_FaceEncodings_FaceRecognitionDotNet_Image_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_Location__System_Int32_FaceRecognitionDotNet_PredictorModel_FaceRecognitionDotNet_Model_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image%2CSystem.Collections.Generic.IEnumerable%7BFaceRecognitionDotNet.Location%7D%2CSystem.Int32%2CFaceRecognitionDotNet.PredictorModel%2CFaceRecognitionDotNet.Model)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L445">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_FaceEncodings_" data-uid="FaceRecognitionDotNet.FaceRecognition.FaceEncodings*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_FaceEncodings_FaceRecognitionDotNet_Image_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_Location__System_Int32_FaceRecognitionDotNet_PredictorModel_FaceRecognitionDotNet_Model_" data-uid="FaceRecognitionDotNet.FaceRecognition.FaceEncodings(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},System.Int32,FaceRecognitionDotNet.PredictorModel,FaceRecognitionDotNet.Model)">FaceEncodings(Image, IEnumerable&lt;Location&gt;, Int32, PredictorModel, Model)</h4>
+  <div class="markdown level1 summary"><p>Returns an enumerable collection of face feature data corresponds to all faces in specified image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FaceEncoding&gt; FaceEncodings(Image image, IEnumerable&lt;Location&gt; knownFaceLocation = null, int numJitters = 1, PredictorModel predictorModel = PredictorModel.Small, Model model = Model.Hog)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a></td>
+        <td><span class="parametername">image</span></td>
+        <td><p>The image contains faces. The image can contain multiple faces.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="FaceRecognitionDotNet.Location.html">Location</a>&gt;</td>
+        <td><span class="parametername">knownFaceLocation</span></td>
+        <td><p>The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">numJitters</span></td>
+        <td><p>The number of times to re-sample the face when calculating encoding.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.PredictorModel.html">PredictorModel</a></td>
+        <td><span class="parametername">predictorModel</span></td>
+        <td><p>The dimension of vector which be returned from detector.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Model.html">Model</a></td>
+        <td><span class="parametername">model</span></td>
+        <td><p>The model of face detector to detect in image. If <code data-dev-comment-type="paramref" class="paramref">knownFaceLocation</code> is not null, this value is ignored.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="FaceRecognitionDotNet.FaceEncoding.html">FaceEncoding</a>&gt;</td>
+        <td><p>An enumerable collection of face feature data corresponds to all faces in specified image.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">image</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.InvalidOperationException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">knownFaceLocation</code> contains no elements.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">image</code> or this object or custom face landmark detector is disposed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.NotSupportedException</span></td>
+        <td><p><a class="xref" href="FaceRecognitionDotNet.PredictorModel.html#FaceRecognitionDotNet_PredictorModel_Custom">Custom</a> is not supported.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_FaceLandmark_FaceRecognitionDotNet_Image_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_Location__FaceRecognitionDotNet_PredictorModel_FaceRecognitionDotNet_Model_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image%2CSystem.Collections.Generic.IEnumerable%7BFaceRecognitionDotNet.Location%7D%2CFaceRecognitionDotNet.PredictorModel%2CFaceRecognitionDotNet.Model)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L483">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_FaceLandmark_" data-uid="FaceRecognitionDotNet.FaceRecognition.FaceLandmark*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_FaceLandmark_FaceRecognitionDotNet_Image_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_Location__FaceRecognitionDotNet_PredictorModel_FaceRecognitionDotNet_Model_" data-uid="FaceRecognitionDotNet.FaceRecognition.FaceLandmark(FaceRecognitionDotNet.Image,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.Location},FaceRecognitionDotNet.PredictorModel,FaceRecognitionDotNet.Model)">FaceLandmark(Image, IEnumerable&lt;Location&gt;, PredictorModel, Model)</h4>
+  <div class="markdown level1 summary"><p>Returns an enumerable collection of dictionary of face parts locations (eyes, nose, etc) for each face in the image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IDictionary&lt;FacePart, IEnumerable&lt;FacePoint&gt;&gt;&gt; FaceLandmark(Image faceImage, IEnumerable&lt;Location&gt; faceLocations = null, PredictorModel predictorModel = PredictorModel.Large, Model model = Model.Hog)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a></td>
+        <td><span class="parametername">faceImage</span></td>
+        <td><p>The image contains faces. The image can contain multiple faces.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="FaceRecognitionDotNet.Location.html">Location</a>&gt;</td>
+        <td><span class="parametername">faceLocations</span></td>
+        <td><p>The enumerable collection of location rectangle for faces. If specified null, method will find face locations.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.PredictorModel.html">PredictorModel</a></td>
+        <td><span class="parametername">predictorModel</span></td>
+        <td><p>The dimension of vector which be returned from detector.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Model.html">Model</a></td>
+        <td><span class="parametername">model</span></td>
+        <td><p>The model of face detector to detect in image. If <code data-dev-comment-type="paramref" class="paramref">faceLocations</code> is not null, this value is ignored.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Collections.Generic.IDictionary</span>&lt;<a class="xref" href="FaceRecognitionDotNet.FacePart.html">FacePart</a>, <span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="FaceRecognitionDotNet.FacePoint.html">FacePoint</a>&gt;&gt;&gt;</td>
+        <td><p>An enumerable collection of dictionary of face parts locations (eyes, nose, etc).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">faceImage</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.InvalidOperationException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">faceLocations</code> contains no elements.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">faceImage</code> or this object or custom face landmark detector is disposed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.NotSupportedException</span></td>
+        <td><p>The custom face landmark detector is not ready.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_FaceLocations_FaceRecognitionDotNet_Image_System_Int32_FaceRecognitionDotNet_Model_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image%2CSystem.Int32%2CFaceRecognitionDotNet.Model)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L576">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_FaceLocations_" data-uid="FaceRecognitionDotNet.FaceRecognition.FaceLocations*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_FaceLocations_FaceRecognitionDotNet_Image_System_Int32_FaceRecognitionDotNet_Model_" data-uid="FaceRecognitionDotNet.FaceRecognition.FaceLocations(FaceRecognitionDotNet.Image,System.Int32,FaceRecognitionDotNet.Model)">FaceLocations(Image, Int32, Model)</h4>
+  <div class="markdown level1 summary"><p>Returns an enumerable collection of face location correspond to all faces in specified image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Location&gt; FaceLocations(Image image, int numberOfTimesToUpsample = 1, Model model = Model.Hog)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a></td>
+        <td><span class="parametername">image</span></td>
+        <td><p>The image contains faces. The image can contain multiple faces.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">numberOfTimesToUpsample</span></td>
+        <td><p>The number of times to up-sample the image when finding faces.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Model.html">Model</a></td>
+        <td><span class="parametername">model</span></td>
+        <td><p>The model of face detector to detect in image.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="FaceRecognitionDotNet.Location.html">Location</a>&gt;</td>
+        <td><p>An enumerable collection of face location correspond to all faces in specified image.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">image</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">image</code> or this object is disposed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_LoadFaceEncoding_System_Double___.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.LoadFaceEncoding(System.Double%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L600">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_LoadFaceEncoding_" data-uid="FaceRecognitionDotNet.FaceRecognition.LoadFaceEncoding*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_LoadFaceEncoding_System_Double___" data-uid="FaceRecognitionDotNet.FaceRecognition.LoadFaceEncoding(System.Double[])">LoadFaceEncoding(Double[])</h4>
+  <div class="markdown level1 summary"><p>Creates an <a class="xref" href="FaceRecognitionDotNet.FaceEncoding.html">FaceEncoding</a> from the <span class="xref">System.Double</span> array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FaceEncoding LoadFaceEncoding(double[] encoding)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span>[]</td>
+        <td><span class="parametername">encoding</span></td>
+        <td><p>The <span class="xref">System.Double</span> array contains face encoding data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.FaceEncoding.html">FaceEncoding</a></td>
+        <td><p>The <a class="xref" href="FaceRecognitionDotNet.FaceEncoding.html">FaceEncoding</a> this method creates.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">encoding</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentOutOfRangeException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">encoding</code> must be 128.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_LoadImage_System_Byte___System_Int32_System_Int32_System_Int32_FaceRecognitionDotNet_Mode_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Byte%5B%5D%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CFaceRecognitionDotNet.Mode)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L733">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_LoadImage_" data-uid="FaceRecognitionDotNet.FaceRecognition.LoadImage*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_LoadImage_System_Byte___System_Int32_System_Int32_System_Int32_FaceRecognitionDotNet_Mode_" data-uid="FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Byte[],System.Int32,System.Int32,System.Int32,FaceRecognitionDotNet.Mode)">LoadImage(Byte[], Int32, Int32, Int32, Mode)</h4>
+  <div class="markdown level1 summary"><p>Creates an <a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a> from the <span class="xref">System.Byte</span> array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Image LoadImage(byte[] array, int row, int column, int stride, Mode mode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>The <span class="xref">System.Byte</span> array contains image data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">row</span></td>
+        <td><p>The number of rows in a image data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">column</span></td>
+        <td><p>The number of columns in a image data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">stride</span></td>
+        <td><p>The stride width in bytes.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Mode.html">Mode</a></td>
+        <td><span class="parametername">mode</span></td>
+        <td><p>A image color mode.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a></td>
+        <td><p>The <a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a> this method creates.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">array</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentOutOfRangeException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">row</code> is less than 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentOutOfRangeException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">column</code> is less than 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentOutOfRangeException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">stride</code> is less than 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentOutOfRangeException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">stride</code> is less than <code data-dev-comment-type="paramref" class="paramref">column</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentOutOfRangeException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">row</code> x <code data-dev-comment-type="paramref" class="paramref">stride</code> is less than <span class="xref">System.Array.Length</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_LoadImage_System_Drawing_Bitmap_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Drawing.Bitmap)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L620">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_LoadImage_" data-uid="FaceRecognitionDotNet.FaceRecognition.LoadImage*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_LoadImage_System_Drawing_Bitmap_" data-uid="FaceRecognitionDotNet.FaceRecognition.LoadImage(System.Drawing.Bitmap)">LoadImage(Bitmap)</h4>
+  <div class="markdown level1 summary"><p>Creates an <a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a> from the specified existing bitmap image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Image LoadImage(Bitmap bitmap)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.Bitmap</span></td>
+        <td><span class="parametername">bitmap</span></td>
+        <td><p>The <span class="xref">System.Drawing.Bitmap</span> from which to create the new <a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a></td>
+        <td><p>The <a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a> this method creates.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">bitmap</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentOutOfRangeException</span></td>
+        <td><p>The specified <span class="xref">System.Drawing.Imaging.PixelFormat</span> is not supported.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_LoadImage_System_IntPtr_System_Int32_System_Int32_System_Int32_FaceRecognitionDotNet_Mode_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.LoadImage(System.IntPtr%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CFaceRecognitionDotNet.Mode)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L781">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_LoadImage_" data-uid="FaceRecognitionDotNet.FaceRecognition.LoadImage*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_LoadImage_System_IntPtr_System_Int32_System_Int32_System_Int32_FaceRecognitionDotNet_Mode_" data-uid="FaceRecognitionDotNet.FaceRecognition.LoadImage(System.IntPtr,System.Int32,System.Int32,System.Int32,FaceRecognitionDotNet.Mode)">LoadImage(IntPtr, Int32, Int32, Int32, Mode)</h4>
+  <div class="markdown level1 summary"><p>Creates an <a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a> from the unmanaged memory pointer indicates <span class="xref">System.Byte</span> array image data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Image LoadImage(IntPtr array, int row, int column, int stride, Mode mode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IntPtr</span></td>
+        <td><span class="parametername">array</span></td>
+        <td><p>The unmanaged memory pointer indicates <span class="xref">System.Byte</span> array image data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">row</span></td>
+        <td><p>The number of rows in a image data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">column</span></td>
+        <td><p>The number of columns in a image data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">stride</span></td>
+        <td><p>The stride width in bytes.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Mode.html">Mode</a></td>
+        <td><span class="parametername">mode</span></td>
+        <td><p>A image color mode.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a></td>
+        <td><p>The <a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a> this method creates.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">array</code> is <span class="xref">System.IntPtr.Zero</span>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentOutOfRangeException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">row</code> is less than 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentOutOfRangeException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">column</code> is less than 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentOutOfRangeException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">stride</code> is less than 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentOutOfRangeException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">stride</code> is less than <code data-dev-comment-type="paramref" class="paramref">column</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_LoadImageFile_System_String_FaceRecognitionDotNet_Mode_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.LoadImageFile(System.String%2CFaceRecognitionDotNet.Mode)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L812">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_LoadImageFile_" data-uid="FaceRecognitionDotNet.FaceRecognition.LoadImageFile*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_LoadImageFile_System_String_FaceRecognitionDotNet_Mode_" data-uid="FaceRecognitionDotNet.FaceRecognition.LoadImageFile(System.String,FaceRecognitionDotNet.Mode)">LoadImageFile(String, Mode)</h4>
+  <div class="markdown level1 summary"><p>Creates an <a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a> from the specified path.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Image LoadImageFile(string file, Mode mode = Mode.Rgb)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">file</span></td>
+        <td><p>A string that contains the path of the file from which to create the <a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Mode.html">Mode</a></td>
+        <td><span class="parametername">mode</span></td>
+        <td><p>A image color mode.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a></td>
+        <td><p>The <a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a> this method creates.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IO.FileNotFoundException</span></td>
+        <td><p>The specified path does not exist.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_PredictAge_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.PredictAge(FaceRecognitionDotNet.Image%2CFaceRecognitionDotNet.Location)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L837">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_PredictAge_" data-uid="FaceRecognitionDotNet.FaceRecognition.PredictAge*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_PredictAge_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_" data-uid="FaceRecognitionDotNet.FaceRecognition.PredictAge(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">PredictAge(Image, Location)</h4>
+  <div class="markdown level1 summary"><p>Returns an index of age group of face image correspond to specified location in specified image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint PredictAge(Image image, Location location)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a></td>
+        <td><span class="parametername">image</span></td>
+        <td><p>The image contains a face.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Location.html">Location</a></td>
+        <td><span class="parametername">location</span></td>
+        <td><p>The location rectangle for a face.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><p>An index of age group of face image correspond to specified location in specified image.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">image</code> or <code data-dev-comment-type="paramref" class="paramref">location</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">image</code> or this object or custom age estimator is disposed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.NotSupportedException</span></td>
+        <td><p>The custom age estimator is not ready.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_PredictGender_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.PredictGender(FaceRecognitionDotNet.Image%2CFaceRecognitionDotNet.Location)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L865">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_PredictGender_" data-uid="FaceRecognitionDotNet.FaceRecognition.PredictGender*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_PredictGender_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_" data-uid="FaceRecognitionDotNet.FaceRecognition.PredictGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">PredictGender(Image, Location)</h4>
+  <div class="markdown level1 summary"><p>Returns an gender of face image correspond to specified location in specified image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Gender PredictGender(Image image, Location location)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a></td>
+        <td><span class="parametername">image</span></td>
+        <td><p>The image contains a face.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Location.html">Location</a></td>
+        <td><span class="parametername">location</span></td>
+        <td><p>The location rectangle for a face.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Gender.html">Gender</a></td>
+        <td><p>An gender of face image correspond to specified location in specified image.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">image</code> or <code data-dev-comment-type="paramref" class="paramref">location</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">image</code> or this object or custom gender estimator is disposed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.NotSupportedException</span></td>
+        <td><p>The custom gender estimator is not ready.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_PredictHeadPose_System_Collections_Generic_IDictionary_FaceRecognitionDotNet_FacePart_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FacePoint___.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.PredictHeadPose(System.Collections.Generic.IDictionary%7BFaceRecognitionDotNet.FacePart%2CSystem.Collections.Generic.IEnumerable%7BFaceRecognitionDotNet.FacePoint%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L948">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_PredictHeadPose_" data-uid="FaceRecognitionDotNet.FaceRecognition.PredictHeadPose*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_PredictHeadPose_System_Collections_Generic_IDictionary_FaceRecognitionDotNet_FacePart_System_Collections_Generic_IEnumerable_FaceRecognitionDotNet_FacePoint___" data-uid="FaceRecognitionDotNet.FaceRecognition.PredictHeadPose(System.Collections.Generic.IDictionary{FaceRecognitionDotNet.FacePart,System.Collections.Generic.IEnumerable{FaceRecognitionDotNet.FacePoint}})">PredictHeadPose(IDictionary&lt;FacePart, IEnumerable&lt;FacePoint&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns a head pose estimated from face parts locations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HeadPose PredictHeadPose(IDictionary&lt;FacePart, IEnumerable&lt;FacePoint&gt;&gt; landmark)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IDictionary</span>&lt;<a class="xref" href="FaceRecognitionDotNet.FacePart.html">FacePart</a>, <span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="FaceRecognitionDotNet.FacePoint.html">FacePoint</a>&gt;&gt;</td>
+        <td><span class="parametername">landmark</span></td>
+        <td><p>The dictionary of face parts locations (eyes, nose, etc).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.HeadPose.html">HeadPose</a></td>
+        <td><p>A head pose estimated from face parts locations.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">landmark</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p>This object or custom head pose estimator is disposed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.NotSupportedException</span></td>
+        <td><p>The custom head pose estimator is not ready.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_PredictProbabilityAge_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.PredictProbabilityAge(FaceRecognitionDotNet.Image%2CFaceRecognitionDotNet.Location)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L893">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_PredictProbabilityAge_" data-uid="FaceRecognitionDotNet.FaceRecognition.PredictProbabilityAge*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_PredictProbabilityAge_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_" data-uid="FaceRecognitionDotNet.FaceRecognition.PredictProbabilityAge(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">PredictProbabilityAge(Image, Location)</h4>
+  <div class="markdown level1 summary"><p>Returns probabilities of age group of face image correspond to specified location in specified image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDictionary&lt;uint, float&gt; PredictProbabilityAge(Image image, Location location)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a></td>
+        <td><span class="parametername">image</span></td>
+        <td><p>The image contains a face.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Location.html">Location</a></td>
+        <td><span class="parametername">location</span></td>
+        <td><p>The location rectangle for a face.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IDictionary</span>&lt;<span class="xref">System.UInt32</span>, <span class="xref">System.Single</span>&gt;</td>
+        <td><p>Probabilities of age group of face image correspond to specified location in specified image.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">image</code> or <code data-dev-comment-type="paramref" class="paramref">location</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">image</code> or this object or custom age estimator is disposed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.NotSupportedException</span></td>
+        <td><p>The custom age estimator is not ready.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition_PredictProbabilityGender_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition.PredictProbabilityGender(FaceRecognitionDotNet.Image%2CFaceRecognitionDotNet.Location)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L921">View Source</a>
+  </span>
+  <a id="FaceRecognitionDotNet_FaceRecognition_PredictProbabilityGender_" data-uid="FaceRecognitionDotNet.FaceRecognition.PredictProbabilityGender*"></a>
+  <h4 id="FaceRecognitionDotNet_FaceRecognition_PredictProbabilityGender_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_" data-uid="FaceRecognitionDotNet.FaceRecognition.PredictProbabilityGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">PredictProbabilityGender(Image, Location)</h4>
+  <div class="markdown level1 summary"><p>Returns probabilities of gender of face image correspond to specified location in specified image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDictionary&lt;Gender, float&gt; PredictProbabilityGender(Image image, Location location)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Image.html">Image</a></td>
+        <td><span class="parametername">image</span></td>
+        <td><p>The image contains a face.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="FaceRecognitionDotNet.Location.html">Location</a></td>
+        <td><span class="parametername">location</span></td>
+        <td><p>The location rectangle for a face.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IDictionary</span>&lt;<a class="xref" href="FaceRecognitionDotNet.Gender.html">Gender</a>, <span class="xref">System.Single</span>&gt;</td>
+        <td><p>Probabilities of gender of face image correspond to specified location in specified image.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">image</code> or <code data-dev-comment-type="paramref" class="paramref">location</code> is null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">image</code> or this object or custom gender estimator is disposed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.NotSupportedException</span></td>
+        <td><p>The custom gender estimator is not ready.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">System.IDisposable</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/new/master/apiSpec/new?filename=FaceRecognitionDotNet_FaceRecognition.md&amp;value=---%0Auid%3A%20FaceRecognitionDotNet.FaceRecognition%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/takuya-takeuchi/FaceRecognitionDotNet/blob/master/src/FaceRecognitionDotNet/FaceRecognition.cs/#L21" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
