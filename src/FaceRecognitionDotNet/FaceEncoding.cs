@@ -46,6 +46,7 @@ namespace FaceRecognitionDotNet
         /// <summary>
         /// Gets the size of feature data.
         /// </summary>
+        /// <exception cref="ObjectDisposedException">This object is disposed.</exception>
         public int Size
         {
             get
@@ -64,6 +65,7 @@ namespace FaceRecognitionDotNet
         /// </summary>
         /// <returns>A <see cref="double"/> array that represents a feature data.</returns>
         /// <remarks><see cref="FaceEncoding"/> class supports serialization. This method is for interoperability between FaceRecognitionDotNet and dlib.</remarks>
+        /// <exception cref="ObjectDisposedException">This object is disposed.</exception>
         public double[] GetRawEncoding()
         {
             this.ThrowIfDisposed();

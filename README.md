@@ -28,6 +28,9 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |FaceRecognitionDotNet for CUDA 11.1|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA111.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA111)|
 ||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA111.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA111)|
 ||OSX|-|-|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA111.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA111)|
+|FaceRecognitionDotNet for CUDA 11.2|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA112.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA112)|
+||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA112.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA112)|
+||OSX|-|-|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.CUDA112.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.CUDA112)|
 |FaceRecognitionDotNet for Intel MKL|Windows|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
 ||Linux|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
 ||OSX|-|✓|-|-|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.MKL.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet.MKL)|
@@ -79,6 +82,12 @@ You can check the following examples to train dataset.
 |Face Landmark|Age and Gender Classification|Head Pose Estimation|
 |---|---|---|
 |<img src="images/3.jpg" width="240"/>|<img src="examples/CustomClassificationDemo/images/result.png" width="240"/>|<img src="images/4.png" width="240"/>|
+
+## Document
+
+FaceRecognitionDotNet support full xml document for Visual Studio.
+A xml document is written English and Japanese.
+And you can check online document at [FaceRecognitionDotNet API Document](https://taktak.jp/FaceRecognitionDotNet/)
 
 ## Dependencies Libraries and Products
 

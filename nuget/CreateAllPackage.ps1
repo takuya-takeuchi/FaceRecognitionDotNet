@@ -6,6 +6,7 @@ $targets = @(
    "CUDA102",
    "CUDA110",
    "CUDA111",
+   "CUDA112",
    "MKL"
 )
 

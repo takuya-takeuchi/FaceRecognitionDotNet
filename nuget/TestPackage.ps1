@@ -77,12 +77,12 @@ function RunTest($BuildTargets, $DependencyHash)
          New-Item "$TestDir" -ItemType Directory > $null
       }
 
-      $NativeTestDir = Join-Path $FaceRecognitionDotNetRoot test | `
+      $UnitTestDir = Join-Path $FaceRecognitionDotNetRoot test | `
                         Join-Path -ChildPath FaceRecognitionDotNet.Tests
 
       $TargetDir = Join-Path $WorkDir FaceRecognitionDotNet.Tests
       if (Test-Path "$TargetDir") {
-         Remove-Item -Path "$TargetDir" -Recurse -Force
+         Remove-Item -Path "$TargetDir" -Recurse -Force 2> $null
       }
 
       $TargetDirTestImages = Join-Path $TargetDir TestImages
@@ -90,12 +90,12 @@ function RunTest($BuildTargets, $DependencyHash)
          Remove-Item -Path "$TargetDirTestImages" -Recurse -Force
       }
 
-      $NativeTestDirTestImages = Join-Path $NativeTestDir TestImages
-      $NativeTestDirSources = Join-Path $NativeTestDir "*.cs"
-      $NativeTestDirProject = Join-Path $NativeTestDir "FaceRecognitionDotNet.Tests.csproj"
-      Copy-Item "$NativeTestDirTestImages" "$TargetDirTestImages" -Recurse
-      Copy-Item "$NativeTestDirSources" "$TargetDir" -Recurse
-      Copy-Item "$NativeTestDirProject" "$TargetDir" -Recurse
+      $UnitTestDirTestImages = Join-Path $UnitTestDir TestImages
+      $UnitTestDirSources = Join-Path $UnitTestDir "*.cs"
+      $UnitTestDirProject = Join-Path $UnitTestDir "FaceRecognitionDotNet.Tests.csproj"
+      Copy-Item "$UnitTestDirTestImages" "$TargetDirTestImages" -Recurse
+      Copy-Item "$UnitTestDirSources" "$TargetDir" -Recurse
+      Copy-Item "$UnitTestDirProject" "$TargetDir" -Recurse
       
 
       Set-Location -Path "$TargetDir"
@@ -114,20 +114,31 @@ function RunTest($BuildTargets, $DependencyHash)
       # Copy Dependencies
       if ($global:IsWindows)
       {
-         $OutDir = Join-Path $TargetDir bin | `
-                   Join-Path -ChildPath x64 | `
-                   Join-Path -ChildPath Release | `
-                   Join-Path -ChildPath netcoreapp2.0      
-         if (!(Test-Path "$OutDir")) {
-            New-Item "$OutDir" -ItemType Directory > $null
-         }
+         # Get framework version
+         $re = New-Object regex("<TargetFramework>(?<version>[^<]+)</TargetFramework>")
+         $match = $re.Matches((Get-Content "${UnitTestDirProject}"))
+         $version = $match[0].Groups["version"]
 
-         if ($DependencyHash.Contains($package))
+         # Just in case, deploy symbolic link to possbile output directory
+         $OutDirs = @((Join-Path $TargetDir bin | Join-Path -ChildPath Release | Join-Path -ChildPath $version),
+                      (Join-Path $TargetDir bin | Join-Path -ChildPath x64     | Join-Path -ChildPath Release | Join-Path -ChildPath $version),
+                      (Join-Path $TargetDir bin | Join-Path -ChildPath x86     | Join-Path -ChildPath Release | Join-Path -ChildPath $version)
+         )
+
+         foreach ($OutDir in $OutDirs)
          {
-            foreach($Dependency in $DependencyHash[$package])
+            if (!(Test-Path "$OutDir"))
             {
-               $FileName = [System.IO.Path]::GetFileName("$Dependency")
-               New-Item -Value "$Dependency" -Path "$OutDir" -Name "$FileName" -ItemType SymbolicLink > $null
+               New-Item "$OutDir" -ItemType Directory > $null
+            }
+
+            if ($DependencyHash.Contains($package))
+            {
+               foreach($Dependency in $DependencyHash[$package])
+               {
+                  $FileName = [System.IO.Path]::GetFileName("$Dependency")
+                  New-Item -Value "$Dependency" -Path "$OutDir" -Name "$FileName" -ItemType SymbolicLink > $null
+               }
             }
          }
       }
@@ -161,8 +172,9 @@ $BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture =
 $BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 100; Package = "FaceRecognitionDotNet.CUDA100" }
 $BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 101; Package = "FaceRecognitionDotNet.CUDA101" }
 $BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 102; Package = "FaceRecognitionDotNet.CUDA102" }
-$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 102; Package = "FaceRecognitionDotNet.CUDA110" }
-$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 102; Package = "FaceRecognitionDotNet.CUDA111" }
+$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 110; Package = "FaceRecognitionDotNet.CUDA110" }
+$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 111; Package = "FaceRecognitionDotNet.CUDA111" }
+$BuildTargets += New-Object PSObject -Property @{Target = "cuda"; Architecture = 64; CUDA = 112; Package = "FaceRecognitionDotNet.CUDA112" }
 $BuildTargets += New-Object PSObject -Property @{Target = "mkl";  Architecture = 64; CUDA = 0;   Package = "FaceRecognitionDotNet.MKL"     }
 
 
@@ -222,6 +234,20 @@ $tmp111.Add("$env:CUDA_PATH_V11_1\bin\cudnn64_8.dll")
 $tmp111.Add("$env:CUDA_PATH_V11_1\bin\curand64_10.dll")
 $tmp111.Add("$env:CUDA_PATH_V11_1\bin\cusolver64_11.dll")
 
+# For FaceRecognitionDotNet.CUDA111
+$tmp112 = New-Object 'System.Collections.Generic.List[string]'
+$tmp112.Add("$env:CUDA_PATH_V11_2\bin\cublas64_11.dll")
+$tmp112.Add("$env:CUDA_PATH_V11_2\bin\cublasLt64_11.dll")
+$tmp112.Add("$env:CUDA_PATH_V11_2\bin\cudnn_adv_infer64_8.dll")
+$tmp112.Add("$env:CUDA_PATH_V11_2\bin\cudnn_adv_train64_8.dll")
+$tmp112.Add("$env:CUDA_PATH_V11_2\bin\cudnn_cnn_infer64_8.dll")
+$tmp112.Add("$env:CUDA_PATH_V11_2\bin\cudnn_cnn_train64_8.dll")
+$tmp112.Add("$env:CUDA_PATH_V11_2\bin\cudnn_ops_infer64_8.dll")
+$tmp112.Add("$env:CUDA_PATH_V11_2\bin\cudnn_ops_train64_8.dll")
+$tmp112.Add("$env:CUDA_PATH_V11_2\bin\cudnn64_8.dll")
+$tmp112.Add("$env:CUDA_PATH_V11_2\bin\curand64_10.dll")
+$tmp112.Add("$env:CUDA_PATH_V11_2\bin\cusolver64_11.dll")
+
 # For mkl
 $tmpmkl = New-Object 'System.Collections.Generic.List[string]'
 $tmpmkl.Add("$env:MKL_WIN\redist\intel64_win\mkl\mkl_core.dll")
@@ -235,6 +261,7 @@ $DependencyHash = @{"FaceRecognitionDotNet.CUDA92"  = $tmp92;
                     "FaceRecognitionDotNet.CUDA102" = $tmp102;
                     "FaceRecognitionDotNet.CUDA110" = $tmp110;
                     "FaceRecognitionDotNet.CUDA111" = $tmp111;
+                    "FaceRecognitionDotNet.CUDA112" = $tmp112;
                     "FaceRecognitionDotNet.MKL"     = $tmpmkl}
 
 # Store current directory
