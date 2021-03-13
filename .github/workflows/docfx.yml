@@ -19,13 +19,13 @@ jobs:
         shell: cmd
         run: |
           choco install docfx -y
-          docfx docs\docfx.json
+          docfx docfx\docfx.json
 
       - name: Upload DocFX packages
         uses: actions/upload-artifact@v2
         with:
           name: docfx_site
-          path: ${{ github.workspace }}\docs\_site
+          path: ${{ github.workspace }}\docfx\_site
 
       - name: Publish Documentation on GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
