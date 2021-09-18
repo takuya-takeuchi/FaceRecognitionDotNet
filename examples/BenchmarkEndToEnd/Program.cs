@@ -70,7 +70,7 @@ namespace BenchmarkEndToEnd
                     var size = image.Split('-')[1].Split('.')[0];
                     Console.WriteLine($"Timings at {size}:");
 
-                    var faceLocations = RunTest(image, SetupLocateFaces, TestLocateFaces);
+                    var faceLocations = RunTest(image, SetupLocateFaces, TestEndToEnd);
                     Console.WriteLine($" - Face locations, landmark, encoding, distance: {faceLocations.Item1:F4}s ({faceLocations.Item2:F2} fps)");
                     Console.WriteLine();
                 }
@@ -112,7 +112,7 @@ namespace BenchmarkEndToEnd
             return FaceRecognition.LoadImageFile(path);
         }
 
-        private static void TestLocateFaces(Image image)
+        private static void TestEndToEnd(Image image)
         {
             var model = _UseCnn ? Model.Cnn : Model.Hog;
             var faceLocations = _FaceRecognition.FaceLocations(image, model: model);
