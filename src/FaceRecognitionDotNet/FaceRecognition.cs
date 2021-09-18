@@ -215,9 +215,11 @@ namespace FaceRecognitionDotNet
             if (images == null)
                 throw new ArgumentNullException(nameof(images));
 
+            var results = new List<Location[]>();
+
             var imagesArray = images.ToArray();
             if (!imagesArray.Any())
-                yield break;
+                return results;
 
             var rawDetectionsBatched = this.RawFaceLocationsBatched(imagesArray, numberOfTimesToUpsample, batchSize).ToArray();
 
@@ -227,9 +229,11 @@ namespace FaceRecognitionDotNet
                 var faces = rawDetectionsBatched[index].ToArray();
                 var locations = faces.Select(rect => new Location(TrimBound(rect.Rect, image.Width, image.Height), rect.DetectionConfidence)).ToArray();
                 foreach (var face in faces)
-                    face.Dispose();
-                yield return locations;
+                    face.Dispose();                
+                results.Add(locations);
             }
+
+            return results;
         }
 
         /// <summary>
@@ -276,11 +280,14 @@ namespace FaceRecognitionDotNet
             if (array.Any(encoding => encoding.IsDisposed))
                 throw new ObjectDisposedException($"{nameof(knownFaceEncodings)} contains disposed object.");
 
+            var results = new List<bool>();
             if (array.Length == 0)
-                yield break;
+                return results;
 
             foreach (var faceEncoding in array)
-                yield return FaceDistance(faceEncoding, faceEncodingToCheck) <= tolerance;
+                results.Add(FaceDistance(faceEncoding, faceEncodingToCheck) <= tolerance);
+
+            return results;
         }
 
         /// <summary>
@@ -322,6 +329,7 @@ namespace FaceRecognitionDotNet
 
             image.ThrowIfDisposed();
 
+            var results = new List<Image>();
             foreach (var location in locations)
             {
                 var rect = new Rectangle(location.Left, location.Top, location.Right, location.Bottom);
@@ -340,16 +348,18 @@ namespace FaceRecognitionDotNet
                 {
                     case Mode.Rgb:
                         var rgb = image.Matrix as Matrix<RgbPixel>;
-                        yield return new Image(DlibDotNet.Dlib.ExtractImage4Points(rgb, dPoint, width, height),
-                                               Mode.Rgb);
+                        results.Add(new Image(DlibDotNet.Dlib.ExtractImage4Points(rgb, dPoint, width, height),
+                                              Mode.Rgb));
                         break;
                     case Mode.Greyscale:
                         var gray = image.Matrix as Matrix<byte>;
-                        yield return new Image(DlibDotNet.Dlib.ExtractImage4Points(gray, dPoint, width, height),
-                                               Mode.Rgb);
+                        results.Add(new Image(DlibDotNet.Dlib.ExtractImage4Points(gray, dPoint, width, height),
+                                              Mode.Rgb));
                         break;
                 }
             }
+
+            return results;
         }
 
         /// <summary>
@@ -421,12 +431,15 @@ namespace FaceRecognitionDotNet
             if (array.Any(encoding => encoding.IsDisposed))
                 throw new ObjectDisposedException($"{nameof(faceEncodings)} contains disposed object.");
 
+            var results = new List<double>();
             if (array.Length == 0)
-                yield break;
+                return results;
 
             foreach (var faceEncoding in array)
                 using (var diff = faceEncoding.Encoding - faceToCompare.Encoding)
-                    yield return DlibDotNet.Dlib.Length(diff);
+                    results.Add(DlibDotNet.Dlib.Length(diff));
+
+            return results;
         }
 
         /// <summary>
@@ -460,12 +473,16 @@ namespace FaceRecognitionDotNet
             this.ThrowIfDisposed();
 
             var rawLandmarks = this.RawFaceLandmarks(image, knownFaceLocation, predictorModel, model);
+
+            var results = new List<FaceEncoding>();
             foreach (var landmark in rawLandmarks)
             {
                 var ret = new FaceEncoding(FaceRecognitionModelV1.ComputeFaceDescriptor(this._FaceEncoder, image, landmark, numJitters));
                 landmark.Dispose();
-                yield return ret;
+                results.Add(ret);
             }
+
+            return results;
         }
 
         /// <summary>
@@ -581,13 +598,16 @@ namespace FaceRecognitionDotNet
             image.ThrowIfDisposed();
             this.ThrowIfDisposed();
 
+            var results = new List<Location>();
             foreach (var face in this.RawFaceLocations(image, numberOfTimesToUpsample, model))
             {
                 var ret = TrimBound(face.Rect, image.Width, image.Height);
                 var confidence = face.DetectionConfidence;
                 face.Dispose();
-                yield return new Location(ret, confidence);
+                results.Add(new Location(ret, confidence));
             }
+
+            return results;
         }
 
         /// <summary>
@@ -987,12 +1007,13 @@ namespace FaceRecognitionDotNet
                 rects = faceLocations;
             }
 
+            var results = new List<FullObjectDetection>();
             if (predictorModel == PredictorModel.Custom)
             {
                 foreach (var rect in rects)
                 {
                     var ret = this._CustomFaceLandmarkDetector.Detect(faceImage, rect);
-                    yield return ret;
+                    results.Add(ret);
                 }
             }
             else
@@ -1008,9 +1029,11 @@ namespace FaceRecognitionDotNet
                 foreach (var rect in rects)
                 {
                     var ret = posePredictor.Detect(faceImage.Matrix, new Rectangle(rect.Left, rect.Top, rect.Right, rect.Bottom));
-                    yield return ret;
+                    results.Add(ret);
                 }
             }
+
+            return results;
         }
 
         private IEnumerable<MModRect> RawFaceLocations(Image faceImage, int numberOfTimesToUpsample = 1, Model model = Model.Hog)
