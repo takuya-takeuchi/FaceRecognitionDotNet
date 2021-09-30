@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeadPoseTraining", "tools\H
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeadPoseEstimationDemo", "examples\HeadPoseEstimationDemo\HeadPoseEstimationDemo.csproj", "{8540B212-5605-4402-BAE4-BEFEBAAD9F97}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenchmarkEndToEnd", "examples\BenchmarkEndToEnd\BenchmarkEndToEnd.csproj", "{F26A2088-EB8B-43F0-8F78-9A2BCE514367}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{8540B212-5605-4402-BAE4-BEFEBAAD9F97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8540B212-5605-4402-BAE4-BEFEBAAD9F97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8540B212-5605-4402-BAE4-BEFEBAAD9F97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F26A2088-EB8B-43F0-8F78-9A2BCE514367}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F26A2088-EB8B-43F0-8F78-9A2BCE514367}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F26A2088-EB8B-43F0-8F78-9A2BCE514367}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F26A2088-EB8B-43F0-8F78-9A2BCE514367}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -134,6 +140,7 @@ Global
 		{13DDB1E7-EF71-48BA-A1E7-365C94783709} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 		{BB6A1F98-DEF9-475C-A69A-82FE518D1E9E} = {8C8838E0-B002-426F-9B25-4C1F65A6D33D}
 		{8540B212-5605-4402-BAE4-BEFEBAAD9F97} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
+		{F26A2088-EB8B-43F0-8F78-9A2BCE514367} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D44C572-D749-4A76-A199-8C598A08AE8A}
