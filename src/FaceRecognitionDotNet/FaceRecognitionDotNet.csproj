@@ -6,7 +6,7 @@
     <Copyright>© Takuya Takeuchi 2018-2021</Copyright>
     <Company />
     <Description>Porting face_recognition (by Adam Geitgey) by C#</Description>
-    <Version>1.3.0.4</Version>
+    <Version>1.3.0.5</Version>
     <RepositoryUrl>https://github.com/takuya-takeuchi/FaceRecognitionDotNet</RepositoryUrl>
     <PackageTags>.net machinelearning face-recognition</PackageTags>
     <PackageLicenseUrl></PackageLicenseUrl>
