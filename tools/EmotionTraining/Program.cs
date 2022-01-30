@@ -5,9 +5,11 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using DlibDotNet;
+using DlibDotNet.Dnn;
 using FaceRecognitionDotNet;
 using MathNet.Numerics.Data.Matlab;
 using Microsoft.Extensions.CommandLineUtils;
@@ -24,7 +26,13 @@ namespace EmotionTraining
 
         #region Fields
 
-        
+        public const string EmotionClassificationNativeLibrary = "DlibDotNetNativeDnnEmotionClassification";
+
+        public const CallingConvention EmotionClassificationCallingConvention = CallingConvention.Cdecl;
+
+        [DllImport(EmotionClassificationNativeLibrary, CallingConvention = EmotionClassificationCallingConvention)]
+        public static extern void LossMulticlassLog_emotion_train_type_test(IntPtr @base);
+
 
         #endregion
 
@@ -39,12 +47,19 @@ namespace EmotionTraining
 
             app.Command("train", command =>
             {
-                const double alphaDefault = 0.1d;
-                const double momentumDefault = 0.8d;
+                const uint epochDefault = 300;
+                const double learningRateDefault = 0.001d;
+                const double minLearningRateDefault = 0.00001d;
+                const uint minBatchSizeDefault = 256;
+                const uint validationDefault = 30;
 
                 var datasetOption = command.Option("-d|--dataset", "The directory of dataset", CommandOptionType.SingleValue);
-                var alphaOption = command.Option("-a|--alpha", $"The alpha. Default is {alphaDefault}", CommandOptionType.SingleValue);
-                var momentumOption = command.Option("-m|--momentum", $"The alpha. Default is {alphaDefault}", CommandOptionType.SingleValue);
+                var epochOption = command.Option("-e|--epoch", $"The epoch. Default is {epochDefault}", CommandOptionType.SingleValue);
+                var learningRateOption = command.Option("-l|--lr", $"The learning rate. Default is {learningRateDefault}", CommandOptionType.SingleValue);
+                var minLearningRateOption = command.Option("-m|--min-lr", $"The minimum learning rate. Default is {minLearningRateDefault}", CommandOptionType.SingleValue);
+                var minBatchSizeOption = command.Option("-b|--min-batchsize", $"The minimum batch size. Default is {minBatchSizeDefault}", CommandOptionType.SingleValue);
+                var validationOption = command.Option("-v|--validation-interval", $"The interval of validation. Default is {validationDefault}", CommandOptionType.SingleValue);
+                var useMeanOption = command.Option("-u|--use-mean", "Use mean image", CommandOptionType.NoValue);
                 var outputOption = command.Option("-o|--output", $"The output directory path.", CommandOptionType.SingleValue);
 
                 command.OnExecute(() =>
@@ -56,17 +71,38 @@ namespace EmotionTraining
                         return -1;
                     }
 
-                    var alpha = alphaDefault;
-                    if (alphaOption.HasValue() && !double.TryParse(alphaOption.Value(), NumberStyles.Float, Thread.CurrentThread.CurrentCulture.NumberFormat, out alpha))
+                    var epoch = epochDefault;
+                    if (epochOption.HasValue() && !uint.TryParse(epochOption.Value(), out epoch))
                     {
-                        Console.WriteLine("alpha is invalid value");
+                        Console.WriteLine("epoch is invalid value");
                         return -1;
                     }
 
-                    var momentum = momentumDefault;
-                    if (momentumOption.HasValue() && !double.TryParse(momentumOption.Value(), NumberStyles.Float, Thread.CurrentThread.CurrentCulture.NumberFormat, out alpha))
+                    var learningRate = learningRateDefault;
+                    if (learningRateOption.HasValue() && !double.TryParse(learningRateOption.Value(), NumberStyles.Float, Thread.CurrentThread.CurrentCulture.NumberFormat, out learningRate))
                     {
-                        Console.WriteLine("momentum is invalid value");
+                        Console.WriteLine("learning rate is invalid value");
+                        return -1;
+                    }
+
+                    var minLearningRate = minLearningRateDefault;
+                    if (minLearningRateOption.HasValue() && !double.TryParse(minLearningRateOption.Value(), NumberStyles.Float, Thread.CurrentThread.CurrentCulture.NumberFormat, out minLearningRate))
+                    {
+                        Console.WriteLine("minimum learning rate is invalid value");
+                        return -1;
+                    }
+
+                    var minBatchSize = minBatchSizeDefault;
+                    if (minBatchSizeOption.HasValue() && !uint.TryParse(minBatchSizeOption.Value(), out minBatchSize))
+                    {
+                        Console.WriteLine("minimum batch size is invalid value");
+                        return -1;
+                    }
+
+                    var validation = validationDefault;
+                    if (validationOption.HasValue() && !uint.TryParse(validationOption.Value(), out validation) || validation == 0)
+                    {
+                        Console.WriteLine("validation interval is invalid value");
                         return -1;
                     }
 
@@ -78,20 +114,29 @@ namespace EmotionTraining
 
                     Directory.CreateDirectory(output);
 
-                    Console.WriteLine($"  Dataset: {dataset}");;
-                    Console.WriteLine($"    alpha: {alpha}");
-                    Console.WriteLine($" momentum: {momentum}");
-                    Console.WriteLine($"   Output: {output}");
+                    var useMean = useMeanOption.HasValue();
+
+                    Console.WriteLine($"            Dataset: {dataset}");
+                    Console.WriteLine($"              Epoch: {epoch}");
+                    Console.WriteLine($"      Learning Rate: {learningRate}");
+                    Console.WriteLine($"  Min Learning Rate: {minLearningRate}");
+                    Console.WriteLine($"     Min Batch Size: {minBatchSize}");
+                    Console.WriteLine($"Validation Interval: {validation}");
+                    Console.WriteLine($"           Use Mean: {useMean}");
+                    Console.WriteLine($"             Output: {output}");
                     Console.WriteLine();
-                    
-                    var baseName = $"Corrective_re-annotation_of_FER_CK+_KDEF-mlp_{alpha}_{momentum}";
+
+                    var baseName = $"Corrective_re-annotation_of_FER_CK+_KDEF-mlp_{epoch}_{learningRate}_{minLearningRate}_{minBatchSize}";
                     var parameter = new Parameter
                     {
                         BaseName = baseName,
                         Dataset = dataset,
                         Output = output,
-                        Alpha = alpha,
-                        Momentum = momentum
+                        Epoch = epoch,
+                        LearningRate = learningRate,
+                        MinLearningRate = minLearningRate,
+                        MiniBatchSize = minBatchSize,
+                        Validation = validation
                     };
 
                     Train(parameter);
@@ -699,12 +744,17 @@ namespace EmotionTraining
                 Console.WriteLine($"Load test images: {testingImages.Count}");
                 Console.WriteLine();
 
-                using (var mlp = new MultilayerPerceptron<Kernel1>(12, 100, 500, 7, parameter.Alpha, parameter.Momentum))
+                // So with that out of the way, we can make a network instance.
+                var trainNet = NativeMethods.LossMulticlassLog_emotion_train_type_create();
+                var networkId = LossMulticlassLogRegistry.GetId(trainNet);
+                LossMulticlassLogRegistry.Add(trainNet);
+
+                using (var net = LossMulticlassLog.Deserialize(parameter.Model, networkId))
                 {
                     var validationParameter = new ValidationParameter
                     {
                         BaseName = Path.GetFileNameWithoutExtension(parameter.Model),
-                        Trainer = mlp,
+                        Trainer = net,
                         TrainingImages = trainingImages,
                         TrainingLabels = trainingLabels,
                         TestingImages = testingImages,
@@ -715,11 +765,7 @@ namespace EmotionTraining
                         Output = Path.GetDirectoryName(parameter.Model)
                     };
 
-                    Validation(validationParameter, out var trainAccuracy, out var testAccuracy);
-
-                    var validationLog = $"train accuracy: {trainAccuracy:F4}, test accuracy: {testAccuracy:F4}";
-                    Console.WriteLine(validationLog);
-                    Console.WriteLine();
+                    Validation(validationParameter, out _, out _);
                 }
             }
             catch (Exception e)
@@ -746,33 +792,125 @@ namespace EmotionTraining
                 Console.WriteLine($"Load test images: {testingImages.Count}");
                 Console.WriteLine();
 
-                Console.WriteLine("Training");
-                using (var mlp = new MultilayerPerceptron<Kernel1>(12, 100, 500, 7, parameter.Alpha, parameter.Momentum))
+                // So with that out of the way, we can make a network instance.
+                var trainNet = NativeMethods.LossMulticlassLog_emotion_train_type_create();
+                var networkId = LossMulticlassLogRegistry.GetId(trainNet);
+                LossMulticlassLogRegistry.Add(trainNet);
+
+                using (var net = new LossMulticlassLog(networkId))
+                using (var trainer = new DnnTrainer<LossMulticlassLog>(net))
                 {
-                    // now we train our object on a few samples of the sinc function.
-                    var count = trainingImages.Count;
-                    var options = new ProgressBarOptions
+                    var learningRate = parameter.LearningRate;
+                    var minLearningRate = parameter.MinLearningRate;
+                    var miniBatchSize = parameter.MiniBatchSize;
+                    var baseName = parameter.BaseName;
+                    var epoch = parameter.Epoch;
+                    var validation = parameter.Validation;
+
+                    trainer.SetLearningRate(learningRate);
+                    trainer.SetMinLearningRate(minLearningRate);
+                    trainer.SetMiniBatchSize(miniBatchSize);
+                    trainer.BeVerbose();
+                    trainer.SetSynchronizationFile(baseName, 180);
+
+                    // create array box
+                    var trainingImagesCount = trainingImages.Count;
+                    var trainingLabelsCount = trainingLabels.Count;
+
+                    var maxIteration = (int)Math.Ceiling(trainingImagesCount / (float)miniBatchSize);
+                    var imageBatches = new Matrix<double>[maxIteration][];
+                    var labelBatches = new uint[maxIteration][];
+                    for (var i = 0; i < maxIteration; i++)
                     {
-                        ProgressCharacter = '─',
-                        ProgressBarOnBottom = true,
-                        EnableTaskBarProgress = true
-                    };
-                    using (var pbar = new ProgressBar(count, "", options))
-                    {
-                        for (var index = 0; index < count; index++)
+                        if (miniBatchSize <= trainingImagesCount - i * miniBatchSize)
                         {
-                            var train = trainingImages[index];
-                            var label = trainingLabels[index];
-                            mlp.Train(train, (double)label);
-                            pbar.Tick($"Step {index + 1} of {count}");
+                            imageBatches[i] = new Matrix<double>[miniBatchSize];
+                            labelBatches[i] = new uint[miniBatchSize];
+                        }
+                        else
+                        {
+                            imageBatches[i] = new Matrix<double>[trainingImagesCount % miniBatchSize];
+                            labelBatches[i] = new uint[trainingLabelsCount % miniBatchSize];
                         }
                     }
 
-                    var validationParameter = new ValidationParameter
+                    using (var fs = new FileStream($"{baseName}.log", FileMode.Create, FileAccess.Write, FileShare.Write))
+                    using (var sw = new StreamWriter(fs, Encoding.UTF8))
+                        for (var e = 0; e < epoch; e++)
+                        {
+                            var randomArray = Enumerable.Range(0, trainingImagesCount).OrderBy(i => Guid.NewGuid()).ToArray();
+                            var index = 0;
+                            for (var i = 0; i < imageBatches.Length; i++)
+                            {
+                                var currentImages = imageBatches[i];
+                                var currentLabels = labelBatches[i];
+                                for (var j = 0; j < imageBatches[i].Length; j++)
+                                {
+                                    var rIndex = randomArray[index];
+                                    currentImages[j] = trainingImages[rIndex];
+                                    currentLabels[j] = (uint)trainingLabels[rIndex];
+                                    index++;
+                                }
+                            }
+
+                            using (var dataVec = new StdVector<Matrix<double>>(imageBatches[0]))
+                            {
+                                LossMulticlassLog_emotion_train_type_test(dataVec.NativePtr);
+                                LossMulticlassLog_emotion_train_type_test(dataVec.ElementPtr);
+                            }
+
+                            for (var i = 0; i < maxIteration; i++)
+                                LossMulticlassLog.TrainOneStep(trainer, imageBatches[i], labelBatches[i]);
+
+                            var lr = trainer.GetLearningRate();
+                            var loss = trainer.GetAverageLoss();
+
+                            var trainLog = $"Epoch: {e}, learning Rate: {lr}, average loss: {loss}";
+                            Console.WriteLine(trainLog);
+                            sw.WriteLine(trainLog);
+
+                            if (e > 0 && e % validation == 0)
+                            {
+                                var validationParameter = new ValidationParameter
+                                {
+                                    BaseName = parameter.BaseName,
+                                    Output = parameter.Output,
+                                    Trainer = net,
+                                    TrainingImages = trainingImages,
+                                    TrainingLabels = trainingLabels,
+                                    TestingImages = testingImages,
+                                    TestingLabels = testingLabels,
+                                    UseConsole = true,
+                                    SaveToXml = true,
+                                    OutputDiffLog = true
+                                };
+
+                                Validation(validationParameter, out var trainAccuracy, out var testAccuracy);
+
+                                var validationLog = $"Epoch: {e}, train accuracy: {trainAccuracy}, test accuracy: {testAccuracy}";
+                                Console.WriteLine(validationLog);
+                                sw.WriteLine(validationLog);
+                            }
+
+                            if (lr < minLearningRate)
+                                break;
+                        }
+
+                    // wait for training threads to stop
+                    trainer.GetNet();
+                    Console.WriteLine("done training");
+
+                    net.Clean();
+                    LossMulticlassLog.Serialize(net, $"{baseName}.dat");
+
+                    // Now let's run the training images through the network.  This statement runs all the
+                    // images through it and asks the loss layer to convert the network's raw output into
+                    // labels.  In our case, these labels are the numbers between 0 and 9.
+                    var validationParameter2 = new ValidationParameter
                     {
                         BaseName = parameter.BaseName,
                         Output = parameter.Output,
-                        Trainer = mlp,
+                        Trainer = net,
                         TrainingImages = trainingImages,
                         TrainingLabels = trainingLabels,
                         TestingImages = testingImages,
@@ -782,11 +920,7 @@ namespace EmotionTraining
                         OutputDiffLog = true
                     };
 
-                    Validation(validationParameter, out var trainAccuracy, out var testAccuracy);
-
-                    var validationLog = $"train accuracy: {trainAccuracy:F4}, test accuracy: {testAccuracy:F4}";
-                    Console.WriteLine(validationLog);
-                    Console.WriteLine();
+                    Validation(validationParameter2, out _, out _);
                 }
             }
             catch (Exception e)
@@ -811,99 +945,64 @@ namespace EmotionTraining
             trainAccuracy = 0;
             testAccuracy = 0;
 
-            var train_diff = new List<Tuple<Emotion, Emotion>>();
-            var test_diff = new List<Tuple<Emotion, Emotion>>();
+            var net = parameter.Trainer;
+            var trainingImages = parameter.TrainingImages;
+            var trainingLabels = parameter.TrainingLabels;
+            var testingImages = parameter.TestingImages;
+            var testingLabels = parameter.TestingLabels;
+            var saveToXml = parameter.SaveToXml;
+            var baseName = parameter.BaseName;
+            var useConsole = parameter.UseConsole;
 
-            Console.WriteLine();
-            Console.WriteLine("Validation for Training data");
-            var numRight = 0;
-            var numWrong = 0;
-            var count = parameter.TrainingImages.Count;
-            var options = new ProgressBarOptions
+            using (var predictedLabels = net.Operator(trainingImages))
             {
-                ProgressCharacter = '─',
-                ProgressBarOnBottom = true,
-                EnableTaskBarProgress = true
-            };
-            using (var pbar = new ProgressBar(count, "", options))
-            {
-                for (var index = 0; index < count; index++)
+                var numRight = 0;
+                var numWrong = 0;
+
+                // And then let's see if it classified them correctly.
+                for (var i = 0; i < trainingImages.Count; ++i)
                 {
-                    var x = parameter.TrainingImages[index];
-                    var y = parameter.TrainingLabels[index];
+                    if ((Emotion)predictedLabels[i] == trainingLabels[i])
+                        ++numRight;
+                    else
+                        ++numWrong;
+                }
 
-                    using (var p = parameter.Trainer.Operator(x))
+                if (useConsole)
+                {
+                    Console.WriteLine($"training num_right: {numRight}");
+                    Console.WriteLine($"training num_wrong: {numWrong}");
+                    Console.WriteLine($"training accuracy:  {numRight / (double)(numRight + numWrong)}");
+                }
+
+                trainAccuracy = numRight / (double)(numRight + numWrong);
+
+                using (var predictedLabels2 = net.Operator(testingImages))
+                {
+                    numRight = 0;
+                    numWrong = 0;
+                    for (var i = 0; i < testingImages.Count; ++i)
                     {
-                        var result = GetEmotion(p);
-                        if (result == y)
+                        if ((Emotion)predictedLabels2[i] == testingLabels[i])
                             ++numRight;
                         else
                             ++numWrong;
-
-                        train_diff.Add(new Tuple<Emotion, Emotion>(y, result));
-                        pbar.Tick($"Step {index + 1} of {count}");
                     }
-                }
-            }
 
-            trainAccuracy = numRight / (double)(numRight + numWrong);
-
-            if (parameter.UseConsole)
-            {
-                Console.WriteLine($"training num_right: {numRight}");
-                Console.WriteLine($"training num_wrong: {numWrong}");
-                Console.WriteLine($" training accuracy:  {trainAccuracy:F4}");
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("Validation for Test data");
-            numRight = 0;
-            numWrong = 0;
-            count = parameter.TestingImages.Count;
-            using (var pbar = new ProgressBar(count, "", options))
-            {
-                for (var index = 0; index < parameter.TestingImages.Count; index++)
-                {
-                    var x = parameter.TestingImages[index];
-                    var y = parameter.TestingLabels[index];
-
-                    using (var p = parameter.Trainer.Operator(x))
+                    if (useConsole)
                     {
-                        var result = GetEmotion(p);
-                        if (result == y)
-                            ++numRight;
-                        else
-                            ++numWrong;
-                        
-                        test_diff.Add(new Tuple<Emotion, Emotion>(y, result));
-                        pbar.Tick($"Step {index + 1} of {count}");
+                        Console.WriteLine($"testing num_right: {numRight}");
+                        Console.WriteLine($"testing num_wrong: {numWrong}");
+                        Console.WriteLine($"testing accuracy:  {numRight / (double)(numRight + numWrong)}");
                     }
-                }
-            }
 
-            testAccuracy = numRight / (double)(numRight + numWrong);
+                    testAccuracy = numRight / (double)(numRight + numWrong);
 
-            if (parameter.UseConsole)
-            {
-                Console.WriteLine($"testing num_right: {numRight}");
-                Console.WriteLine($"testing num_wrong: {numWrong}");
-                Console.WriteLine($" testing accuracy:  {testAccuracy:F4}");
-            }
-
-            //if (parameter.SaveToXml)
-            //    MultilayerPerceptron<Kernel1>.Serialize(parameter.Trainer, Path.Combine(parameter.Output, $"{parameter.BaseName}.dat"));
-
-            if (parameter.OutputDiffLog)
-            {
-                using (var train_fs = new FileStream(Path.Combine(parameter.Output, $"{parameter.BaseName}_train_diff.log"), FileMode.Create, FileAccess.Write, FileShare.Write))
-                using (var test_fs = new FileStream(Path.Combine(parameter.Output, $"{parameter.BaseName}_test_diff.log"), FileMode.Create, FileAccess.Write, FileShare.Write))
-                using (var train_sw = new StreamWriter(train_fs, Encoding.UTF8))
-                using (var test_sw = new StreamWriter(test_fs, Encoding.UTF8))
-                {
-                    foreach (var v in train_diff)
-                        train_sw.WriteLine($"{v.Item1}\t{v.Item2}");
-                    foreach (var v in test_diff)
-                        test_sw.WriteLine($"{v.Item1}\t{v.Item2}");
+                    // Finally, you can also save network parameters to XML files if you want to do
+                    // something with the network in another tool.  For example, you could use dlib's
+                    // tools/convert_dlib_nets_to_caffe to convert the network to a caffe model.
+                    if (saveToXml)
+                        Dlib.NetToXml(net, $"{baseName}.xml");
                 }
             }
         }
@@ -960,19 +1059,31 @@ namespace EmotionTraining
                 set;
             }
 
-            public double Tolerance
+            public uint Epoch
             {
                 get;
                 set;
             }
 
-            public double Alpha
+            public double LearningRate
             {
                 get;
                 set;
             }
 
-            public double Momentum
+            public double MinLearningRate
+            {
+                get;
+                set;
+            }
+
+            public uint MiniBatchSize
+            {
+                get;
+                set;
+            }
+
+            public uint Validation
             {
                 get;
                 set;
@@ -995,7 +1106,7 @@ namespace EmotionTraining
                 set;
             }
 
-            public MultilayerPerceptron<Kernel1> Trainer
+            public LossMulticlassLog Trainer
             {
                 get;
                 set;
@@ -1023,13 +1134,6 @@ namespace EmotionTraining
 
 
             public IList<Emotion> TestingLabels
-            {
-                get;
-                set;
-            }
-
-
-            public uint Range
             {
                 get;
                 set;
