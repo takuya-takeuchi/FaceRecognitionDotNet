@@ -21,11 +21,4 @@ DLLEXPORT void LossMulticlassLog_emotion_train_type_eval(void* obj)
     // dlib::layer<5>(net).layer_details() = dlib::dropout_(0);
 }
 
-DLLEXPORT void LossMulticlassLog_emotion_train_type_test(std::vector<dlib::matrix<double>*>* const data)
-{
-    printf("%d", data->size());
-    // dlib::layer<2>(net).layer_details() = dlib::dropout_(0);
-    // dlib::layer<5>(net).layer_details() = dlib::dropout_(0);
-}
-
 #endif

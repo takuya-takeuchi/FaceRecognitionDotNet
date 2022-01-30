@@ -4,7 +4,8 @@ class Config
    $ConfigurationArray =
    @(
       "Debug",
-      "Release"
+      "Release",
+      "RelWithDebInfo"
    )
 
    $TargetArray =
@@ -94,7 +95,7 @@ class Config
    #***************************************
    # Arguments
    #  %1: Root directory of DlibDotNet
-   #  %2: Build Configuration (Release/Debug)
+   #  %2: Build Configuration (Release/Debug/RelWithDebInfo)
    #  %3: Target (cpu/cuda/mkl/arm)
    #  %4: Architecture (32/64)
    #  %5: Platform (desktop/android/ios/uwp)
@@ -918,7 +919,7 @@ function Reset-Dlib-Modification([Config]$Config, [string]$currentDir)
    $dlibDir = $Config.GetDlibRootDir()
    Set-Location -Path $dlibDir
    Write-Host "Reset modification of ${dlibDir}" -ForegroundColor Yellow
-   git checkout .
+   # git checkout .
    Set-Location -Path $currentDir
 }
 

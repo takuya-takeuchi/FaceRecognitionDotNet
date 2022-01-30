@@ -5,7 +5,6 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using DlibDotNet;
@@ -13,7 +12,6 @@ using DlibDotNet.Dnn;
 using FaceRecognitionDotNet;
 using MathNet.Numerics.Data.Matlab;
 using Microsoft.Extensions.CommandLineUtils;
-using ShellProgressBar;
 using Image = System.Drawing.Image;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
 using Point = System.Drawing.Point;
@@ -23,18 +21,6 @@ namespace EmotionTraining
 
     internal class Program
     {
-
-        #region Fields
-
-        public const string EmotionClassificationNativeLibrary = "DlibDotNetNativeDnnEmotionClassification";
-
-        public const CallingConvention EmotionClassificationCallingConvention = CallingConvention.Cdecl;
-
-        [DllImport(EmotionClassificationNativeLibrary, CallingConvention = EmotionClassificationCallingConvention)]
-        public static extern void LossMulticlassLog_emotion_train_type_test(IntPtr @base);
-
-
-        #endregion
 
         #region Methods
 
@@ -281,82 +267,6 @@ namespace EmotionTraining
                         bitmap.Save(Path.Combine(output, $"{filename}-gt.jpg"), ImageFormat.Jpeg);
                     }
 
-                    //using (var source = Image.FromFile(image))
-                    //using (var bitmap = new Bitmap(source.Width, source.Height, PixelFormat.Format24bppRgb))
-                    //using (var g = Graphics.FromImage(bitmap))
-                    //{
-                    //    double rollValue;
-                    //    double pitchValue;
-                    //    double yawValue;
-                    //    using (var matrix = GetPointMatrix(points, Emotion.Roll))
-                    //    using (var rbk = new RadialBasisKernel<double, Matrix<double>>(0.1, 0, 0))
-                    //    {
-                    //        Krls<double, RadialBasisKernel<double, Matrix<double>>> trainer = null;
-
-                    //        try
-                    //        {
-                    //            trainer = new Krls<double, RadialBasisKernel<double, Matrix<double>>>(rbk);
-                    //            Krls<double, RadialBasisKernel<double, Matrix<double>>>.Deserialize(roll, ref trainer);
-                    //            rollValue = trainer.Operator(matrix);
-                    //        }
-                    //        finally
-                    //        {
-                    //            trainer?.Dispose();
-                    //        }
-                    //    }
-
-                    //    using (var matrix = GetPointMatrix(points, Emotion.Pitch))
-                    //    using (var rbk = new RadialBasisKernel<double, Matrix<double>>(0.1, 0, 0))
-                    //    {
-                    //        Krls<double, RadialBasisKernel<double, Matrix<double>>> trainer = null;
-
-                    //        try
-                    //        {
-                    //            trainer = new Krls<double, RadialBasisKernel<double, Matrix<double>>>(rbk);
-                    //            Krls<double, RadialBasisKernel<double, Matrix<double>>>.Deserialize(pitch, ref trainer);
-                    //            pitchValue = trainer.Operator(matrix);
-                    //        }
-                    //        finally
-                    //        {
-                    //            trainer?.Dispose();
-                    //        }
-                    //    }
-
-                    //    using (var matrix = GetPointMatrix(points, Emotion.Yaw))
-                    //    using (var rbk = new RadialBasisKernel<double, Matrix<double>>(0.1, 0, 0))
-                    //    {
-                    //        Krls<double, RadialBasisKernel<double, Matrix<double>>> trainer = null;
-
-                    //        try
-                    //        {
-                    //            trainer = new Krls<double, RadialBasisKernel<double, Matrix<double>>>(rbk);
-                    //            Krls<double, RadialBasisKernel<double, Matrix<double>>>.Deserialize(yaw, ref trainer);
-                    //            yawValue = trainer.Operator(matrix);
-                    //        }
-                    //        finally
-                    //        {
-                    //            trainer?.Dispose();
-                    //        }
-                    //    }
-
-                    //    g.DrawImage(source, Point.Empty);
-
-                    //    Console.WriteLine($" Predicted Roll: {rollValue}");
-                    //    Console.WriteLine($"Predicted Pitch: {pitchValue}");
-                    //    Console.WriteLine($"  Predicted Yaw: {yawValue}");
-
-                    //    const int pointSize = 2;
-                    //    foreach (var p in points)
-                    //    {
-                    //        g.DrawEllipse(Pens.GreenYellow, (float)p.X - pointSize, (float)p.Y - pointSize, pointSize * 2, pointSize * 2);
-                    //    }
-
-                    //    DrawAxis(g, bitmap.Width, bitmap.Height, rollValue, pitchValue, yawValue, 150);
-
-                    //    var filename = Path.GetFileName(image);
-                    //    bitmap.Save(Path.Combine(output, $"{filename}-predicted.jpg"), ImageFormat.Jpeg);
-                    //}
-
                     return 0;
                 });
             });
@@ -457,18 +367,6 @@ namespace EmotionTraining
             //        throw new ArgumentOutOfRangeException(nameof(emotion), emotion, null);
             //}
             return null;
-        }
-
-        private static void NormalizeVector(IList<double> vector)
-        {
-            // z-score normalization
-            var count = vector.Count;
-            var mean = vector.Average();
-            var sum2 = vector.Select(a => a * a).Sum();
-            var variance = sum2 / count - mean * mean;
-            var std = Math.Sqrt(variance);
-            for (var index = 0; index < vector.Count; index++)
-                vector[index] = (vector[index] - mean) / std;
         }
 
         private static void DrawAxis(Graphics g, int width, int height, double roll, double pitch, double yaw, uint size)
@@ -798,7 +696,8 @@ namespace EmotionTraining
                 LossMulticlassLogRegistry.Add(trainNet);
 
                 using (var net = new LossMulticlassLog(networkId))
-                using (var trainer = new DnnTrainer<LossMulticlassLog>(net))
+                using (var solver = new Adam())
+                using (var trainer = new DnnTrainer<LossMulticlassLog>(net, solver))
                 {
                     var learningRate = parameter.LearningRate;
                     var minLearningRate = parameter.MinLearningRate;
@@ -851,12 +750,6 @@ namespace EmotionTraining
                                     currentLabels[j] = (uint)trainingLabels[rIndex];
                                     index++;
                                 }
-                            }
-
-                            using (var dataVec = new StdVector<Matrix<double>>(imageBatches[0]))
-                            {
-                                LossMulticlassLog_emotion_train_type_test(dataVec.NativePtr);
-                                LossMulticlassLog_emotion_train_type_test(dataVec.ElementPtr);
                             }
 
                             for (var i = 0; i < maxIteration; i++)

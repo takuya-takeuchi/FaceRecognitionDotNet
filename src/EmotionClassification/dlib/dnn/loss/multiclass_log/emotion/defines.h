@@ -16,7 +16,7 @@ using fc1 = add_layer<fc_<100, FC_HAS_BIAS>, SUBNET>;
 template <typename SUBNET>
 using fc2 = add_layer<fc_<500, FC_HAS_BIAS>, SUBNET>;
 template <typename SUBNET>
-using fc3 = add_layer<fc_<7, FC_HAS_BIAS>, SUBNET>;
+using fc3 = add_layer<fc_<8, FC_HAS_BIAS>, SUBNET>;
 
 using emotion_train_type = loss_multiclass_log<relu<fc3<dropout<
                                                relu<fc2<dropout<
