@@ -112,7 +112,7 @@ namespace EmotionTraining
                     Console.WriteLine($"             Output: {output}");
                     Console.WriteLine();
 
-                    var baseName = $"Corrective_re-annotation_of_FER_CK+_KDEF-mlp_{epoch}_{learningRate}_{minLearningRate}_{minBatchSize}";
+                    var baseName = Path.Combine(output, $"Corrective_re-annotation_of_FER_CK+_KDEF-mlp_{epoch}_{learningRate}_{minLearningRate}_{minBatchSize}");
                     var parameter = new Parameter
                     {
                         BaseName = baseName,
@@ -171,12 +171,7 @@ namespace EmotionTraining
             app.Command("eval", command =>
             {
                 var imageOption = command.Option("-i|--image", "The image file.", CommandOptionType.SingleValue);
-                var matOption = command.Option("-m|--mat", "The mat file.", CommandOptionType.SingleValue);
-                var landmarkOption = command.Option("-l|--landmark", "The landmark mat file.", CommandOptionType.SingleValue);
-                var rollOption = command.Option("-r|--roll", "The roll model file.", CommandOptionType.SingleValue);
-                var pitchOption = command.Option("-p|--pitch", "The pitch model file.", CommandOptionType.SingleValue);
-                var yawOption = command.Option("-y|--yaw", "The yaw model file.", CommandOptionType.SingleValue);
-                var outputOption = command.Option("-o|--output", "The output directory path.", CommandOptionType.SingleValue);
+                var modelOption = command.Option("-m|--model", "The model file path to estimate human emotion.", CommandOptionType.SingleValue);
 
                 command.OnExecute(() =>
                 {
@@ -187,84 +182,39 @@ namespace EmotionTraining
                         return -1;
                     }
 
-                    var mat = matOption.Value();
-                    if (!matOption.HasValue() || !File.Exists(mat))
+                    var model = modelOption.Value();
+                    if (!modelOption.HasValue() || !File.Exists(model))
                     {
-                        Console.WriteLine($"mat does not exist");
+                        Console.WriteLine("model file does not exist");
                         return -1;
                     }
-
-                    var landmark = landmarkOption.Value();
-                    if (!landmarkOption.HasValue() || !File.Exists(landmark))
-                    {
-                        Console.WriteLine("landmark does not exist");
-                        return -1;
-                    }
-
-                    var roll = rollOption.Value();
-                    if (!rollOption.HasValue() || !File.Exists(roll))
-                    {
-                        Console.WriteLine("roll model file does not exist");
-                        return -1;
-                    }
-
-                    var pitch = pitchOption.Value();
-                    if (!pitchOption.HasValue() || !File.Exists(pitch))
-                    {
-                        Console.WriteLine("pitch model file does not exist");
-                        return -1;
-                    }
-
-                    var yaw = yawOption.Value();
-                    if (!yawOption.HasValue() || !File.Exists(yaw))
-                    {
-                        Console.WriteLine("yaw model file does not exist");
-                        return -1;
-                    }
-
-                    var output = "result";
-                    if (outputOption.HasValue())
-                    {
-                        output = outputOption.Value();
-                    }
-
-                    Directory.CreateDirectory(output);
-
-                    Console.WriteLine($"      Image File: {image}");
-                    Console.WriteLine($"        Mat File: {mat}");
-                    Console.WriteLine($"   Landmark File: {landmark}");
-                    Console.WriteLine($"       Roll File: {roll}");
-                    Console.WriteLine($"      Pitch File: {pitch}");
-                    Console.WriteLine($"        Yaw File: {yaw}");
-                    Console.WriteLine($"Output Directory: {output}");
+                    
+                    Console.WriteLine($"Image File: {image}");
+                    Console.WriteLine($"     Model: {model}");
                     Console.WriteLine();
 
-                    var pt2d = MatlabReader.Read<double>(landmark, "pts_2d");
-                    var points = GetPoints(pt2d);
-                    using (var source = Image.FromFile(image))
-                    using (var bitmap = new Bitmap(source.Width, source.Height, PixelFormat.Format24bppRgb))
-                    using (var g = Graphics.FromImage(bitmap))
+                    using (var faceRecognition = FaceRecognition.Create("Models"))
+                    using (var faceImage = FaceRecognition.LoadImageFile(image, Mode.Greyscale))
                     {
-                        g.DrawImage(source, Point.Empty);
-
-                        // https://github.com/natanielruiz/deep-head-pose/blob/master/code/utils.py
-                        var poseMatrix = MatlabReader.Read<double>(mat, "Pose_Para");
-                        GetRollPitchYaw(poseMatrix, out var rollValue, out var pitchValue, out var yawValue);
-
-                        Console.WriteLine($"       Roll: {rollValue}");
-                        Console.WriteLine($"      Pitch: {pitchValue}");
-                        Console.WriteLine($"        Yaw: {yawValue}");
-
-                        const int pointSize = 2;
-                        foreach (var p in points)
+                        var location = new Location(0, 0, faceImage.Width, faceImage.Height);
+                        var landmark = faceRecognition.FaceLandmark(faceImage, new[] { location }).FirstOrDefault();
+                        if (landmark == null)
                         {
-                            g.DrawEllipse(Pens.GreenYellow, (float)p.X - pointSize, (float)p.Y - pointSize, pointSize * 2, pointSize * 2);
+                            Console.WriteLine($"Failed to get face landmark and estimate face emotion");
+                            return 0;
                         }
 
-                        DrawAxis(g, bitmap.Width, bitmap.Height, rollValue, pitchValue, yawValue, 150);
+                        var vector = GetFeatureVector(landmark);
+                        var trainNet = NativeMethods.LossMulticlassLog_emotion_train_type_create();
+                        var networkId = LossMulticlassLogRegistry.GetId(trainNet);
+                        LossMulticlassLogRegistry.Add(trainNet);
 
-                        var filename = Path.GetFileName(image);
-                        bitmap.Save(Path.Combine(output, $"{filename}-gt.jpg"), ImageFormat.Jpeg);
+                        using (var net = LossMulticlassLog.Deserialize(model, networkId))
+                        using (var matrix = new Matrix<double>(vector.ToArray(), vector.Length, 1))
+                        using (var predictedLabels = net.Operator(matrix))
+                        {
+                            Console.WriteLine($"{(Emotion)predictedLabels[0]}");
+                        }
                     }
 
                     return 0;
@@ -276,129 +226,127 @@ namespace EmotionTraining
 
         #region Helpers
 
-        private static void GetRollPitchYaw(MathNet.Numerics.LinearAlgebra.Matrix<double> poseMatrix, out double roll,
-                                                                                                      out double pitch,
-                                                                                                      out double yaw)
+        private static double[] GetFeatureVector(IDictionary<FacePart, IEnumerable<FacePoint>> landmark)
         {
-            roll = poseMatrix[0, 2] * 180 / Math.PI;
-            pitch = poseMatrix[0, 0] * 180 / Math.PI;
-            yaw = poseMatrix[0, 1] * 180 / Math.PI;
-        }
+            var leftEye = landmark[FacePart.LeftEye].ToArray();
+            var rightEye = landmark[FacePart.RightEye].ToArray();
+            var leftEyebrow = landmark[FacePart.LeftEyebrow].ToArray();
+            var rightEyebrow = landmark[FacePart.RightEyebrow].ToArray();
+            var bottomLip = landmark[FacePart.BottomLip];
+            var topLip = landmark[FacePart.TopLip];
+            var lip = bottomLip.Concat(topLip).ToArray();
+            var nose = landmark[FacePart.NoseBridge].ToArray();
 
-        private static IList<DPoint> GetPoints(MathNet.Numerics.LinearAlgebra.Matrix<double> pointMatrix)
-        {
-            var points = new List<DPoint>();
-            for (var c = 0; c < 68; c++)
-            {
-                var x = pointMatrix[c, 0];
-                var y = pointMatrix[c, 1];
-                points.Add(new DPoint(x, y));
-            }
+            // For a definition of each point index, see https://cdn-images-1.medium.com/max/1600/1*AbEg31EgkbXSQehuNJBlWg.png
+            // convert 68 points to 18 points
+            // left eye
+            var leftEyeTop1 = leftEye.FirstOrDefault(point => point.Index == 37).Point;
+            var leftEyeTop2 = leftEye.FirstOrDefault(point => point.Index == 38).Point;
+            var leftEyeBottom1 = leftEye.FirstOrDefault(point => point.Index == 41).Point;
+            var leftEyeBottom2 = leftEye.FirstOrDefault(point => point.Index == 40).Point;
+            var f1 = CenterOf(leftEyeTop1, leftEyeTop2);
+            var f2 = CenterOf(leftEyeBottom1, leftEyeBottom2);
+            var f3 = leftEye.FirstOrDefault(point => point.Index == 36).Point;
+            var f4 = leftEye.FirstOrDefault(point => point.Index == 39).Point;
 
-            return points;
-        }
+            // left eye
+            var rightEyeTop1 = rightEye.FirstOrDefault(point => point.Index == 43).Point;
+            var rightEyeTop2 = rightEye.FirstOrDefault(point => point.Index == 44).Point;
+            var rightEyeBottom1 = rightEye.FirstOrDefault(point => point.Index == 46).Point;
+            var rightEyeBottom2 = rightEye.FirstOrDefault(point => point.Index == 47).Point;
+            var f5 = CenterOf(rightEyeTop1, rightEyeTop2);
+            var f6 = CenterOf(rightEyeBottom1, rightEyeBottom2);
+            var f7 = rightEye.FirstOrDefault(point => point.Index == 42).Point;
+            var f8 = rightEye.FirstOrDefault(point => point.Index == 45).Point;
 
-        private static Matrix<double> GetPointMatrix(IList<DPoint> points)
-        {
-            //// https://cdn-images-1.medium.com/max/1600/1*AbEg31EgkbXSQehuNJBlWg.png
-            //switch (emotion)
+            // nose
+            var f9 = nose.FirstOrDefault(point => point.Index == 30).Point;
+
+            // left eyebrow
+            var f10 = leftEyebrow.FirstOrDefault(point => point.Index == 17).Point;
+            var f11 = leftEyebrow.FirstOrDefault(point => point.Index == 21).Point;
+            var f12 = leftEyebrow.FirstOrDefault(point => point.Index == 19).Point;
+
+            // right eyebrow
+            var f13 = rightEyebrow.FirstOrDefault(point => point.Index == 22).Point;
+            var f14 = rightEyebrow.FirstOrDefault(point => point.Index == 26).Point;
+            var f15 = rightEyebrow.FirstOrDefault(point => point.Index == 24).Point;
+
+            // lip
+            var f16 = lip.FirstOrDefault(point => point.Index == 48).Point;
+            var f17 = lip.FirstOrDefault(point => point.Index == 54).Point;
+            var top = lip.FirstOrDefault(point => point.Index == 62).Point;
+            var bottom = lip.FirstOrDefault(point => point.Index == 66).Point;
+            var f18 = CenterOf(top, bottom);
+
+            //using (var canvas = new Bitmap(faceImage.Width * 2, faceImage.Height))
+            //using (var image = new Bitmap(imagePath))
+            //using (var g = Graphics.FromImage(canvas))
             //{
+            //    g.DrawImage(image, new System.Drawing.Rectangle(0, 0, faceImage.Width, faceImage.Height));
+            //    g.DrawImage(image, new System.Drawing.Rectangle(faceImage.Width, 0, faceImage.Width, faceImage.Height));
 
-            //    case Emotion.Roll:
-            //        {
-            //            // Calc angle from 33 to each point except for 33
-            //            var vector = new List<double>();
-            //            var p1 = points[33];
-            //            for (var c = 0; c < 68; c++)
-            //            {
-            //                if (c == 33)
-            //                    continue;
+            //    const int pointSize = 2;
 
-            //                var p2 = points[c];
-            //                var distance = Math.Atan((p2.X - p1.X) / (p2.Y - p1.Y));
-            //                //var distance = Math.Sqrt(Math.Pow(p2.X - p1.X,2) + Math.Pow(p2.Y - p1.Y,2));
-            //                vector.Add(distance);
-            //            }
+            //    var eyeAndNose = new[]
+            //    {
+            //        f1, f2, f3, f4, f5, f6, f7, f8, f9
+            //    };
 
-            //            // Need not to use Normalization
-            //            //NormalizeVector(vector);
+            //    var eyebrowAndLip = new[]
+            //    {
+            //        f10, f11, f12, f13, f14, f15, f16, f17, f18
+            //    };
 
-            //            return new Matrix<double>(vector.ToArray(), vector.Count, 1);
-            //        }
-            //    case Emotion.Pitch:
-            //        {
-            //            // Calc angle from 33 to each point except for 33
-            //            var vector = new List<double>();
-            //            var p1 = points[33];
-            //            for (var c = 0; c < 68; c++)
-            //            {
-            //                if (c == 33)
-            //                    continue;
+            //    foreach (var p in eyeAndNose)
+            //        g.DrawEllipse(Pens.Red, (float)p.X - pointSize, (float)p.Y - pointSize, pointSize * 2, pointSize * 2);
+            //    foreach (var p in eyebrowAndLip)
+            //        g.DrawEllipse(Pens.CornflowerBlue, (float)p.X - pointSize, (float)p.Y - pointSize, pointSize * 2, pointSize * 2);
 
-            //                var p2 = points[c];
-            //                var distance = p2.Y - p1.Y;
-            //                vector.Add(distance);
-            //            }
+            //    foreach (var points in landmark.Values)
+            //        foreach (var p in points)
+            //            g.DrawEllipse(Pens.GreenYellow, (float)p.Point.X - pointSize + faceImage.Width, (float)p.Point.Y - pointSize, pointSize * 2, pointSize * 2);
 
-            //            NormalizeVector(vector);
-
-            //            return new Matrix<double>(vector.ToArray(), vector.Count, 1);
-            //        }
-            //    case Emotion.Yaw:
-            //        {
-            //            // Calc angle from 33 to each point except for 33
-            //            var vector = new List<double>();
-            //            var p1 = points[33];
-            //            for (var c = 0; c < 68; c++)
-            //            {
-            //                if (c == 33)
-            //                    continue;
-
-            //                var p2 = points[c];
-            //                var distance = p2.X - p1.X;
-            //                vector.Add(distance);
-            //            }
-
-            //            NormalizeVector(vector);
-
-            //            return new Matrix<double>(vector.ToArray(), vector.Count, 1);
-            //        }
-            //    default:
-            //        throw new ArgumentOutOfRangeException(nameof(emotion), emotion, null);
+            //    canvas.Save("tmp.png");
             //}
-            return null;
-        }
 
-        private static void DrawAxis(Graphics g, int width, int height, double roll, double pitch, double yaw, uint size)
-        {
-            // https://github.com/natanielruiz/deep-head-pose/blob/master/code/utils.py
-            // plot_pose_cube
-            pitch = pitch * Math.PI / 180;
-            yaw = -(yaw * Math.PI / 180);
-            roll = roll * Math.PI / 180;
+            // Left eye Height V1 = F1-F2
+            var v1 = GetEuclideanDistance(f1, f2);
 
-            var tdx = width / 2;
-            var tdy = height / 2;
+            // Left eye Width V2 = F4 - F3
+            var v2 = GetEuclideanDistance(f4, f3);
 
-            // X-Axis pointing to right. drawn in red
-            var x1 = size * (Math.Cos(yaw) * Math.Cos(roll)) + tdx;
-            var y1 = size * (Math.Cos(pitch) * Math.Sin(roll) + Math.Cos(roll) * Math.Sin(pitch) * Math.Sin(yaw)) + tdy;
+            // Right eye Height V3 = F5 - F6
+            var v3 = GetEuclideanDistance(f5, f6);
 
-            // Y-Axis | drawn in green
-            // v
-            var x2 = size * (-Math.Cos(yaw) * Math.Sin(roll)) + tdx;
-            var y2 = size * (Math.Cos(pitch) * Math.Cos(roll) - Math.Sin(pitch) * Math.Sin(yaw) * Math.Sin(roll)) + tdy;
+            // Right eye Width V4 = F8- F7
+            var v4 = GetEuclideanDistance(f8, f7);
 
-            // Z-Axis (out of the screen) drawn in blue
-            var x3 = size * (Math.Sin(yaw)) + tdx;
-            var y3 = size * (-Math.Cos(yaw) * Math.Sin(pitch)) + tdy;
+            // Left eyebrow width V5 = F11 - F10
+            var v5 = GetEuclideanDistance(f11, f10);
 
-            using (var pen = new Pen(Color.Red, 3))
-                g.DrawLine(pen, tdx, tdy, (int)x1, (int)y1);
-            using (var pen = new Pen(Color.Green, 3))
-                g.DrawLine(pen, tdx, tdy, (int)x2, (int)y2);
-            using (var pen = new Pen(Color.Blue, 3))
-                g.DrawLine(pen, tdx, tdy, (int)x3, (int)y3);
+            // Right eyebrow width V6 = F14 - F13
+            var v6 = GetEuclideanDistance(f14, f13);
+
+            // Lip width V7 = F17 - F16
+            var v7 = GetEuclideanDistance(f17, f16);
+
+            // Left eye upper corner and left eyebrow center dist. V8 = F12 - F1
+            var v8 = GetEuclideanDistance(f12, f11);
+
+            // Right eye upper corner and right eyebrow center dist. V9 = F15 - F5
+            var v9 = GetEuclideanDistance(f15, f5);
+
+            // Nose centre and lips centre dist. V10 = F9 - F18
+            var v10 = GetEuclideanDistance(f9, f18);
+
+            // Left eye lower corner and lips left corner dist. V11 = F2 - F16
+            var v11 = GetEuclideanDistance(f2, f16);
+
+            // Right eye lower corner and lips right corner dist. V12 = F6 - F17
+            var v12 = GetEuclideanDistance(f6, f17);
+
+            return new[] { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12 };
         }
 
         private static double GetEuclideanDistance(FaceRecognitionDotNet.Point p1, FaceRecognitionDotNet.Point p2)
@@ -476,131 +424,11 @@ namespace EmotionTraining
                                         continue;
                                     }
 
-                                    // Subsample of Input feature vectors and description
-                                    {
-                                        var leftEye = landmark[FacePart.LeftEye].ToArray();
-                                        var rightEye = landmark[FacePart.RightEye].ToArray();
-                                        var leftEyebrow = landmark[FacePart.LeftEyebrow].ToArray();
-                                        var rightEyebrow = landmark[FacePart.RightEyebrow].ToArray();
-                                        var bottomLip = landmark[FacePart.BottomLip];
-                                        var topLip = landmark[FacePart.TopLip];
-                                        var lip = bottomLip.Concat(topLip).ToArray();
-                                        var nose = landmark[FacePart.NoseBridge].ToArray();
-
-                                        // For a definition of each point index, see https://cdn-images-1.medium.com/max/1600/1*AbEg31EgkbXSQehuNJBlWg.png
-                                        // convert 68 points to 18 points
-                                        // left eye
-                                        var leftEyeTop1 = leftEye.FirstOrDefault(point => point.Index == 37).Point;
-                                        var leftEyeTop2 = leftEye.FirstOrDefault(point => point.Index == 38).Point;
-                                        var leftEyeBottom1 = leftEye.FirstOrDefault(point => point.Index == 41).Point;
-                                        var leftEyeBottom2 = leftEye.FirstOrDefault(point => point.Index == 40).Point;
-                                        var f1 = CenterOf(leftEyeTop1, leftEyeTop2);
-                                        var f2 = CenterOf(leftEyeBottom1, leftEyeBottom2);
-                                        var f3 = leftEye.FirstOrDefault(point => point.Index == 36).Point;
-                                        var f4 = leftEye.FirstOrDefault(point => point.Index == 39).Point;
-
-                                        // left eye
-                                        var rightEyeTop1 = rightEye.FirstOrDefault(point => point.Index == 43).Point;
-                                        var rightEyeTop2 = rightEye.FirstOrDefault(point => point.Index == 44).Point;
-                                        var rightEyeBottom1 = rightEye.FirstOrDefault(point => point.Index == 46).Point;
-                                        var rightEyeBottom2 = rightEye.FirstOrDefault(point => point.Index == 47).Point;
-                                        var f5 = CenterOf(rightEyeTop1, rightEyeTop2);
-                                        var f6 = CenterOf(rightEyeBottom1, rightEyeBottom2);
-                                        var f7 = rightEye.FirstOrDefault(point => point.Index == 42).Point;
-                                        var f8 = rightEye.FirstOrDefault(point => point.Index == 45).Point;
-
-                                        // nose
-                                        var f9 = nose.FirstOrDefault(point => point.Index == 30).Point;
-
-                                        // left eyebrow
-                                        var f10 = leftEyebrow.FirstOrDefault(point => point.Index == 17).Point;
-                                        var f11 = leftEyebrow.FirstOrDefault(point => point.Index == 21).Point;
-                                        var f12 = leftEyebrow.FirstOrDefault(point => point.Index == 19).Point;
-
-                                        // right eyebrow
-                                        var f13 = rightEyebrow.FirstOrDefault(point => point.Index == 22).Point;
-                                        var f14 = rightEyebrow.FirstOrDefault(point => point.Index == 26).Point;
-                                        var f15 = rightEyebrow.FirstOrDefault(point => point.Index == 24).Point;
-
-                                        // lip
-                                        var f16 = lip.FirstOrDefault(point => point.Index == 48).Point;
-                                        var f17 = lip.FirstOrDefault(point => point.Index == 54).Point;
-                                        var top = lip.FirstOrDefault(point => point.Index == 62).Point;
-                                        var bottom = lip.FirstOrDefault(point => point.Index == 66).Point;
-                                        var f18 = CenterOf(top, bottom);
-
-                                        //using (var canvas = new Bitmap(faceImage.Width * 2, faceImage.Height))
-                                        //using (var image = new Bitmap(imagePath))
-                                        //using (var g = Graphics.FromImage(canvas))
-                                        //{
-                                        //    g.DrawImage(image, new System.Drawing.Rectangle(0, 0, faceImage.Width, faceImage.Height));
-                                        //    g.DrawImage(image, new System.Drawing.Rectangle(faceImage.Width, 0, faceImage.Width, faceImage.Height));
-
-                                        //    const int pointSize = 2;
-
-                                        //    var eyeAndNose = new[]
-                                        //    {
-                                        //        f1, f2, f3, f4, f5, f6, f7, f8, f9
-                                        //    };
-
-                                        //    var eyebrowAndLip = new[]
-                                        //    {
-                                        //        f10, f11, f12, f13, f14, f15, f16, f17, f18
-                                        //    };
-
-                                        //    foreach (var p in eyeAndNose)
-                                        //        g.DrawEllipse(Pens.Red, (float)p.X - pointSize, (float)p.Y - pointSize, pointSize * 2, pointSize * 2);
-                                        //    foreach (var p in eyebrowAndLip)
-                                        //        g.DrawEllipse(Pens.CornflowerBlue, (float)p.X - pointSize, (float)p.Y - pointSize, pointSize * 2, pointSize * 2);
-
-                                        //    foreach (var points in landmark.Values)
-                                        //        foreach (var p in points)
-                                        //            g.DrawEllipse(Pens.GreenYellow, (float)p.Point.X - pointSize + faceImage.Width, (float)p.Point.Y - pointSize, pointSize * 2, pointSize * 2);
-
-                                        //    canvas.Save("tmp.png");
-                                        //}
-
-                                        // Left eye Height V1 = F1-F2
-                                        var v1 = GetEuclideanDistance(f1, f2);
-
-                                        // Left eye Width V2 = F4 - F3
-                                        var v2 = GetEuclideanDistance(f4, f3);
-
-                                        // Right eye Height V3 = F5 - F6
-                                        var v3 = GetEuclideanDistance(f5, f6);
-
-                                        // Right eye Width V4 = F8- F7
-                                        var v4 = GetEuclideanDistance(f8, f7);
-
-                                        // Left eyebrow width V5 = F11 - F10
-                                        var v5 = GetEuclideanDistance(f11, f10);
-
-                                        // Right eyebrow width V6 = F14 - F13
-                                        var v6 = GetEuclideanDistance(f14, f13);
-
-                                        // Lip width V7 = F17 - F16
-                                        var v7 = GetEuclideanDistance(f17, f16);
-
-                                        // Left eye upper corner and left eyebrow center dist. V8 = F12 - F1
-                                        var v8 = GetEuclideanDistance(f12, f11);
-
-                                        // Right eye upper corner and right eyebrow center dist. V9 = F15 - F5
-                                        var v9 = GetEuclideanDistance(f15, f5);
-
-                                        // Nose centre and lips centre dist. V10 = F9 - F18
-                                        var v10 = GetEuclideanDistance(f9, f18);
-
-                                        // Left eye lower corner and lips left corner dist. V11 = F2 - F16
-                                        var v11 = GetEuclideanDistance(f2, f16);
-
-                                        // Right eye lower corner and lips right corner dist. V12 = F6 - F17
-                                        var v12 = GetEuclideanDistance(f6, f17);
-
-                                        var vector = new[] { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12 };
-                                        vectorList.Add(vector);
-                                        imageList.Add(new Matrix<double>(vector.ToArray(), vector.Length, 1));
-                                        labelList.Add(emotion);
-                                    }
+                                    var vector = GetFeatureVector(landmark);
+                                    
+                                    vectorList.Add(vector);
+                                    imageList.Add(new Matrix<double>(vector.ToArray(), vector.Length, 1));
+                                    labelList.Add(emotion);
                                 }
 
                                 break;
@@ -820,15 +648,6 @@ namespace EmotionTraining
             {
                 Console.WriteLine(e.Message);
             }
-        }
-
-        private static Emotion GetEmotion(Matrix<double> propability)
-        {
-            var exp = propability.ToArray().Select(Math.Exp);
-            var sum = exp.Sum();
-            var softmax = exp.Select(i => i / sum);
-            return (Emotion)softmax.Select((value, index) => new { Value = value, Index = index })
-                                   .Aggregate((max, working) => (max.Value > working.Value) ? max : working).Index;
         }
 
         private static void Validation(ValidationParameter parameter,

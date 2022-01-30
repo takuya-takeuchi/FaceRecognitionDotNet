@@ -1,152 +1,108 @@
-﻿# Head Pose Training
+﻿# Emotion Training
  
-This program aims to train human face images to estimate face pose.
+This program aims to train human face images to estimate face emotion.
 
 ## How to estimate?
 
-At first, create input data from 68 face landmark. 
-This time, **point 34** shall be center of face. 
+This program implements [Facial Expression Recognition using Facial Landmark Detection and Feature Extraction via Neural Networks](https://arxiv.org/pdf/1812.04510.pdf).
+Please check this paper about algorithm.
 
-<img src="images/68-face.png" width="480"/>
+##### :warning: Warning
 
-https://arxiv.org/pdf/1812.04510.pdf
-
-And calculating **distance** from **point 34** to other points except for **point 34**. 
-You must calculate in order of 68 face landmark from 1 to 68. 
-After that, normalize vector by **z-score normalization** except for roll. 
-Then, we got **67 vector**. 
-
-However, there is 3 patterns of **distance** and these correspond to roll, pitch and yaw.
-
-* Roll
-  * distance is **arc tangent** for X and Y
-* Pitch
-  * distance is **euclidean distance** for only Y
-* Yaw
-  * distance is **euclidean distance** for only X
-
-It means that we shall retrieve three **67 vector**.
-
-And finally, train these vector by **kernel recursive least squares algorithm**.
+This program does not reproduce paper's performance.
 
 ## How to use?
 
 ## 1. Build
 
-1. Open command prompt and change to &lt;HeadPoseTraining_dir&gt;
+1. Open command prompt and change to &lt;EmotionTraining_dir&gt;
 1. Type the following command
 ````
 dotnet build -c Release
 ````
-2. Copy ***DlibDotNetNative.dll*** and ***DlibDotNetNativeDnn.dll*** to output directory; &lt;HeadPoseTraining_dir&gt;\bin\Release\netcoreapp2.0.
+2. Copy ***DlibDotNetNative.dll*** and ***DlibDotNetNativeDnn.dll*** to output directory; &lt;EmotionTraining_dir&gt;\bin\Release\netcoreapp2.0.
 
 ## 2. Download train and test data
 
 Download data from the following url.
 
-- http://www.cbsr.ia.ac.cn/users/xiangyuzhu/projects/3DDFA/main.htm
-  - 300W-LP
+- https://www.kaggle.com/sudarshanvaidya/corrective-reannotation-of-fer-ck-kdef
+  - Corrective re-annotation of FER - CK+ - KDEF
 
 And extract them and copy extracted files to directory where you want to.
 
 ## 3. Create dataset
 
-Create your dataset from 300W-LP directory by using ***tools/CreateDataset.ps1***.
-The following command divides images to train and test randomly according to ***TrainRate***.
-***TrainRate 8*** means that training data is 80% and test data is 20%.
+Create your dataset from 300W-LP directory by using ***tools/GenerateTrainTestList.ps1***.
+The following command generates train and test image list files into <dataset_dir>.
 
 ````cmd
-pwsh tools\CreateDataset.ps1 -InputDirectory <300W-LP-Dataset_dir> ^
-                             -TrainRate 8 ^
-                             -OutputDirectory <300W-LP-YourDataset_dir> ^
-                             -Max 0
+pwsh tools\GenerateTrainTestList.ps1 -rootDirectory <dataset_dir> ^
+                                     -trainingRatio 0.9
 ````
 
-## 4. Check dataset (Option)
+***-trainingRatio 0.9*** means that training data is 90% and test data is 10%.
 
-You can check dataset status.
+## 4. Train
 
-````cmd
-python tools\pose-hist.png.py <300W-LP-YourDataset_dir>
-````
-
-<img src="images/pose-hist.png"/>
-
-For examples, this is other custom dataset which sample size is limited to 5000 samples.
-
-<img src="images/pose-hist_5000.png"/>
-
-## 5. Train
+You must parepare `Models` directory of **FaceRecognitionDotNet** in <EmotionTraining_dir> before start training.
 
 ````cmd
-cd <HeadPoseTraining_dir>
-dotnet run -c Release -- train --dataset <300W-LP-YourDataset_dir> ^
-                      --gamma 0.1 ^
-                      --tolerance 0.001 ^
-                      --range 10 ^
-                      --output <300W-LP-YourDataset_dir>\result
-
-  Dataset: <300W-LP-YourDataset_dir>
-Tolerance: 0.001
-    Gamma: 0.1
-    Range: 10
-     Pose: All
-   Output: <300W-LP-YourDataset_dir>\result
-
-Start load train images
-Use Cache <300W-LP-YourDataset_dir>\train\cache_Roll.dat
-Load train images: 4000
-Start load test images
-Use Cache <300W-LP-YourDataset_dir>\test\cache_Roll.dat
-Load test images: 1000
-
-Training
-100.00% Step 4000 of 4000                                  00:06:55
-───────────────────────────────────────────────────────────────────
-Validation for Training data
-100.00% Step 4000 of 4000                                  00:00:01
-───────────────────────────────────────────────────────────────────
-training num_right: 4000
-training num_wrong: 0
- training accuracy:  1.0000
-
-Validation for Test data
-100.00% Step 1000 of 1000                                  00:00:00
-───────────────────────────────────────────────────────────────────
-testing num_right: 872
-testing num_wrong: 128
- testing accuracy:  0.8720
-train accuracy: 1.0000, test accuracy: 0.8720
+cd <EmotionTraining_dir>
+dotnet run -c Release -- train --dataset <dataset_dir> ^
+                               --epoch 3000 ^
+                               --lr 0.0005 ^
+                               --min-lr 0.000000005 ^
+                               --min-batchsize 512 ^
+                               --validation-interval 30 ^
+                               --output <dataset_dir>\result
+            Dataset: <dataset_dir>
+              Epoch: 3000
+      Learning Rate: 0.0005
+  Min Learning Rate: 5E-09
+     Min Batch Size: 512
+Validation Interval: 30
+           Use Mean: False
+             Output: <dataset_dir>\result
 
 Start load train images
-Use Cache <300W-LP-YourDataset_dir>\train\cache_Pitch.dat
-Load train images: 4000
+Use Cache <dataset_dir>\train_cache.dat
+Load train images: 29568
 Start load test images
-Use Cache <300W-LP-YourDataset_dir>\test\cache_Pitch.dat
-Load test images: 1000
+Use Cache <dataset_dir>\test_cache.dat
+Load test images: 3286
 
-Training
-100.00% Step 4000 of 4000                                  00:00:16
-───────────────────────────────────────────────────────────────────
-100.00% Step 4000 of 4000                                  00:00:00
-───────────────────────────────────────────────────────────────────
-training num_right: 3949
-training num_wrong: 51
- training accuracy:  0.9873
-100.00% Step 1000 of 1000                                  00:00:00
-───────────────────────────────────────────────────────────────────
-testing num_right: 969
-testing num_wrong: 31
- testing accuracy:  0.9690
-train accuracy: 0.9873, test accuracy: 0.9690
+step#: 0     learning rate: 0.0005  average loss: 0            steps without apparent progress: 0
+Epoch: 0, learning Rate: 0.0005, average loss: 4.11948018428823
+Epoch: 1, learning Rate: 0.0005, average loss: 3.1305690457948
+Epoch: 2, learning Rate: 0.0005, average loss: 2.69736696763001
+Epoch: 3, learning Rate: 0.0005, average loss: 2.45950934526035
+Epoch: 4, learning Rate: 0.0005, average loss: 2.30691530587521
+Epoch: 5, learning Rate: 0.0005, average loss: 2.19935585556312
+Epoch: 6, learning Rate: 0.0005, average loss: 2.11859311641417
+Epoch: 7, learning Rate: 0.0005, average loss: 2.0555247708289
+Epoch: 8, learning Rate: 0.0005, average loss: 2.00418632351514
+Epoch: 9, learning Rate: 0.0005, average loss: 1.96132853099646
+Epoch: 10, learning Rate: 0.0005, average loss: 1.92488743458344
+Epoch: 11, learning Rate: 0.0005, average loss: 1.89341635029666
+Epoch: 12, learning Rate: 0.0005, average loss: 1.86622101266595
+Epoch: 13, learning Rate: 0.0005, average loss: 1.84257901432909
+Epoch: 14, learning Rate: 0.0005, average loss: 1.82172028172718
+Epoch: 15, learning Rate: 0.0005, average loss: 1.80331000603231
+Epoch: 16, learning Rate: 0.0005, average loss: 1.78676114864211
 
-Start load train images
-Use Cache <300W-LP-YourDataset_dir>\train\cache_Yaw.dat
-Load train images: 4000
-Start load test images
-Use Cache <300W-LP-YourDataset_dir>\test\cache_Yaw.dat
-Load test images: 1000
-100.00% Step 4000 of 4000                                  00:00:27
+Epoch: 384, learning Rate: 5E-09, average loss: 1.39896950052756
+Saved state to Corrective_re-annotation_of_FER_CK+_KDEF-mlp_3000_0.0005_5E-09_512
+Epoch: 385, learning Rate: 5E-09, average loss: 1.39896063521396
+Epoch: 386, learning Rate: 5E-10, average loss: 1.39897608550845
+Saved state to Corrective_re-annotation_of_FER_CK+_KDEF-mlp_3000_0.0005_5E-09_512_
+done training
+training num_right: 14257
+training num_wrong: 15311
+training accuracy:  0.482176677489177
+testing num_right: 1703
+testing num_wrong: 1583
+testing accuracy:  0.518259281801582                    00:00:27
 ───────────────────────────────────────────────────────────────────
 100.00% Step 4000 of 4000                                  00:00:00
 ───────────────────────────────────────────────────────────────────
@@ -161,56 +117,39 @@ testing num_wrong: 0
 train accuracy: 1.0000, test accuracy: 1.0000
 ````
 
-## 6. Visualize Evaluation (Option)
+## 6. Test (Option)
 
-You can evaluate dataset by visualize image.
+You must parepare `Models` directory of **FaceRecognitionDotNet** in <EmotionTraining_dir> before start test.
 
 ````cmd
-cd <HeadPoseTraining_dir>
-dotnet run -c Release -- eval --image <300W-LP>\AFW\AFW_134212_1_4.jpg ^
-                              --mat <300W-LP>\AFW\AFW_134212_1_4.mat ^
-                              --landmark <300W-LP>\landmarks\IBUG\IBUG_image_003_1_5_pts.mat ^
-                              --roll <300W-LP-YourDataset_dir>\result\300w-lp-roll-krls_0.001_0.1.dat ^
-                              --pitch <300W-LP-YourDataset_dir>\result\300w-lp-pitch-krls_0.001_0.1.dat ^
-                              --yaw <300W-LP-YourDataset_dir>\result\300w-lp-yaw-krls_0.001_0.1.dat ^
-                              --output <300W-LP-YourDataset_dir>\result\eval
+cd <EmotionTraining_dir>
+dotnet run -c Debug -- test --dataset <dataset_dir> ^
+                            --model "Corrective_re-annotation_of_FER_CK+_KDEF-mlp_3000_5E-05_5E-09_512.dat"
 
-      Image File: <300W-LP>\AFW\AFW_134212_1_4.jpg
-        Mat File: <300W-LP>\AFW\AFW_134212_1_4.mat
-   Landmark File: <300W-LP>\landmarks\AFW\AFW_134212_1_4_pts.mat
-       Roll File: <300W-LP-YourDataset_dir>\result\300w-lp-roll-krls_0.001_0.1.dat
-      Pitch File: <300W-LP-YourDataset_dir>\result\300w-lp-pitch-krls_0.001_0.1.dat
-        Yaw File: <300W-LP-YourDataset_dir>\result\300w-lp-yaw-krls_0.001_0.1.dat
-Output Directory: <300W-LP-YourDataset_dir>\result\eval
+Start load train images
+Use Cache <dataset_dir>\train_cache.dat
+Load train images: 29568
+Start load test images
+Use Cache <dataset_dir>\test_cache.dat
+Load test images: 3286
 
-       Roll: -12.5080101676021
-      Pitch: -24.7073657941586
-        Yaw: 46.8672622731993
- Predicted Roll: -6.62495690307041
-Predicted Pitch: -23.208335859383
-  Predicted Yaw: 46.6662299870219
+training num_right: 14128
+training num_wrong: 15440
+training accuracy:  0.477813852813853
+testing num_right: 1659
+testing num_wrong: 1627
+testing accuracy:  0.504869141813755
 ````
-
-#### Ground Truth
-
-<img src="images\AFW_134212_1_4.jpg-gt.jpg" width="240"/>
-
-#### Prediction
-
-<img src="images\AFW_134212_1_4.jpg-predicted.jpg" width="240"/>
 
 ## 7. Evaluation
 
 The following table is evaluation from author's data. 
 The condition is here. 
 
-* Training Data: 4000
-* Test Data: 1000
-* Tolerance: 0.001
-* Gamma: 0.1
-
-|Pose|±10 degree|±5 degree|±3 degree|
-|---|---|---|---|
-|Roll|0.9660|0.9030|0.8020|
-|Pitch|0.9720|0.8470 |0.7000|
-|Yaw|1.000|1.000|0.9970|
+* Training Data: 29568
+* Test Data: 3286
+* Epoch: 3000
+* Learning Rate: 0.0005
+* Min Learning Rate: 5E-09
+* Min Batch Size: 512
+* Accuracy: 0.524345709068777

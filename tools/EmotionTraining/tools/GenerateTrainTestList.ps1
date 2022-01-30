@@ -4,9 +4,6 @@ param
     [String] $rootDirectory,
     
     [parameter(Mandatory=$true)]
-    [string] $outputDirectory,
-    
-    [parameter(Mandatory=$true)]
     [float] $trainingRatio
 )
 
@@ -106,7 +103,7 @@ foreach ($input in $inputs)
     $source    = $input.Input
     $fileName   = $input.FileName
 
-    $path = Join-Path "${outputDirectory}" $fileName
+    $path = Join-Path "${rootDirectory}" $fileName
 
     Write-Host "Write to ${path}" -ForegroundColor Green
     $source | Out-File -Encoding Default "tmp.txt"

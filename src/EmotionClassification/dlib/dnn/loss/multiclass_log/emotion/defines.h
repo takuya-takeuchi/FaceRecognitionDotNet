@@ -18,9 +18,9 @@ using fc2 = add_layer<fc_<500, FC_HAS_BIAS>, SUBNET>;
 template <typename SUBNET>
 using fc3 = add_layer<fc_<8, FC_HAS_BIAS>, SUBNET>;
 
-using emotion_train_type = loss_multiclass_log<relu<fc3<dropout<
+using emotion_train_type = loss_multiclass_log<fc3<dropout<
                                                relu<fc2<dropout<
-                                               relu<fc1<input<matrix<double>>>>>>>>>>>;
+                                               relu<fc1<input<matrix<double>>>>>>>>>>;
 
 static const std::vector<const char *>* emotion_train_type_labels = new std::vector<const char *>(
 {
