@@ -46,6 +46,8 @@ namespace FaceRecognitionDotNet.Tests
 
         private readonly string _AgeEstimatorModelFile;
 
+        private readonly string _EmotionEstimatorModelFile;
+
         private readonly string _GenderEstimatorModelFile;
 
         private readonly string _RollEstimateorModelFile;
@@ -55,6 +57,8 @@ namespace FaceRecognitionDotNet.Tests
         private readonly string _YawEstimateorModelFile;
 
         private readonly string _SimpleFaceDetectorModelFile;
+
+        private readonly string _PosePredictor68PointModelFile;
 
         #endregion
 
@@ -74,6 +78,7 @@ namespace FaceRecognitionDotNet.Tests
             this._PitchEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-pitch-krls_0.001_0.1.dat");
             this._YawEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-yaw-krls_0.001_0.1.dat");
             this._SimpleFaceDetectorModelFile = Path.Combine(ModelDirectory, "face_detector.svm");
+            this._PosePredictor68PointModelFile = Path.Combine(ModelDirectory, "shape_predictor_68_face_landmarks.dat");
 
             var faceRecognition = typeof(FaceRecognition);
             var type = faceRecognition.Assembly.GetTypes().FirstOrDefault(t => t.Name == "FaceRecognitionModels");
@@ -93,6 +98,9 @@ namespace FaceRecognitionDotNet.Tests
                 {
                     case "GetPosePredictor194PointModelLocation":
                         this._HelenModelFile = Path.Combine(ModelDirectory, result);
+                        break;
+                    case "GetEmotionNetworkModelLocation":
+                        this._EmotionEstimatorModelFile = Path.Combine(ModelDirectory, result);
                         break;
                     case "GetGenderNetworkModelLocation":
                         this._GenderEstimatorModelFile = Path.Combine(ModelDirectory, result);
@@ -1681,6 +1689,137 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
+        public void PredictEmotion()
+        {
+            if (!File.Exists(this._EmotionEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile, this._PosePredictor68PointModelFile))
+                {
+                    this._FaceRecognition.CustomEmotionEstimator = estimator;
+                    Assert.Equal(this._FaceRecognition.CustomEmotionEstimator, estimator);
+
+                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s));
+                    foreach (var gt in groundTruth)
+                        using (var image = FaceRecognition.LoadImageFile(gt.Key))
+                        {
+                            var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                            var emotion = this._FaceRecognition.PredictEmotion(image, location);
+                            Assert.True(gt.Value == emotion, $"Failed to classify '{gt.Value}'");
+                        }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomEmotionEstimator = null;
+            }
+        }
+
+        [Fact]
+        public void PredictEmotionRepeat()
+        {
+            if (!File.Exists(this._EmotionEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile, this._PosePredictor68PointModelFile))
+                {
+                    this._FaceRecognition.CustomEmotionEstimator = estimator;
+                    Assert.Equal(this._FaceRecognition.CustomEmotionEstimator, estimator);
+
+                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s));
+                    foreach (var gt in groundTruth)
+                        foreach (var index in Enumerable.Range(0, 10))
+                            using (var image = FaceRecognition.LoadImageFile(gt.Key))
+                            {
+                                var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                                var emotion = this._FaceRecognition.PredictEmotion(image, location);
+                                Assert.True(gt.Value == emotion, $"Failed to classify '{gt.Value}' for repeat {index + 1}");
+                            }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomEmotionEstimator = null;
+            }
+        }
+
+        [Fact]
+        public void PredictEmotionException()
+        {
+            try
+            {
+                new SimpleEmotionEstimator("not_found", this._PosePredictor68PointModelFile);
+                Assert.True(false, $"{nameof(SimpleEmotionEstimator)} method should throw exception.");
+            }
+            catch (FileNotFoundException)
+            {
+            }
+
+            try
+            {
+                new SimpleEmotionEstimator(this._EmotionEstimatorModelFile, "not_found");
+                Assert.True(false, $"{nameof(SimpleEmotionEstimator)} method should throw exception.");
+            }
+            catch (FileNotFoundException)
+            {
+            }
+
+            try
+            {
+                this._FaceRecognition.PredictEmotion(null, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictEmotion)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictEmotion(image, null);
+                Assert.True(false, $"{nameof(PredictEmotion)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictEmotion(image, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictEmotion)} method should throw {nameof(NotSupportedException)}.");
+            }
+            catch (NotSupportedException)
+            {
+            }
+
+            if (!File.Exists(this._EmotionEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile, this._PosePredictor68PointModelFile))
+                {
+                    this._FaceRecognition.CustomEmotionEstimator = estimator;
+                    estimator.Dispose();
+                    this._FaceRecognition.PredictEmotion(image, new Location(0, 0, 0, 0));
+                }
+                Assert.True(false, $"{nameof(PredictEmotion)} method should throw {nameof(ObjectDisposedException)}.");
+            }
+            catch (ObjectDisposedException)
+            {
+            }
+        }
+
+        [Fact]
         public void PredictGender()
         {
             if (!File.Exists(this._GenderEstimatorModelFile))
@@ -1961,6 +2100,135 @@ namespace FaceRecognitionDotNet.Tests
                     this._FaceRecognition.PredictProbabilityAge(image, new Location(0, 0, 0, 0));
                 }
                 Assert.True(false, $"{nameof(PredictProbabilityAge)} method should throw {nameof(ObjectDisposedException)}.");
+            }
+            catch (ObjectDisposedException)
+            {
+            }
+        }
+
+        [Fact]
+        public void PredictProbabilityEmotion()
+        {
+            if (!File.Exists(this._EmotionEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile, this._PosePredictor68PointModelFile))
+                {
+                    this._FaceRecognition.CustomEmotionEstimator = estimator;
+                    Assert.Equal(this._FaceRecognition.CustomEmotionEstimator, estimator);
+
+                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s));
+                    foreach (var gt in groundTruth)
+                        using (var image = FaceRecognition.LoadImageFile(gt.Key))
+                        {
+                            var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                            var probability = this._FaceRecognition.PredictProbabilityEmotion(image, location);
+
+                            var pos = gt.Value;
+                            var maxLabel = probability.Aggregate((max, working) => (max.Value > working.Value) ? max : working).Key;
+                            Assert.True(pos == maxLabel, $"Failed to classify '{gt.Value}'. Probability: {probability[pos]}");
+                        }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomEmotionEstimator = null;
+            }
+        }
+
+        [Fact]
+        public void PredictProbabilityEmotionRepeat()
+        {
+            if (!File.Exists(this._EmotionEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile, this._PosePredictor68PointModelFile))
+                {
+                    this._FaceRecognition.CustomEmotionEstimator = estimator;
+                    Assert.Equal(this._FaceRecognition.CustomEmotionEstimator, estimator);
+
+                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s));
+                    var list = new List<IDictionary<string, float>>();
+                    foreach (var gt in groundTruth)
+                        foreach (var index in Enumerable.Range(0, 10))
+                            using (var image = FaceRecognition.LoadImageFile(gt.Key))
+                            {
+                                var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                                var probability = this._FaceRecognition.PredictProbabilityEmotion(image, location);
+                                list.Add(probability);
+                            }
+
+                    var first = list.First();
+                    foreach (var results in list)
+                    {
+                        var keys1 = first.Keys;
+                        foreach (var key in keys1)
+                        {
+                            var value1 = first[key];
+                            var value2 = results[key];
+                            Assert.True(Math.Abs(value1 - value2) < float.Epsilon, "Estimator should return same results");
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomEmotionEstimator = null;
+            }
+        }
+
+        [Fact]
+        public void PredictProbabilityEmotionException()
+        {
+            try
+            {
+                this._FaceRecognition.PredictProbabilityEmotion(null, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictProbabilityEmotion)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictProbabilityEmotion(image, null);
+                Assert.True(false, $"{nameof(PredictProbabilityEmotion)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictProbabilityEmotion(image, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictProbabilityEmotion)} method should throw {nameof(NotSupportedException)}.");
+            }
+            catch (NotSupportedException)
+            {
+            }
+
+            if (!File.Exists(this._EmotionEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile, this._PosePredictor68PointModelFile))
+                {
+                    this._FaceRecognition.CustomEmotionEstimator = estimator;
+                    estimator.Dispose();
+                    this._FaceRecognition.PredictProbabilityEmotion(image, new Location(0, 0, 0, 0));
+                }
+                Assert.True(false, $"{nameof(PredictProbabilityEmotion)} method should throw {nameof(ObjectDisposedException)}.");
             }
             catch (ObjectDisposedException)
             {

@@ -39,6 +39,11 @@
             return "utkface-gender-network.dat";
         }
 
+        public static string GetEmotionNetworkModelLocation()
+        {
+            return "corrective-reannotation-of-fer-ck-kdef-emotion-network.dat";
+        }
+
     }
 
 }

@@ -39,6 +39,8 @@ namespace FaceRecognitionDotNet
 
         private AgeEstimator _CustomAgeEstimator;
 
+        private EmotionEstimator _CustomEmotionEstimator;
+
         private GenderEstimator _CustomGenderEstimator;
 
         private EyeBlinkDetector _CustomEyeBlinkDetector;
@@ -142,6 +144,15 @@ namespace FaceRecognitionDotNet
         {
             get => this._CustomAgeEstimator;
             set => this._CustomAgeEstimator = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the custom emotion estimator that user defined.
+        /// </summary>
+        public EmotionEstimator CustomEmotionEstimator
+        {
+            get => this._CustomEmotionEstimator;
+            set => this._CustomEmotionEstimator = value;
         }
 
         /// <summary>
@@ -874,6 +885,34 @@ namespace FaceRecognitionDotNet
         }
 
         /// <summary>
+        /// Returns an emotion of face image correspond to specified location in specified image.
+        /// </summary>
+        /// <param name="image">The image contains a face.</param>
+        /// <param name="location">The location rectangle for a face.</param>
+        /// <returns>An emotion of face image correspond to specified location in specified image.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object or custom emotion estimator is disposed.</exception>
+        /// <exception cref="NotSupportedException">The custom emotion estimator is not ready.</exception>
+        public string PredictEmotion(Image image, Location location)
+        {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+            if (location == null)
+                throw new ArgumentNullException(nameof(location));
+
+            image.ThrowIfDisposed();
+            this.ThrowIfDisposed();
+
+            if (this._CustomEmotionEstimator == null)
+                throw new NotSupportedException("The custom emotion estimator is not ready.");
+
+            if (this._CustomEmotionEstimator.IsDisposed)
+                throw new ObjectDisposedException($"{nameof(CustomEmotionEstimator)}", "The custom emotion estimator is disposed.");
+
+            return this._CustomEmotionEstimator.Predict(image, location);
+        }
+
+        /// <summary>
         /// Returns an gender of face image correspond to specified location in specified image.
         /// </summary>
         /// <param name="image">The image contains a face.</param>
@@ -927,6 +966,34 @@ namespace FaceRecognitionDotNet
                 throw new ObjectDisposedException($"{nameof(CustomAgeEstimator)}", "The custom age estimator is disposed.");
 
             return this._CustomAgeEstimator.PredictProbability(image, location);
+        }
+
+        /// <summary>
+        /// Returns probabilities of emotion of face image correspond to specified location in specified image.
+        /// </summary>
+        /// <param name="image">The image contains a face.</param>
+        /// <param name="location">The location rectangle for a face.</param>
+        /// <returns>Probabilities of emotion of face image correspond to specified location in specified image.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
+        /// <exception cref="ObjectDisposedException"><paramref name="image"/> or this object or custom emotion estimator is disposed.</exception>
+        /// <exception cref="NotSupportedException">The custom emotion estimator is not ready.</exception>
+        public IDictionary<string, float> PredictProbabilityEmotion(Image image, Location location)
+        {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+            if (location == null)
+                throw new ArgumentNullException(nameof(location));
+
+            image.ThrowIfDisposed();
+            this.ThrowIfDisposed();
+
+            if (this._CustomEmotionEstimator == null)
+                throw new NotSupportedException("The custom emotion estimator is not ready.");
+
+            if (this._CustomEmotionEstimator.IsDisposed)
+                throw new ObjectDisposedException($"{nameof(CustomEmotionEstimator)}", "The custom emotion estimator is disposed.");
+
+            return this._CustomEmotionEstimator.PredictProbability(image, location);
         }
 
         /// <summary>
