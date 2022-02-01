@@ -49,14 +49,19 @@ This library is ported from https://github.com/ageitgey/face_recognition by C#.<
     
     <!-- Age and Gender classification -->
     <file src="..\artifacts\cpu\runtimes\win-x64\native\DlibDotNetNativeDnnAgeClassification.dll" target="runtimes\win-x64\native\DlibDotNetNativeDnnAgeClassification.dll" />
+    <file src="..\artifacts\cpu\runtimes\win-x64\native\DlibDotNetNativeDnnEmotionClassification.dll" target="runtimes\win-x64\native\DlibDotNetNativeDnnEmotionClassification.dll" />
     <file src="..\artifacts\cpu\runtimes\win-x64\native\DlibDotNetNativeDnnGenderClassification.dll" target="runtimes\win-x64\native\DlibDotNetNativeDnnGenderClassification.dll" />
     <file src="..\artifacts\cpu\runtimes\win-x86\native\DlibDotNetNativeDnnAgeClassification.dll" target="runtimes\win-x86\native\DlibDotNetNativeDnnAgeClassification.dll" />
+    <file src="..\artifacts\cpu\runtimes\win-x86\native\DlibDotNetNativeDnnEmotionClassification.dll" target="runtimes\win-x86\native\DlibDotNetNativeDnnEmotionClassification.dll" />
     <file src="..\artifacts\cpu\runtimes\win-x86\native\DlibDotNetNativeDnnGenderClassification.dll" target="runtimes\win-x86\native\DlibDotNetNativeDnnGenderClassification.dll" />
     <file src="..\artifacts\cpu\runtimes\linux-x64\native\libDlibDotNetNativeDnnAgeClassification.so" target="runtimes\linux-x64\native\libDlibDotNetNativeDnnAgeClassification.so" />
+    <file src="..\artifacts\cpu\runtimes\linux-x64\native\libDlibDotNetNativeDnnEmotionClassification.so" target="runtimes\linux-x64\native\libDlibDotNetNativeDnnEmotionClassification.so" />
     <file src="..\artifacts\cpu\runtimes\linux-x64\native\libDlibDotNetNativeDnnGenderClassification.so" target="runtimes\linux-x64\native\libDlibDotNetNativeDnnGenderClassification.so" />
     <file src="..\artifacts\cpu\runtimes\centos-x64\native\libDlibDotNetNativeDnnAgeClassification.so" target="runtimes\centos-x64\native\libDlibDotNetNativeDnnAgeClassification.so" />
+    <file src="..\artifacts\cpu\runtimes\centos-x64\native\libDlibDotNetNativeDnnEmotionClassification.so" target="runtimes\centos-x64\native\libDlibDotNetNativeDnnEmotionClassification.so" />
     <file src="..\artifacts\cpu\runtimes\centos-x64\native\libDlibDotNetNativeDnnGenderClassification.so" target="runtimes\centos-x64\native\libDlibDotNetNativeDnnGenderClassification.so" />
     <file src="..\artifacts\cpu\runtimes\osx-x64\native\libDlibDotNetNativeDnnAgeClassification.dylib" target="runtimes\osx-x64\native\libDlibDotNetNativeDnnAgeClassification.dylib" />
+    <file src="..\artifacts\cpu\runtimes\osx-x64\native\libDlibDotNetNativeDnnEmotionClassification.dylib" target="runtimes\osx-x64\native\libDlibDotNetNativeDnnEmotionClassification.dylib" />
     <file src="..\artifacts\cpu\runtimes\osx-x64\native\libDlibDotNetNativeDnnGenderClassification.dylib" target="runtimes\osx-x64\native\libDlibDotNetNativeDnnGenderClassification.dylib" />
         
     <!-- license -->
