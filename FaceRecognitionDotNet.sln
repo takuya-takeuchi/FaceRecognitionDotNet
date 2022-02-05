@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29806.167
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2F845E5F-E6B9-46D5-B5D8-52BEE4B463F0}"
 EndProject
@@ -47,7 +47,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenchmarkEndToEnd", "exampl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmotionTraining", "tools\EmotionTraining\EmotionTraining.csproj", "{269D318D-B37E-4F24-AF9B-30D580439056}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmotionTrainingV2", "tools\EmotionTrainingV2\EmotionTrainingV2.csproj", "{2462DBBC-3902-4C92-B1D3-F1CB09AE0995}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "tools\Shared\Shared.shproj", "{91B27982-5175-48B6-B653-6F5F022F488C}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		tools\Shared\Shared.projitems*{2462dbbc-3902-4c92-b1d3-f1cb09ae0995}*SharedItemsImports = 5
+		tools\Shared\Shared.projitems*{91b27982-5175-48b6-b653-6f5f022f488c}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -125,6 +133,10 @@ Global
 		{269D318D-B37E-4F24-AF9B-30D580439056}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{269D318D-B37E-4F24-AF9B-30D580439056}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{269D318D-B37E-4F24-AF9B-30D580439056}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2462DBBC-3902-4C92-B1D3-F1CB09AE0995}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2462DBBC-3902-4C92-B1D3-F1CB09AE0995}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2462DBBC-3902-4C92-B1D3-F1CB09AE0995}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2462DBBC-3902-4C92-B1D3-F1CB09AE0995}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,6 +160,8 @@ Global
 		{8540B212-5605-4402-BAE4-BEFEBAAD9F97} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 		{F26A2088-EB8B-43F0-8F78-9A2BCE514367} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 		{269D318D-B37E-4F24-AF9B-30D580439056} = {8C8838E0-B002-426F-9B25-4C1F65A6D33D}
+		{2462DBBC-3902-4C92-B1D3-F1CB09AE0995} = {8C8838E0-B002-426F-9B25-4C1F65A6D33D}
+		{91B27982-5175-48B6-B653-6F5F022F488C} = {8C8838E0-B002-426F-9B25-4C1F65A6D33D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D44C572-D749-4A76-A199-8C598A08AE8A}

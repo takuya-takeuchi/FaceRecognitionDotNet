@@ -11,35 +11,88 @@ using NLog;
 
 using DlibDotNet;
 using DlibDotNet.Dnn;
-using FaceRecognitionDotNet;
 
-namespace EmotionTraining
+namespace Shared
 {
 
-    internal class Program
+    public abstract class ImageTrainerProgram<T>
+        where T : struct
     {
 
         #region Fields
 
-        private const int Size = 227;
+        protected readonly int Size;
 
-        private static NLog.Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly string _Name;
+
+        private readonly string _Description;
+
+        private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
+
+        #endregion
+
+        #region Constructors
+
+        protected ImageTrainerProgram(int size, string name, string description)
+        {
+            this.Size = size;
+            this._Name = name;
+            this._Description = description;
+        }
 
         #endregion
 
         #region Methods
 
-        private static int Main(string[] args)
+        protected abstract uint Cast(T label);
+
+        protected abstract T Cast(uint label);
+
+        protected abstract bool Compare(uint predicted, T expected);
+
+        protected abstract string GetBaseName(uint epoch, double learningRate, double minLearningRate, uint minBatchSize);
+
+        protected abstract void Load(string directory, string type, out IList<Matrix<RgbPixel>> images, out IList<T> labels);
+
+        protected virtual void SetEvalMode(int networkId, LossMulticlassLog net)
+        {
+
+        }
+
+        protected abstract int SetupNetwork();
+
+        public int Start(string[] args)
         {
             var app = new CommandLineApplication(false);
-            app.Name = nameof(EmotionTraining);
-            app.Description = "The program for training Corrective re-annotation of FER - CK+ - KDEF dataset";
+            app.Name = this._Name;
+            app.Description = this._Description;
             app.HelpOption("-h|--help");
+
+            app.Command("clean", command =>
+            {
+                var outputOption = command.Option("-o|--output", "The output directory path.", CommandOptionType.SingleValue);
+
+                command.OnExecute(() =>
+                {
+                    if (!outputOption.HasValue() || !Directory.Exists(outputOption.Value()))
+                    {
+                        Logger.Error($"'{outputOption.Value()} is missing or output option is not specified");
+                        return -1;
+                    }
+                    
+                    Logger.Info($"             Output: {outputOption.Value()}");
+                    Logger.Info("");
+                    
+                    Clean(outputOption.Value());
+
+                    return 0;
+                });
+            });
 
             app.Command("train", command =>
             {
                 const uint epochDefault = 300;
-                const double learningRateDefault = 0.005d;
+                const double learningRateDefault = 0.001d;
                 const double minLearningRateDefault = 0.00001d;
                 const uint minBatchSizeDefault = 256;
                 const uint validationDefault = 30;
@@ -51,7 +104,7 @@ namespace EmotionTraining
                 var minBatchSizeOption = command.Option("-b|--min-batchsize", $"The minimum batch size. Default is {minBatchSizeDefault}", CommandOptionType.SingleValue);
                 var validationOption = command.Option("-v|--validation-interval", $"The interval of validation. Default is {validationDefault}", CommandOptionType.SingleValue);
                 var useMeanOption = command.Option("-u|--use-mean", "Use mean image", CommandOptionType.NoValue);
-                var outputOption = command.Option("-o|--output", $"The output directory path.", CommandOptionType.SingleValue);
+                var outputOption = command.Option("-o|--output", "The output directory path.", CommandOptionType.SingleValue);
 
                 command.OnExecute(() =>
                 {
@@ -117,7 +170,8 @@ namespace EmotionTraining
                     Logger.Info($"             Output: {output}");
                     Logger.Info("");
 
-                    var baseName = Path.Combine(output, $"Corrective_re-annotation_of_FER_CK+_KDEF-mlp_{epoch}_{learningRate}_{minLearningRate}_{minBatchSize}");
+                    var name = this.GetBaseName(epoch, learningRate, minLearningRate, minBatchSize);
+                    var baseName = Path.Combine(output, name);
                     var parameter = new Parameter
                     {
                         BaseName = baseName,
@@ -139,7 +193,7 @@ namespace EmotionTraining
             app.Command("test", command =>
             {
                 var datasetOption = command.Option("-d|--dataset", "The directory of dataset", CommandOptionType.SingleValue);
-                var modelOption = command.Option("-m|--model", "The model file.", CommandOptionType.SingleValue);
+                var modelOption = command.Option("-m|--model", "The model file path", CommandOptionType.SingleValue);
 
                 command.OnExecute(() =>
                 {
@@ -176,7 +230,7 @@ namespace EmotionTraining
             app.Command("eval", command =>
             {
                 var imageOption = command.Option("-i|--image", "The image file.", CommandOptionType.SingleValue);
-                var modelOption = command.Option("-m|--model", "The model file path to estimate human emotion.", CommandOptionType.SingleValue);
+                var modelOption = command.Option("-m|--model", "The model file path", CommandOptionType.SingleValue);
 
                 command.OnExecute(() =>
                 {
@@ -193,7 +247,7 @@ namespace EmotionTraining
                         Logger.Error("model file does not exist");
                         return -1;
                     }
-                    
+
                     Logger.Info($"Image File: {image}");
                     Logger.Info($"     Model: {model}");
                     Logger.Info("");
@@ -205,9 +259,9 @@ namespace EmotionTraining
                     using (var m = new Matrix<RgbPixel>(Size, Size))
                     {
                         Dlib.ResizeImage(tmp, m);
-                        NativeMethods.LossMulticlassLog_emotion_train_type_eval(networkId, net.NativePtr);
+                        this.SetEvalMode(networkId, net);
                         using (var predictedLabels = net.Operator(m))
-                            Logger.Info($"{(Emotion)predictedLabels[0]}");
+                            Logger.Info($"{this.Cast(predictedLabels[0])}");
                     }
 
                     return 0;
@@ -219,248 +273,41 @@ namespace EmotionTraining
 
         #region Helpers
 
-        private static double[] GetFeatureVector(IDictionary<FacePart, IEnumerable<FacePoint>> landmark)
+        private void Clean(string directory)
         {
-            var leftEye = landmark[FacePart.LeftEye].ToArray();
-            var rightEye = landmark[FacePart.RightEye].ToArray();
-            var leftEyebrow = landmark[FacePart.LeftEyebrow].ToArray();
-            var rightEyebrow = landmark[FacePart.RightEyebrow].ToArray();
-            var bottomLip = landmark[FacePart.BottomLip];
-            var topLip = landmark[FacePart.TopLip];
-            var lip = bottomLip.Concat(topLip).ToArray();
-            var nose = landmark[FacePart.NoseBridge].ToArray();
-
-            // For a definition of each point index, see https://cdn-images-1.medium.com/max/1600/1*AbEg31EgkbXSQehuNJBlWg.png
-            // convert 68 points to 18 points
-            // left eye
-            var leftEyeTop1 = leftEye.FirstOrDefault(point => point.Index == 37).Point;
-            var leftEyeTop2 = leftEye.FirstOrDefault(point => point.Index == 38).Point;
-            var leftEyeBottom1 = leftEye.FirstOrDefault(point => point.Index == 41).Point;
-            var leftEyeBottom2 = leftEye.FirstOrDefault(point => point.Index == 40).Point;
-            var f1 = CenterOf(leftEyeTop1, leftEyeTop2);
-            var f2 = CenterOf(leftEyeBottom1, leftEyeBottom2);
-            var f3 = leftEye.FirstOrDefault(point => point.Index == 36).Point;
-            var f4 = leftEye.FirstOrDefault(point => point.Index == 39).Point;
-
-            // left eye
-            var rightEyeTop1 = rightEye.FirstOrDefault(point => point.Index == 43).Point;
-            var rightEyeTop2 = rightEye.FirstOrDefault(point => point.Index == 44).Point;
-            var rightEyeBottom1 = rightEye.FirstOrDefault(point => point.Index == 46).Point;
-            var rightEyeBottom2 = rightEye.FirstOrDefault(point => point.Index == 47).Point;
-            var f5 = CenterOf(rightEyeTop1, rightEyeTop2);
-            var f6 = CenterOf(rightEyeBottom1, rightEyeBottom2);
-            var f7 = rightEye.FirstOrDefault(point => point.Index == 42).Point;
-            var f8 = rightEye.FirstOrDefault(point => point.Index == 45).Point;
-
-            // nose
-            var f9 = nose.FirstOrDefault(point => point.Index == 30).Point;
-
-            // left eyebrow
-            var f10 = leftEyebrow.FirstOrDefault(point => point.Index == 17).Point;
-            var f11 = leftEyebrow.FirstOrDefault(point => point.Index == 21).Point;
-            var f12 = leftEyebrow.FirstOrDefault(point => point.Index == 19).Point;
-
-            // right eyebrow
-            var f13 = rightEyebrow.FirstOrDefault(point => point.Index == 22).Point;
-            var f14 = rightEyebrow.FirstOrDefault(point => point.Index == 26).Point;
-            var f15 = rightEyebrow.FirstOrDefault(point => point.Index == 24).Point;
-
-            // lip
-            var f16 = lip.FirstOrDefault(point => point.Index == 48).Point;
-            var f17 = lip.FirstOrDefault(point => point.Index == 54).Point;
-            var top = lip.FirstOrDefault(point => point.Index == 62).Point;
-            var bottom = lip.FirstOrDefault(point => point.Index == 66).Point;
-            var f18 = CenterOf(top, bottom);
-
-            //using (var canvas = new Bitmap(faceImage.Width * 2, faceImage.Height))
-            //using (var image = new Bitmap(imagePath))
-            //using (var g = Graphics.FromImage(canvas))
-            //{
-            //    g.DrawImage(image, new System.Drawing.Rectangle(0, 0, faceImage.Width, faceImage.Height));
-            //    g.DrawImage(image, new System.Drawing.Rectangle(faceImage.Width, 0, faceImage.Width, faceImage.Height));
-
-            //    const int pointSize = 2;
-
-            //    var eyeAndNose = new[]
-            //    {
-            //        f1, f2, f3, f4, f5, f6, f7, f8, f9
-            //    };
-
-            //    var eyebrowAndLip = new[]
-            //    {
-            //        f10, f11, f12, f13, f14, f15, f16, f17, f18
-            //    };
-
-            //    foreach (var p in eyeAndNose)
-            //        g.DrawEllipse(Pens.Red, (float)p.X - pointSize, (float)p.Y - pointSize, pointSize * 2, pointSize * 2);
-            //    foreach (var p in eyebrowAndLip)
-            //        g.DrawEllipse(Pens.CornflowerBlue, (float)p.X - pointSize, (float)p.Y - pointSize, pointSize * 2, pointSize * 2);
-
-            //    foreach (var points in landmark.Values)
-            //        foreach (var p in points)
-            //            g.DrawEllipse(Pens.GreenYellow, (float)p.Point.X - pointSize + faceImage.Width, (float)p.Point.Y - pointSize, pointSize * 2, pointSize * 2);
-
-            //    canvas.Save("tmp.png");
-            //}
-
-            // Left eye Height V1 = F1-F2
-            var v1 = GetEuclideanDistance(f1, f2);
-
-            // Left eye Width V2 = F4 - F3
-            var v2 = GetEuclideanDistance(f4, f3);
-
-            // Right eye Height V3 = F5 - F6
-            var v3 = GetEuclideanDistance(f5, f6);
-
-            // Right eye Width V4 = F8- F7
-            var v4 = GetEuclideanDistance(f8, f7);
-
-            // Left eyebrow width V5 = F11 - F10
-            var v5 = GetEuclideanDistance(f11, f10);
-
-            // Right eyebrow width V6 = F14 - F13
-            var v6 = GetEuclideanDistance(f14, f13);
-
-            // Lip width V7 = F17 - F16
-            var v7 = GetEuclideanDistance(f17, f16);
-
-            // Left eye upper corner and left eyebrow center dist. V8 = F12 - F1
-            var v8 = GetEuclideanDistance(f12, f11);
-
-            // Right eye upper corner and right eyebrow center dist. V9 = F15 - F5
-            var v9 = GetEuclideanDistance(f15, f5);
-
-            // Nose centre and lips centre dist. V10 = F9 - F18
-            var v10 = GetEuclideanDistance(f9, f18);
-
-            // Left eye lower corner and lips left corner dist. V11 = F2 - F16
-            var v11 = GetEuclideanDistance(f2, f16);
-
-            // Right eye lower corner and lips right corner dist. V12 = F6 - F17
-            var v12 = GetEuclideanDistance(f6, f17);
-
-            return new[] { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12 };
-        }
-
-        private static double GetEuclideanDistance(FaceRecognitionDotNet.Point p1, FaceRecognitionDotNet.Point p2)
-        {
-            return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
-        }
-
-        private static FaceRecognitionDotNet.Point CenterOf(FaceRecognitionDotNet.Point p1, FaceRecognitionDotNet.Point p2)
-        {
-            var x = (p1.X + p2.X) / 2;
-            var y = (p1.Y + p2.Y) / 2;
-            return new FaceRecognitionDotNet.Point(x, y);
-        }
-
-        private static int SetupNetwork()
-        {
-            var trainNet = NativeMethods.LossMulticlassLog_emotion_train_type_create();
-            var networkId = LossMulticlassLogRegistry.GetId(trainNet);
-            LossMulticlassLogRegistry.Add(trainNet);
-            return networkId;
-        }
-        
-        private static void Load(string directory, string type, out IList<Matrix<double>> images, out IList<Emotion> labels)
-        {
-            var imageList = new List<Matrix<double>>();
-            var vectorList = new List<double[]>();
-            var labelList = new List<Emotion>();
-
-            var path = $"{Path.Combine(directory, type)}_cache.dat";
-            if (File.Exists(path))
+            var files = Directory.GetFiles(directory, "*.tmp").ToArray();
+            foreach (var file in files)
             {
-                Logger.Info($"Use Cache {path}");
-
-                using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+                try
                 {
-                    var s = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                    var cache = (Cache)s.Deserialize(fs);
+                    var newPath = Path.ChangeExtension(file, "dat");
+                    // So with that out of the way, we can make a network instance.
+                    var networkId = SetupNetwork();
 
-                    imageList.AddRange(cache.Points.Select(vector => new Matrix<double>(vector.ToArray(), vector.Length, 1)));
-                    labelList.AddRange(cache.Emotion);
-                }
-
-                images = imageList;
-                labels = labelList;
-
-                return;
-            }
-
-            using (var faceRecognition = FaceRecognition.Create("Models"))
-            {
-                using (var fs = new FileStream($"{Path.Combine(directory, type)}.txt", FileMode.Open, FileAccess.Read, FileShare.Read))
-                using (var sr = new StreamReader(fs, Encoding.UTF8))
-                {
-                    do
+                    using (var net = LossMulticlassLog.Deserialize(file, networkId))
                     {
-                        var line = sr.ReadLine();
-                        if (line == null)
-                            break;
+                        net.Clean();
+                        LossMulticlassLog.Serialize(net, newPath);
+                    }
 
-                        var imagePath = Path.Combine(directory, line);
-                        var dir = Path.GetFileName(Path.GetDirectoryName(imagePath));
-                        switch (dir)
-                        {
-                            case "anger":
-                            case "contempt":
-                            case "disgust":
-                            case "fear":
-                            case "happiness":
-                            case "neutrality":
-                            case "sadness":
-                            case "surprise":
-                                if (!Enum.TryParse<Emotion>(dir, true, out var emotion))
-                                {
-                                    continue;
-                                }
-
-                                using (var faceImage = FaceRecognition.LoadImageFile(imagePath, Mode.Greyscale))
-                                {
-                                    var location = new Location(0, 0, faceImage.Width, faceImage.Height);
-                                    var landmark = faceRecognition.FaceLandmark(faceImage, new[] { location }).FirstOrDefault();
-                                    if (landmark == null)
-                                    {
-                                        continue;
-                                    }
-
-                                    var vector = GetFeatureVector(landmark);
-
-                                    vectorList.Add(vector);
-                                    imageList.Add(new Matrix<double>(vector.ToArray(), vector.Length, 1));
-                                    labelList.Add(emotion);
-                                }
-
-                                break;
-                        }
-                    } while (true);
+                    File.Delete(file);
+                    Logger.Info($"'{file}' was cleaned and '{newPath}' is created.");
                 }
-            }
-
-            images = imageList;
-            labels = labelList;
-
-            using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Write))
-            {
-                Logger.Info($"Save Cache {path}");
-
-                var cache = new Cache();
-                cache.Points = vectorList;
-                cache.Emotion = labelList;
-                var s = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                s.Serialize(fs, cache);
+                catch (Exception e)
+                {
+                    Logger.Error(e.Message);
+                }
             }
         }
 
-        private static void Test(Parameter parameter)
+        private void Test(Parameter parameter)
         {
             try
             {
-                IList<Matrix<double>> trainingImages;
-                IList<Emotion> trainingLabels;
-                IList<Matrix<double>> testingImages;
-                IList<Emotion> testingLabels;
+                IList<Matrix<RgbPixel>> trainingImages;
+                IList<T> trainingLabels;
+                IList<Matrix<RgbPixel>> testingImages;
+                IList<T> testingLabels;
 
                 Logger.Info("Start load train images");
                 Load(parameter.Dataset, "train", out trainingImages, out trainingLabels);
@@ -476,8 +323,8 @@ namespace EmotionTraining
 
                 using (var net = LossMulticlassLog.Deserialize(parameter.Model, networkId))
                 {
-                    NativeMethods.LossMulticlassLog_emotion_train_type_eval(networkId, net.NativePtr);
-                    var validationParameter = new ValidationParameter
+                    this.SetEvalMode(networkId, net);
+                    var validationParameter = new ValidationParameter<T>
                     {
                         BaseName = Path.GetFileNameWithoutExtension(parameter.Model),
                         Trainer = net,
@@ -500,14 +347,14 @@ namespace EmotionTraining
             }
         }
 
-        private static void Train(Parameter parameter)
+        private void Train(Parameter parameter)
         {
             try
             {
-                IList<Matrix<double>> trainingImages;
-                IList<Emotion> trainingLabels;
-                IList<Matrix<double>> testingImages;
-                IList<Emotion> testingLabels;
+                IList<Matrix<RgbPixel>> trainingImages;
+                IList<T> trainingLabels;
+                IList<Matrix<RgbPixel>> testingImages;
+                IList<T> testingLabels;
 
                 Logger.Info("Start load train images");
                 Load(parameter.Dataset, "train", out trainingImages, out trainingLabels);
@@ -543,18 +390,18 @@ namespace EmotionTraining
                     var trainingLabelsCount = trainingLabels.Count;
 
                     var maxIteration = (int)Math.Ceiling(trainingImagesCount / (float)miniBatchSize);
-                    var imageBatches = new Matrix<double>[maxIteration][];
+                    var imageBatches = new Matrix<RgbPixel>[maxIteration][];
                     var labelBatches = new uint[maxIteration][];
                     for (var i = 0; i < maxIteration; i++)
                     {
                         if (miniBatchSize <= trainingImagesCount - i * miniBatchSize)
                         {
-                            imageBatches[i] = new Matrix<double>[miniBatchSize];
+                            imageBatches[i] = new Matrix<RgbPixel>[miniBatchSize];
                             labelBatches[i] = new uint[miniBatchSize];
                         }
                         else
                         {
-                            imageBatches[i] = new Matrix<double>[trainingImagesCount % miniBatchSize];
+                            imageBatches[i] = new Matrix<RgbPixel>[trainingImagesCount % miniBatchSize];
                             labelBatches[i] = new uint[trainingLabelsCount % miniBatchSize];
                         }
                     }
@@ -573,7 +420,7 @@ namespace EmotionTraining
                                 {
                                     var rIndex = randomArray[index];
                                     currentImages[j] = trainingImages[rIndex];
-                                    currentLabels[j] = (uint)trainingLabels[rIndex];
+                                    currentLabels[j] = this.Cast(trainingLabels[rIndex]);
                                     index++;
                                 }
                             }
@@ -588,9 +435,9 @@ namespace EmotionTraining
                             Logger.Info(trainLog);
                             sw.WriteLine(trainLog);
 
-                            if (e > 0 && e % validation == 0)
+                            if (e >= 0 && e % validation == 0)
                             {
-                                var validationParameter = new ValidationParameter
+                                var validationParameter = new ValidationParameter<T>
                                 {
                                     BaseName = parameter.BaseName,
                                     Output = parameter.Output,
@@ -609,10 +456,21 @@ namespace EmotionTraining
                                 var validationLog = $"Epoch: {e}, train accuracy: {trainAccuracy}, test accuracy: {testAccuracy}";
                                 Logger.Info(validationLog);
                                 sw.WriteLine(validationLog);
+
+                                var name = this.GetBaseName(parameter.Epoch,
+                                                            parameter.LearningRate,
+                                                            parameter.MinLearningRate,
+                                                            parameter.MiniBatchSize);
+
+                                UpdateBestModelFile(net, testAccuracy, parameter.Output, name, "test");
+                                UpdateBestModelFile(net, trainAccuracy, parameter.Output, name, "train");
                             }
 
                             if (lr < minLearningRate)
+                            {
+                                Logger.Info($"Stop training: {lr} < {minLearningRate}");
                                 break;
+                            }
                         }
 
                     // wait for training threads to stop
@@ -620,12 +478,12 @@ namespace EmotionTraining
                     Logger.Info("done training");
 
                     net.Clean();
-                    LossMulticlassLog.Serialize(net, $"{baseName}.dat");
+                    LossMulticlassLog.Serialize(net, $"{baseName}.tmp");
 
                     // Now let's run the training images through the network.  This statement runs all the
                     // images through it and asks the loss layer to convert the network's raw output into
                     // labels.  In our case, these labels are the numbers between 0 and 9.
-                    var validationParameter2 = new ValidationParameter
+                    var validationParameter2 = new ValidationParameter<T>
                     {
                         BaseName = parameter.BaseName,
                         Output = parameter.Output,
@@ -640,6 +498,9 @@ namespace EmotionTraining
                     };
 
                     Validation(validationParameter2, out _, out _);
+
+                    // clean up tmp files
+                    Clean(parameter.Output);
                 }
             }
             catch (Exception e)
@@ -648,9 +509,54 @@ namespace EmotionTraining
             }
         }
 
-        private static void Validation(ValidationParameter parameter,
-                                       out double trainAccuracy,
-                                       out double testAccuracy)
+        private static void UpdateBestModelFile(LossMulticlassLog net, double accuracy, string output, string basename, string postfix)
+        {
+            bool save;
+            var candidates = new Dictionary<string, double>();
+
+            var files = Directory.GetFiles(output, $"{basename}_{postfix}_best_*.tmp").ToArray();
+            if (files.Any())
+            {
+                var culture = new CultureInfo("en-US");
+                foreach (var file in files)
+                {
+                    var value = Path.GetFileNameWithoutExtension(file).Replace($"{basename}_{postfix}_best_", "");
+                    if (double.TryParse(value, NumberStyles.Float, culture, out var tmp))
+                        candidates.Add(file, tmp);
+                }
+
+                // there is no last best file or latest accuracy gets over old one
+                save = !candidates.Any() || candidates.All(pair => pair.Value < accuracy);
+            }
+            else
+            {
+                save = true;
+            }
+
+            if (save)
+            {
+                var path = Path.Combine(output, $"{basename}_{postfix}_best_{accuracy}.tmp");
+                LossMulticlassLog.Serialize(net, path);
+                Logger.Info($"Best Accuracy Model file is saved for {postfix} [{accuracy}]");
+
+                // delete old files
+                foreach (var (key, _) in candidates)
+                {
+                    try
+                    {
+                        File.Delete(key);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Error($"Failed to delete '{key}'. Reason: {e.Message}");
+                    }
+                }
+            }
+        }
+
+        private void Validation(ValidationParameter<T> parameter,
+                                out double trainAccuracy,
+                                out double testAccuracy)
         {
             trainAccuracy = 0;
             testAccuracy = 0;
@@ -672,7 +578,7 @@ namespace EmotionTraining
                 // And then let's see if it classified them correctly.
                 for (var i = 0; i < trainingImages.Count; ++i)
                 {
-                    if ((Emotion)predictedLabels[i] == trainingLabels[i])
+                    if (this.Compare(predictedLabels[i], trainingLabels[i]))
                         ++numRight;
                     else
                         ++numWrong;
@@ -693,7 +599,7 @@ namespace EmotionTraining
                     numWrong = 0;
                     for (var i = 0; i < testingImages.Count; ++i)
                     {
-                        if ((Emotion)predictedLabels2[i] == testingLabels[i])
+                        if (this.Compare(predictedLabels2[i], testingLabels[i]))
                             ++numRight;
                         else
                             ++numWrong;
@@ -716,168 +622,10 @@ namespace EmotionTraining
                 }
             }
         }
-
-        #endregion
-
-        #endregion
-
-        private enum Emotion
-        {
-
-            Anger,
-
-            Contempt,
-
-            Disgust,
-
-            Fear,
-
-            Happiness,
-
-            Neutrality,
-
-            Sadness,
-
-            Surprise
-
-        }
-
-        private sealed class Parameter
-        {
-
-            public string Dataset
-            {
-                get;
-                set;
-            }
-
-            public string Model
-            {
-                get;
-                set;
-            }
-
-            public string BaseName
-            {
-                get;
-                set;
-            }
-
-            public string Output
-            {
-                get;
-                set;
-            }
-
-            public uint Epoch
-            {
-                get;
-                set;
-            }
-
-            public double LearningRate
-            {
-                get;
-                set;
-            }
-
-            public double MinLearningRate
-            {
-                get;
-                set;
-            }
-
-            public uint MiniBatchSize
-            {
-                get;
-                set;
-            }
-
-            public uint Validation
-            {
-                get;
-                set;
-            }
-
-        }
         
-        private sealed class ValidationParameter
-        {
+        #endregion
 
-            public string BaseName
-            {
-                get;
-                set;
-            }
-
-            public string Output
-            {
-                get;
-                set;
-            }
-
-            public LossMulticlassLog Trainer
-            {
-                get;
-                set;
-            }
-
-            public IList<Matrix<double>> TrainingImages
-            {
-                get;
-                set;
-            }
-
-
-            public IList<Emotion> TrainingLabels
-            {
-                get;
-                set;
-            }
-
-
-            public IList<Matrix<double>> TestingImages
-            {
-                get;
-                set;
-            }
-
-
-            public IList<Emotion> TestingLabels
-            {
-                get;
-                set;
-            }
-
-            public bool UseConsole
-            {
-                get;
-                set;
-            }
-
-            public bool SaveToXml
-            {
-                get;
-                set;
-            }
-
-            public bool OutputDiffLog
-            {
-                get;
-                set;
-            }
-
-        }
-
-        [Serializable]
-        private struct Cache
-        {
-
-            public List<double[]> Points;
-
-            public List<Emotion> Emotion;
-
-        }
+        #endregion
 
     }
 
