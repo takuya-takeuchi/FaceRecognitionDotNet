@@ -89,6 +89,32 @@
             Gets the inclusive start of the <see cref="T:FaceRecognitionDotNet.Extensions.AgeRange"/>.
             </summary>
         </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.EmotionEstimator">
+            <summary>
+            An abstract base class that provides functionality to estimate emotion from face image.
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Extensions.EmotionEstimator.Labels">
+            <summary>
+            Gets the collection of emotion label this estimator returns in derived classes.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredict(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns an emotion of face image correspond to specified location in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>An emotion of face image correspond to specified location in specified image.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredictProbability(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns probabilities of emotion of face image correspond to specified location in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>Probabilities of emotion of face image correspond to specified location in specified image.</returns>
+        </member>
         <member name="T:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector">
             <summary>
             An abstract base class that provides functionality to detect human eye's blink base on eye aspect ratio (EAR).
@@ -318,6 +344,44 @@
             <returns>Probabilities of age group of face image correspond to specified location in specified image.</returns>
         </member>
         <member name="M:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.DisposeUnmanaged">
+            <summary>
+            Releases all unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator">
+            <summary>
+            The age estimator which was trained by Corrective re-annotation of FER - CK+ - KDEF dataset. This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator"/> class with the model file path that this estimator uses.
+            </summary>
+            <param name="modelPath">The model file path that this estimator uses.</param>
+            <exception cref="T:System.IO.FileNotFoundException">The <paramref name="modelPath"/> file is not found.</exception>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.Labels">
+            <summary>
+            Gets the collection of emotion label this estimator returns in derived classes.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredict(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns an emotion of face image correspond to specified location in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>An emotion of face image correspond to specified location in specified image.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredictProbability(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns probabilities of emotion of face image correspond to specified location in specified image.
+            </summary>
+            <param name="matrix">The matrix contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>Probabilities of emotion of face image correspond to specified location in specified image.</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.DisposeUnmanaged">
             <summary>
             Releases all unmanaged resources.
             </summary>
@@ -583,6 +647,11 @@
             Gets or sets the custom age estimator that user defined.
             </summary>
         </member>
+        <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomEmotionEstimator">
+            <summary>
+            Gets or sets the custom emotion estimator that user defined.
+            </summary>
+        </member>
         <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomEyeBlinkDetector">
             <summary>
             Gets or sets the custom eye blink detector that user defined.
@@ -814,6 +883,17 @@
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object or custom age estimator is disposed.</exception>
             <exception cref="T:System.NotSupportedException">The custom age estimator is not ready.</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictEmotion(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns an emotion of face image correspond to specified location in specified image.
+            </summary>
+            <param name="image">The image contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>An emotion of face image correspond to specified location in specified image.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object or custom emotion estimator is disposed.</exception>
+            <exception cref="T:System.NotSupportedException">The custom emotion estimator is not ready.</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
             <summary>
             Returns an gender of face image correspond to specified location in specified image.
@@ -835,6 +915,17 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object or custom age estimator is disposed.</exception>
             <exception cref="T:System.NotSupportedException">The custom age estimator is not ready.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityEmotion(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
+            <summary>
+            Returns probabilities of emotion of face image correspond to specified location in specified image.
+            </summary>
+            <param name="image">The image contains a face.</param>
+            <param name="location">The location rectangle for a face.</param>
+            <returns>Probabilities of emotion of face image correspond to specified location in specified image.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> or <paramref name="location"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/> or this object or custom emotion estimator is disposed.</exception>
+            <exception cref="T:System.NotSupportedException">The custom emotion estimator is not ready.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
             <summary>
