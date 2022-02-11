@@ -11,11 +11,16 @@ namespace EmotionTrainingV2
 
     internal sealed class EmotionTrainer : ImageTrainerProgram<Emotion, RgbPixel>
     {
-        
-        public EmotionTrainer(int size, string name, string description):
-            base(size, name, description)
-        {}
 
+        #region Constructors
+        public EmotionTrainer(int size, string name, string description) :
+            base(size, name, description)
+        { }
+
+        #endregion
+
+        #region ImageTrainerProgram<Emotion, RgbPixel> Members
+        
         protected override void SetEvalMode(int networkId, LossMulticlassLog net)
         {
             NativeMethods.LossMulticlassLog_emotion_train_type_eval(networkId, net.NativePtr);
@@ -102,6 +107,8 @@ namespace EmotionTrainingV2
             images = imageList;
             labels = labelList;
         }
+
+        #endregion
 
     }
 

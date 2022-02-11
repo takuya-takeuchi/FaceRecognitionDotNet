@@ -29,7 +29,7 @@ namespace Shared
 
         private readonly string _Description;
 
-        private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
+        protected static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
 
         #endregion
 

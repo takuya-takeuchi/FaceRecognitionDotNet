@@ -12,9 +12,15 @@ namespace EmotionTrainingV2
     internal sealed class EmotionGrayscaleTrainer : ImageTrainerProgram<Emotion, byte>
     {
 
+        #region Constructors
+
         public EmotionGrayscaleTrainer(int size, string name, string description) :
             base(size, name, description)
         { }
+
+        #endregion
+
+        #region ImageTrainerProgram<Emotion, RgbPixel> Members
 
         protected override void SetEvalMode(int networkId, LossMulticlassLog net)
         {
@@ -102,6 +108,8 @@ namespace EmotionTrainingV2
             images = imageList;
             labels = labelList;
         }
+        
+        #endregion
 
     }
 
