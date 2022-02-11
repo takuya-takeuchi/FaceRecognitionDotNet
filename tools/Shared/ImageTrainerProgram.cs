@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,8 @@ using NLog;
 using DlibDotNet;
 using DlibDotNet.Dnn;
 using FaceRecognitionDotNet;
+using Image = FaceRecognitionDotNet.Image;
+using Rectangle = DlibDotNet.Rectangle;
 
 namespace Shared
 {
@@ -51,6 +54,11 @@ namespace Shared
         protected abstract T Cast(uint label);
 
         protected abstract bool Compare(uint predicted, T expected);
+        
+        protected virtual void Demo(FaceRecognition faceRecognition, string modelFile, string imageFile, Image image, Location location)
+        {
+
+        }
 
         protected abstract string GetBaseName(uint epoch, double learningRate, double minLearningRate, uint minBatchSize);
 
@@ -284,6 +292,77 @@ namespace Shared
                                     Logger.Info($"{this.Cast(predictedLabels[0])}");
                             }
                         }
+                    }
+
+                    return 0;
+                });
+            });
+            
+            app.Command("demo", command =>
+            {
+                command.HelpOption("-?|-h|--help");
+                var imageOption = command.Option("-i|--image", "test image file", CommandOptionType.SingleValue);
+                var modelOption = command.Option("-m|--model", "model file", CommandOptionType.SingleValue);
+                var directoryOption = command.Option("-d|--directory", "model files directory path", CommandOptionType.SingleValue);
+
+                command.OnExecute(() =>
+                {
+                    if (!imageOption.HasValue())
+                    {
+                        Console.WriteLine("image option is missing");
+                        app.ShowHelp();
+                        return -1;
+                    }
+
+                    if (!directoryOption.HasValue())
+                    {
+                        Console.WriteLine("directory option is missing");
+                        app.ShowHelp();
+                        return -1;
+                    }
+
+                    if (!modelOption.HasValue())
+                    {
+                        Console.WriteLine("model option is missing");
+                        app.ShowHelp();
+                        return -1;
+                    }
+
+                    var modelFile = modelOption.Value();
+                    if (!File.Exists(modelFile))
+                    {
+                        Console.WriteLine($"'{modelFile}' is not found");
+                        app.ShowHelp();
+                        return -1;
+                    }
+
+                    var imageFile = imageOption.Value();
+                    if (!File.Exists(imageFile))
+                    {
+                        Console.WriteLine($"'{imageFile}' is not found");
+                        app.ShowHelp();
+                        return -1;
+                    }
+
+                    var directory = directoryOption.Value();
+                    if (!Directory.Exists(directory))
+                    {
+                        Console.WriteLine($"'{directory}' is not found");
+                        app.ShowHelp();
+                        return -1;
+                    }
+
+                    using (var fr = FaceRecognition.Create(directory))
+                    using (var image = FaceRecognition.LoadImageFile(imageFile))
+                    {
+                        var loc = fr.FaceLocations(image).FirstOrDefault();
+                        if (loc == null)
+                        {
+                            Console.WriteLine("No face is detected");
+                            return 0;
+                        }
+
+                        this.Demo(fr, modelFile, imageFile, image, loc);
                     }
 
                     return 0;

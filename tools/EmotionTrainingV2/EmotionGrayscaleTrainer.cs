@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using DlibDotNet;
 using DlibDotNet.Dnn;
+using FaceRecognitionDotNet;
 using Shared;
+using Image = FaceRecognitionDotNet.Image;
+using Rectangle = DlibDotNet.Rectangle;
 
 namespace EmotionTrainingV2
 {
@@ -45,6 +50,55 @@ namespace EmotionTrainingV2
         protected override Emotion Cast(uint label)
         {
             return (Emotion)label;
+        }
+
+        protected override void Demo(FaceRecognition faceRecognition, string modelFile, string imageFile, Image image, Location location)
+        {
+            var networkId = SetupNetwork();
+
+            using (var net = LossMulticlassLog.Deserialize(modelFile, networkId))
+            using (var bitmap = (Bitmap)System.Drawing.Image.FromFile(imageFile))
+            using (var org = new Bitmap(bitmap.Width, bitmap.Height))
+            using (var g = Graphics.FromImage(org))
+            {
+                g.DrawImage(bitmap, new System.Drawing.Rectangle(0, 0, org.Width, org.Height), new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height), GraphicsUnit.Pixel);
+                
+                var rect = new Rectangle(location.Left, location.Top, location.Right, location.Bottom);
+                var dPoint = new[]
+                {
+                    new DPoint(rect.Left, rect.Top),
+                    new DPoint(rect.Right, rect.Top),
+                    new DPoint(rect.Left, rect.Bottom),
+                    new DPoint(rect.Right, rect.Bottom),
+                };
+
+                using (var tmp = Dlib.LoadImageAsMatrix<byte>(imageFile))
+                using (var face = Dlib.ExtractImage4Points(tmp, dPoint, this.Size, this.Size))
+                {
+                    this.SetEvalMode(networkId, net);
+                    var results = net.Probability(face, 1).ToArray();
+
+                    var labels = net.GetLabels();
+                    var dictionary = new Dictionary<string, float>();
+                    for (var index = 0; index < labels.Length; index++)
+                        dictionary.Add(labels[index], results[0][index]);
+
+                    var maxResult = dictionary.Aggregate((max, working) => (max.Value > working.Value) ? max : working);
+                    var emotion = maxResult.Key;
+                    var probability = maxResult.Value;
+                    
+                    using (var p = new Pen(Color.Red, bitmap.Width / 200f))
+                    using (var b = new SolidBrush(Color.Blue))
+                    using (var font = new Font("Calibri", 16))
+                    {
+                        g.DrawRectangle(p, rect.Left, rect.Top, rect.Width, rect.Height);
+
+                        g.DrawString($"{emotion}\n({probability})", font, b, new PointF(rect.Left + 10, rect.Top + 10));
+                    }
+
+                    org.Save("demo.jpg");
+                }
+            }
         }
 
         protected override int SetupNetwork()

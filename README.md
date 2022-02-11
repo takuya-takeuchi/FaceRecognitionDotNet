@@ -70,6 +70,7 @@ You can check the following examples to train dataset.
 
 * tools/AgeTraining
 * tools/EmotionTraining
+* tools/EmotionTrainingV2
 * tools/GenderTraining
 * tools/HeadPoseTraining
 * tools/HelenTraining
@@ -82,9 +83,9 @@ You can check the following examples to train dataset.
 
 #### Other Face Functions
 
-|Face Landmark|Age and Gender Classification|Head Pose Estimation|
-|---|---|---|
-|<img src="images/3.jpg" width="240"/>|<img src="examples/CustomClassificationDemo/images/result.png" width="240"/>|<img src="images/4.png" width="240"/>|
+|Face Landmark|Age and Gender Classification|Head Pose Estimation|Emotion Estimation|
+|---|---|---|---|
+|<img src="images/3.jpg" width="240"/>|<img src="examples/CustomClassificationDemo/images/result.png" width="240"/>|<img src="images/4.png" width="240"/>|<img src="images/5.jpg" width="240"/>|
 
 ## Document
 
