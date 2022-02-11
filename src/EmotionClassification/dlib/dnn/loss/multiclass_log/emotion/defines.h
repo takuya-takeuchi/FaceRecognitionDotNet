@@ -10,18 +10,25 @@ using namespace std;
 // Developer can customize these as you want to do!!!
 #pragma region type definitions
 
-// https://arxiv.org/pdf/1812.04510.pdf
-template <typename SUBNET>
-using fc1 = add_layer<fc_<100, FC_HAS_BIAS>, SUBNET>;
-template <typename SUBNET>
-using fc2 = add_layer<fc_<500, FC_HAS_BIAS>, SUBNET>;
-template <typename SUBNET>
-using fc3 = add_layer<fc_<8, FC_HAS_BIAS>, SUBNET>;
+// avoid to conflict with previous declaration
+namespace emotion
+{
+	// https://arxiv.org/pdf/1812.04510.pdf
+	template <typename SUBNET>
+	using fc1 = add_layer<fc_<100, FC_HAS_BIAS>, SUBNET>;
+	template <typename SUBNET>
+	using fc2 = add_layer<fc_<500, FC_HAS_BIAS>, SUBNET>;
+	template <typename SUBNET>
+	using fc3 = add_layer<fc_<8, FC_HAS_BIAS>, SUBNET>;
+}
 
-using emotion_train_type = loss_multiclass_log<fc3<dropout<
-                                               sig<fc2<dropout<
-                                               sig<fc1<input<matrix<double>>>>>>>>>>;
+using emotion_train_type = loss_multiclass_log<emotion::fc3<dropout<
+                                               sig<emotion::fc2<dropout<
+                                               sig<emotion::fc1<input<matrix<double>>>>>>>>>>;
 
+// avoid to conflict with previous declaration
+namespace emotion
+{
 // Inception layer has some different convolutions inside.  Here we define
 // blocks as convolutions with different kernel size that we will use in
 // inception layer block.
@@ -33,7 +40,7 @@ template <typename SUBNET> using block_a4 = relu<con<10,1,1,1,1,max_pool<3,3,1,1
 // Here is inception layer definition. It uses different blocks to process input
 // and returns combined output.  Dlib includes a number of these inceptionN
 // layer types which are themselves created using concat layers.  
-template <typename SUBNET> using incept_a = inception4<block_a1,block_a2,block_a3,block_a4, SUBNET>;
+template <typename SUBNET> using incept_a = inception4<emotion::block_a1,emotion::block_a2,emotion::block_a3,emotion::block_a4, SUBNET>;
 
 // Network can have inception layers of different structure.  It will work
 // properly so long as all the sub-blocks inside a particular inception block
@@ -41,22 +48,23 @@ template <typename SUBNET> using incept_a = inception4<block_a1,block_a2,block_a
 template <typename SUBNET> using block_b1 = relu<con<4,1,1,1,1,SUBNET>>;
 template <typename SUBNET> using block_b2 = relu<con<4,3,3,1,1,SUBNET>>;
 template <typename SUBNET> using block_b3 = relu<con<4,1,1,1,1,max_pool<3,3,1,1,SUBNET>>>;
-template <typename SUBNET> using incept_b = inception3<block_b1,block_b2,block_b3,SUBNET>;
+template <typename SUBNET> using incept_b = inception3<emotion::block_b1,emotion::block_b2,emotion::block_b3,SUBNET>;
+}
 
 // It occurs overfit to training data
 using emotion_train_type2 = loss_multiclass_log<
         fc<8,
         relu<fc<32,
-        max_pool<2,2,2,2,incept_b<
-        max_pool<2,2,2,2,incept_a<
+        max_pool<2,2,2,2,emotion::incept_b<
+        max_pool<2,2,2,2,emotion::incept_a<
         input_rgb_image_sized<227>
         >>>>>>>>;
 
 using emotion_train_type3 = loss_multiclass_log<
         fc<8,
         relu<fc<32,
-        max_pool<2,2,2,2,dropout<incept_b<
-        max_pool<2,2,2,2,incept_a<
+        max_pool<2,2,2,2,dropout<emotion::incept_b<
+        max_pool<2,2,2,2,emotion::incept_a<
         input_rgb_image_sized<227>
         >>>>>>>>>;
 
