@@ -6,7 +6,9 @@ using DlibDotNet.Dnn;
 namespace Shared
 {
 
-    public sealed class ValidationParameter<T>
+    public sealed class ValidationParameter<T, C>
+        where T : struct
+        where C : struct
     {
 
         public string BaseName
@@ -27,7 +29,7 @@ namespace Shared
             set;
         }
 
-        public IList<Matrix<RgbPixel>> TrainingImages
+        public IList<Matrix<C>> TrainingImages
         {
             get;
             set;
@@ -39,7 +41,7 @@ namespace Shared
             set;
         }
 
-        public IList<Matrix<RgbPixel>> TestingImages
+        public IList<Matrix<C>> TestingImages
         {
             get;
             set;

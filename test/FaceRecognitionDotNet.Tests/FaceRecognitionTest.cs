@@ -1696,12 +1696,13 @@ namespace FaceRecognitionDotNet.Tests
 
             try
             {
-                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile, this._PosePredictor68PointModelFile))
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile))
                 {
                     this._FaceRecognition.CustomEmotionEstimator = estimator;
                     Assert.Equal(this._FaceRecognition.CustomEmotionEstimator, estimator);
 
-                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s));
+                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s))
+                                                      .Where(pair => File.Exists(pair.Key));
                     foreach (var gt in groundTruth)
                         using (var image = FaceRecognition.LoadImageFile(gt.Key))
                         {
@@ -1725,12 +1726,13 @@ namespace FaceRecognitionDotNet.Tests
 
             try
             {
-                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile, this._PosePredictor68PointModelFile))
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile))
                 {
                     this._FaceRecognition.CustomEmotionEstimator = estimator;
                     Assert.Equal(this._FaceRecognition.CustomEmotionEstimator, estimator);
 
-                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s));
+                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s))
+                                                      .Where(pair => File.Exists(pair.Key));
                     foreach (var gt in groundTruth)
                         foreach (var index in Enumerable.Range(0, 10))
                             using (var image = FaceRecognition.LoadImageFile(gt.Key))
@@ -1752,16 +1754,7 @@ namespace FaceRecognitionDotNet.Tests
         {
             try
             {
-                new SimpleEmotionEstimator("not_found", this._PosePredictor68PointModelFile);
-                Assert.True(false, $"{nameof(SimpleEmotionEstimator)} method should throw exception.");
-            }
-            catch (FileNotFoundException)
-            {
-            }
-
-            try
-            {
-                new SimpleEmotionEstimator(this._EmotionEstimatorModelFile, "not_found");
+                new SimpleEmotionEstimator("not_found");
                 Assert.True(false, $"{nameof(SimpleEmotionEstimator)} method should throw exception.");
             }
             catch (FileNotFoundException)
@@ -1806,7 +1799,7 @@ namespace FaceRecognitionDotNet.Tests
             {
                 using (var bmp = new Bitmap(100, 100))
                 using (var image = FaceRecognition.LoadImage(bmp))
-                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile, this._PosePredictor68PointModelFile))
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile))
                 {
                     this._FaceRecognition.CustomEmotionEstimator = estimator;
                     estimator.Dispose();
@@ -2114,12 +2107,13 @@ namespace FaceRecognitionDotNet.Tests
 
             try
             {
-                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile, this._PosePredictor68PointModelFile))
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile))
                 {
                     this._FaceRecognition.CustomEmotionEstimator = estimator;
                     Assert.Equal(this._FaceRecognition.CustomEmotionEstimator, estimator);
 
-                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s));
+                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s))
+                                                      .Where(pair => File.Exists(pair.Key));
                     foreach (var gt in groundTruth)
                         using (var image = FaceRecognition.LoadImageFile(gt.Key))
                         {
@@ -2146,16 +2140,17 @@ namespace FaceRecognitionDotNet.Tests
 
             try
             {
-                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile, this._PosePredictor68PointModelFile))
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile))
                 {
                     this._FaceRecognition.CustomEmotionEstimator = estimator;
                     Assert.Equal(this._FaceRecognition.CustomEmotionEstimator, estimator);
 
-                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s));
+                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s))
+                                                      .Where(pair => File.Exists(pair.Key));
                     var list = new List<IDictionary<string, float>>();
                     foreach (var gt in groundTruth)
-                        foreach (var index in Enumerable.Range(0, 10))
-                            using (var image = FaceRecognition.LoadImageFile(gt.Key))
+                        using (var image = FaceRecognition.LoadImageFile(gt.Key))
+                            foreach (var index in Enumerable.Range(0, 10))
                             {
                                 var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
                                 var probability = this._FaceRecognition.PredictProbabilityEmotion(image, location);
@@ -2222,7 +2217,7 @@ namespace FaceRecognitionDotNet.Tests
             {
                 using (var bmp = new Bitmap(100, 100))
                 using (var image = FaceRecognition.LoadImage(bmp))
-                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile, this._PosePredictor68PointModelFile))
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile))
                 {
                     this._FaceRecognition.CustomEmotionEstimator = estimator;
                     estimator.Dispose();

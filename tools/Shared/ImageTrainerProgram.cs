@@ -11,12 +11,14 @@ using NLog;
 
 using DlibDotNet;
 using DlibDotNet.Dnn;
+using FaceRecognitionDotNet;
 
 namespace Shared
 {
 
-    public abstract class ImageTrainerProgram<T>
+    public abstract class ImageTrainerProgram<T, C>
         where T : struct
+        where C : struct
     {
 
         #region Fields
@@ -52,7 +54,7 @@ namespace Shared
 
         protected abstract string GetBaseName(uint epoch, double learningRate, double minLearningRate, uint minBatchSize);
 
-        protected abstract void Load(string directory, string type, out IList<Matrix<RgbPixel>> images, out IList<T> labels);
+        protected abstract void Load(string directory, string type, out IList<Matrix<C>> images, out IList<T> labels);
 
         protected virtual void SetEvalMode(int networkId, LossMulticlassLog net)
         {
@@ -255,13 +257,33 @@ namespace Shared
                     var networkId = SetupNetwork();
 
                     using (var net = LossMulticlassLog.Deserialize(model, networkId))
-                    using (var tmp = Dlib.LoadImageAsMatrix<RgbPixel>(image))
-                    using (var m = new Matrix<RgbPixel>(Size, Size))
+                    using (var fr = FaceRecognition.Create("Models"))
+                    using (var img = FaceRecognition.LoadImageFile(image))
                     {
-                        Dlib.ResizeImage(tmp, m);
-                        this.SetEvalMode(networkId, net);
-                        using (var predictedLabels = net.Operator(m))
-                            Logger.Info($"{this.Cast(predictedLabels[0])}");
+                        var location = fr.FaceLocations(img).FirstOrDefault();
+                        if (location == null)
+                        {
+                            Logger.Info("Missing face");
+                            return -1;
+                        }
+
+                        var rect = new Rectangle(location.Left, location.Top, location.Right, location.Bottom);
+                        var dPoint = new[]
+                        {
+                            new DPoint(rect.Left, rect.Top),
+                            new DPoint(rect.Right, rect.Top),
+                            new DPoint(rect.Left, rect.Bottom),
+                            new DPoint(rect.Right, rect.Bottom),
+                        };
+                        using (var tmp = Dlib.LoadImageAsMatrix<byte>(image))
+                        {
+                            using (var face = Dlib.ExtractImage4Points(tmp, dPoint, this.Size, this.Size))
+                            {
+                                this.SetEvalMode(networkId, net);
+                                using (var predictedLabels = net.Operator(face))
+                                    Logger.Info($"{this.Cast(predictedLabels[0])}");
+                            }
+                        }
                     }
 
                     return 0;
@@ -304,9 +326,9 @@ namespace Shared
         {
             try
             {
-                IList<Matrix<RgbPixel>> trainingImages;
+                IList<Matrix<C>> trainingImages;
                 IList<T> trainingLabels;
-                IList<Matrix<RgbPixel>> testingImages;
+                IList<Matrix<C>> testingImages;
                 IList<T> testingLabels;
 
                 Logger.Info("Start load train images");
@@ -324,7 +346,7 @@ namespace Shared
                 using (var net = LossMulticlassLog.Deserialize(parameter.Model, networkId))
                 {
                     this.SetEvalMode(networkId, net);
-                    var validationParameter = new ValidationParameter<T>
+                    var validationParameter = new ValidationParameter<T, C>
                     {
                         BaseName = Path.GetFileNameWithoutExtension(parameter.Model),
                         Trainer = net,
@@ -351,9 +373,9 @@ namespace Shared
         {
             try
             {
-                IList<Matrix<RgbPixel>> trainingImages;
+                IList<Matrix<C>> trainingImages;
                 IList<T> trainingLabels;
-                IList<Matrix<RgbPixel>> testingImages;
+                IList<Matrix<C>> testingImages;
                 IList<T> testingLabels;
 
                 Logger.Info("Start load train images");
@@ -390,18 +412,18 @@ namespace Shared
                     var trainingLabelsCount = trainingLabels.Count;
 
                     var maxIteration = (int)Math.Ceiling(trainingImagesCount / (float)miniBatchSize);
-                    var imageBatches = new Matrix<RgbPixel>[maxIteration][];
+                    var imageBatches = new Matrix<C>[maxIteration][];
                     var labelBatches = new uint[maxIteration][];
                     for (var i = 0; i < maxIteration; i++)
                     {
                         if (miniBatchSize <= trainingImagesCount - i * miniBatchSize)
                         {
-                            imageBatches[i] = new Matrix<RgbPixel>[miniBatchSize];
+                            imageBatches[i] = new Matrix<C>[miniBatchSize];
                             labelBatches[i] = new uint[miniBatchSize];
                         }
                         else
                         {
-                            imageBatches[i] = new Matrix<RgbPixel>[trainingImagesCount % miniBatchSize];
+                            imageBatches[i] = new Matrix<C>[trainingImagesCount % miniBatchSize];
                             labelBatches[i] = new uint[trainingLabelsCount % miniBatchSize];
                         }
                     }
@@ -437,7 +459,7 @@ namespace Shared
 
                             if (e >= 0 && e % validation == 0)
                             {
-                                var validationParameter = new ValidationParameter<T>
+                                var validationParameter = new ValidationParameter<T, C>
                                 {
                                     BaseName = parameter.BaseName,
                                     Output = parameter.Output,
@@ -483,7 +505,7 @@ namespace Shared
                     // Now let's run the training images through the network.  This statement runs all the
                     // images through it and asks the loss layer to convert the network's raw output into
                     // labels.  In our case, these labels are the numbers between 0 and 9.
-                    var validationParameter2 = new ValidationParameter<T>
+                    var validationParameter2 = new ValidationParameter<T, C>
                     {
                         BaseName = parameter.BaseName,
                         Output = parameter.Output,
@@ -554,7 +576,7 @@ namespace Shared
             }
         }
 
-        private void Validation(ValidationParameter<T> parameter,
+        private void Validation(ValidationParameter<T, C> parameter,
                                 out double trainAccuracy,
                                 out double testAccuracy)
         {

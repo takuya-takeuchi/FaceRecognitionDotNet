@@ -4,12 +4,7 @@ This program aims to train human face images to estimate face emotion.
 
 ## How to estimate?
 
-This program implements [Facial Expression Recognition using Facial Landmark Detection and Feature Extraction via Neural Networks](https://arxiv.org/pdf/1812.04510.pdf).
-Please check this paper about algorithm.
-
-##### :warning: Warning
-
-This program does not reproduce paper's performance.
+This program uses ResNet-10. Input is 227x227 grayscale images.
 
 ## How to use?
 
@@ -49,72 +44,47 @@ You must parepare `Models` directory of **FaceRecognitionDotNet** in <EmotionTra
 
 ````cmd
 cd <EmotionTraining_dir>
-dotnet run -c Release -- train --dataset <dataset_dir> ^
-                               --epoch 3000 ^
-                               --lr 0.0005 ^
-                               --min-lr 0.000000005 ^
-                               --min-batchsize 512 ^
-                               --validation-interval 30 ^
-                               --output <dataset_dir>\result
-            Dataset: <dataset_dir>
-              Epoch: 3000
-      Learning Rate: 0.0005
-  Min Learning Rate: 5E-09
-     Min Batch Size: 512
-Validation Interval: 30
-           Use Mean: False
-             Output: <dataset_dir>\result
+2022-02-06 17:27:34.0383 [INFO ]             Dataset: <EmotionTraining_dir> 
+2022-02-06 17:27:34.2450 [INFO ]               Epoch: 3000 
+2022-02-06 17:27:34.2450 [INFO ]       Learning Rate: 0.001 
+2022-02-06 17:27:34.2450 [INFO ]   Min Learning Rate: 5E-09 
+2022-02-06 17:27:34.2450 [INFO ]      Min Batch Size: 192 
+2022-02-06 17:27:34.2450 [INFO ] Validation Interval: 1 
+2022-02-06 17:27:34.2450 [INFO ]            Use Mean: False 
+2022-02-06 17:27:34.2450 [INFO ]              Output: <EmotionTraining_dir>\result 
+2022-02-06 17:27:34.2450 [INFO ]  
+2022-02-06 17:27:34.2527 [INFO ] Start load train images 
+2022-02-06 17:32:22.9455 [INFO ]             Dataset: <EmotionTraining_dir> 
+2022-02-06 17:32:23.1567 [INFO ]               Epoch: 3000 
+2022-02-06 17:32:23.1581 [INFO ]       Learning Rate: 0.001 
+2022-02-06 17:32:23.1581 [INFO ]   Min Learning Rate: 5E-09 
+2022-02-06 17:32:23.1581 [INFO ]      Min Batch Size: 192 
+2022-02-06 17:32:23.1581 [INFO ] Validation Interval: 1 
+2022-02-06 17:32:23.1581 [INFO ]            Use Mean: False 
+2022-02-06 17:32:23.1581 [INFO ]              Output: <EmotionTraining_dir>\result 
+2022-02-06 17:32:23.1581 [INFO ]  
+2022-02-06 17:32:23.1581 [INFO ] Start load train images 
+2022-02-06 17:32:49.4177 [INFO ] Load train images: 29568 
+2022-02-06 17:32:49.4177 [INFO ] Start load test images 
+2022-02-06 17:32:52.1883 [INFO ] Load test images: 3286 
+2022-02-06 17:32:52.1883 [INFO ]  
+2022-02-06 17:37:33.2620 [INFO ] Epoch: 0, learning Rate: 0.001, average loss: 1.83685714839136 
+2022-02-06 17:38:13.9779 [INFO ] training num_right: 8214 
+2022-02-06 17:38:13.9779 [INFO ] training num_wrong: 21354 
 
-Start load train images
-Use Cache <dataset_dir>\train_cache.dat
-Load train images: 29568
-Start load test images
-Use Cache <dataset_dir>\test_cache.dat
-Load test images: 3286
+...
 
-step#: 0     learning rate: 0.0005  average loss: 0            steps without apparent progress: 0
-Epoch: 0, learning Rate: 0.0005, average loss: 4.11948018428823
-Epoch: 1, learning Rate: 0.0005, average loss: 3.1305690457948
-Epoch: 2, learning Rate: 0.0005, average loss: 2.69736696763001
-Epoch: 3, learning Rate: 0.0005, average loss: 2.45950934526035
-Epoch: 4, learning Rate: 0.0005, average loss: 2.30691530587521
-Epoch: 5, learning Rate: 0.0005, average loss: 2.19935585556312
-Epoch: 6, learning Rate: 0.0005, average loss: 2.11859311641417
-Epoch: 7, learning Rate: 0.0005, average loss: 2.0555247708289
-Epoch: 8, learning Rate: 0.0005, average loss: 2.00418632351514
-Epoch: 9, learning Rate: 0.0005, average loss: 1.96132853099646
-Epoch: 10, learning Rate: 0.0005, average loss: 1.92488743458344
-Epoch: 11, learning Rate: 0.0005, average loss: 1.89341635029666
-Epoch: 12, learning Rate: 0.0005, average loss: 1.86622101266595
-Epoch: 13, learning Rate: 0.0005, average loss: 1.84257901432909
-Epoch: 14, learning Rate: 0.0005, average loss: 1.82172028172718
-Epoch: 15, learning Rate: 0.0005, average loss: 1.80331000603231
-Epoch: 16, learning Rate: 0.0005, average loss: 1.78676114864211
-
-Epoch: 384, learning Rate: 5E-09, average loss: 1.39896950052756
-Saved state to Corrective_re-annotation_of_FER_CK+_KDEF-mlp_3000_0.0005_5E-09_512
-Epoch: 385, learning Rate: 5E-09, average loss: 1.39896063521396
-Epoch: 386, learning Rate: 5E-10, average loss: 1.39897608550845
-Saved state to Corrective_re-annotation_of_FER_CK+_KDEF-mlp_3000_0.0005_5E-09_512_
-done training
-training num_right: 14257
-training num_wrong: 15311
-training accuracy:  0.482176677489177
-testing num_right: 1703
-testing num_wrong: 1583
-testing accuracy:  0.518259281801582                    00:00:27
-───────────────────────────────────────────────────────────────────
-100.00% Step 4000 of 4000                                  00:00:00
-───────────────────────────────────────────────────────────────────
-training num_right: 4000
-training num_wrong: 0
- training accuracy:  1.0000
-100.00% Step 1000 of 1000                                  00:00:00
-───────────────────────────────────────────────────────────────────
-testing num_right: 1000
-testing num_wrong: 0
- testing accuracy:  1.0000
-train accuracy: 1.0000, test accuracy: 1.0000
+2022-02-06 23:22:20.0030 [INFO ] Epoch: 55, train accuracy: 0.996617965367965, test accuracy: 0.674071819841753 
+2022-02-06 23:22:30.4702 [INFO ] Best Accuracy Model file is saved for train [0.996617965367965] 
+2022-02-06 23:27:11.5971 [INFO ] Epoch: 56, learning Rate: 0.0001, average loss: 0.0236947398526919 
+2022-02-06 23:27:52.3024 [INFO ] training num_right: 29460 
+2022-02-06 23:27:52.3024 [INFO ] training num_wrong: 108 
+2022-02-06 23:27:52.3024 [INFO ] training accuracy:  0.996347402597403 
+2022-02-06 23:27:56.4852 [INFO ] testing num_right: 2231 
+2022-02-06 23:27:56.4852 [INFO ] testing num_wrong: 1055 
+2022-02-06 23:27:56.4852 [INFO ] testing accuracy:  0.678940961655508 
+2022-02-06 23:28:25.0470 [INFO ]              Output: <EmotionTraining_dir>\result 
+2022-02-06 23:28:25.0945 [INFO ]  
 ````
 
 ## 6. Test (Option)
@@ -126,30 +96,42 @@ cd <EmotionTraining_dir>
 dotnet run -c Debug -- test --dataset <dataset_dir> ^
                             --model "Corrective_re-annotation_of_FER_CK+_KDEF-mlp_3000_5E-05_5E-09_512.dat"
 
-Start load train images
-Use Cache <dataset_dir>\train_cache.dat
-Load train images: 29568
-Start load test images
-Use Cache <dataset_dir>\test_cache.dat
-Load test images: 3286
-
-training num_right: 14128
-training num_wrong: 15440
-training accuracy:  0.477813852813853
-testing num_right: 1659
-testing num_wrong: 1627
-testing accuracy:  0.504869141813755
+2022-02-08 00:40:45.9466 [INFO ] Dataset: <EmotionTraining_dir>
+2022-02-08 00:40:45.9976 [INFO ]   Model: <EmotionTraining_dir>\result\Corrective_re-annotation_of_FER_CK+_KDEF-cnn_3000_0.001_5E-09_192_test_best_0.681679853925746.dat
+2022-02-08 00:40:45.9976 [INFO ]
+2022-02-08 00:40:45.9976 [INFO ] Start load train images
+2022-02-08 00:41:09.5241 [INFO ] Load train images: 29568
+2022-02-08 00:41:09.5241 [INFO ] Start load test images
+2022-02-08 00:41:12.0637 [INFO ] Load test images: 3286
+2022-02-08 00:41:12.0637 [INFO ]
+2022-02-08 00:41:51.9729 [INFO ] training num_right: 23754
+2022-02-08 00:41:51.9729 [INFO ] training num_wrong: 5814
+2022-02-08 00:41:51.9729 [INFO ] training accuracy:  0.803368506493506
+2022-02-08 00:41:55.9163 [INFO ] testing num_right: 2240
+2022-02-08 00:41:55.9181 [INFO ] testing num_wrong: 1046
+2022-02-08 00:41:55.9181 [INFO ] testing accuracy:  0.681679853925746
 ````
 
 ## 7. Evaluation
 
-The following table is evaluation from author's data. 
-The condition is here. 
+### Best accuracy model for training data
 
 * Training Data: 29568
 * Test Data: 3286
-* Epoch: 3000
-* Learning Rate: 0.0005
+* Epoch: 55
+* Learning Rate: 0.001
 * Min Learning Rate: 5E-09
-* Min Batch Size: 512
-* Accuracy: 0.524345709068777
+* Min Batch Size: 192
+* training accuracy: 0.996617965367965
+* testing accuracy: 0.674071819841753
+
+### Best accuracy model for test data
+
+* Training Data: 29568
+* Test Data: 3286
+* Epoch: 55
+* Learning Rate: 0.001
+* Min Learning Rate: 5E-09
+* Min Batch Size: 192
+* training accuracy: 0.803368506493506
+* testing accuracy: 0.681679853925746

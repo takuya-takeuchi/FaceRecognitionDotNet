@@ -41,7 +41,7 @@
 
         public static string GetEmotionNetworkModelLocation()
         {
-            return "corrective-reannotation-of-fer-ck-kdef-emotion-network.dat";
+            return "corrective-reannotation-of-fer-ck-kdef-emotion-network_test_best.dat";
         }
 
     }

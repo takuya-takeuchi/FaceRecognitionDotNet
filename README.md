@@ -1,4 +1,4 @@
-# ![Alt text](nuget/face48.png "FaceRecognitionDotNet") FaceRecognitionDotNet [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)]() [![codecov](https://codecov.io/gh/takuya-takeuchi/FaceRecognitionDotNet/branch/master/graph/badge.svg)](https://codecov.io/gh/takuya-takeuchi/FaceRecognitionDotNet)
+![FaceRecognitionDotNet](https://socialify.git.ci/takuya-takeuchi/FaceRecognitionDotNet/image?description=1&font=Raleway&language=1&logo=https%3A%2F%2Fgithub.com%2Ftakuya-takeuchi%2FFaceRecognitionDotNet%2Fraw%2Fmaster%2Fnuget%2Fface128.png&owner=1&pattern=Circuit%20Board&theme=Light)
 
 The world's simplest facial recognition api for .NET  
 This repository is porting https://github.com/ageitgey/face_recognition by C#.
@@ -55,8 +55,10 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |-|EyeBlinkDetect|Detect person is blinking or not<br>Support Large model and **Helen dataset** :warning:|
 |-|LoadImage|From memory data or System.Drawing.Bitmap|
 |-|PredictAge|Predict human age.<br>Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
+|-|PredictEmotion|Predict emotion for human face.<br>Use **Corrective re-annotation of FER - CK+ - KDEF** :warning:|
 |-|PredictGender|Predict human gender.<br>Use **UTKFace dataset** :warning:|
 |-|PredictProbabilityAge|Predict probability of human age.<br>Use **Adience Benchmark Of Unfiltered Faces For Gender And Age Classification dataset** :warning:|
+|-|PredictProbabilityEmotion|Predict probability of emotion from human face.<br>Use **Corrective re-annotation of FER - CK+ - KDEF** :warning:|
 |-|PredictProbabilityGender|Predict probability of human gender.<br>Use **UTKFace dataset** :warning:|
 |-|PredictHeadPose|Predict human head pose.<br>Use **300W-LP dataset** :warning:|
 
@@ -67,6 +69,7 @@ I will **NOT** provide pretrained model file due to avoiding license issue.
 You can check the following examples to train dataset.
 
 * tools/AgeTraining
+* tools/EmotionTraining
 * tools/GenderTraining
 * tools/HeadPoseTraining
 * tools/HelenTraining
