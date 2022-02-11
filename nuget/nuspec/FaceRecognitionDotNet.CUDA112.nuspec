@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>FaceRecognitionDotNet.CUDA112</id>
-    <version>1.3.0.5</version>
+    <version>1.3.0.6</version>
     <title>FaceRecognitionDotNet for CUDA 11.2</title>
     <authors>Takuya Takeuchi</authors>
     <owners>Takuya Takeuchi</owners>
