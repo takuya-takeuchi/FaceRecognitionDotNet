@@ -61,24 +61,28 @@ class Config
    static $BuildLibraryWindowsHash = 
    @{
       "GenderClassification"  = "DlibDotNetNativeDnnGenderClassification.dll";
+      "EmotionClassification" = "DlibDotNetNativeDnnEmotionClassification.dll";
       "AgeClassification"     = "DlibDotNetNativeDnnAgeClassification.dll";
    }
    
    static $BuildLibraryLinuxHash = 
    @{
       "GenderClassification"  = "libDlibDotNetNativeDnnGenderClassification.so";
+      "EmotionClassification" = "libDlibDotNetNativeDnnEmotionClassification.so";
       "AgeClassification"     = "libDlibDotNetNativeDnnAgeClassification.so";
    }
    
    static $BuildLibraryOSXHash = 
    @{
       "GenderClassification"  = "libDlibDotNetNativeDnnGenderClassification.dylib";
+      "EmotionClassification" = "libDlibDotNetNativeDnnEmotionClassification.dylib";
       "AgeClassification"     = "libDlibDotNetNativeDnnAgeClassification.dylib";
    }
    
    static $BuildLibraryIOSHash = 
    @{
       "GenderClassification"  = "libDlibDotNetNativeDnnGenderClassification.a";
+      "EmotionClassification" = "libDlibDotNetNativeDnnEmotionClassification.a";
       "AgeClassification"     = "libDlibDotNetNativeDnnAgeClassification.a";
    }
 

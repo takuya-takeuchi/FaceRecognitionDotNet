@@ -89,6 +89,32 @@
             <see cref="T:FaceRecognitionDotNet.Extensions.AgeRange"/> の包括的な開始年齢を取得します。
             </summary>
         </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.EmotionEstimator">
+            <summary>
+            顔画像から感情を検出する機能を提供する抽象基本クラス。
+            </summary>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Extensions.EmotionEstimator.Labels">
+            <summary>
+            派生クラス内でこの推定器が返す感情のコレクションを取得します。
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredict(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            指定した画像内における、指定した位置に対応する顔画像の感情を返します。
+            </summary>
+            <param name="matrix">顔を含む行列。</param>
+            <param name="location">顔の位置の矩形。</param>
+            <returns>指定した画像内における、指定した位置に対応する顔画像の感情。</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredictProbability(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            指定した画像内における、指定した位置に対応する顔画像の感情の確率を返します。
+            </summary>
+            <param name="matrix">顔を含む行列。</param>
+            <param name="location">顔の位置の矩形。</param>
+            <returns>指定した画像内における、指定した位置に対応する顔画像の感情の確率。</returns>
+        </member>
         <member name="T:FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector">
             <summary>
             Eye Aspect Ratio (EAR) に基づいて、人間のまばたきを検出する機能を提供する抽象基本クラス。
@@ -318,6 +344,44 @@
             <returns>指定した画像内における、指定した位置に対応する顔画像の年齢グループの確率。</returns>
         </member>
         <member name="M:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.DisposeUnmanaged">
+            <summary>
+            アンマネージ リソースを解放します。
+            </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator">
+            <summary>
+            Corrective re-annotation of FER - CK+ - KDEF データセットによって訓練された感情推定器。このクラスは継承できません。
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.#ctor(System.String)">
+            <summary>
+            この推定器が利用するモデルファイルのパスを指定して、<see cref="T:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator"/> クラスの新しいインスタンスを初期化します。
+            </summary>
+            <param name="modelPath">この推定器が利用するモデルファイルのパス。</param>
+            <exception cref="T:System.IO.FileNotFoundException">モデルファイルが見つかりません。</exception>
+        </member>
+        <member name="P:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.Labels">
+            <summary>
+            派生クラス内でこの推定器が返す感情のコレクションを取得します。
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredict(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            指定した画像内における、指定した位置に対応する顔画像の感情を返します。
+            </summary>
+            <param name="matrix">顔を含む行列。</param>
+            <param name="location">顔の位置の矩形。</param>
+            <returns>指定した画像内における、指定した位置に対応する顔画像の感情。</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredictProbability(DlibDotNet.MatrixBase,FaceRecognitionDotNet.Location)">
+            <summary>
+            指定した画像内における、指定した位置に対応する顔画像の感情の確率を返します。
+            </summary>
+            <param name="matrix">顔を含む行列。</param>
+            <param name="location">顔の位置の矩形。</param>
+            <returns>指定した画像内における、指定した位置に対応する顔画像の感情の確率。</returns>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.DisposeUnmanaged">
             <summary>
             アンマネージ リソースを解放します。
             </summary>
@@ -583,6 +647,11 @@
             ユーザーが定義したカスタム年齢推定器を取得または設定します。
             </summary>
         </member>
+        <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomEmotionEstimator">
+            <summary>
+            ユーザーが定義したカスタム感情推定器を取得または設定します。
+            </summary>
+        </member>
         <member name="P:FaceRecognitionDotNet.FaceRecognition.CustomEyeBlinkDetector">
             <summary>
             ユーザーが定義したカスタムまばたき検出器を取得または設定します。
@@ -814,6 +883,17 @@
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/>、このオブジェクトまたはカスタム年齢推定器は破棄されています。</exception>
             <exception cref="T:System.NotSupportedException">カスタム年齢推定器の準備ができていません。</exception>
         </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictEmotion(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
+            <summary>
+            指定した画像内における、指定した位置に対応する顔画像の感情を返します。
+            </summary>
+            <param name="image">顔を含む画像。</param>
+            <param name="location">顔の位置の矩形。</param>
+            <returns>指定した画像内における、指定した位置に対応する顔画像の感情。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> または <paramref name="location"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/>、このオブジェクトまたはカスタム感情推定器は破棄されています。</exception>
+            <exception cref="T:System.NotSupportedException">カスタム感情推定器の準備ができていません。</exception>
+        </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
             <summary>
             指定した画像内における、指定した位置に対応する顔画像の性別を返します。
@@ -824,6 +904,17 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="image"/> または <paramref name="location"/> が null です。</exception>
             <exception cref="T:System.ObjectDisposedException"><paramref name="image"/>、このオブジェクトまたはカスタム性別推定器は破棄されています。</exception>
             <exception cref="T:System.NotSupportedException">カスタム性別推定器の準備ができていません。</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityEmotion(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
+            <summary>
+            指定した画像内における、指定した位置に対応する顔画像の感情の確率を返します。
+            </summary>
+            <param name="image">顔を含む画像。</param>
+            <param name="location">顔の位置の矩形。</param>
+            <returns>指定した画像内における、指定した位置に対応する顔画像の感情の確率。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="image"/> または <paramref name="location"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="image"/>、このオブジェクトまたはカスタム感情推定器は破棄されています。</exception>
+            <exception cref="T:System.NotSupportedException">カスタム感情推定器の準備ができていません。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityAge(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)">
             <summary>
