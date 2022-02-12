@@ -2020,27 +2020,26 @@ namespace FaceRecognitionDotNet.Tests
 
                     var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s))
                                                       .Where(pair => File.Exists(pair.Key));
-                    var list = new List<IDictionary<string, float>>();
+                    var list = new Dictionary<string, IDictionary<string, float>>();
+                    foreach (var (key, value) in groundTruth)
+                        using (var image = FaceRecognition.LoadImageFile(key))
+                        {
+                            var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                            var probability = this._FaceRecognition.PredictProbabilityEmotion(image, location);
+                            list.Add(value, probability);
+                        }
+
                     foreach (var gt in groundTruth)
                         using (var image = FaceRecognition.LoadImageFile(gt.Key))
-                            foreach (var index in Enumerable.Range(0, 10))
+                            foreach (var _ in Enumerable.Range(0, 10))
                             {
                                 var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
                                 var probability = this._FaceRecognition.PredictProbabilityEmotion(image, location);
-                                list.Add(probability);
-                            }
 
-                    var first = list.First();
-                    foreach (var results in list)
-                    {
-                        var keys1 = first.Keys;
-                        foreach (var key in keys1)
-                        {
-                            var value1 = first[key];
-                            var value2 = results[key];
-                            Assert.True(Math.Abs(value1 - value2) < float.Epsilon, "Estimator should return same results");
-                        }
-                    }
+                                var first = list[gt.Value];
+                                foreach (var label in estimator.Labels)
+                                    Assert.True(Math.Abs(first[label] - probability[label]) < float.Epsilon, "Estimator should return same results");
+                            }
                 }
             }
             finally
