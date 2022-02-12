@@ -81,6 +81,9 @@ using emotion_train_type4 = loss_multiclass_log<
        max_pool<3, 3, 2, 2, l2normalize<relu<con<96, 11, 11, 1, 1, 
        input_rgb_image_sized<227>>>>>>>>>>>>>>>>>>>>>>>>;
 
+// avoid to conflict with previous declaration
+namespace emotion
+{
 // restnet
 // https://www.researchgate.net/publication/333159395_Human_Emotion_Recognition_in_Video_Using_Subtraction_Pre-Processing	   
 template <template <int,template<typename>class,int,typename> class block, int N, template<typename>class BN, typename SUBNET>
@@ -90,25 +93,26 @@ template <template <int,template<typename>class,int,typename> class block, int N
 using residual_down = add_prev2<avg_pool<2,2,2,2,skip1<tag2<block<N,BN,2,tag1<SUBNET>>>>>>;
 
 template <int N, template <typename> class BN, int stride, typename SUBNET> 
-using block  = BN<con<N,3,3,1,1,relu<BN<con<N,3,3,stride,stride,SUBNET>>>>>;
+using block = BN<con<N,3,3,1,1,relu<BN<con<N,3,3,stride,stride,SUBNET>>>>>;
 
-template <int N, typename SUBNET> using ares      = relu<residual<block,N,affine,SUBNET>>;
-template <int N, typename SUBNET> using ares_down = relu<residual_down<block,N,affine,SUBNET>>;
+template <int N, typename SUBNET> using ares      = relu<emotion::residual<emotion::block,N,affine,SUBNET>>;
+template <int N, typename SUBNET> using ares_down = relu<emotion::residual_down<emotion::block,N,affine,SUBNET>>;
 
-template <typename SUBNET> using resnet_34_level1 = ares<512,ares<512,ares_down<512,SUBNET>>>;
-template <typename SUBNET> using resnet_34_level2 = ares<256,ares<256,ares<256,ares<256,ares<256,ares_down<256,SUBNET>>>>>>;
-template <typename SUBNET> using resnet_34_level3 = ares<128,ares<128,ares<128,ares_down<128,SUBNET>>>>;
-template <typename SUBNET> using resnet_34_level4 = ares<64,ares<64,ares<64,SUBNET>>>;
+template <typename SUBNET> using resnet_34_level1 = emotion::ares<512,emotion::ares<512,emotion::ares_down<512,SUBNET>>>;
+template <typename SUBNET> using resnet_34_level2 = emotion::ares<256,emotion::ares<256,emotion::ares<256,emotion::ares<256,emotion::ares<256,emotion::ares_down<256,SUBNET>>>>>>;
+template <typename SUBNET> using resnet_34_level3 = emotion::ares<128,emotion::ares<128,emotion::ares<128,emotion::ares_down<128,SUBNET>>>>;
+template <typename SUBNET> using resnet_34_level4 = emotion::ares<64, emotion::ares<64, emotion::ares<64, SUBNET>>>;
 
-template <typename SUBNET> using resnet_18_level1 = ares<512,ares_down<512,SUBNET>>;
-template <typename SUBNET> using resnet_18_level2 = ares<256,ares_down<256,SUBNET>>;
-template <typename SUBNET> using resnet_18_level3 = ares<128,ares_down<128,SUBNET>>;
-template <typename SUBNET> using resnet_18_level4 = ares<64,ares<64,SUBNET>>;
+template <typename SUBNET> using resnet_18_level1 = emotion::ares<512,emotion::ares_down<512,SUBNET>>;
+template <typename SUBNET> using resnet_18_level2 = emotion::ares<256,emotion::ares_down<256,SUBNET>>;
+template <typename SUBNET> using resnet_18_level3 = emotion::ares<128,emotion::ares_down<128,SUBNET>>;
+template <typename SUBNET> using resnet_18_level4 = emotion::ares<64, emotion::ares<64,SUBNET>>;
 
-template <typename SUBNET> using resnet_10_level1 = ares_down<512,SUBNET>;
-template <typename SUBNET> using resnet_10_level2 = ares_down<256,SUBNET>;
-template <typename SUBNET> using resnet_10_level3 = ares_down<128,SUBNET>;
-template <typename SUBNET> using resnet_10_level4 = ares<64,SUBNET>;
+template <typename SUBNET> using resnet_10_level1 = emotion::ares_down<512,SUBNET>;
+template <typename SUBNET> using resnet_10_level2 = emotion::ares_down<256,SUBNET>;
+template <typename SUBNET> using resnet_10_level3 = emotion::ares_down<128,SUBNET>;
+template <typename SUBNET> using resnet_10_level4 = emotion::ares<64,SUBNET>;
+}
 
 // restnet-34
 // using emotion_train_type5 = loss_multiclass_log<fc<8,avg_pool_everything<
@@ -130,19 +134,19 @@ template <typename SUBNET> using resnet_10_level4 = ares<64,SUBNET>;
 //                             >>>>>>>>>>>;
 // restnet-10
 using emotion_train_type5 = loss_multiclass_log<fc<8,avg_pool_everything<
-                            resnet_10_level1<
-                            resnet_10_level2<
-                            resnet_10_level3<
-                            resnet_10_level4<
+                            emotion::resnet_10_level1<
+                            emotion::resnet_10_level2<
+                            emotion::resnet_10_level3<
+                            emotion::resnet_10_level4<
                             max_pool<3,3,2,2,relu<affine<con<64,7,7,2,2,
                             input_rgb_image_sized<227>
                             >>>>>>>>>>>;
 // resnet-10 for grayscale
 using emotion_train_type6 = loss_multiclass_log<fc<8,avg_pool_everything<
-                            resnet_10_level1<
-                            resnet_10_level2<
-                            resnet_10_level3<
-                            resnet_10_level4<
+                            emotion::resnet_10_level1<
+                            emotion::resnet_10_level2<
+                            emotion::resnet_10_level3<
+                            emotion::resnet_10_level4<
                             max_pool<3,3,2,2,relu<affine<con<64,7,7,2,2,
                             input<matrix<uint8_t>>
                             >>>>>>>>>>>;
