@@ -24,8 +24,6 @@ namespace FaceRecognitionDotNet.Tests
 
         private FaceRecognition _FaceRecognition;
 
-        private const string ImageDirectory = "Images";
-
         private const string TestImageDirectory = "TestImages";
 
         private readonly string ModelDirectory = "Models";
@@ -37,8 +35,6 @@ namespace FaceRecognitionDotNet.Tests
         private const string ModelBaseUrl = "https://github.com/ageitgey/face_recognition_models/raw/master/face_recognition_models/models";
 
         private const string ResultDirectory = "Result";
-
-        private const string TwoPersonUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
         private const string TwoPersonFile = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
@@ -176,30 +172,11 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void CompareFacesTrue()
         {
-            var obamaUrl1 = "https://upload.wikimedia.org/wikipedia/commons/3/3f";
             var obamaFile1 = "Barack_Obama_addresses_LULAC_7-8-08.JPG";
-            var obamaUrl2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg";
             var obamaFile2 = "480px-President_Barack_Obama.jpg";
 
-            var path1 = Path.Combine(ImageDirectory, obamaFile1);
-            if (!File.Exists(path1))
-            {
-                var url = $"{obamaUrl1}/{obamaFile1}";
-                var binary = new HttpClient().GetByteArrayAsync(url).Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path1, binary);
-            }
-
-            var path2 = Path.Combine(ImageDirectory, obamaFile2);
-            if (!File.Exists(path2))
-            {
-                var url = $"{obamaUrl2}/{obamaFile2}";
-                var binary = new HttpClient().GetByteArrayAsync(url).Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path2, binary);
-            }
+            var path1 = Path.Combine(TestImageDirectory, obamaFile1);
+            var path2 = Path.Combine(TestImageDirectory, obamaFile2);
 
             bool atLeast1Time = false;
 
@@ -238,14 +215,7 @@ namespace FaceRecognitionDotNet.Tests
         {
             const string testName = nameof(this.CropFaces);
 
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
             {
@@ -283,14 +253,7 @@ namespace FaceRecognitionDotNet.Tests
             {
             }
 
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
             try
             {
@@ -735,14 +698,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void FaceEncodings()
         {
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
                 foreach (var model in new[] { PredictorModel.Small, PredictorModel.Large })
@@ -795,14 +751,7 @@ namespace FaceRecognitionDotNet.Tests
 
             try
             {
-                var path = Path.Combine(ImageDirectory, TwoPersonFile);
-                if (!File.Exists(path))
-                {
-                    var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                    Directory.CreateDirectory(ImageDirectory);
-                    File.WriteAllBytes(path, binary);
-                }
+                var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
                 using (var image = FaceRecognition.LoadImageFile(path))
                 {
@@ -816,14 +765,7 @@ namespace FaceRecognitionDotNet.Tests
 
             try
             {
-                var path = Path.Combine(ImageDirectory, TwoPersonFile);
-                if (!File.Exists(path))
-                {
-                    var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                    Directory.CreateDirectory(ImageDirectory);
-                    File.WriteAllBytes(path, binary);
-                }
+                var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
                 using (var image = FaceRecognition.LoadImageFile(path))
                 {
@@ -864,14 +806,7 @@ namespace FaceRecognitionDotNet.Tests
             {
             }
 
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
             try
             {
@@ -920,14 +855,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void FaceLandmarkEmpty()
         {
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            Path.Combine(TestImageDirectory, TwoPersonFile);
 
             // empty image should return empty result
             using (var bitmap = new Bitmap(640, 480, PixelFormat.Format24bppRgb))
@@ -1071,17 +999,9 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void LoadImage()
         {
-            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
             const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
-            var path = Path.Combine(ImageDirectory, file);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, file);
 
             using (var array2D = DlibDotNet.Dlib.LoadImage<RgbPixel>(path))
             {
@@ -1126,17 +1046,9 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void LoadImage2()
         {
-            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
             const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
-            var path = Path.Combine(ImageDirectory, file);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, file);
 
             using (var bitmap = (Bitmap)System.Drawing.Image.FromFile(path))
             {
@@ -1197,17 +1109,9 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void LoadImageRgba()
         {
-            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
             const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
-            var path = Path.Combine(ImageDirectory, file);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, file);
 
             using (var bitmap = (Bitmap)System.Drawing.Image.FromFile(path))
             {
@@ -1231,17 +1135,9 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void LoadImageGrayscale()
         {
-            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
             const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
-            var path = Path.Combine(ImageDirectory, file);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, file);
 
             using (var array2D = DlibDotNet.Dlib.LoadImage<RgbPixel>(path))
             using (var array2DGray = new Array2D<byte>(array2D.Rows, array2D.Columns))
@@ -1401,17 +1297,9 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void LoadImageCheckIdentity()
         {
-            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
             const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
-            var path = Path.Combine(ImageDirectory, file);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, file);
 
             var image1 = FaceRecognition.LoadImageFile(path);
 
@@ -1439,17 +1327,9 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void LoadImageFile()
         {
-            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
             const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
-            var path = Path.Combine(ImageDirectory, file);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, file);
 
             var image = FaceRecognition.LoadImageFile(path);
             Assert.True(image.Width == 419, $"Width of {path} is wrong");
@@ -1484,14 +1364,7 @@ namespace FaceRecognitionDotNet.Tests
             var directory = Path.Combine(ResultDirectory, testName);
             Directory.CreateDirectory(directory);
 
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
             using (var image = FaceRecognition.LoadImageFile(path))
             {
@@ -2490,8 +2363,7 @@ namespace FaceRecognitionDotNet.Tests
             try
             {
                 using (var bmp = new Bitmap(100, 100))
-                using (var image = FaceRecognition.LoadImage(bmp))
-                    this._FaceRecognition.PredictHeadPose(parts);
+                using (FaceRecognition.LoadImage(bmp)) this._FaceRecognition.PredictHeadPose(parts);
                 Assert.True(false, $"{nameof(PredictHeadPose)} method should throw {nameof(NotSupportedException)}.");
             }
             catch (NotSupportedException)
@@ -2501,7 +2373,7 @@ namespace FaceRecognitionDotNet.Tests
             try
             {
                 using (var bmp = new Bitmap(100, 100))
-                using (var image = FaceRecognition.LoadImage(bmp))
+                using (FaceRecognition.LoadImage(bmp))
                 using (var estimator = new SimpleHeadPoseEstimator(this._RollEstimateorModelFile, this._PitchEstimateorModelFile, this._YawEstimateorModelFile))
                 {
                     this._FaceRecognition.CustomHeadPoseEstimator = estimator;
@@ -3203,7 +3075,7 @@ namespace FaceRecognitionDotNet.Tests
             using (var pen = new Pen(Color.Blue, 3))
                 g.DrawLine(pen, tdx, tdy, (int)x3, (int)y3);
         }
-
+        
         private void EyeBlinkDetect(EyeBlinkDetector eyeBlinkDetector, PredictorModel model)
         {
             try
@@ -3236,14 +3108,7 @@ namespace FaceRecognitionDotNet.Tests
         {
             const int pointSize = 2;
 
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
             {
@@ -3301,14 +3166,7 @@ namespace FaceRecognitionDotNet.Tests
 
         private void FaceLocation(string testName, int numberOfTimesToUpsample, Model model)
         {
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
             {
