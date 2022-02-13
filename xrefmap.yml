@@ -174,6 +174,51 @@ references:
   isSpec: "True"
   fullName: FaceRecognitionDotNet.Extensions.AgeRange.Start
   nameWithType: AgeRange.Start
+- uid: FaceRecognitionDotNet.Extensions.EmotionEstimator
+  name: EmotionEstimator
+  href: api/FaceRecognitionDotNet.Extensions.EmotionEstimator.html
+  commentId: T:FaceRecognitionDotNet.Extensions.EmotionEstimator
+  fullName: FaceRecognitionDotNet.Extensions.EmotionEstimator
+  nameWithType: EmotionEstimator
+- uid: FaceRecognitionDotNet.Extensions.EmotionEstimator.Labels
+  name: Labels
+  href: api/FaceRecognitionDotNet.Extensions.EmotionEstimator.html#FaceRecognitionDotNet_Extensions_EmotionEstimator_Labels
+  commentId: P:FaceRecognitionDotNet.Extensions.EmotionEstimator.Labels
+  fullName: FaceRecognitionDotNet.Extensions.EmotionEstimator.Labels
+  nameWithType: EmotionEstimator.Labels
+- uid: FaceRecognitionDotNet.Extensions.EmotionEstimator.Labels*
+  name: Labels
+  href: api/FaceRecognitionDotNet.Extensions.EmotionEstimator.html#FaceRecognitionDotNet_Extensions_EmotionEstimator_Labels_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.EmotionEstimator.Labels
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.EmotionEstimator.Labels
+  nameWithType: EmotionEstimator.Labels
+- uid: FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredict(MatrixBase,FaceRecognitionDotNet.Location)
+  name: RawPredict(MatrixBase, Location)
+  href: api/FaceRecognitionDotNet.Extensions.EmotionEstimator.html#FaceRecognitionDotNet_Extensions_EmotionEstimator_RawPredict_MatrixBase_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredict(MatrixBase,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredict(MatrixBase, FaceRecognitionDotNet.Location)
+  nameWithType: EmotionEstimator.RawPredict(MatrixBase, Location)
+- uid: FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredict*
+  name: RawPredict
+  href: api/FaceRecognitionDotNet.Extensions.EmotionEstimator.html#FaceRecognitionDotNet_Extensions_EmotionEstimator_RawPredict_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredict
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredict
+  nameWithType: EmotionEstimator.RawPredict
+- uid: FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredictProbability(MatrixBase,FaceRecognitionDotNet.Location)
+  name: RawPredictProbability(MatrixBase, Location)
+  href: api/FaceRecognitionDotNet.Extensions.EmotionEstimator.html#FaceRecognitionDotNet_Extensions_EmotionEstimator_RawPredictProbability_MatrixBase_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredictProbability(MatrixBase,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredictProbability(MatrixBase, FaceRecognitionDotNet.Location)
+  nameWithType: EmotionEstimator.RawPredictProbability(MatrixBase, Location)
+- uid: FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredictProbability*
+  name: RawPredictProbability
+  href: api/FaceRecognitionDotNet.Extensions.EmotionEstimator.html#FaceRecognitionDotNet_Extensions_EmotionEstimator_RawPredictProbability_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredictProbability
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.EmotionEstimator.RawPredictProbability
+  nameWithType: EmotionEstimator.RawPredictProbability
 - uid: FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector
   name: EyeAspectRatioBaseEyeBlinkDetector
   href: api/FaceRecognitionDotNet.Extensions.EyeAspectRatioBaseEyeBlinkDetector.html
@@ -593,6 +638,77 @@ references:
   isSpec: "True"
   fullName: FaceRecognitionDotNet.Extensions.SimpleAgeEstimator.RawPredictProbability
   nameWithType: SimpleAgeEstimator.RawPredictProbability
+- uid: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator
+  name: SimpleEmotionEstimator
+  href: api/FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.html
+  commentId: T:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator
+  fullName: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator
+  nameWithType: SimpleEmotionEstimator
+- uid: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.#ctor(System.String)
+  name: SimpleEmotionEstimator(String)
+  href: api/FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.html#FaceRecognitionDotNet_Extensions_SimpleEmotionEstimator__ctor_System_String_
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.#ctor(System.String)
+  fullName: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.SimpleEmotionEstimator(System.String)
+  nameWithType: SimpleEmotionEstimator.SimpleEmotionEstimator(String)
+- uid: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.#ctor*
+  name: SimpleEmotionEstimator
+  href: api/FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.html#FaceRecognitionDotNet_Extensions_SimpleEmotionEstimator__ctor_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.#ctor
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.SimpleEmotionEstimator
+  nameWithType: SimpleEmotionEstimator.SimpleEmotionEstimator
+- uid: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.DisposeUnmanaged
+  name: DisposeUnmanaged()
+  href: api/FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.html#FaceRecognitionDotNet_Extensions_SimpleEmotionEstimator_DisposeUnmanaged
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.DisposeUnmanaged
+  fullName: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.DisposeUnmanaged()
+  nameWithType: SimpleEmotionEstimator.DisposeUnmanaged()
+- uid: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.DisposeUnmanaged*
+  name: DisposeUnmanaged
+  href: api/FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.html#FaceRecognitionDotNet_Extensions_SimpleEmotionEstimator_DisposeUnmanaged_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.DisposeUnmanaged
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.DisposeUnmanaged
+  nameWithType: SimpleEmotionEstimator.DisposeUnmanaged
+- uid: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.Labels
+  name: Labels
+  href: api/FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.html#FaceRecognitionDotNet_Extensions_SimpleEmotionEstimator_Labels
+  commentId: P:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.Labels
+  fullName: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.Labels
+  nameWithType: SimpleEmotionEstimator.Labels
+- uid: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.Labels*
+  name: Labels
+  href: api/FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.html#FaceRecognitionDotNet_Extensions_SimpleEmotionEstimator_Labels_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.Labels
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.Labels
+  nameWithType: SimpleEmotionEstimator.Labels
+- uid: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredict(MatrixBase,FaceRecognitionDotNet.Location)
+  name: RawPredict(MatrixBase, Location)
+  href: api/FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.html#FaceRecognitionDotNet_Extensions_SimpleEmotionEstimator_RawPredict_MatrixBase_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredict(MatrixBase,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredict(MatrixBase, FaceRecognitionDotNet.Location)
+  nameWithType: SimpleEmotionEstimator.RawPredict(MatrixBase, Location)
+- uid: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredict*
+  name: RawPredict
+  href: api/FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.html#FaceRecognitionDotNet_Extensions_SimpleEmotionEstimator_RawPredict_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredict
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredict
+  nameWithType: SimpleEmotionEstimator.RawPredict
+- uid: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredictProbability(MatrixBase,FaceRecognitionDotNet.Location)
+  name: RawPredictProbability(MatrixBase, Location)
+  href: api/FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.html#FaceRecognitionDotNet_Extensions_SimpleEmotionEstimator_RawPredictProbability_MatrixBase_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredictProbability(MatrixBase,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredictProbability(MatrixBase, FaceRecognitionDotNet.Location)
+  nameWithType: SimpleEmotionEstimator.RawPredictProbability(MatrixBase, Location)
+- uid: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredictProbability*
+  name: RawPredictProbability
+  href: api/FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.html#FaceRecognitionDotNet_Extensions_SimpleEmotionEstimator_RawPredictProbability_
+  commentId: Overload:FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredictProbability
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.Extensions.SimpleEmotionEstimator.RawPredictProbability
+  nameWithType: SimpleEmotionEstimator.RawPredictProbability
 - uid: FaceRecognitionDotNet.Extensions.SimpleFaceDetector
   name: SimpleFaceDetector
   href: api/FaceRecognitionDotNet.Extensions.SimpleFaceDetector.html
@@ -1083,6 +1199,19 @@ references:
   isSpec: "True"
   fullName: FaceRecognitionDotNet.FaceRecognition.CustomAgeEstimator
   nameWithType: FaceRecognition.CustomAgeEstimator
+- uid: FaceRecognitionDotNet.FaceRecognition.CustomEmotionEstimator
+  name: CustomEmotionEstimator
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CustomEmotionEstimator
+  commentId: P:FaceRecognitionDotNet.FaceRecognition.CustomEmotionEstimator
+  fullName: FaceRecognitionDotNet.FaceRecognition.CustomEmotionEstimator
+  nameWithType: FaceRecognition.CustomEmotionEstimator
+- uid: FaceRecognitionDotNet.FaceRecognition.CustomEmotionEstimator*
+  name: CustomEmotionEstimator
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CustomEmotionEstimator_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.CustomEmotionEstimator
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.CustomEmotionEstimator
+  nameWithType: FaceRecognition.CustomEmotionEstimator
 - uid: FaceRecognitionDotNet.FaceRecognition.CustomEyeBlinkDetector
   name: CustomEyeBlinkDetector
   href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_CustomEyeBlinkDetector
@@ -1334,6 +1463,19 @@ references:
   isSpec: "True"
   fullName: FaceRecognitionDotNet.FaceRecognition.PredictAge
   nameWithType: FaceRecognition.PredictAge
+- uid: FaceRecognitionDotNet.FaceRecognition.PredictEmotion(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)
+  name: PredictEmotion(Image, Location)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictEmotion_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.PredictEmotion(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.FaceRecognition.PredictEmotion(FaceRecognitionDotNet.Image, FaceRecognitionDotNet.Location)
+  nameWithType: FaceRecognition.PredictEmotion(Image, Location)
+- uid: FaceRecognitionDotNet.FaceRecognition.PredictEmotion*
+  name: PredictEmotion
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictEmotion_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.PredictEmotion
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.PredictEmotion
+  nameWithType: FaceRecognition.PredictEmotion
 - uid: FaceRecognitionDotNet.FaceRecognition.PredictGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)
   name: PredictGender(Image, Location)
   href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictGender_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_
@@ -1376,6 +1518,19 @@ references:
   isSpec: "True"
   fullName: FaceRecognitionDotNet.FaceRecognition.PredictProbabilityAge
   nameWithType: FaceRecognition.PredictProbabilityAge
+- uid: FaceRecognitionDotNet.FaceRecognition.PredictProbabilityEmotion(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)
+  name: PredictProbabilityEmotion(Image, Location)
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictProbabilityEmotion_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_
+  commentId: M:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityEmotion(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)
+  fullName: FaceRecognitionDotNet.FaceRecognition.PredictProbabilityEmotion(FaceRecognitionDotNet.Image, FaceRecognitionDotNet.Location)
+  nameWithType: FaceRecognition.PredictProbabilityEmotion(Image, Location)
+- uid: FaceRecognitionDotNet.FaceRecognition.PredictProbabilityEmotion*
+  name: PredictProbabilityEmotion
+  href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictProbabilityEmotion_
+  commentId: Overload:FaceRecognitionDotNet.FaceRecognition.PredictProbabilityEmotion
+  isSpec: "True"
+  fullName: FaceRecognitionDotNet.FaceRecognition.PredictProbabilityEmotion
+  nameWithType: FaceRecognition.PredictProbabilityEmotion
 - uid: FaceRecognitionDotNet.FaceRecognition.PredictProbabilityGender(FaceRecognitionDotNet.Image,FaceRecognitionDotNet.Location)
   name: PredictProbabilityGender(Image, Location)
   href: api/FaceRecognitionDotNet.FaceRecognition.html#FaceRecognitionDotNet_FaceRecognition_PredictProbabilityGender_FaceRecognitionDotNet_Image_FaceRecognitionDotNet_Location_
