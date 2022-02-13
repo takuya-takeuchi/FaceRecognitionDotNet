@@ -24,8 +24,6 @@ namespace FaceRecognitionDotNet.Tests
 
         private FaceRecognition _FaceRecognition;
 
-        private const string ImageDirectory = "Images";
-
         private const string TestImageDirectory = "TestImages";
 
         private readonly string ModelDirectory = "Models";
@@ -38,13 +36,13 @@ namespace FaceRecognitionDotNet.Tests
 
         private const string ResultDirectory = "Result";
 
-        private const string TwoPersonUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
-
         private const string TwoPersonFile = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
         private readonly string _HelenModelFile;
 
         private readonly string _AgeEstimatorModelFile;
+
+        private readonly string _EmotionEstimatorModelFile;
 
         private readonly string _GenderEstimatorModelFile;
 
@@ -55,6 +53,8 @@ namespace FaceRecognitionDotNet.Tests
         private readonly string _YawEstimateorModelFile;
 
         private readonly string _SimpleFaceDetectorModelFile;
+
+        private readonly string _PosePredictor68PointModelFile;
 
         #endregion
 
@@ -74,6 +74,7 @@ namespace FaceRecognitionDotNet.Tests
             this._PitchEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-pitch-krls_0.001_0.1.dat");
             this._YawEstimateorModelFile = Path.Combine(ModelDirectory, "300w-lp-yaw-krls_0.001_0.1.dat");
             this._SimpleFaceDetectorModelFile = Path.Combine(ModelDirectory, "face_detector.svm");
+            this._PosePredictor68PointModelFile = Path.Combine(ModelDirectory, "shape_predictor_68_face_landmarks.dat");
 
             var faceRecognition = typeof(FaceRecognition);
             var type = faceRecognition.Assembly.GetTypes().FirstOrDefault(t => t.Name == "FaceRecognitionModels");
@@ -93,6 +94,9 @@ namespace FaceRecognitionDotNet.Tests
                 {
                     case "GetPosePredictor194PointModelLocation":
                         this._HelenModelFile = Path.Combine(ModelDirectory, result);
+                        break;
+                    case "GetEmotionNetworkModelLocation":
+                        this._EmotionEstimatorModelFile = Path.Combine(ModelDirectory, result);
                         break;
                     case "GetGenderNetworkModelLocation":
                         this._GenderEstimatorModelFile = Path.Combine(ModelDirectory, result);
@@ -168,30 +172,11 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void CompareFacesTrue()
         {
-            var obamaUrl1 = "https://upload.wikimedia.org/wikipedia/commons/3/3f";
             var obamaFile1 = "Barack_Obama_addresses_LULAC_7-8-08.JPG";
-            var obamaUrl2 = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg";
             var obamaFile2 = "480px-President_Barack_Obama.jpg";
 
-            var path1 = Path.Combine(ImageDirectory, obamaFile1);
-            if (!File.Exists(path1))
-            {
-                var url = $"{obamaUrl1}/{obamaFile1}";
-                var binary = new HttpClient().GetByteArrayAsync(url).Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path1, binary);
-            }
-
-            var path2 = Path.Combine(ImageDirectory, obamaFile2);
-            if (!File.Exists(path2))
-            {
-                var url = $"{obamaUrl2}/{obamaFile2}";
-                var binary = new HttpClient().GetByteArrayAsync(url).Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path2, binary);
-            }
+            var path1 = Path.Combine(TestImageDirectory, obamaFile1);
+            var path2 = Path.Combine(TestImageDirectory, obamaFile2);
 
             bool atLeast1Time = false;
 
@@ -230,14 +215,7 @@ namespace FaceRecognitionDotNet.Tests
         {
             const string testName = nameof(this.CropFaces);
 
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
             {
@@ -275,14 +253,7 @@ namespace FaceRecognitionDotNet.Tests
             {
             }
 
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
             try
             {
@@ -727,14 +698,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void FaceEncodings()
         {
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
                 foreach (var model in new[] { PredictorModel.Small, PredictorModel.Large })
@@ -787,14 +751,7 @@ namespace FaceRecognitionDotNet.Tests
 
             try
             {
-                var path = Path.Combine(ImageDirectory, TwoPersonFile);
-                if (!File.Exists(path))
-                {
-                    var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                    Directory.CreateDirectory(ImageDirectory);
-                    File.WriteAllBytes(path, binary);
-                }
+                var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
                 using (var image = FaceRecognition.LoadImageFile(path))
                 {
@@ -808,14 +765,7 @@ namespace FaceRecognitionDotNet.Tests
 
             try
             {
-                var path = Path.Combine(ImageDirectory, TwoPersonFile);
-                if (!File.Exists(path))
-                {
-                    var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                    Directory.CreateDirectory(ImageDirectory);
-                    File.WriteAllBytes(path, binary);
-                }
+                var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
                 using (var image = FaceRecognition.LoadImageFile(path))
                 {
@@ -856,14 +806,7 @@ namespace FaceRecognitionDotNet.Tests
             {
             }
 
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
             try
             {
@@ -912,14 +855,7 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void FaceLandmarkEmpty()
         {
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            Path.Combine(TestImageDirectory, TwoPersonFile);
 
             // empty image should return empty result
             using (var bitmap = new Bitmap(640, 480, PixelFormat.Format24bppRgb))
@@ -1063,17 +999,9 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void LoadImage()
         {
-            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
             const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
-            var path = Path.Combine(ImageDirectory, file);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, file);
 
             using (var array2D = DlibDotNet.Dlib.LoadImage<RgbPixel>(path))
             {
@@ -1118,17 +1046,9 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void LoadImage2()
         {
-            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
             const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
-            var path = Path.Combine(ImageDirectory, file);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, file);
 
             using (var bitmap = (Bitmap)System.Drawing.Image.FromFile(path))
             {
@@ -1189,17 +1109,9 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void LoadImageRgba()
         {
-            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
             const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
-            var path = Path.Combine(ImageDirectory, file);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, file);
 
             using (var bitmap = (Bitmap)System.Drawing.Image.FromFile(path))
             {
@@ -1223,17 +1135,9 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void LoadImageGrayscale()
         {
-            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
             const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
-            var path = Path.Combine(ImageDirectory, file);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, file);
 
             using (var array2D = DlibDotNet.Dlib.LoadImage<RgbPixel>(path))
             using (var array2DGray = new Array2D<byte>(array2D.Rows, array2D.Columns))
@@ -1393,17 +1297,9 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void LoadImageCheckIdentity()
         {
-            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
             const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
-            var path = Path.Combine(ImageDirectory, file);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, file);
 
             var image1 = FaceRecognition.LoadImageFile(path);
 
@@ -1431,17 +1327,9 @@ namespace FaceRecognitionDotNet.Tests
         [Fact]
         public void LoadImageFile()
         {
-            const string url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
             const string file = "419px-Official_portrait_of_President_Obama_and_Vice_President_Biden_2012.jpg";
 
-            var path = Path.Combine(ImageDirectory, file);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{url}/{file}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, file);
 
             var image = FaceRecognition.LoadImageFile(path);
             Assert.True(image.Width == 419, $"Width of {path} is wrong");
@@ -1476,14 +1364,7 @@ namespace FaceRecognitionDotNet.Tests
             var directory = Path.Combine(ResultDirectory, testName);
             Directory.CreateDirectory(directory);
 
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
             using (var image = FaceRecognition.LoadImageFile(path))
             {
@@ -1674,6 +1555,130 @@ namespace FaceRecognitionDotNet.Tests
                     this._FaceRecognition.PredictAge(image, new Location(0, 0, 0, 0));
                 }
                 Assert.True(false, $"{nameof(PredictAge)} method should throw {nameof(ObjectDisposedException)}.");
+            }
+            catch (ObjectDisposedException)
+            {
+            }
+        }
+
+        [Fact]
+        public void PredictEmotion()
+        {
+            if (!File.Exists(this._EmotionEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile))
+                {
+                    this._FaceRecognition.CustomEmotionEstimator = estimator;
+                    Assert.Equal(this._FaceRecognition.CustomEmotionEstimator, estimator);
+
+                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s))
+                                                      .Where(pair => File.Exists(pair.Key));
+                    foreach (var gt in groundTruth)
+                        using (var image = FaceRecognition.LoadImageFile(gt.Key))
+                        {
+                            var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                            var emotion = this._FaceRecognition.PredictEmotion(image, location);
+                            Assert.True(gt.Value == emotion, $"Failed to classify '{gt.Value}'");
+                        }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomEmotionEstimator = null;
+            }
+        }
+
+        [Fact]
+        public void PredictEmotionRepeat()
+        {
+            if (!File.Exists(this._EmotionEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile))
+                {
+                    this._FaceRecognition.CustomEmotionEstimator = estimator;
+                    Assert.Equal(this._FaceRecognition.CustomEmotionEstimator, estimator);
+
+                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s))
+                                                      .Where(pair => File.Exists(pair.Key));
+                    foreach (var gt in groundTruth)
+                        foreach (var index in Enumerable.Range(0, 10))
+                            using (var image = FaceRecognition.LoadImageFile(gt.Key))
+                            {
+                                var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                                var emotion = this._FaceRecognition.PredictEmotion(image, location);
+                                Assert.True(gt.Value == emotion, $"Failed to classify '{gt.Value}' for repeat {index + 1}");
+                            }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomEmotionEstimator = null;
+            }
+        }
+
+        [Fact]
+        public void PredictEmotionException()
+        {
+            try
+            {
+                new SimpleEmotionEstimator("not_found");
+                Assert.True(false, $"{nameof(SimpleEmotionEstimator)} method should throw exception.");
+            }
+            catch (FileNotFoundException)
+            {
+            }
+
+            try
+            {
+                this._FaceRecognition.PredictEmotion(null, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictEmotion)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictEmotion(image, null);
+                Assert.True(false, $"{nameof(PredictEmotion)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictEmotion(image, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictEmotion)} method should throw {nameof(NotSupportedException)}.");
+            }
+            catch (NotSupportedException)
+            {
+            }
+
+            if (!File.Exists(this._EmotionEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile))
+                {
+                    this._FaceRecognition.CustomEmotionEstimator = estimator;
+                    estimator.Dispose();
+                    this._FaceRecognition.PredictEmotion(image, new Location(0, 0, 0, 0));
+                }
+                Assert.True(false, $"{nameof(PredictEmotion)} method should throw {nameof(ObjectDisposedException)}.");
             }
             catch (ObjectDisposedException)
             {
@@ -1968,6 +1973,136 @@ namespace FaceRecognitionDotNet.Tests
         }
 
         [Fact]
+        public void PredictProbabilityEmotion()
+        {
+            if (!File.Exists(this._EmotionEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile))
+                {
+                    this._FaceRecognition.CustomEmotionEstimator = estimator;
+                    Assert.Equal(this._FaceRecognition.CustomEmotionEstimator, estimator);
+
+                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s))
+                                                      .Where(pair => File.Exists(pair.Key));
+                    foreach (var gt in groundTruth)
+                        using (var image = FaceRecognition.LoadImageFile(gt.Key))
+                        {
+                            var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                            var probability = this._FaceRecognition.PredictProbabilityEmotion(image, location);
+
+                            var pos = gt.Value;
+                            var maxLabel = probability.Aggregate((max, working) => (max.Value > working.Value) ? max : working).Key;
+                            Assert.True(pos == maxLabel, $"Failed to classify '{gt.Value}'. Probability: {probability[pos]}");
+                        }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomEmotionEstimator = null;
+            }
+        }
+
+        [Fact]
+        public void PredictProbabilityEmotionRepeat()
+        {
+            if (!File.Exists(this._EmotionEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile))
+                {
+                    this._FaceRecognition.CustomEmotionEstimator = estimator;
+                    Assert.Equal(this._FaceRecognition.CustomEmotionEstimator, estimator);
+
+                    var groundTruth = estimator.Labels.Select(s => new KeyValuePair<string, string>(Path.Combine(TestImageDirectory, "Emotion", $"{s}.png"), s))
+                                                      .Where(pair => File.Exists(pair.Key));
+                    var list = new Dictionary<string, IDictionary<string, float>>();
+                    foreach (var (key, value) in groundTruth)
+                        using (var image = FaceRecognition.LoadImageFile(key))
+                        {
+                            var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                            var probability = this._FaceRecognition.PredictProbabilityEmotion(image, location);
+                            list.Add(value, probability);
+                        }
+
+                    foreach (var gt in groundTruth)
+                        using (var image = FaceRecognition.LoadImageFile(gt.Key))
+                            foreach (var _ in Enumerable.Range(0, 10))
+                            {
+                                var location = this._FaceRecognition.FaceLocations(image).ToArray()[0];
+                                var probability = this._FaceRecognition.PredictProbabilityEmotion(image, location);
+
+                                var first = list[gt.Value];
+                                foreach (var label in estimator.Labels)
+                                    Assert.True(Math.Abs(first[label] - probability[label]) < float.Epsilon, "Estimator should return same results");
+                            }
+                }
+            }
+            finally
+            {
+                this._FaceRecognition.CustomEmotionEstimator = null;
+            }
+        }
+
+        [Fact]
+        public void PredictProbabilityEmotionException()
+        {
+            try
+            {
+                this._FaceRecognition.PredictProbabilityEmotion(null, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictProbabilityEmotion)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictProbabilityEmotion(image, null);
+                Assert.True(false, $"{nameof(PredictProbabilityEmotion)} method should throw {nameof(ArgumentNullException)}.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                    this._FaceRecognition.PredictProbabilityEmotion(image, new Location(0, 0, 0, 0));
+                Assert.True(false, $"{nameof(PredictProbabilityEmotion)} method should throw {nameof(NotSupportedException)}.");
+            }
+            catch (NotSupportedException)
+            {
+            }
+
+            if (!File.Exists(this._EmotionEstimatorModelFile))
+                return;
+
+            try
+            {
+                using (var bmp = new Bitmap(100, 100))
+                using (var image = FaceRecognition.LoadImage(bmp))
+                using (var estimator = new SimpleEmotionEstimator(this._EmotionEstimatorModelFile))
+                {
+                    this._FaceRecognition.CustomEmotionEstimator = estimator;
+                    estimator.Dispose();
+                    this._FaceRecognition.PredictProbabilityEmotion(image, new Location(0, 0, 0, 0));
+                }
+                Assert.True(false, $"{nameof(PredictProbabilityEmotion)} method should throw {nameof(ObjectDisposedException)}.");
+            }
+            catch (ObjectDisposedException)
+            {
+            }
+        }
+
+        [Fact]
         public void PredictProbabilityGender()
         {
             if (!File.Exists(this._GenderEstimatorModelFile))
@@ -2227,8 +2362,7 @@ namespace FaceRecognitionDotNet.Tests
             try
             {
                 using (var bmp = new Bitmap(100, 100))
-                using (var image = FaceRecognition.LoadImage(bmp))
-                    this._FaceRecognition.PredictHeadPose(parts);
+                using (FaceRecognition.LoadImage(bmp)) this._FaceRecognition.PredictHeadPose(parts);
                 Assert.True(false, $"{nameof(PredictHeadPose)} method should throw {nameof(NotSupportedException)}.");
             }
             catch (NotSupportedException)
@@ -2238,7 +2372,7 @@ namespace FaceRecognitionDotNet.Tests
             try
             {
                 using (var bmp = new Bitmap(100, 100))
-                using (var image = FaceRecognition.LoadImage(bmp))
+                using (FaceRecognition.LoadImage(bmp))
                 using (var estimator = new SimpleHeadPoseEstimator(this._RollEstimateorModelFile, this._PitchEstimateorModelFile, this._YawEstimateorModelFile))
                 {
                     this._FaceRecognition.CustomHeadPoseEstimator = estimator;
@@ -2940,7 +3074,7 @@ namespace FaceRecognitionDotNet.Tests
             using (var pen = new Pen(Color.Blue, 3))
                 g.DrawLine(pen, tdx, tdy, (int)x3, (int)y3);
         }
-
+        
         private void EyeBlinkDetect(EyeBlinkDetector eyeBlinkDetector, PredictorModel model)
         {
             try
@@ -2973,14 +3107,7 @@ namespace FaceRecognitionDotNet.Tests
         {
             const int pointSize = 2;
 
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
             {
@@ -3038,14 +3165,7 @@ namespace FaceRecognitionDotNet.Tests
 
         private void FaceLocation(string testName, int numberOfTimesToUpsample, Model model)
         {
-            var path = Path.Combine(ImageDirectory, TwoPersonFile);
-            if (!File.Exists(path))
-            {
-                var binary = new HttpClient().GetByteArrayAsync($"{TwoPersonUrl}/{TwoPersonFile}").Result;
-
-                Directory.CreateDirectory(ImageDirectory);
-                File.WriteAllBytes(path, binary);
-            }
+            var path = Path.Combine(TestImageDirectory, TwoPersonFile);
 
             foreach (var mode in new[] { Mode.Rgb, Mode.Greyscale })
             {
