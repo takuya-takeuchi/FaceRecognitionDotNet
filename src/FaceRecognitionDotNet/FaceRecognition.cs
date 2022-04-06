@@ -1113,7 +1113,7 @@ namespace FaceRecognitionDotNet
                     using(var detector = DlibDotNet.Dlib.GetFrontalFaceDetector())
                     {
                       var locations = SimpleObjectDetector.RunDetectorWithUpscale2(detector, faceImage, (uint)numberOfTimesToUpsample);
-                      return locations.Select(tuple => new MModRect { Rect = tuple.Item1, DetectionConfidence = tuple.Item2 });
+                      return locations.Select(tuple => new MModRect { Rect = tuple.Item1, DetectionConfidence = tuple.Item2 }).ToArray();
                     }
             }
         }
