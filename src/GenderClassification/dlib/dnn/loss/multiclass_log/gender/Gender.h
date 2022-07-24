@@ -9,8 +9,8 @@
 #include "defines.h"
 #include "DlibDotNet.Native.Dnn/dlib/dnn/loss/multiclass_log/template.h"
 
-typedef unsigned long gender_out_type;
-typedef unsigned long gender_train_label_type;
+typedef uint32_t gender_out_type;
+typedef uint32_t gender_train_label_type;
 
 MAKE_LOSSMULTICLASSLOG_FUNC(gender_train_type,  matrix_element_type::RgbPixel, dlib::rgb_pixel, matrix_element_type::UInt32, gender_train_label_type, 100)
 
