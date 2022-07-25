@@ -33,3 +33,6 @@ run-test-ubuntu16-cpu-x64-desktop: ## run build container for ubuntu16 cpu x64 o
 
 run-test-ubuntu16-mkl-x64-desktop: ## run build container for ubuntu16 mkl x64 on desktop
 	@pwsh RunTestContainer.ps1 mkl 64 desktop ubuntu 16 "/x64"
+
+run-test-ubuntu16-cu101-x64-desktop: ## run build container for ubuntu16 cuda-101 x64 on desktop
+	@pwsh RunTestContainer.ps1 cuda 64 desktop ubuntu 16 "101"
