@@ -59,7 +59,7 @@ python tools\gender-hist.py UTKFaceDataset
 
 ````
 cd <GenderTraining_dir>
-dotnet run -c Release -- -d=UTKFaceDataset -b=400 -e=600 -v=20
+dotnet run -c Release -- train -d=UTKFaceDataset -b=400 -e=600 -v=20
               Epoch: 600
       Learning Rate: 0.001
   Min Learning Rate: 1E-05
