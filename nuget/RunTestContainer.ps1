@@ -53,6 +53,13 @@ $BuildUtilsPath = Join-Path $FaceRecognitionDotNetRoot "nuget" | `
 import-module $BuildUtilsPath -function *
 $Config = [Config]::new($FaceRecognitionDotNetRoot, "Release", $Target, $Architecture, $Platform, $Option)
 
+$DataSetRoot = $env:DataSetDir
+if (!(Test-Path($DataSetRoot)))
+{
+   Write-Host "${DataSetRoot} is missing. You can specify DataSetDir environmental variable" -ForegroundColor Yellow
+   $DataSetRoot = $FaceRecognitionDotNetRoot
+}
+
 if ($Target -ne "cuda")
 {
    $postfix = $Option
@@ -75,8 +82,10 @@ if ($cuda -ne 0)
       docker run --gpus all --rm `
                  --entrypoint="/bin/bash" `
                  -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
+                 -v "$($DataSetRoot):/opt/data/Dataset" `
                  -e "LOCAL_UID=$(id -u $env:USER)" `
                  -e "LOCAL_GID=$(id -g $env:USER)" `
+                 -w /opt/data/FaceRecognitionDotNet `
                  -it "$dockername"
    }
    else
@@ -84,8 +93,10 @@ if ($cuda -ne 0)
       docker run --runtime=nvidia --rm `
                  --entrypoint="/bin/bash" `
                  -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
+                 -v "$($DataSetRoot):/opt/data/Dataset" `
                  -e "LOCAL_UID=$(id -u $env:USER)" `
                  -e "LOCAL_GID=$(id -g $env:USER)" `
+                 -w /opt/data/FaceRecognitionDotNet `
                  -it "$dockername"
    }
 }
@@ -94,7 +105,9 @@ else
    docker run --rm `
               --entrypoint="/bin/bash" `
               -v "$($FaceRecognitionDotNetRoot):/opt/data/FaceRecognitionDotNet" `
+              -v "$($DataSetRoot):/opt/data/Dataset" `
               -e "LOCAL_UID=$(id -u $env:USER)" `
               -e "LOCAL_GID=$(id -g $env:USER)" `
+              -w /opt/data/FaceRecognitionDotNet `
               -it "$dockername"
 }
