@@ -9,8 +9,8 @@
 #include "defines.h"
 #include "DlibDotNet.Native.Dnn/dlib/dnn/loss/multiclass_log/template.h"
 
-typedef unsigned long emotion_out_type;
-typedef unsigned long emotion_train_label_type;
+typedef uint32_t emotion_out_type;
+typedef uint32_t emotion_train_label_type;
 
 MAKE_LOSSMULTICLASSLOG_FUNC(emotion_train_type,  matrix_element_type::Double,   double,          matrix_element_type::UInt32, emotion_train_label_type, 200)
 MAKE_LOSSMULTICLASSLOG_FUNC(emotion_train_type2, matrix_element_type::RgbPixel, dlib::rgb_pixel, matrix_element_type::UInt32, emotion_train_label_type, 201)
