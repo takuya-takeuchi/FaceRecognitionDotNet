@@ -14,7 +14,7 @@
 
 This library is ported from https://github.com/ageitgey/face_recognition by C#.</description>
     <releaseNotes></releaseNotes>
-    <copyright>© Takuya Takeuchi 2018-2021</copyright>
+    <copyright>© Takuya Takeuchi 2018-2022</copyright>
     <tags>.net machinelearning face-recognition</tags>
     <serviceable>true</serviceable>
 
