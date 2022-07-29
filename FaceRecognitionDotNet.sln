@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.32112.339
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32630.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2F845E5F-E6B9-46D5-B5D8-52BEE4B463F0}"
 EndProject
@@ -50,6 +50,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmotionTrainingV2", "tools\EmotionTrainingV2\EmotionTrainingV2.csproj", "{2462DBBC-3902-4C92-B1D3-F1CB09AE0995}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "tools\Shared\Shared.shproj", "{91B27982-5175-48B6-B653-6F5F022F488C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet6", "examples\DotNet6\DotNet6.csproj", "{F602F08C-B644-4EBB-9749-EF9856BBEFF0}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -138,6 +140,10 @@ Global
 		{2462DBBC-3902-4C92-B1D3-F1CB09AE0995}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2462DBBC-3902-4C92-B1D3-F1CB09AE0995}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2462DBBC-3902-4C92-B1D3-F1CB09AE0995}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F602F08C-B644-4EBB-9749-EF9856BBEFF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F602F08C-B644-4EBB-9749-EF9856BBEFF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F602F08C-B644-4EBB-9749-EF9856BBEFF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F602F08C-B644-4EBB-9749-EF9856BBEFF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -163,6 +169,7 @@ Global
 		{269D318D-B37E-4F24-AF9B-30D580439056} = {8C8838E0-B002-426F-9B25-4C1F65A6D33D}
 		{2462DBBC-3902-4C92-B1D3-F1CB09AE0995} = {8C8838E0-B002-426F-9B25-4C1F65A6D33D}
 		{91B27982-5175-48B6-B653-6F5F022F488C} = {8C8838E0-B002-426F-9B25-4C1F65A6D33D}
+		{F602F08C-B644-4EBB-9749-EF9856BBEFF0} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D44C572-D749-4A76-A199-8C598A08AE8A}
