@@ -365,7 +365,7 @@ namespace FaceRecognitionDotNet
                     case Mode.Greyscale:
                         var gray = image.Matrix as Matrix<byte>;
                         results.Add(new Image(DlibDotNet.Dlib.ExtractImage4Points(gray, dPoint, width, height),
-                                              Mode.Rgb));
+                                              Mode.Greyscale));
                         break;
                 }
             }
