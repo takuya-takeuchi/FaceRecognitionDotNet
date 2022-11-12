@@ -32,15 +32,15 @@ namespace FaceRecognitionDotNet.Extensions
             if (!File.Exists(modelPath))
                 throw new FileNotFoundException(modelPath);
 
-            var ret = NativeMethods.LossMulticlassLog_age_train_type_create();
+            var ret = DlibDotNet.NativeMethods.LossMulticlassLog_age_train_type_create();
             var networkId = LossMulticlassLogRegistry.GetId(ret);
             if (LossMulticlassLogRegistry.Contains(networkId))
-                NativeMethods.LossMulticlassLog_age_train_type_delete(ret);
+                DlibDotNet.NativeMethods.LossMulticlassLog_age_train_type_delete(ret);
             else
                 LossMulticlassLogRegistry.Add(ret);
 
             this._Network = LossMulticlassLog.Deserialize(modelPath, networkId);
-            NativeMethods.LossMulticlassLog_age_train_type_eval(this._Network.NativePtr);
+            DlibDotNet.NativeMethods.LossMulticlassLog_age_train_type_eval(this._Network.NativePtr);
         }
 
         #endregion

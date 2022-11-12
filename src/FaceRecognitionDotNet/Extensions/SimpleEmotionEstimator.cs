@@ -39,15 +39,15 @@ namespace FaceRecognitionDotNet.Extensions
             if (!File.Exists(modelPath))
                 throw new FileNotFoundException(modelPath);
 
-            var ret = NativeMethods.LossMulticlassLog_emotion_train_type6_create();
+            var ret = DlibDotNet.NativeMethods.LossMulticlassLog_emotion_train_type6_create();
             var networkId = LossMulticlassLogRegistry.GetId(ret);
             if (LossMulticlassLogRegistry.Contains(networkId))
-                NativeMethods.LossMulticlassLog_emotion_train_type_delete(ret);
+                DlibDotNet.NativeMethods.LossMulticlassLog_emotion_train_type_delete(ret);
             else
                 LossMulticlassLogRegistry.Add(ret);
 
             this._Network = LossMulticlassLog.Deserialize(modelPath, networkId);
-            NativeMethods.LossMulticlassLog_emotion_train_type_eval(networkId, ret);
+            DlibDotNet.NativeMethods.LossMulticlassLog_emotion_train_type_eval(networkId, ret);
 
             this._Labels = this._Network.GetLabels();
         }
