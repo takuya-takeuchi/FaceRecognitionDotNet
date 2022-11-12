@@ -2,3 +2,6 @@
 	path = src/DlibDotNet
 	url = https://github.com/takuya-takeuchi/DlibDotNet
         ignore = dirty
+[submodule "src/Searches/annoy"]
+	path = src/Searches/annoy
+	url = https://github.com/spotify/annoy
