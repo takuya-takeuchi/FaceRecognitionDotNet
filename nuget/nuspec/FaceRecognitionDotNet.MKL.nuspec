@@ -65,6 +65,8 @@ This library is ported from https://github.com/ageitgey/face_recognition by C#.<
     <file src="..\artifacts\mkl\runtimes\osx-x64\native\libDlibDotNetNativeDnnGenderClassification.dylib" target="runtimes\osx-x64\native\libDlibDotNetNativeDnnGenderClassification.dylib" />
 
     <!-- license -->
-    <file src="..\..\LICENSE.txt" target="" /> 
+    <file src="..\..\LICENSE.txt" target="" />
+    <file src="..\..\licenses\annoy" target="licenses" />
+    <file src="..\..\licenses\DlibDotNet" target="licenses" />
   </files>
 </package>

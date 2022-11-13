@@ -89,6 +89,47 @@
             Gets the inclusive start of the <see cref="T:FaceRecognitionDotNet.Extensions.AgeRange"/>.
             </summary>
         </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.AnnoySearch">
+            <summary>
+            The face search class that provides Annoy (Approximate Nearest Neighbors Oh Yeah) kind of Approximate Nearest Neighbors. This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Extensions.AnnoySearch"/> class with the number of tree size.
+            </summary>
+            <param name="treeSize">A number of trees for forest. More trees gives higher precision when querying.</param>
+            <exception cref="T:System.ArgumentException"><paramref name="treeSize"/> should be more than 0.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.Add(System.Int32,FaceRecognitionDotNet.FaceEncoding)">
+            <summary>
+            Add an <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> to feature data set.
+            </summary>
+            <param name="item">The label to specify <param name="encoding">.</param></param>
+            <param name="encoding">A known face encodings to be added to feature data set.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="encoding"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="encoding"/> or this object is disposed.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.Build">
+            <summary>
+            Build feature data set to make ready for query.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.Query(FaceRecognitionDotNet.FaceEncoding,System.UInt32)">
+            <summary>
+            Searches for elements that are closed to given face encoding, and returns the top K occurrence within the entire feature data set.
+            </summary>
+            <param name="encoding">A face encodings to query in feature data set.</param>
+            <param name="topK">The number of most likely outcomes to query the label.</param>
+            <returns>A dictionary of label and distance.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="encoding"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="encoding"/> or this object is disposed.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.DisposeUnmanaged">
+            <summary>
+            Releases all unmanaged resources.
+            </summary>
+        </member>
         <member name="T:FaceRecognitionDotNet.Extensions.EmotionEstimator">
             <summary>
             An abstract base class that provides functionality to estimate emotion from face image.
@@ -309,6 +350,31 @@
             <summary>
             Releases all unmanaged resources.
             </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.Search">
+            <summary>
+            An abstract base class that provides functionality to query face encoding from face encoding set.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.Search.Add(System.Int32,FaceRecognitionDotNet.FaceEncoding)">
+            <summary>
+            Add an <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> to feature data set.
+            </summary>
+            <param name="item">The label to specify <param name="encoding">.</param></param>
+            <param name="encoding">A known face encodings to be added to feature data set.</param>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.Search.Build">
+            <summary>
+            Build feature data set to make ready for query.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.Search.Query(FaceRecognitionDotNet.FaceEncoding,System.UInt32)">
+            <summary>
+            Searches for elements that are closed to given face encoding, and returns the top K occurrence within the entire feature data set.
+            </summary>
+            <param name="encoding">A face encodings to query in feature data set.</param>
+            <param name="topK">The number of most likely outcomes to query the label.</param>
+            <returns>A dictionary of label and distance.</returns>
         </member>
         <member name="T:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator">
             <summary>

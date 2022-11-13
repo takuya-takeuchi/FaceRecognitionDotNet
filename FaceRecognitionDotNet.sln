@@ -51,12 +51,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmotionTrainingV2", "tools\
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "tools\Shared\Shared.shproj", "{91B27982-5175-48B6-B653-6F5F022F488C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaceSearch", "examples\FaceSearch\FaceSearch.csproj", "{E12CE919-27F4-4221-AD47-E0D26B647C47}"
+EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		tools\Shared\Shared.projitems*{2462dbbc-3902-4c92-b1d3-f1cb09ae0995}*SharedItemsImports = 5
-		tools\Shared\Shared.projitems*{269d318d-b37e-4f24-af9b-30d580439056}*SharedItemsImports = 5
-		tools\Shared\Shared.projitems*{91b27982-5175-48b6-b653-6f5f022f488c}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -138,6 +135,10 @@ Global
 		{2462DBBC-3902-4C92-B1D3-F1CB09AE0995}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2462DBBC-3902-4C92-B1D3-F1CB09AE0995}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2462DBBC-3902-4C92-B1D3-F1CB09AE0995}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E12CE919-27F4-4221-AD47-E0D26B647C47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E12CE919-27F4-4221-AD47-E0D26B647C47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E12CE919-27F4-4221-AD47-E0D26B647C47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E12CE919-27F4-4221-AD47-E0D26B647C47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -163,8 +164,14 @@ Global
 		{269D318D-B37E-4F24-AF9B-30D580439056} = {8C8838E0-B002-426F-9B25-4C1F65A6D33D}
 		{2462DBBC-3902-4C92-B1D3-F1CB09AE0995} = {8C8838E0-B002-426F-9B25-4C1F65A6D33D}
 		{91B27982-5175-48B6-B653-6F5F022F488C} = {8C8838E0-B002-426F-9B25-4C1F65A6D33D}
+		{E12CE919-27F4-4221-AD47-E0D26B647C47} = {FEEAC07F-70D7-4C12-B92C-153CEE0F2539}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D44C572-D749-4A76-A199-8C598A08AE8A}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		tools\Shared\Shared.projitems*{2462dbbc-3902-4c92-b1d3-f1cb09ae0995}*SharedItemsImports = 5
+		tools\Shared\Shared.projitems*{269d318d-b37e-4f24-af9b-30d580439056}*SharedItemsImports = 5
+		tools\Shared\Shared.projitems*{91b27982-5175-48b6-b653-6f5f022f488c}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

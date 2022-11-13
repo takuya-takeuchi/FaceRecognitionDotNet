@@ -63,6 +63,7 @@ class Config
       "GenderClassification"  = "DlibDotNetNativeDnnGenderClassification.dll";
       "EmotionClassification" = "DlibDotNetNativeDnnEmotionClassification.dll";
       "AgeClassification"     = "DlibDotNetNativeDnnAgeClassification.dll";
+      "Searches/AnnoySearch"  = "FaceRecognitionDotNetNativeAnnoySearch.dll";
    }
    
    static $BuildLibraryLinuxHash = 
@@ -70,6 +71,7 @@ class Config
       "GenderClassification"  = "libDlibDotNetNativeDnnGenderClassification.so";
       "EmotionClassification" = "libDlibDotNetNativeDnnEmotionClassification.so";
       "AgeClassification"     = "libDlibDotNetNativeDnnAgeClassification.so";
+      "Searches/AnnoySearch"  = "libFaceRecognitionDotNetNativeAnnoySearch.so";
    }
    
    static $BuildLibraryOSXHash = 
@@ -77,6 +79,7 @@ class Config
       "GenderClassification"  = "libDlibDotNetNativeDnnGenderClassification.dylib";
       "EmotionClassification" = "libDlibDotNetNativeDnnEmotionClassification.dylib";
       "AgeClassification"     = "libDlibDotNetNativeDnnAgeClassification.dylib";
+      "Searches/AnnoySearch"  = "libFaceRecognitionDotNetNativeAnnoySearch.dylib";
    }
    
    static $BuildLibraryIOSHash = 
@@ -84,6 +87,7 @@ class Config
       "GenderClassification"  = "libDlibDotNetNativeDnnGenderClassification.a";
       "EmotionClassification" = "libDlibDotNetNativeDnnEmotionClassification.a";
       "AgeClassification"     = "libDlibDotNetNativeDnnAgeClassification.a";
+      "Searches/AnnoySearch"  = "libFaceRecognitionDotNetNativeAnnoySearch.a";
    }
 
    [string]   $_Root
@@ -931,6 +935,9 @@ function Build([Config]$Config)
 {
    # current is each source directory
    $Current = Get-Location
+
+   Write-Host "git submodule update --init --recursive" -ForegroundColor Yellow
+   git submodule update --init --recursive
 
    $CMakefile = Join-Path $Current "CMakeLists.txt"
    if (!(Test-Path(${CMakefile})))
