@@ -7,10 +7,12 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
-using DlibDotNet;
-using FaceRecognitionDotNet.Extensions;
+
 using Xunit;
 using Xunit.Abstractions;
+
+using DlibDotNet;
+using FaceRecognitionDotNet.Extensions;
 
 namespace FaceRecognitionDotNet.Tests
 {
@@ -3035,6 +3037,60 @@ namespace FaceRecognitionDotNet.Tests
                         rect.Dispose();
             }
         }
+
+        #region Searches
+
+        [Fact]
+        public void AnnoySearch()
+        {
+            var directory = Path.Combine(TestImageDirectory, "CelebA");
+
+            var encodings = new List<Tuple<string, int, FaceEncoding>>();
+            var extensions = new[] { ".jpg", ".png", ".bmp" };
+            foreach (var file in Directory.GetFiles(directory))
+            {
+                if (!extensions.Contains(Path.GetExtension(file).ToLower()))
+                    continue;
+
+                using (var im = FaceRecognition.LoadImageFile(file))
+                {
+                    var locations = this._FaceRecognition.FaceLocations(im).ToArray();
+                    if (!locations.Any())
+                        continue;
+
+                    if (locations.Count() > 1)
+                        continue;
+
+                    var location = locations.First();
+                    var encoding = this._FaceRecognition.FaceEncodings(im, new[] { location }).First();
+                    encodings.Add(new Tuple<string, int, FaceEncoding>(file, encodings.Count() + 1, encoding));
+                }
+            }
+
+            var count = 0;
+            using (var annoySearch = new AnnoySearch(256))
+            {
+                foreach (var encoding in encodings)
+                    annoySearch.Add(encoding.Item2, encoding.Item3);
+                annoySearch.Build();
+                
+                foreach (var encoding in encodings)
+                {
+                    var results = annoySearch.Query(encoding.Item3, 5);
+                    encoding.Item3.Dispose();
+
+                    Assert.NotEmpty(results);
+
+                    var tuple = results.FirstOrDefault();
+                    Assert.Equal(encoding.Item2, tuple.Key);
+                    count++;
+                }
+            }
+
+            Assert.True(count > 90);
+        }
+
+        #endregion
 
         #region Helpers
 
