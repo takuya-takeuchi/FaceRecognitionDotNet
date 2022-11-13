@@ -114,6 +114,7 @@
             <summary>
             クエリの準備をするために顔エンコーディング集合を構築します。
             </summary>
+            <exception cref="T:System.ObjectDisposedException">このオブジェクトは破棄されています</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.Query(FaceRecognitionDotNet.FaceEncoding,System.UInt32)">
             <summary>

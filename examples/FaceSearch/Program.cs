@@ -8,6 +8,7 @@ using System.Linq;
 using Microsoft.Extensions.CommandLineUtils;
 
 using FaceRecognitionDotNet;
+using FaceRecognitionDotNet.Extensions;
 
 namespace FaceSearch
 {
@@ -100,66 +101,61 @@ namespace FaceSearch
                 Console.WriteLine($"Finish: Get face encodings [{sw.ElapsedMilliseconds} ms]");
                 Console.WriteLine();
 
-                Console.WriteLine("Start: Annoy Search");
-                using (var annoySearch = new FaceRecognitionDotNet.Extensions.AnnoySearch(256))
+                if (!encodings.Any())
                 {
-                    var item = encodings[0];
-
-                    Console.WriteLine("Start: Add encoding");
-                    sw.Reset();
-                    sw.Start();
-                    foreach (var encoding in encodings)
-                        annoySearch.Add(encoding.Item2, encoding.Item3);
-                    sw.Stop();
-                    Console.WriteLine($"Finish: Add encoding [{sw.ElapsedMilliseconds} ms]");
-
-                    Console.WriteLine("Start: Build index");
-                    sw.Reset();
-                    sw.Start();
-                    annoySearch.Build();
-                    sw.Stop();
-                    Console.WriteLine($"Finish: Build index [{sw.ElapsedMilliseconds} ms]");
-
-                    Console.WriteLine($"Start: Query: {item.Item1}");
-                    sw.Reset();
-                    sw.Start();
-                    var results = annoySearch.Query(item.Item3, k);
-                    sw.Stop();
-                    Console.WriteLine($"Finish: Query [{sw.ElapsedMilliseconds} ms]");
-
-                    foreach (var result in results)
-                    {
-                        var tuple = encodings.FirstOrDefault(t => t.Item2 == result.Key);
-                        if (tuple != null)
-                            Console.WriteLine($"{result.Key}: [{tuple.Item1}: {result.Value}]");
-                        else
-                            Console.WriteLine($"{result.Key}: {result.Value}");
-                    }
+                    Console.WriteLine($"There is no face encodings");
+                    return -1;
                 }
-                Console.WriteLine("Finish: Annoy Search");
-                Console.WriteLine();
 
-                Console.WriteLine("Start: Linear Search");
+                var searches = new []
                 {
-                    var item = encodings[0];
-                    var results = new List<Tuple<string, int, double>>();
+                    new { Search = new AnnoySearch(256) as Search,         Name = "Annoy Search" },
+                    new { Search = new KNearestNeighborSearch() as Search, Name = "K Nearest Neighbor Search" }
+                };
+                
+                foreach (var search in searches)
+                {
+                    var name = search.Name;
 
-                    Console.WriteLine($"Start: Query: {item.Item1}");
-                    sw.Reset();
-                    sw.Start();
-                    foreach (var encoding in encodings)
-                        results.Add(new Tuple<string, int, double>(encoding.Item1, encoding.Item2, FaceRecognition.FaceDistance(item.Item3, encoding.Item3)));
-                    results.Sort((tuple1, tuple2) => tuple1.Item3.CompareTo(tuple2.Item3));
-                    sw.Stop();
-                    Console.WriteLine($"Finish: Query [{sw.ElapsedMilliseconds} ms]");
-
-                    for (var index = 0; index < k; index++)
+                    Console.WriteLine($"Start: {name}");
+                    using (var s = search.Search)
                     {
-                        var result = results[index];
-                        Console.WriteLine($"{result.Item2}: [{result.Item1}: {result.Item3}]");
+                        var item = encodings[0];
+
+                        Console.WriteLine("Start: Add encoding");
+                        sw.Reset();
+                        sw.Start();
+                        foreach (var encoding in encodings)
+                            s.Add(encoding.Item2, encoding.Item3);
+                        sw.Stop();
+                        Console.WriteLine($"Finish: Add encoding [{sw.ElapsedMilliseconds} ms]");
+
+                        Console.WriteLine("Start: Build index");
+                        sw.Reset();
+                        sw.Start();
+                        s.Build();
+                        sw.Stop();
+                        Console.WriteLine($"Finish: Build index [{sw.ElapsedMilliseconds} ms]");
+
+                        Console.WriteLine($"Start: Query: {item.Item1}");
+                        sw.Reset();
+                        sw.Start();
+                        var results = s.Query(item.Item3, k);
+                        sw.Stop();
+                        Console.WriteLine($"Finish: Query [{sw.ElapsedMilliseconds} ms]");
+
+                        foreach (var result in results)
+                        {
+                            var tuple = encodings.FirstOrDefault(t => t.Item2 == result.Key);
+                            if (tuple != null)
+                                Console.WriteLine($"{result.Key}: [{tuple.Item1}: {result.Value}]");
+                            else
+                                Console.WriteLine($"{result.Key}: {result.Value}");
+                        }
                     }
+                    Console.WriteLine($"Finish: {name}");
+                    Console.WriteLine();
                 }
-                Console.WriteLine("Finish: Linear Search");
 
                 foreach (var encoding in encodings)
                     encoding.Item3.Dispose();
