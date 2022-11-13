@@ -71,9 +71,9 @@ BEGIN
 			VALUE "CompanyName",      "Takuya Takeuchi"
 			VALUE "FileDescription",  "DlibDotNet Native Emotion Classification Library"
 			VALUE "FileVersion",      VER_FILEVERSION_STR
-			VALUE "InternalName",     "DlibDotNet.Native.Dnn.GenderClassification"
+			VALUE "InternalName",     "DlibDotNet.Native.Dnn.EmotionClassification"
 			VALUE "LegalCopyright",   "Copyright (c) 2019-2021 Takuya Takeuchi."
-			VALUE "OriginalFilename", "DlibDotNet.Native.Dnn.GenderClassification.dll"
+			VALUE "OriginalFilename", "DlibDotNet.Native.Dnn.EmotionClassification.dll"
 			VALUE "ProductName",      "DlibDotNet"
 			VALUE "ProductVersion",   VER_PRODUCTVERSION_STR
 		END
