@@ -114,6 +114,7 @@
             <summary>
             Build feature data set to make ready for query.
             </summary>
+            <exception cref="T:System.ObjectDisposedException">this object is disposed.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.Query(FaceRecognitionDotNet.FaceEncoding,System.UInt32)">
             <summary>
@@ -350,6 +351,41 @@
             <summary>
             Releases all unmanaged resources.
             </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.KNearestNeighborSearch">
+            <summary>
+            The face search class that provides kNN (K-Nearest Neighbors). This class cannot be inherited.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.KNearestNeighborSearch.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Extensions.KNearestNeighborSearch"/>.
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.KNearestNeighborSearch.Add(System.Int32,FaceRecognitionDotNet.FaceEncoding)">
+            <summary>
+            Add an <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> to feature data set.
+            </summary>
+            <param name="item">The label to specify <param name="encoding">.</param></param>
+            <param name="encoding">A known face encodings to be added to feature data set.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="encoding"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="encoding"/> or this object is disposed.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.KNearestNeighborSearch.Build">
+            <summary>
+            Build feature data set to make ready for query.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">this object is disposed.</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.KNearestNeighborSearch.Query(FaceRecognitionDotNet.FaceEncoding,System.UInt32)">
+            <summary>
+            Searches for elements that are closed to given face encoding, and returns the top K occurrence within the entire feature data set.
+            </summary>
+            <param name="encoding">A face encodings to query in feature data set.</param>
+            <param name="topK">The number of most likely outcomes to query the label.</param>
+            <returns>A dictionary of label and distance.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="encoding"/> is null.</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="encoding"/> or this object is disposed.</exception>
         </member>
         <member name="T:FaceRecognitionDotNet.Extensions.Search">
             <summary>

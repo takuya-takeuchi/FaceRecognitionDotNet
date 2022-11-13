@@ -28,36 +28,40 @@ $ dotnet build -c Release
 ````
 $ dotnet run -c Release -- --model models --directory images --topK 5
 Start: Get face encodings
-test\000003.jpg does not have any face
-test\000004.jpg does not have any face
-test\000036.jpg does not have any face
-test\000067.jpg does not have any face
+images\000003.jpg does not have any face
+images\000004.jpg does not have any face
+images\000036.jpg does not have any face
+images\000067.jpg does not have any face
 Total: 96 faces
-Finish: Get face encodings
+Finish: Get face encodings [5106 ms]
 
 Start: Annoy Search
 Start: Add encoding
 Finish: Add encoding [2 ms]
 Start: Build index
 Finish: Build index [2 ms]
-Start: Query: test\000001.jpg
+Start: Query: images\000001.jpg
 Finish: Query [9 ms]
-1: [test\000001.jpg: 0]
-95: [test\000099.jpg: 0.626607159241616]
-96: [test\000100.jpg: 0.699352741710065]
-42: [test\000045.jpg: 0.699802253518985]
-70: [test\000074.jpg: 0.701357934078195]
+1: [images\000001.jpg: 0]
+95: [images\000099.jpg: 0.626607159241616]
+96: [images\000100.jpg: 0.699352741710065]
+42: [images\000045.jpg: 0.699802253518985]
+70: [images\000074.jpg: 0.701357934078195]
 Finish: Annoy Search
 
-Start: Linear Search
-Start: Query: test\000001.jpg
-Finish: Query [2 ms]
-1: [test\000001.jpg: 0]
-95: [test\000099.jpg: 0.626607159241616]
-96: [test\000100.jpg: 0.699352741710065]
-42: [test\000045.jpg: 0.699802253518985]
-70: [test\000074.jpg: 0.701357934078195]
-Finish: Linear Search
+Start: K Nearest Neighbor Search
+Start: Add encoding
+Finish: Add encoding [0 ms]
+Start: Build index
+Finish: Build index [0 ms]
+Start: Query: images\000001.jpg
+Finish: Query [5 ms]
+1: [images\000001.jpg: 0]
+95: [images\000099.jpg: 0.626607159241616]
+96: [images\000100.jpg: 0.699352741710065]
+42: [images\000045.jpg: 0.699802253518985]
+70: [images\000074.jpg: 0.701357934078195]
+Finish: K Nearest Neighbor Search
 ````
 
 Basically, Annoy search would be fast if number of face encodings are enough large.

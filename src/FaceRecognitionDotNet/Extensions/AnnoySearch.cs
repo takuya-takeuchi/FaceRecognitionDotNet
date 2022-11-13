@@ -61,6 +61,7 @@ namespace FaceRecognitionDotNet.Extensions
         /// <summary>
         /// Build feature data set to make ready for query.
         /// </summary>
+        /// <exception cref="ObjectDisposedException">this object is disposed.</exception>
         public override void Build()
         {
             this.ThrowIfDisposed();

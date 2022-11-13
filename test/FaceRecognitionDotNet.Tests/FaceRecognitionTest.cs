@@ -3090,6 +3090,65 @@ namespace FaceRecognitionDotNet.Tests
             Assert.True(count > 90);
         }
 
+        [Fact]
+        public void KNearestNeighborSearch()
+        {
+            var directory = Path.Combine(TestImageDirectory, "CelebA");
+
+            var encodings = new List<Tuple<string, int, FaceEncoding>>();
+            var extensions = new[] { ".jpg", ".png", ".bmp" };
+            foreach (var file in Directory.GetFiles(directory))
+            {
+                if (!extensions.Contains(Path.GetExtension(file).ToLower()))
+                    continue;
+
+                using (var im = FaceRecognition.LoadImageFile(file))
+                {
+                    var locations = this._FaceRecognition.FaceLocations(im).ToArray();
+                    if (!locations.Any())
+                        continue;
+
+                    if (locations.Count() > 1)
+                        continue;
+
+                    var location = locations.First();
+                    var encoding = this._FaceRecognition.FaceEncodings(im, new[] { location }).First();
+                    encodings.Add(new Tuple<string, int, FaceEncoding>(file, encodings.Count() + 1, encoding));
+                }
+            }
+
+            var count = 0;
+            using (var knnSearch = new KNearestNeighborSearch())
+            {
+                foreach (var encoding in encodings)
+                    knnSearch.Add(encoding.Item2, encoding.Item3);
+                knnSearch.Build();
+
+                foreach (var encoding in encodings)
+                {
+                    var results = knnSearch.Query(encoding.Item3, 5);
+
+                    Assert.NotEmpty(results);
+
+                    var tuple = results.FirstOrDefault();
+                    Assert.Equal(encoding.Item2, tuple.Key);
+                    count++;
+                }
+
+                foreach (var encoding in encodings)
+                {
+                    var results = knnSearch.Query(encoding.Item3, 1);
+
+                    Assert.NotEmpty(results);
+
+                    var tuple = results.FirstOrDefault();
+                    Assert.Equal(encoding.Item2, tuple.Key);
+                }
+            }
+
+            Assert.True(count > 90);
+        }
+
         #endregion
 
         #region Helpers
