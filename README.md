@@ -61,7 +61,7 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |-|PredictProbabilityEmotion|Predict probability of emotion from human face.<br>Use **Corrective re-annotation of FER - CK+ - KDEF** :warning:|
 |-|PredictProbabilityGender|Predict probability of human gender.<br>Use **UTKFace dataset** :warning:|
 |-|PredictHeadPose|Predict human head pose.<br>Use **300W-LP dataset** :warning:|
-|-|Query|Query face from face encoding set :note:|
+|-|Query|Query face from face encoding set :notebook:|
 
 ##### :warning: Warning
 
@@ -76,9 +76,14 @@ You can check the following examples to train dataset.
 * tools/HeadPoseTraining
 * tools/HelenTraining
 
-##### :note:
+##### :notebook: Note
 
 Currently, support the following algorithms
+
+###### Nearest Neighbors
+
+* kNN (K-Nearest Neighbor)
+  * KNearestNeighborSearch class
 
 ###### Approximate Nearest Neighbors
 
