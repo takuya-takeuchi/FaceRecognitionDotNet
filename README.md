@@ -61,6 +61,7 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 |-|PredictProbabilityEmotion|Predict probability of emotion from human face.<br>Use **Corrective re-annotation of FER - CK+ - KDEF** :warning:|
 |-|PredictProbabilityGender|Predict probability of human gender.<br>Use **UTKFace dataset** :warning:|
 |-|PredictHeadPose|Predict human head pose.<br>Use **300W-LP dataset** :warning:|
+|-|Query|Query face from face encoding set :note:|
 
 ##### :warning: Warning
 
@@ -74,6 +75,15 @@ You can check the following examples to train dataset.
 * tools/GenderTraining
 * tools/HeadPoseTraining
 * tools/HelenTraining
+
+##### :note:
+
+Currently, support the following algorithms
+
+###### Approximate Nearest Neighbors
+
+* [Annoy (Approximate Nearest Neighbors of Yeah)](https://github.com/spotify/annoy)
+  * AnnoySearch class
 
 ## Demo
 
@@ -134,3 +144,11 @@ And you can check online document at [FaceRecognitionDotNet API Document](https:
 > **Author:** shimat
 > 
 > **Principal Use:** Loading image data by opencv wrapper for example
+
+#### [annoy](https://github.com/spotify/annoy)
+
+> **License:** Apache-2.0 license
+>
+> **Author:** spotify
+> 
+> **Principal Use:** Face search for large amount of face encodings
