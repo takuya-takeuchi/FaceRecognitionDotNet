@@ -89,6 +89,45 @@
             <see cref="T:FaceRecognitionDotNet.Extensions.AgeRange"/> の包括的な開始年齢を取得します。
             </summary>
         </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.AnnoySearch">
+            <summary>
+            近似最近傍探索の一種である Annoy (Approximate Nearest Neighbors Oh Yeah) を提供する顔検索クラス。このクラスは継承できません。
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.#ctor">
+            <summary>
+            <see cref="T:FaceRecognitionDotNet.Extensions.AnnoySearch"/> クラスの新しいインスタンスを初期化します。
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.Add(System.Int32,FaceRecognitionDotNet.FaceEncoding)">
+            <summary>
+            顔エンコーディングの集合に <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> を追加します。
+            </summary>
+            <param name="item"><param name="encoding"> を特定するラベル。</param></param>
+            <param name="encoding">顔エンコーディングの集合に追加する既知の顔エンコーディング。</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="encoding"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="encoding"/> またはこのオブジェクトは破棄されています。</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.Build">
+            <summary>
+            クエリの準備をするために顔エンコーディング集合を構築します。
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.Query(FaceRecognitionDotNet.FaceEncoding,System.UInt32)">
+            <summary>
+            指定された顔エンコーディングに近い要素を検索し、特徴データセット全体の中で上位 K 件を返します。
+            </summary>
+            <param name="encoding">顔エンコーディングの集合に対して照会する顔エンコーディング。</param>
+            <param name="topK">ラベルを照会する際に最も可能性の高い結果の数。</param>
+            <returns>ラベルと距離の辞書。</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="encoding"/> が null です。</exception>
+            <exception cref="T:System.ObjectDisposedException"><paramref name="encoding"/> またはこのオブジェクトは破棄されています。</exception>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.DisposeUnmanaged">
+            <summary>
+            アンマネージ リソースを解放します
+            </summary>
+        </member>
         <member name="T:FaceRecognitionDotNet.Extensions.EmotionEstimator">
             <summary>
             顔画像から感情を検出する機能を提供する抽象基本クラス。
@@ -309,6 +348,31 @@
             <summary>
             アンマネージ リソースを解放します。
             </summary>
+        </member>
+        <member name="T:FaceRecognitionDotNet.Extensions.Search">
+            <summary>
+            顔エンコーディングの集合から顔エンコーディングを照会する機能を提供する抽象基本クラス。
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.Search.Add(System.Int32,FaceRecognitionDotNet.FaceEncoding)">
+            <summary>
+            顔エンコーディングの集合に <see cref="T:FaceRecognitionDotNet.FaceEncoding"/> を追加します。
+            </summary>
+            <param name="item"><param name="encoding"> を特定するラベル。</param></param>
+            <param name="encoding">顔エンコーディングの集合に追加する既知の顔エンコーディング。</param>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.Search.Build">
+            <summary>
+            クエリの準備をするために顔エンコーディング集合を構築します。
+            </summary>
+        </member>
+        <member name="M:FaceRecognitionDotNet.Extensions.Search.Query(FaceRecognitionDotNet.FaceEncoding,System.UInt32)">
+            <summary>
+            指定された顔エンコーディングに近い要素を検索し、特徴データセット全体の中で上位 K 件を返します。
+            </summary>
+            <param name="encoding">顔エンコーディングの集合に対して照会する顔エンコーディング。</param>
+            <param name="topK">ラベルを照会する際に最も可能性の高い結果の数。</param>
+            <returns>ラベルと距離の辞書。</returns>
         </member>
         <member name="T:FaceRecognitionDotNet.Extensions.SimpleAgeEstimator">
             <summary>
