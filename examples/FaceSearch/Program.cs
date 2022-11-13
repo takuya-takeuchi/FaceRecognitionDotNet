@@ -101,7 +101,7 @@ namespace FaceSearch
                 Console.WriteLine();
 
                 Console.WriteLine("Start: Annoy Search");
-                using (var annoySearch = new FaceRecognitionDotNet.Extensions.AnnoySearch())
+                using (var annoySearch = new FaceRecognitionDotNet.Extensions.AnnoySearch(256))
                 {
                     var item = encodings[0];
 
