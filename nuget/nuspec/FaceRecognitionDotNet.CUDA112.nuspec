@@ -34,8 +34,8 @@ This library is ported from https://github.com/ageitgey/face_recognition by C#.<
   <files>
     <file src="..\face128.png" target="images\" />
     
-    <file src="build\FaceRecognitionDotNet.Native.props" target="build\FaceRecognitionDotNet.CUDA111.props" />
-    <file src="build\FaceRecognitionDotNet.targets" target="build\FaceRecognitionDotNet.CUDA111.targets" />
+    <file src="build\FaceRecognitionDotNet.Native.props" target="build\FaceRecognitionDotNet.CUDA112.props" />
+    <file src="build\FaceRecognitionDotNet.targets" target="build\FaceRecognitionDotNet.CUDA112.targets" />
     
     <file src="ref\**\*" target="ref" />
     <file src="..\artifacts\cuda-112\runtimes\**\*" target="runtimes" />
