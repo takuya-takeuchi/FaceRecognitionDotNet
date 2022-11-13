@@ -936,6 +936,9 @@ function Build([Config]$Config)
    # current is each source directory
    $Current = Get-Location
 
+   Write-Host "git submodule update --init --recursive" -ForegroundColor Yellow
+   git submodule update --init --recursive
+
    $CMakefile = Join-Path $Current "CMakeLists.txt"
    if (!(Test-Path(${CMakefile})))
    {
