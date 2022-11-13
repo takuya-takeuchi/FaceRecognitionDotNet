@@ -16,15 +16,23 @@ namespace FaceRecognitionDotNet.Extensions
 
         private readonly IntPtr _Index;
 
+        private readonly int _TreeSize;
+
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnnoySearch"/>.
+        /// Initializes a new instance of the <see cref="AnnoySearch"/> class with the number of tree size.
         /// </summary>
-        public AnnoySearch()
+        /// <param name="treeSize">A number of trees for forest. More trees gives higher precision when querying.</param>
+        /// <exception cref="ArgumentException"><paramref name="treeSize"/> should be more than 0.</exception>
+        public AnnoySearch(int treeSize)
         {
+            if (treeSize <= 0)
+                throw new ArgumentException($"{nameof(treeSize)} should be more than 0.");
+
+            this._TreeSize = treeSize;
             this._Index = NativeMethods.AnnoySearch_AnnoyIndex_new(128);
         }
 
@@ -56,9 +64,7 @@ namespace FaceRecognitionDotNet.Extensions
         public override void Build()
         {
             this.ThrowIfDisposed();
-            // ToDo: I'm not sure why 2 *. It could be tree size.
-            //       https://github.com/spotify/annoy/blob/master/examples/precision_test.cpp#L50
-            NativeMethods.AnnoySearch_AnnoyIndex_build(this._Index, 2 * 128);
+            NativeMethods.AnnoySearch_AnnoyIndex_build(this._Index, this._TreeSize);
         }
 
         /// <summary>

@@ -94,10 +94,12 @@
             The face search class that provides Annoy (Approximate Nearest Neighbors Oh Yeah) kind of Approximate Nearest Neighbors. This class cannot be inherited.
             </summary>
         </member>
-        <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.#ctor">
+        <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.#ctor(System.Int32)">
             <summary>
-            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Extensions.AnnoySearch"/>.
+            Initializes a new instance of the <see cref="T:FaceRecognitionDotNet.Extensions.AnnoySearch"/> class with the number of tree size.
             </summary>
+            <param name="treeSize">A number of trees for forest. More trees gives higher precision when querying.</param>
+            <exception cref="T:System.ArgumentException"><paramref name="treeSize"/> should be more than 0.</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.Add(System.Int32,FaceRecognitionDotNet.FaceEncoding)">
             <summary>

@@ -96,8 +96,10 @@
         </member>
         <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.#ctor">
             <summary>
-            <see cref="T:FaceRecognitionDotNet.Extensions.AnnoySearch"/> クラスの新しいインスタンスを初期化します。
+            木のサイズを指定して、<see cref="T:FaceRecognitionDotNet.Extensions.AnnoySearch"/> クラスの新しいインスタンスを初期化します。
             </summary>
+            <param name="treeSize">フォレストに対する木の数。木が多いほど、照会の精度が高くなります。</param>
+            <exception cref="T:System.ArgumentException"><paramref name="treeSize"/> は 0 より大きい値です。</exception>
         </member>
         <member name="M:FaceRecognitionDotNet.Extensions.AnnoySearch.Add(System.Int32,FaceRecognitionDotNet.FaceEncoding)">
             <summary>
