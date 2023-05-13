@@ -20,4 +20,4 @@ RUN yum install -y https://github.com/PowerShell/PowerShell/releases/download/v6
 # copy build script and run
 COPY runTest.sh /runTest.sh
 RUN chmod 744 /runTest.sh
-ENTRYPOINT ["./runTest.sh"]
+ENTRYPOINT ["/runTest.sh"]

@@ -21,4 +21,4 @@ RUN yum update -y --disablerepo=cuda,nvidia-ml && yum install -y \
 # copy build script and run
 COPY runBuild.sh /runBuild.sh
 RUN chmod 744 /runBuild.sh
-ENTRYPOINT ["./runBuild.sh"]
+ENTRYPOINT ["/runBuild.sh"]
