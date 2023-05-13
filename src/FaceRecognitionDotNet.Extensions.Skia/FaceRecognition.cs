@@ -7,7 +7,7 @@ using SkiaSharp;
 namespace FaceRecognitionDotNet.Extensions.Skia
 {
 
-    public static class FaceRecognition
+    public sealed class FaceRecognition
     {
 
         #region Methods

@@ -2,8 +2,29 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Takuya Takeuchi</Authors>
+    <Copyright>c Takuya Takeuchi 2018-2022</Copyright>
+    <Company />
+    <Description>Porting face_recognition (by Adam Geitgey) by C#</Description>
+    <Version>1.3.0.7</Version>
+    <RepositoryUrl>https://github.com/takuya-takeuchi/FaceRecognitionDotNet</RepositoryUrl>
+    <PackageTags>.net machinelearning face-recognition</PackageTags>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\FaceRecognitionDotNet.Extensions.Skia.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="docs\" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="SkiaSharp" Version="2.88.3" />
