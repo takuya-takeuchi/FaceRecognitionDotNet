@@ -67,7 +67,7 @@ foreach($BuildTarget in $BuildTargets)
       $imagename  = "dlibdotnet/devel/$Distribution/$DistributionVersion/$Target/$cudaVersion"
    }
 
-   $Config = [Config]::new($DlibDotNetRoot, "Release", $target, $architecture, $platform, $option)
+   $Config = [Config]::new($FaceRecognitionDotNetRoot, "Release", $target, $architecture, $platform, $option)
    $libraryDir = Join-Path "artifacts" $Config.GetArtifactDirectoryName()
    $build = $Config.GetBuildDirectoryName($OperatingSystem)
 
