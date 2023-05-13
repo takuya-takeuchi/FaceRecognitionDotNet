@@ -22,7 +22,7 @@ WORKDIR /opt
 RUN wget http://ftp.gnu.org/gnu/gcc/gcc-5.4.0/gcc-5.4.0.tar.gz && tar -xvf gcc-5.4.0.tar.gz && rm gcc-5.4.0.tar.gz
 WORKDIR /opt/gcc-5.4.0
 RUN ./contrib/download_prerequisites
-RUN mkdir -p build && cd build
+WORKDIR build
 RUN ../configure -prefix=/usr/local --enable-checking=release --enable-languages=c,c++ --disable-multilib
 RUN make && make install
 
