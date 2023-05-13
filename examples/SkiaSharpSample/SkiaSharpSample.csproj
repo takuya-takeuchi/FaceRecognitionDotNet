@@ -8,12 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FaceRecognitionDotNet" Version="1.3.0.8" />
+    <PackageReference Include="FaceRecognitionDotNet.Extensions.Skia" Version="1.3.0.8" />
     <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\FaceRecognitionDotNet.Extensions.Skia\FaceRecognitionDotNet.Extensions.Skia.csproj" />
-    <ProjectReference Include="..\..\src\FaceRecognitionDotNet\FaceRecognitionDotNet.csproj" />
+    <PackageReference Include="SkiaSharp" Version="2.88.3" />
   </ItemGroup>
 
 </Project>

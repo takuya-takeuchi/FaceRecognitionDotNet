@@ -69,7 +69,7 @@ namespace FaceRecognitionDotNet.Extensions.Skia
                         case 3:
                         case 4:
                             {
-                                if (colorType == SKColorType.Bgra8888)
+                                if (colorType == SKColorType.Rgba8888)
                                 {
                                     var src = (byte*)bitmap.GetPixels();
                                     var stride = bitmap.RowBytes;
@@ -81,9 +81,9 @@ namespace FaceRecognitionDotNet.Extensions.Skia
 
                                         for (var w = 0; w < width; w++)
                                         {
-                                            pArray[dstOffset + w * dstChannel + 0] = src[srcOffset + w * srcChannel + 2];
+                                            pArray[dstOffset + w * dstChannel + 0] = src[srcOffset + w * srcChannel + 0];
                                             pArray[dstOffset + w * dstChannel + 1] = src[srcOffset + w * srcChannel + 1];
-                                            pArray[dstOffset + w * dstChannel + 2] = src[srcOffset + w * srcChannel + 0];
+                                            pArray[dstOffset + w * dstChannel + 2] = src[srcOffset + w * srcChannel + 2];
                                         }
                                     }
                                 }
@@ -100,9 +100,9 @@ namespace FaceRecognitionDotNet.Extensions.Skia
                                         for (var w = 0; w < width; w++)
                                         {
                                             // BGR order to RGB order
-                                            pArray[dstOffset + w * dstChannel + 0] = src[srcOffset + w * srcChannel + 0];
+                                            pArray[dstOffset + w * dstChannel + 0] = src[srcOffset + w * srcChannel + 2];
                                             pArray[dstOffset + w * dstChannel + 1] = src[srcOffset + w * srcChannel + 1];
-                                            pArray[dstOffset + w * dstChannel + 2] = src[srcOffset + w * srcChannel + 2];
+                                            pArray[dstOffset + w * dstChannel + 2] = src[srcOffset + w * srcChannel + 0];
                                         }
                                     }
                                 }

@@ -20,13 +20,6 @@ $PublishTargets = @{ "FaceRecognitionDotNet"="cpu";
                      "FaceRecognitionDotNet.MKL"="mkl";
                   }
 
-$Token = $env:FaceRecognitionDotNetNugetToken
-if ([string]::IsNullOrWhitespace($Token))
-{
-    Write-Host "nuget token is missing" -ForegroundColor Red
-    exit
-}
-
 # Precheck whether all package is present
 foreach ($key in $PublishTargets.keys)
 {

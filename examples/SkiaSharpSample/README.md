@@ -26,10 +26,10 @@ $ dotnet build -c Release
 1. Type the following sample command
 ````
 $ dotnet run -c Release -- "-m=models"
-Distance: 0.350636343769049 for obama-240p.jpg
-Distance: 0.361864784857372 for obama-480p.jpg
-Distance: 0.37696759951267 for obama-720p.jpg
-Distance: 0.373414821495045 for obama-1080p.jpg
+Distance: 0.342289226629347 for obama-240p.jpg
+Distance: 0.346749102653167 for obama-480p.jpg
+Distance: 0.369195738248585 for obama-720p.jpg
+Distance: 0.361052041208253 for obama-1080p.jpg
 ````
 
 ## 4. Parameters

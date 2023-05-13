@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 
+using FaceRecognitionDotNet;
 using Microsoft.Extensions.CommandLineUtils;
 using SkiaSharp;
 
@@ -14,7 +15,7 @@ namespace SkiaSharpSample
 
         #region Fields
 
-        private static FaceRecognitionDotNet.FaceRecognition _FaceRecognition;
+        private static FaceRecognition _FaceRecognition;
 
         #endregion
 
@@ -44,7 +45,7 @@ namespace SkiaSharpSample
                     return -1;
                 }
 
-                _FaceRecognition = FaceRecognitionDotNet.FaceRecognition.Create(directory);
+                _FaceRecognition = FaceRecognition.Create(directory);
 
                 var testImages = new[]
                 {
@@ -64,10 +65,10 @@ namespace SkiaSharpSample
 
                     foreach (var path in testImages)
                     {
-                        var targetImage = FaceRecognitionDotNet.FaceRecognition.LoadImageFile(path);
+                        var targetImage = FaceRecognition.LoadImageFile(path);
                         var targetEncoding = _FaceRecognition.FaceEncodings(targetImage);
 
-                        var distance = FaceRecognitionDotNet.FaceRecognition.FaceDistance(searchEncodings.First(), targetEncoding.First());
+                        var distance = FaceRecognition.FaceDistance(searchEncodings.First(), targetEncoding.First());
                         Console.WriteLine($"Distance: {distance} for {path}");
 
                         foreach (var encoding in targetEncoding) encoding.Dispose();
