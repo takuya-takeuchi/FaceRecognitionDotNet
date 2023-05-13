@@ -1,4 +1,5 @@
 $targets = @(
+   "Extensions.Skia",
    "CPU",
    "CUDA92",
    "CUDA100",
@@ -15,6 +16,11 @@ $FaceRecognitionDotNetRoot = Split-Path $ScriptPath -Parent
 
 $source = Join-Path $FaceRecognitionDotNetRoot src | `
           Join-Path -ChildPath FaceRecognitionDotNet
+dotnet restore ${source}
+dotnet build -c Release ${source}
+
+$source = Join-Path $FaceRecognitionDotNetRoot src | `
+          Join-Path -ChildPath FaceRecognitionDotNet.Extensions.Skia
 dotnet restore ${source}
 dotnet build -c Release ${source}
 

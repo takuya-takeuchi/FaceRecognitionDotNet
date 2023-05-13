@@ -40,6 +40,12 @@ This package supports cross platform, Windows, Linux and MacOSX!!
 
 ##### :warning: FaceRecognitionDotNet for ARM is not tested yet
 
+### Extensions package
+
+|Package|Nuget|
+|---|---|
+|FaceRecognitionDotNet.Extensions.Skia|[![NuGet version](https://img.shields.io/nuget/v/FaceRecognitionDotNet.Extensions.Skia.svg)](https://www.nuget.org/packages/FaceRecognitionDotNet)|
+
 ## Support API
 
 |face_recognition API|Corresponding API|Note|

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FaceRecognitionDotNet.Extensions.Skia</name>
+    </assembly>
+    <members>
+        <member name="M:FaceRecognitionDotNet.Extensions.Skia.FaceRecognition.LoadImage(SkiaSharp.SKBitmap)">
+            <summary>
+            Creates an <see cref="T:FaceRecognitionDotNet.Image"/> from the specified existing bitmap image.
+            </summary>
+            <param name="bitmap">The <see cref="T:SkiaSharp.SKBitmap"/> from which to create the new <see cref="T:FaceRecognitionDotNet.Image"/>.</param>
+            <returns>The <see cref="T:FaceRecognitionDotNet.Image"/> this method creates.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="bitmap"/> is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">The specified <see cref="T:SkiaSharp.SKColorType"/> is not supported.</exception>
+        </member>
+    </members>
+</doc>
