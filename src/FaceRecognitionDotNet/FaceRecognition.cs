@@ -31,8 +31,6 @@ namespace FaceRecognitionDotNet
 
         private readonly LossMetric _FaceEncoder;
 
-        private readonly FrontalFaceDetector _FaceDetector;
-
         private FaceLandmarkDetector _CustomFaceLandmarkDetector;
 
         private FaceDetector _CustomFaceDetector;
@@ -78,9 +76,6 @@ namespace FaceRecognitionDotNet
             if (!File.Exists(faceRecognitionModel))
                 throw new FileNotFoundException(faceRecognitionModel);
 
-            this._FaceDetector?.Dispose();
-            this._FaceDetector = DlibDotNet.Dlib.GetFrontalFaceDetector();
-
             this._PosePredictor68Point?.Dispose();
             this._PosePredictor68Point = ShapePredictor.Deserialize(predictor68PointModel);
 
@@ -116,9 +111,6 @@ namespace FaceRecognitionDotNet
 
             if (parameter.FaceRecognitionModel == null)
                 throw new NullReferenceException(nameof(parameter.FaceRecognitionModel));
-
-            this._FaceDetector?.Dispose();
-            this._FaceDetector = DlibDotNet.Dlib.GetFrontalFaceDetector();
 
             this._PosePredictor68Point?.Dispose();
             this._PosePredictor68Point = ShapePredictor.Deserialize(parameter.PosePredictor68FaceLandmarksModel);
@@ -1118,8 +1110,11 @@ namespace FaceRecognitionDotNet
                 case Model.Cnn:
                     return CnnFaceDetectionModelV1.Detect(this._CnnFaceDetector, faceImage, numberOfTimesToUpsample);
                 default:
-                    var locations = SimpleObjectDetector.RunDetectorWithUpscale2(this._FaceDetector, faceImage, (uint)numberOfTimesToUpsample);
-                    return locations.Select(tuple => new MModRect { Rect = tuple.Item1, DetectionConfidence = tuple.Item2 });
+                    using(var detector = DlibDotNet.Dlib.GetFrontalFaceDetector())
+                    {
+                      var locations = SimpleObjectDetector.RunDetectorWithUpscale2(detector, faceImage, (uint)numberOfTimesToUpsample);
+                      return locations.Select(tuple => new MModRect { Rect = tuple.Item1, DetectionConfidence = tuple.Item2 }).ToArray();
+                    }
             }
         }
 
@@ -1152,7 +1147,6 @@ namespace FaceRecognitionDotNet
             this._PosePredictor5Point?.Dispose();
             this._CnnFaceDetector?.Dispose();
             this._FaceEncoder?.Dispose();
-            this._FaceDetector?.Dispose();
         }
 
         #endregion
